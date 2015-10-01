@@ -27,3 +27,22 @@ blancoValueObjectは下記のライブラリを利用しています。
    概要: このプロダクトは それ自身が blanco Frameworkにより自動生成されています。
          このプロダクトは 実行時に blanco Framework各種プロダクトに依存して動作します。
    ライセンス: GNU Lesser General Public License
+
+[How to Build]
+
+[Build方法]
+
+* ant -f task.xml clean
+* ant -f task.xml meta
+* ant -f task.xml compile
+* ant meta
+* ant compile
+* ant jar
+
+生成された jar ファイルを別プロジェクトにコピーする
+
+## CAUTION ##
+
+blancobatchproccess が blancovalueobjectを必要とするので，いずれかの
+バージョンのものをlib以下に配置しておく必要がある．
+
