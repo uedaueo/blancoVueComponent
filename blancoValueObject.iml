@@ -85,5 +85,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jxl-2.6.12-java150" level="project" />
+    <orderEntry type="library" name="ant-antlr" level="project" />
   </component>
 </module>

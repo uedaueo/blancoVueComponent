@@ -47,6 +47,12 @@
 		</classpath>
 	</taskdef>
 
+	<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask">
+		<classpath>
+			<fileset dir="lib" includes="*.jar" />
+		</classpath>
+	</taskdef>
+
 	<!-- Antタスク定義 end -->
 
 	<!-- 自分自身のAntタスク。 -->
@@ -145,6 +151,7 @@
 		<blancoresourcebundle metadir="meta/program" commenttimestamp="false" encoding="${encoding}" />
 
 		<!-- TODO: ここに自身のantタスクを追加してください。 -->
+		<blancovalueobject metadir="meta/program" encoding="${encoding}" />
 	</target>
 
 	<target name="build" depends="meta.clean,meta,compile,jar,pack">

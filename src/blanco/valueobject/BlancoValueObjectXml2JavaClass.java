@@ -115,6 +115,9 @@ public class BlancoValueObjectXml2JavaClass {
                 .getAbsolutePath()
                 + "/main");
 
+//        /* tueda DEBUG */
+//        System.out.println("/* tueda */ structure2Source : " + argClassStructure.getName());
+
         // BlancoCgObjectFactoryクラスのインスタンスを取得します。
         fCgFactory = BlancoCgObjectFactory.getInstance();
 

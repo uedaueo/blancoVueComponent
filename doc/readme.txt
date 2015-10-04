@@ -35,6 +35,7 @@ blancoValueObjectは下記のライブラリを利用しています。
 * ant -f task.xml clean
 * ant -f task.xml meta
 * ant -f task.xml compile
+* ant cleantmp
 * ant meta
 * ant compile
 * ant jar
@@ -44,5 +45,4 @@ blancoValueObjectは下記のライブラリを利用しています。
 ## CAUTION ##
 
 blancobatchproccess が blancovalueobjectを必要とするので，いずれかの
-バージョンのものをlib以下に配置しておく必要がある．
-
+バージョンのもの(現行は1.2.0)をlib以下に配置しておく必要がある．
