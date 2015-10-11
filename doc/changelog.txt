@@ -1,244 +1,244 @@
 2012.05.28 (1.2.3.1)
-  �\�[�X�E�p�b�P�[�W���O�̂��߂Ƀr���h���Ȃ����B
-  TODO BlancoBeanUtils �ւ̑Ή��B
-  TODO toString �� BlancoBeanUtils �Ɉړ��B
-  TODO compareTo �̒ǉ��B
+  ソース・パッケージングのためにビルドしなおし。
+  TODO BlancoBeanUtils への対応。
+  TODO toString を BlancoBeanUtils に移動。
+  TODO compareTo の追加。
 
 2010.12.22 (1.2.3)
-  copyTo ���\�b�h��ǉ��B
+  copyTo メソッドを追加。
 
 2009.12.11 (1.2.2)
-  @XmlRootElement �̏o�͗L�����w��ł���悤�ɂ���B
+  @XmlRootElement の出力有無を指定できるようにする。
 
 2009.11.05 (1.2.1)
-  (plugin) Eclipse �v���O�C���̏���̃��[���ɏ]���Ď��������\�[�X�R�[�h�̕����G���R�[�f�B���O������B
-  jar �t�@�C���ނ��X�V�B
+  (plugin) Eclipse プラグインの所定のルールに従って自動生成ソースコードの文字エンコーディングを決定。
+  jar ファイル類を更新。
 
 2008.12.12 (1.2.0)
-  JavaDoc �̌��h��������ɉ��P�B
-  toString �� @Override �A�m�e�[�V������t�^����悤�ɂ���B(����� JDK 1.4 �ł̓R���p�C���ł��Ȃ��Ȃ�܂�)
+  JavaDoc の見栄えを微妙に改善。
+  toString に @Override アノテーションを付与するようにする。(これで JDK 1.4 ではコンパイルできなくなります)
 
 2008.12.10 (1.1.6)
-  JavaDoc���e�̌������B
-  �E�u�^���v�� JavaDoc�ɓ���Ȃ��悤�ɕύX�B
-  ���s�̂͂��݂��݂ɂ��ẮAblancoCg�ɈڊǁB
-  (�폜)BlancoValueObjectUtil.java
-  ����`���Ɋւ���V�d�l
-  �E��`��(Excel)�̐����t�B�[���h�ɂ��āA�������s�t���ŋL�������ꍇ�̈����ɂ��āB
-    �E�P�s�ڂ͐����������̂܂܏����B�����Q�Ƃɂ��Ă͍l������K�v�͂Ȃ��B  (blancoCg �� title ����)
-    �E�Q�s�ڈȍ~�́A�����Q�Ƃ��l�������l���L������B�P�s�ڂƂ͈������قȂ�B(blancoCg �� descriptionList ����)
+  JavaDoc内容の見直し。
+  ・「型名」を JavaDocに入れないように変更。
+  改行のはさみこみについては、blancoCgに移管。
+  (削除)BlancoValueObjectUtil.java
+  ○定義書に関する新仕様
+  ・定義書(Excel)の説明フィールドについて、もし改行付きで記入した場合の扱いについて。
+    ・１行目は説明文をそのまま書く。文字参照については考慮する必要はない。  (blancoCg の title 相当)
+    ・２行目以降は、文字参照を考慮した値を記入する。１行目とは扱いが異なる。(blancoCg の descriptionList 相当)
 
 2008.11.22 (1.1.5)
-  jar�t�@�C���ނ̍X�V�B
+  jarファイル類の更新。
 
 2008.11.21 (1.1.4)
-  �\�[�X�t�@�C���̕����G���R�[�f�B���O�w��@�\��ǉ��B
+  ソースファイルの文字エンコーディング指定機能を追加。
 
 2008.11.20 (1.1.3)
-  (plugin)�v���O�C�����b�Z�[�W�ɔ��ׂȊԈႢ���������̂��C���B
+  (plugin)プラグインメッセージに微細な間違いがあったのを修正。
 
 2008.11.19 (1.1.2)
-  jar�t�@�C���ނ̍X�V�B
+  jarファイル類の更新。
 
 2008.10.24 (1.1.1)
-  JDK 1.5 �Ή��B
+  JDK 1.5 対応。
 
-2008.10.22 (1.1.0) �J����
-  blancoCg�V�łɑΉ��J�n�B
+2008.10.22 (1.1.0) 開発版
+  blancoCg新版に対応開始。
 
-2007.12.24 (0.9.6) Eclipse 3.3 �΍� (�v���O�C���̂�) JDK 1.4.2 �Ή��̍ŏI��
-  ������Ɍ��� plugin�̂݃o�[�W�����ԍ��̔Ԃ̂��������[�X���܂��B
-  (plugin)�o�[�W�����ԍ����̔ԍX�V�B
-  (plugin) workbenchMonitor�𗘗p����̂��~���܂����B
-    ������́AEclipse 3.3 �� workbenchMonitor �𗘗p����� org.eclipse.swt.SWTException: Invalid thread access ���������Ă��܂��̂ŁA���������邽�߂ł��B
-  (plugin)about.html���X�V�B
-  (plugin)build.xml���X�V�B
-  (plugin)plugin.xml�̍Đ���
-  (plugin)�E�B�U�[�h�̐����f�B���N�g���Ɋւ���L�q���X�V (Blanco*WizardPage4)
-  (jar)jar�t�@�C���ނ��X�V�`�F�b�N�B
+2007.12.24 (0.9.6) Eclipse 3.3 対策 (プラグインのみ) JDK 1.4.2 対応の最終版
+  ※今回に限り pluginのみバージョン番号採番のうえリリースします。
+  (plugin)バージョン番号を採番更新。
+  (plugin) workbenchMonitorを利用するのを停止しました。
+    →これは、Eclipse 3.3 で workbenchMonitor を利用すると org.eclipse.swt.SWTException: Invalid thread access が発生してしまうので、これを避けるためです。
+  (plugin)about.htmlを更新。
+  (plugin)build.xmlを更新。
+  (plugin)plugin.xmlの再生成
+  (plugin)ウィザードの生成ディレクトリに関する記述を更新 (Blanco*WizardPage4)
+  (jar)jarファイル類を更新チェック。
 
-2007.12.07 (1.0.0) JDK 1.4.2 �Ή��̍ŏI��
-  ����łƈʒu�Â��B
-  blanco�t�H���_���Đ���
-  (plugin)about.html��ǉ��B
+2007.12.07 (1.0.0) JDK 1.4.2 対応の最終版
+  安定版と位置づけ。
+  blancoフォルダを再生成
+  (plugin)about.htmlを追加。
 
-2007.12.06 (0.9.9) �J����
-  �o�����[�I�u�W�F�N�g�� java.util.ArrayList�t�B�[���h�� java.util.List�ɕύX(!)
-  (�l��)�u�A�N�Z�X�v��ǉ��B
-  (�l��)�u���ۃN���X�v��ǉ��B
-  ���b�Z�[�W��`���𓱓��B
-  TODO �v���O�C���̕s�v�ȃX�C�b�`���폜���邱�ƁB
+2007.12.06 (0.9.9) 開発版
+  バリューオブジェクトの java.util.ArrayListフィールドを java.util.Listに変更(!)
+  (様式)「アクセス」を追加。
+  (様式)「抽象クラス」を追加。
+  メッセージ定義書を導入。
+  TODO プラグインの不要なスイッチを削除すること。
 
-2007.12.06 (0.9.8) �J����
-  ��`���̌p���Ǝ����ɂ��āA����𕪗��B�p���ł͂Ȃ��A�p���A�����Ɠ��{�ꉻ�B
-  toString�쐬�L���̃I�v�V�����ɂ��ċ@�\�쐬�B
+2007.12.06 (0.9.8) 開発版
+  定義書の継承と実装について、これを分離。英字ではなく、継承、実装と日本語化。
+  toString作成有無のオプションについて機能作成。
 
-2007.12.05 (0.9.7) �J����
-  (�l��)�t�@�C������(Filecomment)��j���I
-  (�l��)�ߋ��̗l���ƌ݊������Ȃ��Ȃ�܂����B
-  (�l��)�t�B�[���h���̕ό`�ɂ��Ă͗l������^����悤�ɕύX�B
-  (�l��)�f�t�H���g�l�̖��O�ό`�ɂ��ėl������^����悤�ɋ@�\�ǉ��B
-  (�l��)�p����ǉ��B
-  (�l��)������ǉ��B
-  Javadoc -> Description ��XML��̖��̂�ύX�B
-  �ublancoValueObject 0.8.0���G�~�����[�g���邩�ǂ����B�v�̃t���O��j�����܂����B
-  Javadoc -> Description ��XML��̖��̂�ύX�B
-  (�����݊����ێ��̔j��)�ublancoValueObject 0.8.0���G�~�����[�g���邩�ǂ����B�v�̃t���O��j�����܂����B
+2007.12.05 (0.9.7) 開発版
+  (様式)ファイル説明(Filecomment)を破棄！
+  (様式)過去の様式と互換性がなくなりました。
+  (様式)フィールド名の変形については様式から与えるように変更。
+  (様式)デフォルト値の名前変形について様式から与えるように機能追加。
+  (様式)継承を追加。
+  (様式)実装を追加。
+  Javadoc -> Description にXML上の名称を変更。
+  「blancoValueObject 0.8.0をエミュレートするかどうか。」のフラグを破棄しました。
+  Javadoc -> Description にXML上の名称を変更。
+  (下方互換性維持の破棄)「blancoValueObject 0.8.0をエミュレートするかどうか。」のフラグを破棄しました。
 
-2007.11.18 (0.9.6) �J����
-  (jar)jar�t�@�C���ނ��X�V�B
-  �l����������B
+2007.11.18 (0.9.6) 開発版
+  (jar)jarファイル類を更新。
+  様式を微調整。
 
-2007.09.26 (0.9.5) �J����
-  XmlParser: parseFile, parseDocument�� parse�Ƀ��\�b�h���𓝈�B
-  Xml2Source; structure2Source�Ƀ��\�b�h���𓝈�B
+2007.09.26 (0.9.5) 開発版
+  XmlParser: parseFile, parseDocumentは parseにメソッド名を統一。
+  Xml2Source; structure2Sourceにメソッド名を統一。
 
-2007.09.25 (0.9.4) �J����
-  �g���₷���̂��߂ɁAfListField�̃f�t�H���g�l��ݒ肵�܂����B
-  (�ύX) ListField -> FieldList
+2007.09.25 (0.9.4) 開発版
+  使いやすさのために、fListFieldのデフォルト値を設定しました。
+  (変更) ListField -> FieldList
   (fFieldList = new ArrayList())
-  blancoAntTask 0.3.x�n���Ƀo�[�W�����A�b�v�B
-  TODO ���b�Z�[�W��`���̊O�����B
+  blancoAntTask 0.3.x系統にバージョンアップ。
+  TODO メッセージ定義書の外部化。
 
-2007.09.19 (0.9.3) �J����
-  JavaDoc�����𒲐��B
-  �\�[�X�R�[�h�R�����g�𒲐��B�\�[�X�R�[�h�����t�@�N�^�����O���{�B
+2007.09.19 (0.9.3) 開発版
+  JavaDoc文言を調整。
+  ソースコードコメントを調整。ソースコードをリファクタリング実施。
 
-2007.09.19 (0.9.2) �J����
-  XML�����̂��߂ɁABlancoValueObjectXmlParser �Ƃ����N���X�𓱓��B
-  blancoXmlBinding�x�[�X��XML���o�͂ɕύX���܂����B
-  �y��݊����z���܂� �ʏ��Java XML�x�[�X�������̂ł��� blancoXmlBinding�x�[�X�ւƕύX����Ă��܂��B
+2007.09.19 (0.9.2) 開発版
+  XML処理のために、BlancoValueObjectXmlParser というクラスを導入。
+  blancoXmlBindingベースのXML入出力に変更しました。
+  【非互換性】今まで 通常のJava XMLベースだったのですが blancoXmlBindingベースへと変更されています。
 
-2007.09.18 (0.9.1) �J����
-  �E0.9.1�ɂ��ẮAAnt�^�X�N�ł̂݃����[�X���܂��B
-  �E�y��݊����z ����: ���̃o�[�W�������� ConcreteSax�ɂ�鎩���������̃N���X�E�\�[�X�R�[�h���폜����Ă��܂��B
-             ���̎d�l�Ɉˑ����Ă�����̂Ƃ��āAblancoDb��blancoSOAP�Ȃǂ��l�����܂��B
-  �E�y��݊����z �d�l�폜: �o�����[�I�u�W�F�N�g�e�X�g�R�[�h���������ɂ��ċ@�\���폜���܂����B
-               �����A����Ɠ����̎d�l���K�v�ȏꍇ�ɂ́A�ʃv���_�N�g��V�K�쐬���� ������Ŏ������Ă��������B
-  �EparseDocument�Ƃ������\�b�h�V�K�쐬���A���O������Ăяo���ł���悤�ɂ��܂����B
-  �EparseElementSheet���\�b�h���O������Ăяo���₷���Ȃ�悤���ǂ��܂����B
-    (�O������� blancoValueObject�̗��p��z��)
-  �Ejar�t�@�C���ނ��X�V�B
-  �E�o�����[�I�u�W�F�N�g��`���̗l�����X�V���܂����B(��{�I�Ɍr���𒆐S�Ɍ��������܂���)
-    �Ȃ��A�l���ɂ��ẮA�ߋ��̃o�[�W�����ƌ݊������ێ�����Ă��܂��B
-  �E���̃v���_�N�g�p�̒�`���ɂ��āA�ŐV�̂��̂ɒu�������܂����B
-  �Ebuild.xml�t�@�C���̍X�V �ŐV�� blancoAnt�Ő����B
-  (�폜)BlancoValueObjectXml2JUnitTest.java
-  (�폜)BlancoValueObjectXml2JavaClassTest.java
-  (�폜)blanco.test.valueobject�p�b�P�[�W
-  (�폜)blanco.test.valueobject.method�p�b�P�[�W
-  (�폜)ConcreteSax�̃e���v���[�g�ł��� BlancoValueObject.xml �t�@�C���B
-  (�폜)blanco/main�z���̍Đ����̎��{
-  (�폜)blancocodegenerator-1.0.2.jar
-  (�폜)blancoconcretesax-0.0.5.jar
-  (�폜)BlancoValueObjectTestResourceBundle.xls
+2007.09.18 (0.9.1) 開発版
+  ・0.9.1については、Antタスク版のみリリースします。
+  ・【非互換性】 注意: このバージョンから ConcreteSaxによる自動生成分のクラス・ソースコードが削除されています。
+             この仕様に依存しているものとして、blancoDbやblancoSOAPなどが考えられます。
+  ・【非互換性】 仕様削除: バリューオブジェクトテストコード自動生成について機能を削除しました。
+               もし、これと同等の仕様が必要な場合には、別プロダクトを新規作成して そちらで実現してください。
+  ・parseDocumentというメソッド新規作成し、を外部から呼び出しできるようにしました。
+  ・parseElementSheetメソッドを外部から呼び出しやすくなるよう改良しました。
+    (外部からの blancoValueObjectの利用を想定)
+  ・jarファイル類を更新。
+  ・バリューオブジェクト定義書の様式を更新しました。(基本的に罫線を中心に見直ししました)
+    なお、様式については、過去のバージョンと互換性が維持されています。
+  ・他のプロダクト用の定義書について、最新のものに置き換えました。
+  ・build.xmlファイルの更新 最新版 blancoAntで生成。
+  (削除)BlancoValueObjectXml2JUnitTest.java
+  (削除)BlancoValueObjectXml2JavaClassTest.java
+  (削除)blanco.test.valueobjectパッケージ
+  (削除)blanco.test.valueobject.methodパッケージ
+  (削除)ConcreteSaxのテンプレートである BlancoValueObject.xml ファイル。
+  (削除)blanco/main配下の再生成の実施
+  (削除)blancocodegenerator-1.0.2.jar
+  (削除)blancoconcretesax-0.0.5.jar
+  (削除)BlancoValueObjectTestResourceBundle.xls
 
 2006.12.04 (0.8.4)
-  jar�t�@�C���ނ��ꕔ�X�V�B
+  jarファイル類を一部更新。
 
 2006.12.01 (0.8.3)
-  build.xml���X�V�B
+  build.xmlを更新。
 
 2006.11.29 (0.8.2)
-  �����I�� version 0.8.0���G�~�����[�g�����邽�߂̃��[�h��ǉ��B
-  �N���X�𗘗p���ă\�[�X�R�[�h�����𒼐ڎ��s����ꍇ�ɂ̂ݗL���ł��B
-  (jar)jar�t�@�C���ނ��X�V�B
-  (�l��)����̍��ڂɂ��ďc�̈ʒu�𒆉��ɕύX�B
+  内部的に version 0.8.0をエミュレートさせるためのモードを追加。
+  クラスを利用してソースコード生成を直接実行する場合にのみ有効です。
+  (jar)jarファイル類を更新。
+  (様式)幾つかの項目について縦の位置を中央に変更。
 
 2006.10.20 (0.8.1)
-  blancoCodeGenerator�ւ̈ˑ����폜�B
-  jar�t�@�C���ނ̍X�V�B
-  ��`������readme�V�[�g�������B
+  blancoCodeGeneratorへの依存を削除。
+  jarファイル類の更新。
+  定義書からreadmeシートを除去。
 
 2006.07.26 (0.8.0)
-  (jexcelapi)JExcelApi 2.6�� Sun Java2 SE 1.4.2_12 �œ��삵�Ȃ��s��ɑΉ��B
-    (��̓I�ɂ� JExcelApi��jar�t�@�C���Ƀp�b�`��K�p���� jxl-2.6blanco.jar�𗘗p�J�n)
-  jar�t�@�C���ނ��X�V: blancoCg, blancoCommons
+  (jexcelapi)JExcelApi 2.6が Sun Java2 SE 1.4.2_12 で動作しない不具合に対応。
+    (具体的には JExcelApiのjarファイルにパッチを適用した jxl-2.6blanco.jarを利用開始)
+  jarファイル類を更新: blancoCg, blancoCommons
 
 2006.05.31 (0.2.1)
-  ����������N���X��toString���\�b�h�ɂ����Ĕz��^��null�̏ꍇ��NPE�̃o�O������̂��C���B
-  toString�Ŕz��^���^����ꂽ�ꍇ�� toString���\�b�h�̌��ʂ����������B(�\�[�X�R�[�h�I�ɂ͊ȒP�ɂȂ�)
+  自動生成後クラスのtoStringメソッドにおいて配列型がnullの場合にNPEのバグがあるのを修正。
+  toStringで配列型が与えられた場合の toStringメソッドの結果を少し調整。(ソースコード的には簡単になる)
 
 2006.05.17 (0.2.0)
-  ���O�ό`��ON/OFF���R���g���[���ł���悤�ɕύX���܂����B
-  ����́A�p�r�ɂ���Ă͖��O�ό`�� �t���ʂł���ꍇ�����邽�߂ł��B
+  名前変形のON/OFFをコントロールできるように変更しました。
+  これは、用途によっては名前変形が 逆効果である場合があるためです。
 
 2006.05.11 (0.1.9)
-  (plugin)build.xml�̔��ׂȊԈႢ���C�����܂����B
+  (plugin)build.xmlの微細な間違いを修正しました。
 
 2006.04.26 (0.1.8)
-  jar�t�@�C���ނ��X�V�B
-  (plugin)Eclipse�v���O�C����V���ɍ쐬�B
+  jarファイル類を更新。
+  (plugin)Eclipseプラグインを新たに作成。
 
 2006.04.19 (0.1.7)
-  JavaDoc�̌������Ȃǂ����{�B
-  TODO �v���O�C���̍쐬�B
+  JavaDocの見直しなどを実施。
+  TODO プラグインの作成。
 
 2006.04.15 (0.1.6)
-  blancoCodeGenerator���2����łւƒu�������܂����B
-  blancoCodeGenerator 0.8.1 �� 0.9.6 �ւ̒u�������ł��B
-  ��blancoCodeGenerator�X�V�ɂ��s�v�ȃC���|�[�g�̗}����JavaDoc�����̌��h���̉��P�������܂��B
-  ���u�������̌��ʁA����ɉe���̂���ω��͋N���Ȃ����Ƃ��m�F���܂����B
+  blancoCodeGeneratorを第2世代版へと置き換えました。
+  blancoCodeGenerator 0.8.1 → 0.9.6 への置き換えです。
+  →blancoCodeGenerator更新により不要なインポートの抑制やJavaDoc部分の見栄えの改善が得られます。
+  ※置き換えの結果、動作に影響のある変化は起きないことを確認しました。
 
 2006.04.13 (0.1.5)
-  �y�d�v�ztoString���\�b�h��ǉ����܂����B
-  �z���toString()�܂ł͑Ή��B
-  �y���j�ztoString���K�؂Ɏ��������ł��邱�Ƃ��m�F������ 0.2.0�ň���Ń����[�X��ڎw���܂��B
+  【重要】toStringメソッドを追加しました。
+  配列のtoString()までは対応。
+  【方針】toStringが適切に自動生成できることを確認したら 0.2.0で安定版リリースを目指します。
 
 2006.04.12 (0.1.4)
-  jar�t�@�C���ނ̍X�V�B
+  jarファイル類の更新。
 
 2006.02.14 (0.1.3)
-  jar�t�@�C���̍X�V�B
-  readme.txt�������������P�B
+  jarファイルの更新。
+  readme.txtを少しだけ改善。
 
 2006.01.26 (0.1.2)
-  jar�t�@�C���̍X�V�B
-  ������x ����������\�[�X�o���h�����B
-  �y�폜�zBlancoValueObjectMeta2Xml.java
+  jarファイルの更新。
+  ある程度 文字列をリソースバンドル化。
+  【削除】BlancoValueObjectMeta2Xml.java
 
 2006.01.04 (0.1.1)
-  blancoResourceBundle��jar�t�@�C�����X�V
-  blancoAntTask��jar�t�@�C�����X�V
-  ArrayList�Ƀf�t�H���g�l���Z�b�g�ł���悤�Ɏd�l�𒲐��B
-  �w�肳�ꂽ�N���X�̃��[�h�Ɏ��s���Ă� �����͑��s����悤�Ɏd�l��ύX�B
+  blancoResourceBundleのjarファイルを更新
+  blancoAntTaskのjarファイルを更新
+  ArrayListにデフォルト値がセットできるように仕様を調整。
+  指定されたクラスのロードに失敗しても 処理は続行するように仕様を変更。
 
 2005.12.27 (0.1.0)
-  �T���v���N���X�� jar�t�@�C���Ɋ܂܂�Ȃ��悤�ɕύX�B
+  サンプルクラスが jarファイルに含まれないように変更。
 
 2005.12.27 (0.0.9)
-  �N���X�L���X�g��O����������ӏ����C���B
+  クラスキャスト例外が発生する箇所を修正。
 
 2005.12.26 (0.0.8)
-  XML�ϊ���blancoCommons�ɈڊǁB
+  XML変換をblancoCommonsに移管。
 
 2005.12.26 (0.0.7)
-  �y�d�v�zBlancoValueObject�̂��߂�XML�`���𔲖{�I�ɕύX�B
-  �y�폜�zBlancoValueObjectXml2CombinedXml.java �͔p�~
-  �y�폜�zFieldStructure.java
-  �y�폜�zClassStructure.java
-  �e���v���[�g�t�@�C����ǉ�
-  �ЂƂƂ���̌^�ɑΉ�
+  【重要】BlancoValueObjectのためのXML形式を抜本的に変更。
+  【削除】BlancoValueObjectXml2CombinedXml.java は廃止
+  【削除】FieldStructure.java
+  【削除】ClassStructure.java
+  テンプレートファイルを追加
+  ひととおりの型に対応
 
 2005.12.25 (0.0.6)
-  ���̃��r�W�����͍�Ɠr����
+  このリビジョンは作業途中版
 
 2005.12.25 (0.0.5)
-  ��`���l���̍쐬�ɒ���B
+  定義書様式の作成に着手。
 
 2005.12.23 (0.0.4)
-  String�t�B�[���h�̎����ɂ��ċ�����
-  ����������\�[�X�o���h����
+  Stringフィールドの試験について強化中
+  文字列をリソースバンドル化
 
 2005.12.22 (0.0.3)
-  JUnit���\�b�h�����ɂ���Method�h���N���X�Ƃ��ĕʃN���X��
+  JUnitメソッド生成についてMethod派生クラスとして別クラス化
 
 2005.12.22 (0.0.2)
-  �t�@�C���w�b�_�[��K�����B
-  main�������폜���� JUnit�ɕ����B
-  �\�[�X�R�[�h�����P�B
-  String�^�̂�JUnit�Ή��������B
+  ファイルヘッダーを適正化。
+  main処理を削除して JUnitに分割。
+  ソースコードを改善。
+  String型のみJUnit対応を完了。
 
 2005.12.14 (0.0.1)
-  �V�K�쐬
-  blancoSOAP����blancoValueObject��Ɨ��B
+  新規作成
+  blancoSOAPからblancoValueObjectを独立。

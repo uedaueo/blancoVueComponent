@@ -22,7 +22,7 @@ import blanco.valueobject.task.valueobject.BlancoValueObjectProcessInput;
 
 public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
     /**
-     * ƒƒbƒZ[ƒWB
+     * ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã€‚
      */
     private final BlancoValueObjectMessage fMsg = new BlancoValueObjectMessage();
 
@@ -40,7 +40,7 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                         .getMetadir()));
             }
 
-            // ƒeƒ“ƒ|ƒ‰ƒŠƒfƒBƒŒƒNƒgƒŠ‚ğì¬B
+            // ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä½œæˆã€‚
             new File(input.getTmpdir()
                     + BlancoValueObjectConstants.TARGET_SUBDIRECTORY).mkdirs();
 
@@ -48,8 +48,8 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                     .getTmpdir()
                     + BlancoValueObjectConstants.TARGET_SUBDIRECTORY);
 
-            // XML‰»‚³‚ê‚½ƒƒ^ƒtƒ@ƒCƒ‹‚©‚çValueObject‚ğ¶¬
-            // Å‰‚Éƒeƒ“ƒ|ƒ‰ƒŠƒtƒHƒ‹ƒ_‚ğ‘–¸
+            // XMLåŒ–ã•ã‚ŒãŸãƒ¡ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ValueObjectã‚’ç”Ÿæˆ
+            // æœ€åˆã«ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚©ãƒ«ãƒ€ã‚’èµ°æŸ»
             final File[] fileMeta2 = new File(input.getTmpdir()
                     + BlancoValueObjectConstants.TARGET_SUBDIRECTORY)
                     .listFiles();
@@ -64,10 +64,10 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                 xml2JavaClass.process(fileMeta2[index], new File(input
                         .getTargetdir()));
 
-                // ’P‘ÌŒ±ƒR[ƒh‚Ì©“®¶¬‹@”\‚Í 0.9.1ˆÈ~‚Å‚Ííœ‚³‚ê‚Ü‚µ‚½B
+                // å˜ä½“è©¦é¨“ã‚³ãƒ¼ãƒ‰ã®è‡ªå‹•ç”Ÿæˆæ©Ÿèƒ½ã¯ 0.9.1ä»¥é™ã§ã¯å‰Šé™¤ã•ã‚Œã¾ã—ãŸã€‚
             }
 
-            // Ÿ‚Éƒƒ^ƒfƒBƒŒƒNƒgƒŠ‚Æ‚µ‚Äw’è‚³‚ê‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠ‚ğ‘–¸
+            // æ¬¡ã«ãƒ¡ã‚¿ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ã—ã¦æŒ‡å®šã•ã‚Œã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’èµ°æŸ»
             final File[] fileMeta3 = fileMetadir.listFiles();
             for (int index = 0; index < fileMeta3.length; index++) {
                 if (fileMeta3[index].getName().endsWith(".xml") == false) {
@@ -80,12 +80,12 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                 xml2JavaClass.process(fileMeta3[index], new File(input
                         .getTargetdir()));
 
-                // ’P‘ÌŒ±ƒR[ƒh‚Ì©“®¶¬‹@”\‚Í 0.9.1ˆÈ~‚Å‚Ííœ‚³‚ê‚Ü‚µ‚½B
+                // å˜ä½“è©¦é¨“ã‚³ãƒ¼ãƒ‰ã®è‡ªå‹•ç”Ÿæˆæ©Ÿèƒ½ã¯ 0.9.1ä»¥é™ã§ã¯å‰Šé™¤ã•ã‚Œã¾ã—ãŸã€‚
             }
 
             return BlancoValueObjectBatchProcess.END_SUCCESS;
         } catch (TransformerException e) {
-            throw new IOException("XML•ÏŠ·‚Ì‰ß’ö‚Å—áŠO‚ª”­¶‚µ‚Ü‚µ‚½: " + e.toString());
+            throw new IOException("XMLå¤‰æ›ã®éç¨‹ã§ä¾‹å¤–ãŒç™ºç”Ÿã—ã¾ã—ãŸ: " + e.toString());
         }
     }
 

@@ -1,374 +1,374 @@
 /*
- * ‚±‚Ìƒ\[ƒXƒR[ƒh‚Í blanco Framework‚É‚æ‚è©“®¶¬‚³‚ê‚Ü‚µ‚½B
+ * ã“ã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã¯ blanco Frameworkã«ã‚ˆã‚Šè‡ªå‹•ç”Ÿæˆã•ã‚Œã¾ã—ãŸã€‚
  */
 package blanco.valueobject.valueobject;
 
 import java.util.List;
 
 /**
- * ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚ÌƒtƒB[ƒ‹ƒh‚ğ‚ ‚ç‚í‚·ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒgƒNƒ‰ƒXB‚±‚ÌƒNƒ‰ƒX‚Ìİ’èî•ñ‚ğ‚à‚Æ‚ÉƒtƒB[ƒ‹ƒh‚ÆƒZƒbƒ^[EƒQƒbƒ^[‚ª©“®¶¬‚³‚ê‚Ü‚·B
+ * ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’ã‚ã‚‰ã‚ã™ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹ã€‚ã“ã®ã‚¯ãƒ©ã‚¹ã®è¨­å®šæƒ…å ±ã‚’ã‚‚ã¨ã«ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¨ã‚»ãƒƒã‚¿ãƒ¼ãƒ»ã‚²ãƒƒã‚¿ãƒ¼ãŒè‡ªå‹•ç”Ÿæˆã•ã‚Œã¾ã™ã€‚
  */
 public class BlancoValueObjectFieldStructure {
     /**
-     * €–Ú”Ô†BÈ—ª‰Â”\‚Å‚·B
+     * é …ç›®ç•ªå·ã€‚çœç•¥å¯èƒ½ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [no]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [no]ã€‚
      */
     private String fNo;
 
     /**
-     * ƒtƒB[ƒ‹ƒh–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [name]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [name]ã€‚
      */
     private String fName;
 
     /**
-     * Œ^–¼‚ğƒpƒbƒP[ƒW–¼‚Ìƒtƒ‹Cü•t‚Åw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B
+     * å‹åã‚’ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸åã®ãƒ•ãƒ«ä¿®é£¾ä»˜ã§æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [type]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [type]ã€‚
      */
     private String fType;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ğw’è‚µ‚Ü‚·B
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [default]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [default]ã€‚
      */
     private String fDefault;
 
     /**
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾‚Å‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [description]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [description]ã€‚
      */
     private String fDescription;
 
     /**
-     * ƒtƒB[ƒ‹ƒh‚Ì•â•à–¾‚Å‚·B•¶šQÆƒGƒ“ƒR[ƒhÏ‚İ‚Ì’l‚ğŠi”[‚µ‚Ä‚­‚¾‚³‚¢B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®è£œåŠ©èª¬æ˜ã§ã™ã€‚æ–‡å­—å‚ç…§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®å€¤ã‚’æ ¼ç´ã—ã¦ãã ã•ã„ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [descriptionList]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [descriptionList]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      */
     private List<java.lang.String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * (JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)³‹K•\Œ»‚ğw’è‚µ‚Ü‚·B
+     * (JavaDocã¸ã®åæ˜ ã®ã¿)æ­£è¦è¡¨ç¾ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [pattern]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [pattern]ã€‚
      */
     private String fPattern;
 
     /**
-     * (JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å¬‚Ì’·‚³‚ğw’è‚µ‚Ü‚·B
+     * (JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å°ã®é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [minLength]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [minLength]ã€‚
      */
     private String fMinLength;
 
     /**
-     * (JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å‘å‚Ì’·‚³‚ğw’è‚µ‚Ü‚·B
+     * (JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å¤§ã®é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [maxLength]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [maxLength]ã€‚
      */
     private String fMaxLength;
 
     /**
-     * (JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)’·‚³‚ğw’è‚µ‚Ü‚·B
+     * (JavaDocã¸ã®åæ˜ ã®ã¿)é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [length]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [length]ã€‚
      */
     private String fLength;
 
     /**
-     * (JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å¬’l‚ğw’è‚µ‚Ü‚·B
+     * (JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å°å€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [minInclusive]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [minInclusive]ã€‚
      */
     private String fMinInclusive;
 
     /**
-     * (JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å‘å’l‚ğw’è‚µ‚Ü‚·B
+     * (JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å¤§å€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [maxInclusive]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [maxInclusive]ã€‚
      */
     private String fMaxInclusive;
 
     /**
-     * ƒtƒB[ƒ‹ƒh [no] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [no] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [€–Ú”Ô†BÈ—ª‰Â”\‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [é …ç›®ç•ªå·ã€‚çœç•¥å¯èƒ½ã§ã™ã€‚]ã€‚
      *
-     * @param argNo ƒtƒB[ƒ‹ƒh[no]‚Éİ’è‚·‚é’lB
+     * @param argNo ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[no]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setNo(final String argNo) {
         fNo = argNo;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [no] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [no] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [€–Ú”Ô†BÈ—ª‰Â”\‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [é …ç›®ç•ªå·ã€‚çœç•¥å¯èƒ½ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[no]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[no]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getNo() {
         return fNo;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [name] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [name] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @param argName ƒtƒB[ƒ‹ƒh[name]‚Éİ’è‚·‚é’lB
+     * @param argName ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[name]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setName(final String argName) {
         fName = argName;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [name] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [name] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[name]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[name]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getName() {
         return fName;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [type] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [type] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [Œ^–¼‚ğƒpƒbƒP[ƒW–¼‚Ìƒtƒ‹Cü•t‚Åw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [å‹åã‚’ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸åã®ãƒ•ãƒ«ä¿®é£¾ä»˜ã§æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @param argType ƒtƒB[ƒ‹ƒh[type]‚Éİ’è‚·‚é’lB
+     * @param argType ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[type]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setType(final String argType) {
         fType = argType;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [type] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [type] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [Œ^–¼‚ğƒpƒbƒP[ƒW–¼‚Ìƒtƒ‹Cü•t‚Åw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [å‹åã‚’ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸åã®ãƒ•ãƒ«ä¿®é£¾ä»˜ã§æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[type]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[type]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getType() {
         return fType;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [default] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [default] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argDefault ƒtƒB[ƒ‹ƒh[default]‚Éİ’è‚·‚é’lB
+     * @param argDefault ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[default]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setDefault(final String argDefault) {
         fDefault = argDefault;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [default] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [default] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[default]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[default]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getDefault() {
         return fDefault;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [description] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [description] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh‚Ìà–¾‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜ã§ã™ã€‚]ã€‚
      *
-     * @param argDescription ƒtƒB[ƒ‹ƒh[description]‚Éİ’è‚·‚é’lB
+     * @param argDescription ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[description]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setDescription(final String argDescription) {
         fDescription = argDescription;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [description] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [description] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh‚Ìà–¾‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[description]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[description]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getDescription() {
         return fDescription;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [descriptionList] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [descriptionList] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh‚Ì•â•à–¾‚Å‚·B•¶šQÆƒGƒ“ƒR[ƒhÏ‚İ‚Ì’l‚ğŠi”[‚µ‚Ä‚­‚¾‚³‚¢B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®è£œåŠ©èª¬æ˜ã§ã™ã€‚æ–‡å­—å‚ç…§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®å€¤ã‚’æ ¼ç´ã—ã¦ãã ã•ã„ã€‚]ã€‚
      *
-     * @param argDescriptionList ƒtƒB[ƒ‹ƒh[descriptionList]‚Éİ’è‚·‚é’lB
+     * @param argDescriptionList ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[descriptionList]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setDescriptionList(final List<java.lang.String> argDescriptionList) {
         fDescriptionList = argDescriptionList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [descriptionList] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [descriptionList] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh‚Ì•â•à–¾‚Å‚·B•¶šQÆƒGƒ“ƒR[ƒhÏ‚İ‚Ì’l‚ğŠi”[‚µ‚Ä‚­‚¾‚³‚¢B]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®è£œåŠ©èª¬æ˜ã§ã™ã€‚æ–‡å­—å‚ç…§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®å€¤ã‚’æ ¼ç´ã—ã¦ãã ã•ã„ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[descriptionList]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[descriptionList]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public List<java.lang.String> getDescriptionList() {
         return fDescriptionList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [pattern] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [pattern] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)³‹K•\Œ»‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æ­£è¦è¡¨ç¾ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argPattern ƒtƒB[ƒ‹ƒh[pattern]‚Éİ’è‚·‚é’lB
+     * @param argPattern ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[pattern]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setPattern(final String argPattern) {
         fPattern = argPattern;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [pattern] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [pattern] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)³‹K•\Œ»‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æ­£è¦è¡¨ç¾ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[pattern]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[pattern]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getPattern() {
         return fPattern;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [minLength] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [minLength] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å¬‚Ì’·‚³‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å°ã®é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argMinLength ƒtƒB[ƒ‹ƒh[minLength]‚Éİ’è‚·‚é’lB
+     * @param argMinLength ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[minLength]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setMinLength(final String argMinLength) {
         fMinLength = argMinLength;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [minLength] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [minLength] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å¬‚Ì’·‚³‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å°ã®é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[minLength]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[minLength]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getMinLength() {
         return fMinLength;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [maxLength] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [maxLength] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å‘å‚Ì’·‚³‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å¤§ã®é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argMaxLength ƒtƒB[ƒ‹ƒh[maxLength]‚Éİ’è‚·‚é’lB
+     * @param argMaxLength ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[maxLength]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setMaxLength(final String argMaxLength) {
         fMaxLength = argMaxLength;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [maxLength] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [maxLength] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å‘å‚Ì’·‚³‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å¤§ã®é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[maxLength]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[maxLength]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getMaxLength() {
         return fMaxLength;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [length] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [length] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)’·‚³‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argLength ƒtƒB[ƒ‹ƒh[length]‚Éİ’è‚·‚é’lB
+     * @param argLength ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[length]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setLength(final String argLength) {
         fLength = argLength;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [length] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [length] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)’·‚³‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)é•·ã•ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[length]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[length]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getLength() {
         return fLength;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [minInclusive] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [minInclusive] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å¬’l‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å°å€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argMinInclusive ƒtƒB[ƒ‹ƒh[minInclusive]‚Éİ’è‚·‚é’lB
+     * @param argMinInclusive ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[minInclusive]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setMinInclusive(final String argMinInclusive) {
         fMinInclusive = argMinInclusive;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [minInclusive] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [minInclusive] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å¬’l‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å°å€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[minInclusive]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[minInclusive]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getMinInclusive() {
         return fMinInclusive;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [maxInclusive] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [maxInclusive] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å‘å’l‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å¤§å€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argMaxInclusive ƒtƒB[ƒ‹ƒh[maxInclusive]‚Éİ’è‚·‚é’lB
+     * @param argMaxInclusive ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[maxInclusive]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setMaxInclusive(final String argMaxInclusive) {
         fMaxInclusive = argMaxInclusive;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [maxInclusive] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [maxInclusive] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [(JavaDoc‚Ö‚Ì”½‰f‚Ì‚İ)Å‘å’l‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [(JavaDocã¸ã®åæ˜ ã®ã¿)æœ€å¤§å€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[maxInclusive]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[maxInclusive]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getMaxInclusive() {
         return fMaxInclusive;
     }
 
     /**
-     * ‚±‚ÌƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚Ì•¶š—ñ•\Œ»‚ğæ“¾‚µ‚Ü‚·B
+     * ã“ã®ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * <P>g—pã‚Ì’ˆÓ</P>
+     * <P>ä½¿ç”¨ä¸Šã®æ³¨æ„</P>
      * <UL>
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ÌƒVƒƒƒ[”ÍˆÍ‚Ì‚İ•¶š—ñ‰»‚Ìˆ—‘ÎÛ‚Æ‚È‚è‚Ü‚·B
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ªzŠÂQÆ‚µ‚Ä‚¢‚éê‡‚É‚ÍA‚±‚Ìƒƒ\ƒbƒh‚Íg‚í‚È‚¢‚Å‚­‚¾‚³‚¢B
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚·ãƒ£ãƒ­ãƒ¼ç¯„å›²ã®ã¿æ–‡å­—åˆ—åŒ–ã®å‡¦ç†å¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå¾ªç’°å‚ç…§ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä½¿ã‚ãªã„ã§ãã ã•ã„ã€‚
      * </UL>
      *
-     * @return ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚Ì•¶š—ñ•\Œ»B
+     * @return ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ–‡å­—åˆ—è¡¨ç¾ã€‚
      */
     @Override
     public String toString() {
@@ -391,12 +391,12 @@ public class BlancoValueObjectFieldStructure {
     }
 
     /**
-     * ‚±‚ÌƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚ğw’è‚Ìƒ^[ƒQƒbƒg‚É•¡Ê‚µ‚Ü‚·B
+     * ã“ã®ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒ‡å®šã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«è¤‡å†™ã—ã¾ã™ã€‚
      *
-     * <P>g—pã‚Ì’ˆÓ</P>
+     * <P>ä½¿ç”¨ä¸Šã®æ³¨æ„</P>
      * <UL>
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ÌƒVƒƒƒ[”ÍˆÍ‚Ì‚İ•¡Êˆ—‘ÎÛ‚Æ‚È‚è‚Ü‚·B
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ªzŠÂQÆ‚µ‚Ä‚¢‚éê‡‚É‚ÍA‚±‚Ìƒƒ\ƒbƒh‚Íg‚í‚È‚¢‚Å‚­‚¾‚³‚¢B
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚·ãƒ£ãƒ­ãƒ¼ç¯„å›²ã®ã¿è¤‡å†™å‡¦ç†å¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå¾ªç’°å‚ç…§ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä½¿ã‚ãªã„ã§ãã ã•ã„ã€‚
      * </UL>
      *
      * @param target target value object.
@@ -425,7 +425,7 @@ public class BlancoValueObjectFieldStructure {
         target.fDescription = this.fDescription;
         // Name: fDescriptionList
         // Type: java.util.List
-        // ƒtƒB[ƒ‹ƒh[fDescriptionList]‚ÍƒTƒ|[ƒgŠO‚ÌŒ^[java.util.List]‚Å‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[fDescriptionList]ã¯ã‚µãƒãƒ¼ãƒˆå¤–ã®å‹[java.util.List]ã§ã™ã€‚
         // Name: fPattern
         // Type: java.lang.String
         target.fPattern = this.fPattern;

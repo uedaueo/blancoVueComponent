@@ -1,204 +1,204 @@
 /*
- * ���̃\�[�X�R�[�h�� blanco Framework�ɂ�莩����������܂����B
+ * このソースコードは blanco Frameworkにより自動生成されました。
  */
 package blanco.valueobject.task.valueobject;
 
 /**
- * �����N���X [BlancoValueObjectProcess]�̓��̓o�����[�I�u�W�F�N�g�N���X�ł��B
+ * 処理クラス [BlancoValueObjectProcess]の入力バリューオブジェクトクラスです。
  */
 public class BlancoValueObjectProcessInput {
     /**
-     * verbose���[�h�œ��삳���邩�ǂ����B
+     * verboseモードで動作させるかどうか。
      *
-     * �t�B�[���h: [verbose]�B
-     * �f�t�H���g: [false]�B
+     * フィールド: [verbose]。
+     * デフォルト: [false]。
      */
     private boolean fVerbose = false;
 
     /**
-     * ���^�f�B���N�g���Bxls�t�@�C���̊i�[��܂��� xml�t�@�C���̊i�[����w�肵�܂��B
+     * メタディレクトリ。xlsファイルの格納先または xmlファイルの格納先を指定します。
      *
-     * �t�B�[���h: [metadir]�B
+     * フィールド: [metadir]。
      */
     private String fMetadir;
 
     /**
-     * �o�͐�t�H���_���w�肵�܂��B���w��̏ꍇ�ɂ̓J�����g������blanco��p���܂��B
+     * 出力先フォルダを指定します。無指定の場合にはカレント直下のblancoを用います。
      *
-     * �t�B�[���h: [targetdir]�B
-     * �f�t�H���g: [blanco]�B
+     * フィールド: [targetdir]。
+     * デフォルト: [blanco]。
      */
     private String fTargetdir = "blanco";
 
     /**
-     * �e���|�����f�B���N�g�����w�肵�܂��B���w��̏ꍇ�ɂ̓J�����g������tmp��p���܂��B
+     * テンポラリディレクトリを指定します。無指定の場合にはカレント直下のtmpを用います。
      *
-     * �t�B�[���h: [tmpdir]�B
-     * �f�t�H���g: [tmp]�B
+     * フィールド: [tmpdir]。
+     * デフォルト: [tmp]。
      */
     private String fTmpdir = "tmp";
 
     /**
-     * ������������\�[�X�t�@�C���̕����G���R�[�f�B���O���w�肵�܂��B
+     * 自動生成するソースファイルの文字エンコーディングを指定します。
      *
-     * �t�B�[���h: [encoding]�B
+     * フィールド: [encoding]。
      */
     private String fEncoding;
 
     /**
-     * XML ���[�g�v�f�̃A�m�e�[�V�������o�͂��邩�ǂ����BJDK 1.6 �ȍ~���K�v�B
+     * XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。
      *
-     * �t�B�[���h: [xmlrootelement]�B
-     * �f�t�H���g: [false]�B
+     * フィールド: [xmlrootelement]。
+     * デフォルト: [false]。
      */
     private boolean fXmlrootelement = false;
 
     /**
-     * �t�B�[���h [verbose] �̒l��ݒ肵�܂��B
+     * フィールド [verbose] の値を設定します。
      *
-     * �t�B�[���h�̐���: [verbose���[�h�œ��삳���邩�ǂ����B]�B
+     * フィールドの説明: [verboseモードで動作させるかどうか。]。
      *
-     * @param argVerbose �t�B�[���h[verbose]�ɐݒ肷��l�B
+     * @param argVerbose フィールド[verbose]に設定する値。
      */
     public void setVerbose(final boolean argVerbose) {
         fVerbose = argVerbose;
     }
 
     /**
-     * �t�B�[���h [verbose] �̒l���擾���܂��B
+     * フィールド [verbose] の値を取得します。
      *
-     * �t�B�[���h�̐���: [verbose���[�h�œ��삳���邩�ǂ����B]�B
-     * �f�t�H���g: [false]�B
+     * フィールドの説明: [verboseモードで動作させるかどうか。]。
+     * デフォルト: [false]。
      *
-     * @return �t�B�[���h[verbose]����擾�����l�B
+     * @return フィールド[verbose]から取得した値。
      */
     public boolean getVerbose() {
         return fVerbose;
     }
 
     /**
-     * �t�B�[���h [metadir] �̒l��ݒ肵�܂��B
+     * フィールド [metadir] の値を設定します。
      *
-     * �t�B�[���h�̐���: [���^�f�B���N�g���Bxls�t�@�C���̊i�[��܂��� xml�t�@�C���̊i�[����w�肵�܂��B]�B
+     * フィールドの説明: [メタディレクトリ。xlsファイルの格納先または xmlファイルの格納先を指定します。]。
      *
-     * @param argMetadir �t�B�[���h[metadir]�ɐݒ肷��l�B
+     * @param argMetadir フィールド[metadir]に設定する値。
      */
     public void setMetadir(final String argMetadir) {
         fMetadir = argMetadir;
     }
 
     /**
-     * �t�B�[���h [metadir] �̒l���擾���܂��B
+     * フィールド [metadir] の値を取得します。
      *
-     * �t�B�[���h�̐���: [���^�f�B���N�g���Bxls�t�@�C���̊i�[��܂��� xml�t�@�C���̊i�[����w�肵�܂��B]�B
+     * フィールドの説明: [メタディレクトリ。xlsファイルの格納先または xmlファイルの格納先を指定します。]。
      *
-     * @return �t�B�[���h[metadir]����擾�����l�B
+     * @return フィールド[metadir]から取得した値。
      */
     public String getMetadir() {
         return fMetadir;
     }
 
     /**
-     * �t�B�[���h [targetdir] �̒l��ݒ肵�܂��B
+     * フィールド [targetdir] の値を設定します。
      *
-     * �t�B�[���h�̐���: [�o�͐�t�H���_���w�肵�܂��B���w��̏ꍇ�ɂ̓J�����g������blanco��p���܂��B]�B
+     * フィールドの説明: [出力先フォルダを指定します。無指定の場合にはカレント直下のblancoを用います。]。
      *
-     * @param argTargetdir �t�B�[���h[targetdir]�ɐݒ肷��l�B
+     * @param argTargetdir フィールド[targetdir]に設定する値。
      */
     public void setTargetdir(final String argTargetdir) {
         fTargetdir = argTargetdir;
     }
 
     /**
-     * �t�B�[���h [targetdir] �̒l���擾���܂��B
+     * フィールド [targetdir] の値を取得します。
      *
-     * �t�B�[���h�̐���: [�o�͐�t�H���_���w�肵�܂��B���w��̏ꍇ�ɂ̓J�����g������blanco��p���܂��B]�B
-     * �f�t�H���g: [blanco]�B
+     * フィールドの説明: [出力先フォルダを指定します。無指定の場合にはカレント直下のblancoを用います。]。
+     * デフォルト: [blanco]。
      *
-     * @return �t�B�[���h[targetdir]����擾�����l�B
+     * @return フィールド[targetdir]から取得した値。
      */
     public String getTargetdir() {
         return fTargetdir;
     }
 
     /**
-     * �t�B�[���h [tmpdir] �̒l��ݒ肵�܂��B
+     * フィールド [tmpdir] の値を設定します。
      *
-     * �t�B�[���h�̐���: [�e���|�����f�B���N�g�����w�肵�܂��B���w��̏ꍇ�ɂ̓J�����g������tmp��p���܂��B]�B
+     * フィールドの説明: [テンポラリディレクトリを指定します。無指定の場合にはカレント直下のtmpを用います。]。
      *
-     * @param argTmpdir �t�B�[���h[tmpdir]�ɐݒ肷��l�B
+     * @param argTmpdir フィールド[tmpdir]に設定する値。
      */
     public void setTmpdir(final String argTmpdir) {
         fTmpdir = argTmpdir;
     }
 
     /**
-     * �t�B�[���h [tmpdir] �̒l���擾���܂��B
+     * フィールド [tmpdir] の値を取得します。
      *
-     * �t�B�[���h�̐���: [�e���|�����f�B���N�g�����w�肵�܂��B���w��̏ꍇ�ɂ̓J�����g������tmp��p���܂��B]�B
-     * �f�t�H���g: [tmp]�B
+     * フィールドの説明: [テンポラリディレクトリを指定します。無指定の場合にはカレント直下のtmpを用います。]。
+     * デフォルト: [tmp]。
      *
-     * @return �t�B�[���h[tmpdir]����擾�����l�B
+     * @return フィールド[tmpdir]から取得した値。
      */
     public String getTmpdir() {
         return fTmpdir;
     }
 
     /**
-     * �t�B�[���h [encoding] �̒l��ݒ肵�܂��B
+     * フィールド [encoding] の値を設定します。
      *
-     * �t�B�[���h�̐���: [������������\�[�X�t�@�C���̕����G���R�[�f�B���O���w�肵�܂��B]�B
+     * フィールドの説明: [自動生成するソースファイルの文字エンコーディングを指定します。]。
      *
-     * @param argEncoding �t�B�[���h[encoding]�ɐݒ肷��l�B
+     * @param argEncoding フィールド[encoding]に設定する値。
      */
     public void setEncoding(final String argEncoding) {
         fEncoding = argEncoding;
     }
 
     /**
-     * �t�B�[���h [encoding] �̒l���擾���܂��B
+     * フィールド [encoding] の値を取得します。
      *
-     * �t�B�[���h�̐���: [������������\�[�X�t�@�C���̕����G���R�[�f�B���O���w�肵�܂��B]�B
+     * フィールドの説明: [自動生成するソースファイルの文字エンコーディングを指定します。]。
      *
-     * @return �t�B�[���h[encoding]����擾�����l�B
+     * @return フィールド[encoding]から取得した値。
      */
     public String getEncoding() {
         return fEncoding;
     }
 
     /**
-     * �t�B�[���h [xmlrootelement] �̒l��ݒ肵�܂��B
+     * フィールド [xmlrootelement] の値を設定します。
      *
-     * �t�B�[���h�̐���: [XML ���[�g�v�f�̃A�m�e�[�V�������o�͂��邩�ǂ����BJDK 1.6 �ȍ~���K�v�B]�B
+     * フィールドの説明: [XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。]。
      *
-     * @param argXmlrootelement �t�B�[���h[xmlrootelement]�ɐݒ肷��l�B
+     * @param argXmlrootelement フィールド[xmlrootelement]に設定する値。
      */
     public void setXmlrootelement(final boolean argXmlrootelement) {
         fXmlrootelement = argXmlrootelement;
     }
 
     /**
-     * �t�B�[���h [xmlrootelement] �̒l���擾���܂��B
+     * フィールド [xmlrootelement] の値を取得します。
      *
-     * �t�B�[���h�̐���: [XML ���[�g�v�f�̃A�m�e�[�V�������o�͂��邩�ǂ����BJDK 1.6 �ȍ~���K�v�B]�B
-     * �f�t�H���g: [false]�B
+     * フィールドの説明: [XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。]。
+     * デフォルト: [false]。
      *
-     * @return �t�B�[���h[xmlrootelement]����擾�����l�B
+     * @return フィールド[xmlrootelement]から取得した値。
      */
     public boolean getXmlrootelement() {
         return fXmlrootelement;
     }
 
     /**
-     * ���̃o�����[�I�u�W�F�N�g�̕�����\�����擾���܂��B
+     * このバリューオブジェクトの文字列表現を取得します。
      *
-     * <P>�g�p��̒���</P>
+     * <P>使用上の注意</P>
      * <UL>
-     * <LI>�I�u�W�F�N�g�̃V�����[�͈͂̂ݕ����񉻂̏����ΏۂƂȂ�܂��B
-     * <LI>�I�u�W�F�N�g���z�Q�Ƃ��Ă���ꍇ�ɂ́A���̃��\�b�h�͎g��Ȃ��ł��������B
+     * <LI>オブジェクトのシャロー範囲のみ文字列化の処理対象となります。
+     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
      * </UL>
      *
-     * @return �o�����[�I�u�W�F�N�g�̕�����\���B
+     * @return バリューオブジェクトの文字列表現。
      */
     @Override
     public String toString() {
@@ -215,12 +215,12 @@ public class BlancoValueObjectProcessInput {
     }
 
     /**
-     * ���̃o�����[�I�u�W�F�N�g���w��̃^�[�Q�b�g�ɕ��ʂ��܂��B
+     * このバリューオブジェクトを指定のターゲットに複写します。
      *
-     * <P>�g�p��̒���</P>
+     * <P>使用上の注意</P>
      * <UL>
-     * <LI>�I�u�W�F�N�g�̃V�����[�͈͂̂ݕ��ʏ����ΏۂƂȂ�܂��B
-     * <LI>�I�u�W�F�N�g���z�Q�Ƃ��Ă���ꍇ�ɂ́A���̃��\�b�h�͎g��Ȃ��ł��������B
+     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
+     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
      * </UL>
      *
      * @param target target value object.

@@ -1,388 +1,388 @@
 /*
- * ‚±‚Ìƒ\[ƒXƒR[ƒh‚Í blanco Framework‚É‚æ‚è©“®¶¬‚³‚ê‚Ü‚µ‚½B
+ * ã“ã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã¯ blanco Frameworkã«ã‚ˆã‚Šè‡ªå‹•ç”Ÿæˆã•ã‚Œã¾ã—ãŸã€‚
  */
 package blanco.valueobject.valueobject;
 
 import java.util.List;
 
 /**
- * ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚ÌƒNƒ‰ƒX‚ğ‚ ‚ç‚í‚·ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒgƒNƒ‰ƒXB‚±‚ÌƒNƒ‰ƒX‚Ìİ’èî•ñ‚ğ‚à‚Æ‚ÉƒNƒ‰ƒX‚ª©“®¶¬‚³‚ê‚Ü‚·B
+ * ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¯ãƒ©ã‚¹ã‚’ã‚ã‚‰ã‚ã™ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹ã€‚ã“ã®ã‚¯ãƒ©ã‚¹ã®è¨­å®šæƒ…å ±ã‚’ã‚‚ã¨ã«ã‚¯ãƒ©ã‚¹ãŒè‡ªå‹•ç”Ÿæˆã•ã‚Œã¾ã™ã€‚
  */
 public class BlancoValueObjectClassStructure {
     /**
-     * ƒtƒB[ƒ‹ƒh–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [name]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [name]ã€‚
      */
     private String fName;
 
     /**
-     * ƒpƒbƒP[ƒW–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B
+     * ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [package]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [package]ã€‚
      */
     private String fPackage;
 
     /**
-     * ƒNƒ‰ƒX‚Ìà–¾‚Å‚·B
+     * ã‚¯ãƒ©ã‚¹ã®èª¬æ˜ã§ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [description]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [description]ã€‚
      */
     private String fDescription;
 
     /**
-     * ƒNƒ‰ƒX‚Ì•â•à–¾‚Å‚·B•¶šQÆƒGƒ“ƒR[ƒhÏ‚İ‚Ì’l‚ğŠi”[‚µ‚Ä‚­‚¾‚³‚¢B
+     * ã‚¯ãƒ©ã‚¹ã®è£œåŠ©èª¬æ˜ã§ã™ã€‚æ–‡å­—å‚ç…§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®å€¤ã‚’æ ¼ç´ã—ã¦ãã ã•ã„ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [descriptionList]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [descriptionList]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      */
     private List<java.lang.String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * ƒNƒ‰ƒX‚ÌƒAƒNƒZƒXB’Êí‚Í publicB
+     * ã‚¯ãƒ©ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹ã€‚é€šå¸¸ã¯ publicã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [access]B
-     * ƒfƒtƒHƒ‹ƒg: ["public"]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [access]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: ["public"]ã€‚
      */
     private String fAccess = "public";
 
     /**
-     * ’ŠÛƒNƒ‰ƒX‚©‚Ç‚¤‚©B’Êí‚Í falseB
+     * æŠ½è±¡ã‚¯ãƒ©ã‚¹ã‹ã©ã†ã‹ã€‚é€šå¸¸ã¯ falseã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [abstract]B
-     * ƒfƒtƒHƒ‹ƒg: [false]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [abstract]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [false]ã€‚
      */
     private boolean fAbstract = false;
 
     /**
-     * toStringƒƒ\ƒbƒh‚ğ¶¬‚·‚é‚©‚Ç‚¤‚©B
+     * toStringãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã™ã‚‹ã‹ã©ã†ã‹ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [generateToString]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [generateToString]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      */
     private boolean fGenerateToString = true;
 
     /**
-     * ƒtƒB[ƒ‹ƒh–¼‚Ì–¼‘O•ÏŒ`‚ğ‚¨‚±‚È‚¤‚©‚Ç‚¤‚©B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã®åå‰å¤‰å½¢ã‚’ãŠã“ãªã†ã‹ã©ã†ã‹ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [adjustFieldName]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [adjustFieldName]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      */
     private boolean fAdjustFieldName = true;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚Ì•ÏŒ`‚ğ‚¨‚±‚È‚¤‚©‚Ç‚¤‚©B¦‚È‚é‚×‚­•ÏŒ`‚ğ—˜—p‚µ‚È‚¢‚±‚Æ‚ğ„§‚µ‚½‚¢B¦ƒvƒƒOƒ‰ƒ€API‚Æ‚µ‚Ä¶¬‚·‚éÛ‚É‚ÍA‚±‚ÌƒtƒB[ƒ‹ƒh‚ğ–¾¦“I‚Éİ’è‚µ‚Ä‚­‚¾‚³‚¢B
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®å¤‰å½¢ã‚’ãŠã“ãªã†ã‹ã©ã†ã‹ã€‚â€»ãªã‚‹ã¹ãå¤‰å½¢ã‚’åˆ©ç”¨ã—ãªã„ã“ã¨ã‚’æ¨å¥¨ã—ãŸã„ã€‚â€»ãƒ—ãƒ­ã‚°ãƒ©ãƒ APIã¨ã—ã¦ç”Ÿæˆã™ã‚‹éš›ã«ã¯ã€ã“ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’æ˜ç¤ºçš„ã«è¨­å®šã—ã¦ãã ã•ã„ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [adjustDefaultValue]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [adjustDefaultValue]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      */
     private boolean fAdjustDefaultValue = true;
 
     /**
-     * Œp³‚·‚éƒNƒ‰ƒX‚ğw’è‚µ‚Ü‚·B
+     * ç¶™æ‰¿ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [extends]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [extends]ã€‚
      */
     private String fExtends;
 
     /**
-     * À‘•‚·‚éƒCƒ“ƒ^ƒtƒF[ƒX(java.lang.String)‚Ìˆê——B
+     * å®Ÿè£…ã™ã‚‹ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹(java.lang.String)ã®ä¸€è¦§ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [implementsList]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [implementsList]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      */
     private List<java.lang.String> fImplementsList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * ƒtƒB[ƒ‹ƒh‚ğ‹L‰¯‚·‚éƒŠƒXƒg‚ğw’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¨˜æ†¶ã™ã‚‹ãƒªã‚¹ãƒˆã‚’æŒ‡å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh: [fieldList]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [fieldList]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure>()]ã€‚
      */
     private List<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure> fFieldList = new java.util.ArrayList<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure>();
 
     /**
-     * ƒtƒB[ƒ‹ƒh [name] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [name] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @param argName ƒtƒB[ƒ‹ƒh[name]‚Éİ’è‚·‚é’lB
+     * @param argName ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[name]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setName(final String argName) {
         fName = argName;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [name] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [name] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[name]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[name]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getName() {
         return fName;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [package] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [package] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒpƒbƒP[ƒW–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @param argPackage ƒtƒB[ƒ‹ƒh[package]‚Éİ’è‚·‚é’lB
+     * @param argPackage ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[package]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setPackage(final String argPackage) {
         fPackage = argPackage;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [package] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [package] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒpƒbƒP[ƒW–¼‚ğw’è‚µ‚Ü‚·B•K{€–Ú‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸åã‚’æŒ‡å®šã—ã¾ã™ã€‚å¿…é ˆé …ç›®ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[package]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[package]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getPackage() {
         return fPackage;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [description] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [description] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒNƒ‰ƒX‚Ìà–¾‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ã‚¯ãƒ©ã‚¹ã®èª¬æ˜ã§ã™ã€‚]ã€‚
      *
-     * @param argDescription ƒtƒB[ƒ‹ƒh[description]‚Éİ’è‚·‚é’lB
+     * @param argDescription ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[description]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setDescription(final String argDescription) {
         fDescription = argDescription;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [description] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [description] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒNƒ‰ƒX‚Ìà–¾‚Å‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ã‚¯ãƒ©ã‚¹ã®èª¬æ˜ã§ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[description]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[description]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getDescription() {
         return fDescription;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [descriptionList] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [descriptionList] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒNƒ‰ƒX‚Ì•â•à–¾‚Å‚·B•¶šQÆƒGƒ“ƒR[ƒhÏ‚İ‚Ì’l‚ğŠi”[‚µ‚Ä‚­‚¾‚³‚¢B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ã‚¯ãƒ©ã‚¹ã®è£œåŠ©èª¬æ˜ã§ã™ã€‚æ–‡å­—å‚ç…§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®å€¤ã‚’æ ¼ç´ã—ã¦ãã ã•ã„ã€‚]ã€‚
      *
-     * @param argDescriptionList ƒtƒB[ƒ‹ƒh[descriptionList]‚Éİ’è‚·‚é’lB
+     * @param argDescriptionList ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[descriptionList]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setDescriptionList(final List<java.lang.String> argDescriptionList) {
         fDescriptionList = argDescriptionList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [descriptionList] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [descriptionList] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒNƒ‰ƒX‚Ì•â•à–¾‚Å‚·B•¶šQÆƒGƒ“ƒR[ƒhÏ‚İ‚Ì’l‚ğŠi”[‚µ‚Ä‚­‚¾‚³‚¢B]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ã‚¯ãƒ©ã‚¹ã®è£œåŠ©èª¬æ˜ã§ã™ã€‚æ–‡å­—å‚ç…§ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®å€¤ã‚’æ ¼ç´ã—ã¦ãã ã•ã„ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[descriptionList]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[descriptionList]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public List<java.lang.String> getDescriptionList() {
         return fDescriptionList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [access] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [access] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒNƒ‰ƒX‚ÌƒAƒNƒZƒXB’Êí‚Í publicB]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ã‚¯ãƒ©ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹ã€‚é€šå¸¸ã¯ publicã€‚]ã€‚
      *
-     * @param argAccess ƒtƒB[ƒ‹ƒh[access]‚Éİ’è‚·‚é’lB
+     * @param argAccess ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[access]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setAccess(final String argAccess) {
         fAccess = argAccess;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [access] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [access] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒNƒ‰ƒX‚ÌƒAƒNƒZƒXB’Êí‚Í publicB]B
-     * ƒfƒtƒHƒ‹ƒg: ["public"]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ã‚¯ãƒ©ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹ã€‚é€šå¸¸ã¯ publicã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: ["public"]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[access]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[access]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getAccess() {
         return fAccess;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [abstract] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [abstract] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [’ŠÛƒNƒ‰ƒX‚©‚Ç‚¤‚©B’Êí‚Í falseB]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [æŠ½è±¡ã‚¯ãƒ©ã‚¹ã‹ã©ã†ã‹ã€‚é€šå¸¸ã¯ falseã€‚]ã€‚
      *
-     * @param argAbstract ƒtƒB[ƒ‹ƒh[abstract]‚Éİ’è‚·‚é’lB
+     * @param argAbstract ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[abstract]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setAbstract(final boolean argAbstract) {
         fAbstract = argAbstract;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [abstract] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [abstract] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [’ŠÛƒNƒ‰ƒX‚©‚Ç‚¤‚©B’Êí‚Í falseB]B
-     * ƒfƒtƒHƒ‹ƒg: [false]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [æŠ½è±¡ã‚¯ãƒ©ã‚¹ã‹ã©ã†ã‹ã€‚é€šå¸¸ã¯ falseã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [false]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[abstract]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[abstract]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public boolean getAbstract() {
         return fAbstract;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [generateToString] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [generateToString] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [toStringƒƒ\ƒbƒh‚ğ¶¬‚·‚é‚©‚Ç‚¤‚©B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [toStringãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã™ã‚‹ã‹ã©ã†ã‹ã€‚]ã€‚
      *
-     * @param argGenerateToString ƒtƒB[ƒ‹ƒh[generateToString]‚Éİ’è‚·‚é’lB
+     * @param argGenerateToString ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[generateToString]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setGenerateToString(final boolean argGenerateToString) {
         fGenerateToString = argGenerateToString;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [generateToString] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [generateToString] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [toStringƒƒ\ƒbƒh‚ğ¶¬‚·‚é‚©‚Ç‚¤‚©B]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [toStringãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã™ã‚‹ã‹ã©ã†ã‹ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[generateToString]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[generateToString]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public boolean getGenerateToString() {
         return fGenerateToString;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [adjustFieldName] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [adjustFieldName] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh–¼‚Ì–¼‘O•ÏŒ`‚ğ‚¨‚±‚È‚¤‚©‚Ç‚¤‚©B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã®åå‰å¤‰å½¢ã‚’ãŠã“ãªã†ã‹ã©ã†ã‹ã€‚]ã€‚
      *
-     * @param argAdjustFieldName ƒtƒB[ƒ‹ƒh[adjustFieldName]‚Éİ’è‚·‚é’lB
+     * @param argAdjustFieldName ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[adjustFieldName]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setAdjustFieldName(final boolean argAdjustFieldName) {
         fAdjustFieldName = argAdjustFieldName;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [adjustFieldName] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [adjustFieldName] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh–¼‚Ì–¼‘O•ÏŒ`‚ğ‚¨‚±‚È‚¤‚©‚Ç‚¤‚©B]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã®åå‰å¤‰å½¢ã‚’ãŠã“ãªã†ã‹ã©ã†ã‹ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[adjustFieldName]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[adjustFieldName]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public boolean getAdjustFieldName() {
         return fAdjustFieldName;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [adjustDefaultValue] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [adjustDefaultValue] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚Ì•ÏŒ`‚ğ‚¨‚±‚È‚¤‚©‚Ç‚¤‚©B¦‚È‚é‚×‚­•ÏŒ`‚ğ—˜—p‚µ‚È‚¢‚±‚Æ‚ğ„§‚µ‚½‚¢B¦ƒvƒƒOƒ‰ƒ€API‚Æ‚µ‚Ä¶¬‚·‚éÛ‚É‚ÍA‚±‚ÌƒtƒB[ƒ‹ƒh‚ğ–¾¦“I‚Éİ’è‚µ‚Ä‚­‚¾‚³‚¢B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®å¤‰å½¢ã‚’ãŠã“ãªã†ã‹ã©ã†ã‹ã€‚â€»ãªã‚‹ã¹ãå¤‰å½¢ã‚’åˆ©ç”¨ã—ãªã„ã“ã¨ã‚’æ¨å¥¨ã—ãŸã„ã€‚â€»ãƒ—ãƒ­ã‚°ãƒ©ãƒ APIã¨ã—ã¦ç”Ÿæˆã™ã‚‹éš›ã«ã¯ã€ã“ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’æ˜ç¤ºçš„ã«è¨­å®šã—ã¦ãã ã•ã„ã€‚]ã€‚
      *
-     * @param argAdjustDefaultValue ƒtƒB[ƒ‹ƒh[adjustDefaultValue]‚Éİ’è‚·‚é’lB
+     * @param argAdjustDefaultValue ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[adjustDefaultValue]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setAdjustDefaultValue(final boolean argAdjustDefaultValue) {
         fAdjustDefaultValue = argAdjustDefaultValue;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [adjustDefaultValue] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [adjustDefaultValue] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚Ì•ÏŒ`‚ğ‚¨‚±‚È‚¤‚©‚Ç‚¤‚©B¦‚È‚é‚×‚­•ÏŒ`‚ğ—˜—p‚µ‚È‚¢‚±‚Æ‚ğ„§‚µ‚½‚¢B¦ƒvƒƒOƒ‰ƒ€API‚Æ‚µ‚Ä¶¬‚·‚éÛ‚É‚ÍA‚±‚ÌƒtƒB[ƒ‹ƒh‚ğ–¾¦“I‚Éİ’è‚µ‚Ä‚­‚¾‚³‚¢B]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®å¤‰å½¢ã‚’ãŠã“ãªã†ã‹ã©ã†ã‹ã€‚â€»ãªã‚‹ã¹ãå¤‰å½¢ã‚’åˆ©ç”¨ã—ãªã„ã“ã¨ã‚’æ¨å¥¨ã—ãŸã„ã€‚â€»ãƒ—ãƒ­ã‚°ãƒ©ãƒ APIã¨ã—ã¦ç”Ÿæˆã™ã‚‹éš›ã«ã¯ã€ã“ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’æ˜ç¤ºçš„ã«è¨­å®šã—ã¦ãã ã•ã„ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[adjustDefaultValue]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[adjustDefaultValue]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public boolean getAdjustDefaultValue() {
         return fAdjustDefaultValue;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [extends] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [extends] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [Œp³‚·‚éƒNƒ‰ƒX‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ç¶™æ‰¿ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argExtends ƒtƒB[ƒ‹ƒh[extends]‚Éİ’è‚·‚é’lB
+     * @param argExtends ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[extends]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setExtends(final String argExtends) {
         fExtends = argExtends;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [extends] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [extends] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [Œp³‚·‚éƒNƒ‰ƒX‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ç¶™æ‰¿ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[extends]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[extends]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getExtends() {
         return fExtends;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [implementsList] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [implementsList] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [À‘•‚·‚éƒCƒ“ƒ^ƒtƒF[ƒX(java.lang.String)‚Ìˆê——B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [å®Ÿè£…ã™ã‚‹ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹(java.lang.String)ã®ä¸€è¦§ã€‚]ã€‚
      *
-     * @param argImplementsList ƒtƒB[ƒ‹ƒh[implementsList]‚Éİ’è‚·‚é’lB
+     * @param argImplementsList ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[implementsList]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setImplementsList(final List<java.lang.String> argImplementsList) {
         fImplementsList = argImplementsList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [implementsList] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [implementsList] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [À‘•‚·‚éƒCƒ“ƒ^ƒtƒF[ƒX(java.lang.String)‚Ìˆê——B]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [å®Ÿè£…ã™ã‚‹ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹(java.lang.String)ã®ä¸€è¦§ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[implementsList]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[implementsList]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public List<java.lang.String> getImplementsList() {
         return fImplementsList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [fieldList] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [fieldList] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh‚ğ‹L‰¯‚·‚éƒŠƒXƒg‚ğw’è‚µ‚Ü‚·B]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¨˜æ†¶ã™ã‚‹ãƒªã‚¹ãƒˆã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
      *
-     * @param argFieldList ƒtƒB[ƒ‹ƒh[fieldList]‚Éİ’è‚·‚é’lB
+     * @param argFieldList ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[fieldList]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setFieldList(final List<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure> argFieldList) {
         fFieldList = argFieldList;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [fieldList] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [fieldList] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒtƒB[ƒ‹ƒh‚ğ‹L‰¯‚·‚éƒŠƒXƒg‚ğw’è‚µ‚Ü‚·B]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¨˜æ†¶ã™ã‚‹ãƒªã‚¹ãƒˆã‚’æŒ‡å®šã—ã¾ã™ã€‚]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure>()]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[fieldList]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[fieldList]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public List<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure> getFieldList() {
         return fFieldList;
     }
 
     /**
-     * ‚±‚ÌƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚Ì•¶š—ñ•\Œ»‚ğæ“¾‚µ‚Ü‚·B
+     * ã“ã®ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * <P>g—pã‚Ì’ˆÓ</P>
+     * <P>ä½¿ç”¨ä¸Šã®æ³¨æ„</P>
      * <UL>
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ÌƒVƒƒƒ[”ÍˆÍ‚Ì‚İ•¶š—ñ‰»‚Ìˆ—‘ÎÛ‚Æ‚È‚è‚Ü‚·B
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ªzŠÂQÆ‚µ‚Ä‚¢‚éê‡‚É‚ÍA‚±‚Ìƒƒ\ƒbƒh‚Íg‚í‚È‚¢‚Å‚­‚¾‚³‚¢B
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚·ãƒ£ãƒ­ãƒ¼ç¯„å›²ã®ã¿æ–‡å­—åˆ—åŒ–ã®å‡¦ç†å¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå¾ªç’°å‚ç…§ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä½¿ã‚ãªã„ã§ãã ã•ã„ã€‚
      * </UL>
      *
-     * @return ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚Ì•¶š—ñ•\Œ»B
+     * @return ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ–‡å­—åˆ—è¡¨ç¾ã€‚
      */
     @Override
     public String toString() {
@@ -405,12 +405,12 @@ public class BlancoValueObjectClassStructure {
     }
 
     /**
-     * ‚±‚ÌƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚ğw’è‚Ìƒ^[ƒQƒbƒg‚É•¡Ê‚µ‚Ü‚·B
+     * ã“ã®ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒ‡å®šã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«è¤‡å†™ã—ã¾ã™ã€‚
      *
-     * <P>g—pã‚Ì’ˆÓ</P>
+     * <P>ä½¿ç”¨ä¸Šã®æ³¨æ„</P>
      * <UL>
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ÌƒVƒƒƒ[”ÍˆÍ‚Ì‚İ•¡Êˆ—‘ÎÛ‚Æ‚È‚è‚Ü‚·B
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ªzŠÂQÆ‚µ‚Ä‚¢‚éê‡‚É‚ÍA‚±‚Ìƒƒ\ƒbƒh‚Íg‚í‚È‚¢‚Å‚­‚¾‚³‚¢B
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚·ãƒ£ãƒ­ãƒ¼ç¯„å›²ã®ã¿è¤‡å†™å‡¦ç†å¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå¾ªç’°å‚ç…§ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä½¿ã‚ãªã„ã§ãã ã•ã„ã€‚
      * </UL>
      *
      * @param target target value object.
@@ -433,7 +433,7 @@ public class BlancoValueObjectClassStructure {
         target.fDescription = this.fDescription;
         // Name: fDescriptionList
         // Type: java.util.List
-        // ƒtƒB[ƒ‹ƒh[fDescriptionList]‚ÍƒTƒ|[ƒgŠO‚ÌŒ^[java.util.List]‚Å‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[fDescriptionList]ã¯ã‚µãƒãƒ¼ãƒˆå¤–ã®å‹[java.util.List]ã§ã™ã€‚
         // Name: fAccess
         // Type: java.lang.String
         target.fAccess = this.fAccess;
@@ -454,9 +454,9 @@ public class BlancoValueObjectClassStructure {
         target.fExtends = this.fExtends;
         // Name: fImplementsList
         // Type: java.util.List
-        // ƒtƒB[ƒ‹ƒh[fImplementsList]‚ÍƒTƒ|[ƒgŠO‚ÌŒ^[java.util.List]‚Å‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[fImplementsList]ã¯ã‚µãƒãƒ¼ãƒˆå¤–ã®å‹[java.util.List]ã§ã™ã€‚
         // Name: fFieldList
         // Type: java.util.List
-        // ƒtƒB[ƒ‹ƒh[fFieldList]‚ÍƒTƒ|[ƒgŠO‚ÌŒ^[java.util.List]‚Å‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[fFieldList]ã¯ã‚µãƒãƒ¼ãƒˆå¤–ã®å‹[java.util.List]ã§ã™ã€‚
     }
 }

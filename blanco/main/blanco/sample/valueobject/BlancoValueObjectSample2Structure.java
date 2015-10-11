@@ -1,5 +1,5 @@
 /*
- * ‚±‚Ìƒ\[ƒXƒR[ƒh‚Í blanco Framework‚É‚æ‚è©“®¶¬‚³‚ê‚Ü‚µ‚½B
+ * ã“ã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã¯ blanco Frameworkã«ã‚ˆã‚Šè‡ªå‹•ç”Ÿæˆã•ã‚Œã¾ã—ãŸã€‚
  */
 package blanco.sample.valueobject;
 
@@ -7,637 +7,637 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * BlancoValueObject‚Ì‚È‚©‚Å—˜—p‚³‚ê‚éƒTƒ“ƒvƒ‹‚ÌValueObject‚Å‚·BÅ‰‚É”z—ñ‚ª“oê‚µ‚Ü‚·BtoStringƒƒ\ƒbƒh‚ğ¶¬‚µ‚È‚¢{ƒtƒB[ƒ‹ƒh–¼‚Ì•ÏŒ`‚ğ‚¨‚±‚È‚í‚È‚¢ƒTƒ“ƒvƒ‹‚Å‚·B‚±‚Ìƒtƒ@ƒCƒ‹‚ÍblancoValueObjectƒvƒƒOƒ‰ƒ€‚»‚Ì‚à‚Ì‚Ìˆ—‚É‚Í—˜—p‚³‚ê‚Ü‚¹‚ñI’P‚È‚éƒTƒ“ƒvƒ‹‚Å‚·B
+ * BlancoValueObjectã®ãªã‹ã§åˆ©ç”¨ã•ã‚Œã‚‹ã‚µãƒ³ãƒ—ãƒ«ã®ValueObjectã§ã™ã€‚æœ€åˆã«é…åˆ—ãŒç™»å ´ã—ã¾ã™ã€‚toStringãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ãªã„ï¼‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã®å¤‰å½¢ã‚’ãŠã“ãªã‚ãªã„ã‚µãƒ³ãƒ—ãƒ«ã§ã™ã€‚ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã¯blancoValueObjectãƒ—ãƒ­ã‚°ãƒ©ãƒ ãã®ã‚‚ã®ã®å‡¦ç†ã«ã¯åˆ©ç”¨ã•ã‚Œã¾ã›ã‚“ï¼å˜ãªã‚‹ã‚µãƒ³ãƒ—ãƒ«ã§ã™ã€‚
  */
 abstract class BlancoValueObjectSample2Structure {
     /**
-     * ƒtƒB[ƒ‹ƒh: [stringArray1]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [stringArray1]ã€‚
      */
     private String[] fstringArray1;
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [stringField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [stringField2]ã€‚
      */
     private String fstringField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [booleanField1]B
-     * ƒfƒtƒHƒ‹ƒg: [false]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [booleanField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [false]ã€‚
      */
     private boolean fbooleanField1 = false;
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [booleanField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [booleanField2]ã€‚
      */
     private boolean fbooleanField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [booleanObjField1]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [booleanObjField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      */
     private Boolean fbooleanObjField1 = new Boolean(true);
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [booleanObjField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [booleanObjField2]ã€‚
      */
     private Boolean fbooleanObjField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [shortField1]B
-     * ƒfƒtƒHƒ‹ƒg: [123]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [shortField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [123]ã€‚
      */
     private short fshortField1 = 123;
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [shortField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [shortField2]ã€‚
      */
     private short fshortField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [shortObjField1]B
-     * ƒfƒtƒHƒ‹ƒg: [3456]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [shortObjField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [3456]ã€‚
      */
     private Short fshortObjField1 = new Short((short) 3456);
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [shortObjField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [shortObjField2]ã€‚
      */
     private Short fshortObjField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [intField1]B
-     * ƒfƒtƒHƒ‹ƒg: [44444]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [intField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [44444]ã€‚
      */
     private int fintField1 = 44444;
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [intField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [intField2]ã€‚
      */
     private int fintField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [intObjField1]B
-     * ƒfƒtƒHƒ‹ƒg: [1012]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [intObjField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [1012]ã€‚
      */
     private Integer fintObjField1 = new Integer(1012);
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [intObjField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [intObjField2]ã€‚
      */
     private Integer fintObjField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [longField1]B
-     * ƒfƒtƒHƒ‹ƒg: [1234L]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [longField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [1234L]ã€‚
      */
     private long flongField1 = 1234L;
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [longField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [longField2]ã€‚
      */
     private long flongField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [longObjField1]B
-     * ƒfƒtƒHƒ‹ƒg: [5678L]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [longObjField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [5678L]ã€‚
      */
     private Long flongObjField1 = new Long(5678L);
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [longObjField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [longObjField2]ã€‚
      */
     private Long flongObjField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [bigdecimalField1]B
-     * ƒfƒtƒHƒ‹ƒg: [123.456]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [bigdecimalField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [123.456]ã€‚
      */
     private BigDecimal fbigdecimalField1 = new BigDecimal("123.456");
 
     /**
-     * null‚ÌŒ±
+     * nullã®è©¦é¨“
      *
-     * ƒtƒB[ƒ‹ƒh: [bigdecimalField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [bigdecimalField2]ã€‚
      */
     private BigDecimal fbigdecimalField2;
 
     /**
-     * ƒfƒtƒHƒ‹ƒg’l‚ ‚è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š
      *
-     * ƒtƒB[ƒ‹ƒh: [arraylistField1]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [arraylistField1]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      */
     private List<java.lang.String> farraylistField1 = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * ƒtƒB[ƒ‹ƒh: [arraylistField2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [arraylistField2]ã€‚
      */
     private List<java.lang.String> farraylistField2;
 
     /**
-     * •¶š—ñ”z—ñ‚Ì—á
+     * æ–‡å­—åˆ—é…åˆ—ã®ä¾‹
      *
-     * ƒtƒB[ƒ‹ƒh: [stringArray2]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰: [stringArray2]ã€‚
      */
     private String[] fstringArray2;
 
     /**
-     * ƒtƒB[ƒ‹ƒh [stringArray1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [stringArray1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argstringArray1 ƒtƒB[ƒ‹ƒh[stringArray1]‚Éİ’è‚·‚é’lB
+     * @param argstringArray1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[stringArray1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setstringArray1(final String[] argstringArray1) {
         fstringArray1 = argstringArray1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [stringArray1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [stringArray1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[stringArray1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[stringArray1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String[] getstringArray1() {
         return fstringArray1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [stringField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [stringField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argstringField2 ƒtƒB[ƒ‹ƒh[stringField2]‚Éİ’è‚·‚é’lB
+     * @param argstringField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[stringField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setstringField2(final String argstringField2) {
         fstringField2 = argstringField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [stringField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [stringField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[stringField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[stringField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String getstringField2() {
         return fstringField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argbooleanField1 ƒtƒB[ƒ‹ƒh[booleanField1]‚Éİ’è‚·‚é’lB
+     * @param argbooleanField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setbooleanField1(final boolean argbooleanField1) {
         fbooleanField1 = argbooleanField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [false]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [false]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[booleanField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public boolean getbooleanField1() {
         return fbooleanField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argbooleanField2 ƒtƒB[ƒ‹ƒh[booleanField2]‚Éİ’è‚·‚é’lB
+     * @param argbooleanField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setbooleanField2(final boolean argbooleanField2) {
         fbooleanField2 = argbooleanField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[booleanField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public boolean getbooleanField2() {
         return fbooleanField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanObjField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanObjField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argbooleanObjField1 ƒtƒB[ƒ‹ƒh[booleanObjField1]‚Éİ’è‚·‚é’lB
+     * @param argbooleanObjField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanObjField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setbooleanObjField1(final Boolean argbooleanObjField1) {
         fbooleanObjField1 = argbooleanObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanObjField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanObjField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [true]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [true]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[booleanObjField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanObjField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Boolean getbooleanObjField1() {
         return fbooleanObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanObjField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanObjField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argbooleanObjField2 ƒtƒB[ƒ‹ƒh[booleanObjField2]‚Éİ’è‚·‚é’lB
+     * @param argbooleanObjField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanObjField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setbooleanObjField2(final Boolean argbooleanObjField2) {
         fbooleanObjField2 = argbooleanObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [booleanObjField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [booleanObjField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[booleanObjField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[booleanObjField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Boolean getbooleanObjField2() {
         return fbooleanObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argshortField1 ƒtƒB[ƒ‹ƒh[shortField1]‚Éİ’è‚·‚é’lB
+     * @param argshortField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setshortField1(final short argshortField1) {
         fshortField1 = argshortField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [123]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [123]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[shortField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public short getshortField1() {
         return fshortField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argshortField2 ƒtƒB[ƒ‹ƒh[shortField2]‚Éİ’è‚·‚é’lB
+     * @param argshortField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setshortField2(final short argshortField2) {
         fshortField2 = argshortField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[shortField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public short getshortField2() {
         return fshortField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortObjField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortObjField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argshortObjField1 ƒtƒB[ƒ‹ƒh[shortObjField1]‚Éİ’è‚·‚é’lB
+     * @param argshortObjField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortObjField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setshortObjField1(final Short argshortObjField1) {
         fshortObjField1 = argshortObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortObjField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortObjField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [3456]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [3456]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[shortObjField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortObjField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Short getshortObjField1() {
         return fshortObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortObjField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortObjField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argshortObjField2 ƒtƒB[ƒ‹ƒh[shortObjField2]‚Éİ’è‚·‚é’lB
+     * @param argshortObjField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortObjField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setshortObjField2(final Short argshortObjField2) {
         fshortObjField2 = argshortObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [shortObjField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [shortObjField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[shortObjField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[shortObjField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Short getshortObjField2() {
         return fshortObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argintField1 ƒtƒB[ƒ‹ƒh[intField1]‚Éİ’è‚·‚é’lB
+     * @param argintField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setintField1(final int argintField1) {
         fintField1 = argintField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [44444]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [44444]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[intField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public int getintField1() {
         return fintField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argintField2 ƒtƒB[ƒ‹ƒh[intField2]‚Éİ’è‚·‚é’lB
+     * @param argintField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setintField2(final int argintField2) {
         fintField2 = argintField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[intField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public int getintField2() {
         return fintField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intObjField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intObjField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argintObjField1 ƒtƒB[ƒ‹ƒh[intObjField1]‚Éİ’è‚·‚é’lB
+     * @param argintObjField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intObjField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setintObjField1(final Integer argintObjField1) {
         fintObjField1 = argintObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intObjField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intObjField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [1012]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [1012]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[intObjField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intObjField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Integer getintObjField1() {
         return fintObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intObjField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intObjField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argintObjField2 ƒtƒB[ƒ‹ƒh[intObjField2]‚Éİ’è‚·‚é’lB
+     * @param argintObjField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intObjField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setintObjField2(final Integer argintObjField2) {
         fintObjField2 = argintObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [intObjField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [intObjField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[intObjField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[intObjField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Integer getintObjField2() {
         return fintObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param arglongField1 ƒtƒB[ƒ‹ƒh[longField1]‚Éİ’è‚·‚é’lB
+     * @param arglongField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setlongField1(final long arglongField1) {
         flongField1 = arglongField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [1234L]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [1234L]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[longField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public long getlongField1() {
         return flongField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param arglongField2 ƒtƒB[ƒ‹ƒh[longField2]‚Éİ’è‚·‚é’lB
+     * @param arglongField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setlongField2(final long arglongField2) {
         flongField2 = arglongField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[longField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public long getlongField2() {
         return flongField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longObjField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longObjField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param arglongObjField1 ƒtƒB[ƒ‹ƒh[longObjField1]‚Éİ’è‚·‚é’lB
+     * @param arglongObjField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longObjField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setlongObjField1(final Long arglongObjField1) {
         flongObjField1 = arglongObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longObjField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longObjField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [5678L]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [5678L]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[longObjField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longObjField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Long getlongObjField1() {
         return flongObjField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longObjField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longObjField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param arglongObjField2 ƒtƒB[ƒ‹ƒh[longObjField2]‚Éİ’è‚·‚é’lB
+     * @param arglongObjField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longObjField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setlongObjField2(final Long arglongObjField2) {
         flongObjField2 = arglongObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [longObjField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [longObjField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[longObjField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[longObjField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public Long getlongObjField2() {
         return flongObjField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [bigdecimalField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [bigdecimalField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argbigdecimalField1 ƒtƒB[ƒ‹ƒh[bigdecimalField1]‚Éİ’è‚·‚é’lB
+     * @param argbigdecimalField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[bigdecimalField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setbigdecimalField1(final BigDecimal argbigdecimalField1) {
         fbigdecimalField1 = argbigdecimalField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [bigdecimalField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [bigdecimalField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [123.456]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [123.456]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[bigdecimalField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[bigdecimalField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public BigDecimal getbigdecimalField1() {
         return fbigdecimalField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [bigdecimalField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [bigdecimalField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [null‚ÌŒ±]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [nullã®è©¦é¨“]ã€‚
      *
-     * @param argbigdecimalField2 ƒtƒB[ƒ‹ƒh[bigdecimalField2]‚Éİ’è‚·‚é’lB
+     * @param argbigdecimalField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[bigdecimalField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setbigdecimalField2(final BigDecimal argbigdecimalField2) {
         fbigdecimalField2 = argbigdecimalField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [bigdecimalField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [bigdecimalField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [null‚ÌŒ±]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [nullã®è©¦é¨“]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[bigdecimalField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[bigdecimalField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public BigDecimal getbigdecimalField2() {
         return fbigdecimalField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [arraylistField1] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [arraylistField1] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
      *
-     * @param argarraylistField1 ƒtƒB[ƒ‹ƒh[arraylistField1]‚Éİ’è‚·‚é’lB
+     * @param argarraylistField1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[arraylistField1]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setarraylistField1(final List<java.lang.String> argarraylistField1) {
         farraylistField1 = argarraylistField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [arraylistField1] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [arraylistField1] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [ƒfƒtƒHƒ‹ƒg’l‚ ‚è]B
-     * ƒfƒtƒHƒ‹ƒg: [new java.util.ArrayList<java.lang.String>()]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚ã‚Š]ã€‚
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: [new java.util.ArrayList<java.lang.String>()]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[arraylistField1]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[arraylistField1]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public List<java.lang.String> getarraylistField1() {
         return farraylistField1;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [arraylistField2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [arraylistField2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * @param argarraylistField2 ƒtƒB[ƒ‹ƒh[arraylistField2]‚Éİ’è‚·‚é’lB
+     * @param argarraylistField2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[arraylistField2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setarraylistField2(final List<java.lang.String> argarraylistField2) {
         farraylistField2 = argarraylistField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [arraylistField2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [arraylistField2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[arraylistField2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[arraylistField2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public List<java.lang.String> getarraylistField2() {
         return farraylistField2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [stringArray2] ‚Ì’l‚ğİ’è‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [stringArray2] ã®å€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [•¶š—ñ”z—ñ‚Ì—á]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [æ–‡å­—åˆ—é…åˆ—ã®ä¾‹]ã€‚
      *
-     * @param argstringArray2 ƒtƒB[ƒ‹ƒh[stringArray2]‚Éİ’è‚·‚é’lB
+     * @param argstringArray2 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[stringArray2]ã«è¨­å®šã™ã‚‹å€¤ã€‚
      */
     public void setstringArray2(final String[] argstringArray2) {
         fstringArray2 = argstringArray2;
     }
 
     /**
-     * ƒtƒB[ƒ‹ƒh [stringArray2] ‚Ì’l‚ğæ“¾‚µ‚Ü‚·B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ [stringArray2] ã®å€¤ã‚’å–å¾—ã—ã¾ã™ã€‚
      *
-     * ƒtƒB[ƒ‹ƒh‚Ìà–¾: [•¶š—ñ”z—ñ‚Ì—á]B
+     * ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®èª¬æ˜: [æ–‡å­—åˆ—é…åˆ—ã®ä¾‹]ã€‚
      *
-     * @return ƒtƒB[ƒ‹ƒh[stringArray2]‚©‚çæ“¾‚µ‚½’lB
+     * @return ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[stringArray2]ã‹ã‚‰å–å¾—ã—ãŸå€¤ã€‚
      */
     public String[] getstringArray2() {
         return fstringArray2;
     }
 
     /**
-     * ‚±‚ÌƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚ğw’è‚Ìƒ^[ƒQƒbƒg‚É•¡Ê‚µ‚Ü‚·B
+     * ã“ã®ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒ‡å®šã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«è¤‡å†™ã—ã¾ã™ã€‚
      *
-     * <P>g—pã‚Ì’ˆÓ</P>
+     * <P>ä½¿ç”¨ä¸Šã®æ³¨æ„</P>
      * <UL>
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ÌƒVƒƒƒ[”ÍˆÍ‚Ì‚İ•¡Êˆ—‘ÎÛ‚Æ‚È‚è‚Ü‚·B
-     * <LI>ƒIƒuƒWƒFƒNƒg‚ªzŠÂQÆ‚µ‚Ä‚¢‚éê‡‚É‚ÍA‚±‚Ìƒƒ\ƒbƒh‚Íg‚í‚È‚¢‚Å‚­‚¾‚³‚¢B
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚·ãƒ£ãƒ­ãƒ¼ç¯„å›²ã®ã¿è¤‡å†™å‡¦ç†å¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚
+     * <LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå¾ªç’°å‚ç…§ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä½¿ã‚ãªã„ã§ãã ã•ã„ã€‚
      * </UL>
      *
      * @param target target value object.
@@ -717,10 +717,10 @@ abstract class BlancoValueObjectSample2Structure {
         target.fbigdecimalField2 = this.fbigdecimalField2;
         // Name: farraylistField1
         // Type: java.util.List
-        // ƒtƒB[ƒ‹ƒh[farraylistField1]‚ÍƒTƒ|[ƒgŠO‚ÌŒ^[java.util.List]‚Å‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[farraylistField1]ã¯ã‚µãƒãƒ¼ãƒˆå¤–ã®å‹[java.util.List]ã§ã™ã€‚
         // Name: farraylistField2
         // Type: java.util.List
-        // ƒtƒB[ƒ‹ƒh[farraylistField2]‚ÍƒTƒ|[ƒgŠO‚ÌŒ^[java.util.List]‚Å‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰[farraylistField2]ã¯ã‚µãƒãƒ¼ãƒˆå¤–ã®å‹[java.util.List]ã§ã™ã€‚
         // Name: fstringArray2
         // Type: java.lang.String[]
         if (this.fstringArray2 != null) {

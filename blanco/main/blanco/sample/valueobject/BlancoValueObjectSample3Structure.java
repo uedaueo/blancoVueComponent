@@ -1,66 +1,66 @@
 /*
- * ���̃\�[�X�R�[�h�� blanco Framework�ɂ�莩����������܂����B
+ * このソースコードは blanco Frameworkにより自動生成されました。
  */
 package blanco.sample.valueobject;
 
 /**
- * �N���X�����B���s�ȂǎQ�ƕ����̎����B�P�s�ځB(&lt;&gt;&quot;�������Q�ƃG���R�[�f�B���O�����)
+ * クラス説明。改行など参照文字の試験。１行目。(&lt;&gt;&quot;←文字参照エンコーディングされる)
  *
- * �Q�s�ځB(<>"�����̂܂܏o��)
- * �R�s�ځB(<>"�����̂܂܏o��)
- * �S�s�ځB(<>"�����̂܂܏o��)
+ * ２行目。(<>"←そのまま出力)
+ * ３行目。(<>"←そのまま出力)
+ * ４行目。(<>"←そのまま出力)
  */
 public class BlancoValueObjectSample3Structure {
     /**
-     * �t�B�[���h�����B���s�ȂǎQ�ƕ����̎����B�P�s�ځB(&lt;&gt;&quot;�������Q�ƃG���R�[�f�B���O�����)
+     * フィールド説明。改行など参照文字の試験。１行目。(&lt;&gt;&quot;←文字参照エンコーディングされる)
      *
-     * �Q�s�ځB(<>"�����̂܂܏o��)
-     * �R�s�ځB(<>"�����̂܂܏o��)
-     * �S�s�ځB(<>"�����̂܂܏o��)
-     * �t�B�[���h: [field1]�B
-     * �f�t�H���g: ["������"]�B
+     * ２行目。(<>"←そのまま出力)
+     * ３行目。(<>"←そのまま出力)
+     * ４行目。(<>"←そのまま出力)
+     * フィールド: [field1]。
+     * デフォルト: ["あいう"]。
      */
-    private String fField1 = "\"������\"";
+    private String fField1 = "\"あいう\"";
 
     /**
-     * �t�B�[���h [field1] �̒l��ݒ肵�܂��B
+     * フィールド [field1] の値を設定します。
      *
-     * �t�B�[���h�̐���: [�t�B�[���h�����B���s�ȂǎQ�ƕ����̎����B�P�s�ځB(<>"�������Q�ƃG���R�[�f�B���O�����)]�B
-     * �Q�s�ځB(<>"�����̂܂܏o��)
-     * �R�s�ځB(<>"�����̂܂܏o��)
-     * �S�s�ځB(<>"�����̂܂܏o��)
+     * フィールドの説明: [フィールド説明。改行など参照文字の試験。１行目。(<>"←文字参照エンコーディングされる)]。
+     * ２行目。(<>"←そのまま出力)
+     * ３行目。(<>"←そのまま出力)
+     * ４行目。(<>"←そのまま出力)
      *
-     * @param argField1 �t�B�[���h[field1]�ɐݒ肷��l�B
+     * @param argField1 フィールド[field1]に設定する値。
      */
     public void setField1(final String argField1) {
         fField1 = argField1;
     }
 
     /**
-     * �t�B�[���h [field1] �̒l���擾���܂��B
+     * フィールド [field1] の値を取得します。
      *
-     * �t�B�[���h�̐���: [�t�B�[���h�����B���s�ȂǎQ�ƕ����̎����B�P�s�ځB(<>"�������Q�ƃG���R�[�f�B���O�����)]�B
-     * �Q�s�ځB(<>"�����̂܂܏o��)
-     * �R�s�ځB(<>"�����̂܂܏o��)
-     * �S�s�ځB(<>"�����̂܂܏o��)
-     * �f�t�H���g: ["������"]�B
+     * フィールドの説明: [フィールド説明。改行など参照文字の試験。１行目。(<>"←文字参照エンコーディングされる)]。
+     * ２行目。(<>"←そのまま出力)
+     * ３行目。(<>"←そのまま出力)
+     * ４行目。(<>"←そのまま出力)
+     * デフォルト: ["あいう"]。
      *
-     * @return �t�B�[���h[field1]����擾�����l�B
+     * @return フィールド[field1]から取得した値。
      */
     public String getField1() {
         return fField1;
     }
 
     /**
-     * ���̃o�����[�I�u�W�F�N�g�̕�����\�����擾���܂��B
+     * このバリューオブジェクトの文字列表現を取得します。
      *
-     * <P>�g�p��̒���</P>
+     * <P>使用上の注意</P>
      * <UL>
-     * <LI>�I�u�W�F�N�g�̃V�����[�͈͂̂ݕ����񉻂̏����ΏۂƂȂ�܂��B
-     * <LI>�I�u�W�F�N�g���z�Q�Ƃ��Ă���ꍇ�ɂ́A���̃��\�b�h�͎g��Ȃ��ł��������B
+     * <LI>オブジェクトのシャロー範囲のみ文字列化の処理対象となります。
+     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
      * </UL>
      *
-     * @return �o�����[�I�u�W�F�N�g�̕�����\���B
+     * @return バリューオブジェクトの文字列表現。
      */
     @Override
     public String toString() {
@@ -72,12 +72,12 @@ public class BlancoValueObjectSample3Structure {
     }
 
     /**
-     * ���̃o�����[�I�u�W�F�N�g���w��̃^�[�Q�b�g�ɕ��ʂ��܂��B
+     * このバリューオブジェクトを指定のターゲットに複写します。
      *
-     * <P>�g�p��̒���</P>
+     * <P>使用上の注意</P>
      * <UL>
-     * <LI>�I�u�W�F�N�g�̃V�����[�͈͂̂ݕ��ʏ����ΏۂƂȂ�܂��B
-     * <LI>�I�u�W�F�N�g���z�Q�Ƃ��Ă���ꍇ�ɂ́A���̃��\�b�h�͎g��Ȃ��ł��������B
+     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
+     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
      * </UL>
      *
      * @param target target value object.

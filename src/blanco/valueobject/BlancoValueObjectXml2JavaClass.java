@@ -30,40 +30,40 @@ import blanco.valueobject.valueobject.BlancoValueObjectClassStructure;
 import blanco.valueobject.valueobject.BlancoValueObjectFieldStructure;
 
 /**
- * ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg—p’†ŠÔXMLƒtƒ@ƒCƒ‹‚©‚ç Javaƒ\[ƒXƒR[ƒh‚ğ©“®¶¬‚·‚éƒNƒ‰ƒXB
+ * ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ä¸­é–“XMLãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ Javaã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è‡ªå‹•ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹ã€‚
  * 
- * blancoValueObject‚Ìå‚½‚éƒNƒ‰ƒX‚Ì‚Ğ‚Æ‚Â‚Å‚·B
+ * blancoValueObjectã®ä¸»ãŸã‚‹ã‚¯ãƒ©ã‚¹ã®ã²ã¨ã¤ã§ã™ã€‚
  * 
  * @author IGA Tosiki
  */
 public class BlancoValueObjectXml2JavaClass {
     /**
-     * ƒƒbƒZ[ƒWB
+     * ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã€‚
      */
     private final BlancoValueObjectMessage fMsg = new BlancoValueObjectMessage();
 
     /**
-     * blancoValueObject‚ÌƒŠƒ\[ƒXƒoƒ“ƒhƒ‹ƒIƒuƒWƒFƒNƒgB
+     * blancoValueObjectã®ãƒªã‚½ãƒ¼ã‚¹ãƒãƒ³ãƒ‰ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€‚
      */
     private final BlancoValueObjectResourceBundle fBundle = new BlancoValueObjectResourceBundle();
 
     /**
-     * “à•”“I‚É—˜—p‚·‚éblancoCg—pƒtƒ@ƒNƒgƒŠB
+     * å†…éƒ¨çš„ã«åˆ©ç”¨ã™ã‚‹blancoCgç”¨ãƒ•ã‚¡ã‚¯ãƒˆãƒªã€‚
      */
     private BlancoCgObjectFactory fCgFactory = null;
 
     /**
-     * “à•”“I‚É—˜—p‚·‚éblancoCg—pƒ\[ƒXƒtƒ@ƒCƒ‹î•ñB
+     * å†…éƒ¨çš„ã«åˆ©ç”¨ã™ã‚‹blancoCgç”¨ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«æƒ…å ±ã€‚
      */
     private BlancoCgSourceFile fCgSourceFile = null;
 
     /**
-     * “à•”“I‚É—˜—p‚·‚éblancoCg—pƒNƒ‰ƒXî•ñB
+     * å†…éƒ¨çš„ã«åˆ©ç”¨ã™ã‚‹blancoCgç”¨ã‚¯ãƒ©ã‚¹æƒ…å ±ã€‚
      */
     private BlancoCgClass fCgClass = null;
 
     /**
-     * ©“®¶¬‚·‚éƒ\[ƒXƒtƒ@ƒCƒ‹‚Ì•¶šƒGƒ“ƒR[ƒfƒBƒ“ƒOB
+     * è‡ªå‹•ç”Ÿæˆã™ã‚‹ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã€‚
      */
     private String fEncoding = null;
 
@@ -78,66 +78,66 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
-     * ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚ğ•\Œ»‚·‚é’†ŠÔXMLƒtƒ@ƒCƒ‹‚©‚çAJavaƒ\[ƒXƒR[ƒh‚ğ©“®¶¬‚µ‚Ü‚·B
+     * ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¡¨ç¾ã™ã‚‹ä¸­é–“XMLãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã€Javaã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è‡ªå‹•ç”Ÿæˆã—ã¾ã™ã€‚
      * 
      * @param argMetaXmlSourceFile
-     *            ValueObject‚ÉŠÖ‚·‚éƒƒ^î•ñ‚ªŠÜ‚Ü‚ê‚Ä‚¢‚éXMLƒtƒ@ƒCƒ‹
+     *            ValueObjectã«é–¢ã™ã‚‹ãƒ¡ã‚¿æƒ…å ±ãŒå«ã¾ã‚Œã¦ã„ã‚‹XMLãƒ•ã‚¡ã‚¤ãƒ«
      * @param argDirectoryTarget
-     *            ƒ\[ƒXƒR[ƒh¶¬æƒfƒBƒŒƒNƒgƒŠ
+     *            ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ç”Ÿæˆå…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
      * @throws IOException
-     *             “üo—Í—áŠO‚ª”­¶‚µ‚½ê‡
+     *             å…¥å‡ºåŠ›ä¾‹å¤–ãŒç™ºç”Ÿã—ãŸå ´åˆ
      */
     public void process(final File argMetaXmlSourceFile,
             final File argDirectoryTarget) throws IOException {
         final BlancoValueObjectClassStructure[] structures = new BlancoValueObjectXmlParser()
                 .parse(argMetaXmlSourceFile);
         for (int index = 0; index < structures.length; index++) {
-            // “¾‚ç‚ê‚½î•ñ‚©‚çJavaƒ\[ƒXƒR[ƒh‚ğ¶¬‚µ‚Ü‚·B
+            // å¾—ã‚‰ã‚ŒãŸæƒ…å ±ã‹ã‚‰Javaã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
             structure2Source(structures[index], argDirectoryTarget);
         }
     }
 
     /**
-     * —^‚¦‚ç‚ê‚½ƒNƒ‰ƒXî•ñƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚©‚çAƒ\[ƒXƒR[ƒh‚ğ©“®¶¬‚µ‚Ü‚·B
+     * ä¸ãˆã‚‰ã‚ŒãŸã‚¯ãƒ©ã‚¹æƒ…å ±ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã€ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è‡ªå‹•ç”Ÿæˆã—ã¾ã™ã€‚
      * 
      * @param argClassStructure
-     *            ƒNƒ‰ƒXî•ñ
+     *            ã‚¯ãƒ©ã‚¹æƒ…å ±
      * @param argDirectoryTarget
-     *            Javaƒ\[ƒXƒR[ƒh‚Ìo—ÍæƒfƒBƒŒƒNƒgƒŠ
+     *            Javaã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
      * @throws IOException
-     *             “üo—Í—áŠO‚ª”­¶‚µ‚½ê‡B
+     *             å…¥å‡ºåŠ›ä¾‹å¤–ãŒç™ºç”Ÿã—ãŸå ´åˆã€‚
      */
     public void structure2Source(
             final BlancoValueObjectClassStructure argClassStructure,
             final File argDirectoryTarget) throws IOException {
-        // ]—ˆ‚ÆŒİŠ·«‚ğ‚½‚¹‚é‚½‚ßA/mainƒTƒuƒtƒHƒ‹ƒ_‚Éo—Í‚µ‚Ü‚·B
+        // å¾“æ¥ã¨äº’æ›æ€§ã‚’æŒãŸã›ã‚‹ãŸã‚ã€/mainã‚µãƒ–ãƒ•ã‚©ãƒ«ãƒ€ã«å‡ºåŠ›ã—ã¾ã™ã€‚
         final File fileBlancoMain = new File(argDirectoryTarget
                 .getAbsolutePath()
                 + "/main");
 
-        // BlancoCgObjectFactoryƒNƒ‰ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾‚µ‚Ü‚·B
+        // BlancoCgObjectFactoryã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
         fCgFactory = BlancoCgObjectFactory.getInstance();
 
         fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
                 .getPackage(), null);
         fCgSourceFile.setEncoding(fEncoding);
 
-        // ƒNƒ‰ƒX‚ğì¬‚µ‚Ü‚·B
+        // ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ã¾ã™ã€‚
         fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
         fCgSourceFile.getClassList().add(fCgClass);
 
-        // ƒNƒ‰ƒX‚ÌƒAƒNƒZƒX‚ğİ’èB
+        // ã‚¯ãƒ©ã‚¹ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’è¨­å®šã€‚
         fCgClass.setAccess(argClassStructure.getAccess());
-        // ’ŠÛƒNƒ‰ƒX‚©‚Ç‚¤‚©B
+        // æŠ½è±¡ã‚¯ãƒ©ã‚¹ã‹ã©ã†ã‹ã€‚
         fCgClass.setAbstract(argClassStructure.getAbstract());
 
-        // Œp³
+        // ç¶™æ‰¿
         if (BlancoStringUtil.null2Blank(argClassStructure.getExtends())
                 .length() > 0) {
             fCgClass.getExtendClassList().add(
                     fCgFactory.createType(argClassStructure.getExtends()));
         }
-        // À‘•
+        // å®Ÿè£…
         for (int index = 0; index < argClassStructure.getImplementsList()
                 .size(); index++) {
             final String impl = (String) argClassStructure.getImplementsList()
@@ -152,7 +152,7 @@ public class BlancoValueObjectXml2JavaClass {
                     "javax.xml.bind.annotation.XmlRootElement");
         }
 
-        // ƒNƒ‰ƒX‚ÌJavaDoc‚ğİ’è‚µ‚Ü‚·B
+        // ã‚¯ãƒ©ã‚¹ã®JavaDocã‚’è¨­å®šã—ã¾ã™ã€‚
         fCgClass.setDescription(argClassStructure.getDescription());
         for (String line : argClassStructure.getDescriptionList()) {
             fCgClass.getLangDoc().getDescriptionList().add(line);
@@ -160,11 +160,11 @@ public class BlancoValueObjectXml2JavaClass {
 
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
                 .size(); indexField++) {
-            // ‚¨‚Ì‚¨‚Ì‚ÌƒtƒB[ƒ‹ƒh‚ğˆ—‚µ‚Ü‚·B
+            // ãŠã®ãŠã®ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’å‡¦ç†ã—ã¾ã™ã€‚
             final BlancoValueObjectFieldStructure fieldStructure = (BlancoValueObjectFieldStructure) argClassStructure
                     .getFieldList().get(indexField);
 
-            // •K{€–Ú‚ª–¢İ’è‚Ìê‡‚É‚Í—áŠOˆ—‚ğÀ{‚µ‚Ü‚·B
+            // å¿…é ˆé …ç›®ãŒæœªè¨­å®šã®å ´åˆã«ã¯ä¾‹å¤–å‡¦ç†ã‚’å®Ÿæ–½ã—ã¾ã™ã€‚
             if (fieldStructure.getName() == null) {
                 throw new IllegalArgumentException(fMsg
                         .getMbvoji03(argClassStructure.getName()));
@@ -174,36 +174,36 @@ public class BlancoValueObjectXml2JavaClass {
                         argClassStructure.getName(), fieldStructure.getName()));
             }
 
-            // ƒtƒB[ƒ‹ƒh‚Ì¶¬B
+            // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ç”Ÿæˆã€‚
             buildField(argClassStructure, fieldStructure);
 
-            // ƒZƒbƒ^[ƒƒ\ƒbƒh‚Ì¶¬B
+            // ã‚»ãƒƒã‚¿ãƒ¼ãƒ¡ã‚½ãƒƒãƒ‰ã®ç”Ÿæˆã€‚
             buildMethodSet(argClassStructure, fieldStructure);
 
-            // ƒQƒbƒ^[ƒƒ\ƒbƒh‚Ì¶¬B
+            // ã‚²ãƒƒã‚¿ãƒ¼ãƒ¡ã‚½ãƒƒãƒ‰ã®ç”Ÿæˆã€‚
             buildMethodGet(argClassStructure, fieldStructure);
         }
 
         if (argClassStructure.getGenerateToString()) {
-            // toStringƒƒ\ƒbƒh‚Ì¶¬B
+            // toStringãƒ¡ã‚½ãƒƒãƒ‰ã®ç”Ÿæˆã€‚
             buildMethodToString(argClassStructure);
         }
 
-        // TODO copyTo ƒƒ\ƒbƒh‚Ì¶¬—L–³‚ğŠO•”ƒtƒ‰ƒO‰»‚·‚é‚©‚Ç‚¤‚©ŒŸ“¢‚·‚é‚±‚ÆB
+        // TODO copyTo ãƒ¡ã‚½ãƒƒãƒ‰ã®ç”Ÿæˆæœ‰ç„¡ã‚’å¤–éƒ¨ãƒ•ãƒ©ã‚°åŒ–ã™ã‚‹ã‹ã©ã†ã‹æ¤œè¨ã™ã‚‹ã“ã¨ã€‚
         BlancoBeanUtils.generateCopyToMethod(fCgSourceFile, fCgClass);
 
-        // ûW‚³‚ê‚½î•ñ‚ğŒ³‚ÉÀÛ‚Ìƒ\[ƒXƒR[ƒh‚ğ©“®¶¬B
+        // åé›†ã•ã‚ŒãŸæƒ…å ±ã‚’å…ƒã«å®Ÿéš›ã®ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è‡ªå‹•ç”Ÿæˆã€‚
         BlancoCgTransformerFactory.getJavaSourceTransformer().transform(
                 fCgSourceFile, fileBlancoMain);
     }
 
     /**
-     * ƒNƒ‰ƒX‚ÉƒtƒB[ƒ‹ƒh‚ğ¶¬‚µ‚Ü‚·B
+     * ã‚¯ãƒ©ã‚¹ã«ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
      * 
      * @param argClassStructure
-     *            ƒNƒ‰ƒXî•ñB
+     *            ã‚¯ãƒ©ã‚¹æƒ…å ±ã€‚
      * @param argFieldStructure
-     *            ƒtƒB[ƒ‹ƒhî•ñB
+     *            ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æƒ…å ±ã€‚
      */
     private void buildField(
             final BlancoValueObjectClassStructure argClassStructure,
@@ -213,7 +213,7 @@ public class BlancoValueObjectXml2JavaClass {
                 argFieldStructure.getType(), null);
         fCgClass.getFieldList().add(field);
 
-        // ƒtƒB[ƒ‹ƒh‚ÌJavaDoc‚ğİ’è‚µ‚Ü‚·B
+        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®JavaDocã‚’è¨­å®šã—ã¾ã™ã€‚
         field.setDescription(argFieldStructure.getDescription());
         for (String line : argFieldStructure.getDescriptionList()) {
             field.getLangDoc().getDescriptionList().add(line);
@@ -222,18 +222,18 @@ public class BlancoValueObjectXml2JavaClass {
                 fBundle.getXml2javaclassFieldName(argFieldStructure.getName()));
 
         if (argFieldStructure.getDefault() != null) {
-            // ƒtƒB[ƒ‹ƒh‚ÌƒfƒtƒHƒ‹ƒg’l‚ğİ’è‚µ‚Ü‚·B
+            // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¨­å®šã—ã¾ã™ã€‚
             field.getLangDoc().getDescriptionList().add(
                     fBundle.getXml2javaclassFieldDefault(argFieldStructure
                             .getDefault()));
             if (argClassStructure.getAdjustDefaultValue() == false) {
-                // ƒfƒtƒHƒ‹ƒg’l‚Ì•ÏŒ`‚ªoff‚Ìê‡‚É‚ÍA’è‹`‘ã‚Ì’l‚ğ‚»‚Ì‚Ü‚ÜÌ—pB
+                // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã®å¤‰å½¢ãŒoffã®å ´åˆã«ã¯ã€å®šç¾©æ›¸ä¸Šã®å€¤ã‚’ãã®ã¾ã¾æ¡ç”¨ã€‚
                 field.setDefault(argFieldStructure.getDefault());
             } else {
                 final String type = field.getType().getName();
 
                 if (type.equals("java.lang.String")) {
-                    // ƒ_ƒuƒ‹ƒNƒI[ƒg‚ğ•t—^‚µ‚Ü‚·B
+                    // ãƒ€ãƒ–ãƒ«ã‚¯ã‚ªãƒ¼ãƒˆã‚’ä»˜ä¸ã—ã¾ã™ã€‚
                     field.setDefault("\""
                             + BlancoJavaSourceUtil
                                     .escapeStringAsJavaSource(argFieldStructure
@@ -254,13 +254,13 @@ public class BlancoValueObjectXml2JavaClass {
                             + ")");
                 } else if (type.equals("java.math.BigDecimal")) {
                     fCgSourceFile.getImportList().add("java.math.BigDecimal");
-                    // •¶š—ñ‚©‚çBigDecimal‚Ö‚Æ•ÏŠ·‚µ‚Ü‚·B
+                    // æ–‡å­—åˆ—ã‹ã‚‰BigDecimalã¸ã¨å¤‰æ›ã—ã¾ã™ã€‚
                     field.setDefault("new BigDecimal(\""
                             + argFieldStructure.getDefault() + "\")");
                 } else if (type.equals("java.util.List")
                         || type.equals("java.util.ArrayList")) {
-                    // ArrayList‚Ìê‡‚É‚ÍA—^‚¦‚ç‚ê‚½•¶š‚ğ‚»‚Ì‚Ü‚ÜÌ—p‚µ‚Ü‚·B
-                    // TODO ‘æ2¢‘ãblancoValueObjectÌ—pê‡‚É‚ÍA‘SƒNƒ‰ƒXƒCƒ“ƒ|[ƒg‚ª‘Ã“–B
+                    // ArrayListã®å ´åˆã«ã¯ã€ä¸ãˆã‚‰ã‚ŒãŸæ–‡å­—ã‚’ãã®ã¾ã¾æ¡ç”¨ã—ã¾ã™ã€‚
+                    // TODO ç¬¬2ä¸–ä»£blancoValueObjectæ¡ç”¨å ´åˆã«ã¯ã€å…¨ã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ãƒãƒ¼ãƒˆãŒå¦¥å½“ã€‚
                     fCgSourceFile.getImportList().add(type);
                     field.setDefault(argFieldStructure.getDefault());
                 } else {
@@ -274,22 +274,22 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
-     * setƒƒ\ƒbƒh‚ğ¶¬‚µ‚Ü‚·B
+     * setãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
      * 
      * @param argFieldStructure
-     *            ƒtƒB[ƒ‹ƒhî•ñB
+     *            ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æƒ…å ±ã€‚
      */
     private void buildMethodSet(
             final BlancoValueObjectClassStructure argClassStructure,
             final BlancoValueObjectFieldStructure argFieldStructure) {
-        // ‚¨‚Ì‚¨‚Ì‚ÌƒtƒB[ƒ‹ƒh‚É‘Î‚·‚éƒZƒbƒ^[ƒƒ\ƒbƒh‚ğ¶¬‚µ‚Ü‚·B
+        // ãŠã®ãŠã®ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«å¯¾ã™ã‚‹ã‚»ãƒƒã‚¿ãƒ¼ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
         final BlancoCgMethod method = fCgFactory.createMethod("set"
                 + getFieldNameAdjustered(argClassStructure, argFieldStructure),
                 fBundle.getXml2javaclassSetJavadoc01(argFieldStructure
                         .getName()));
         fCgClass.getMethodList().add(method);
 
-        // ƒƒ\ƒbƒh‚Ì JavaDocİ’èB
+        // ãƒ¡ã‚½ãƒƒãƒ‰ã® JavaDocè¨­å®šã€‚
         if (argFieldStructure.getDescription() != null) {
             method.getLangDoc().getDescriptionList().add(
                     fBundle.getXml2javaclassSetJavadoc02(argFieldStructure
@@ -307,7 +307,7 @@ public class BlancoValueObjectXml2JavaClass {
                         fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
                                 .getName())));
 
-        // ƒƒ\ƒbƒh‚ÌÀ‘•
+        // ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè£…
         method.getLineList().add(
                 "f"
                         + getFieldNameAdjustered(argClassStructure,
@@ -319,22 +319,22 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
-     * getƒƒ\ƒbƒh‚ğ¶¬‚µ‚Ü‚·B
+     * getãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
      * 
      * @param argFieldStructure
-     *            ƒtƒB[ƒ‹ƒhî•ñB
+     *            ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æƒ…å ±ã€‚
      */
     private void buildMethodGet(
             final BlancoValueObjectClassStructure argClassStructure,
             final BlancoValueObjectFieldStructure argFieldStructure) {
-        // ‚¨‚Ì‚¨‚Ì‚ÌƒtƒB[ƒ‹ƒh‚É‘Î‚·‚éƒQƒbƒ^[ƒƒ\ƒbƒh‚ğ¶¬‚µ‚Ü‚·B
+        // ãŠã®ãŠã®ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«å¯¾ã™ã‚‹ã‚²ãƒƒã‚¿ãƒ¼ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
         final BlancoCgMethod method = fCgFactory.createMethod("get"
                 + getFieldNameAdjustered(argClassStructure, argFieldStructure),
                 fBundle.getXml2javaclassGetJavadoc01(argFieldStructure
                         .getName()));
         fCgClass.getMethodList().add(method);
 
-        // ƒƒ\ƒbƒh‚Ì JavaDocİ’èB
+        // ãƒ¡ã‚½ãƒƒãƒ‰ã® JavaDocè¨­å®šã€‚
         if (argFieldStructure.getDescription() != null) {
             method.getLangDoc().getDescriptionList().add(
                     fBundle.getXml2javaclassGetJavadoc02(argFieldStructure
@@ -353,7 +353,7 @@ public class BlancoValueObjectXml2JavaClass {
                 fBundle.getXml2javaclassGetReturnJavadoc(argFieldStructure
                         .getName())));
 
-        // ƒƒ\ƒbƒh‚ÌÀ‘•
+        // ãƒ¡ã‚½ãƒƒãƒ‰ã®å®Ÿè£…
         method.getLineList().add(
                 "return f"
                         + getFieldNameAdjustered(argClassStructure,
@@ -361,26 +361,26 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
-     * toStringƒƒ\ƒbƒh‚ğ¶¬‚µ‚Ü‚·B
+     * toStringãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
      * 
      * @param argClassStructure
-     *            ƒNƒ‰ƒXî•ñB
+     *            ã‚¯ãƒ©ã‚¹æƒ…å ±ã€‚
      */
     private void buildMethodToString(
             final BlancoValueObjectClassStructure argClassStructure) {
         final BlancoCgMethod method = fCgFactory.createMethod("toString",
-                "‚±‚ÌƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚Ì•¶š—ñ•\Œ»‚ğæ“¾‚µ‚Ü‚·B");
+                "ã“ã®ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—ã—ã¾ã™ã€‚");
         fCgClass.getMethodList().add(method);
 
-        method.getLangDoc().getDescriptionList().add("<P>g—pã‚Ì’ˆÓ</P>");
+        method.getLangDoc().getDescriptionList().add("<P>ä½¿ç”¨ä¸Šã®æ³¨æ„</P>");
         method.getLangDoc().getDescriptionList().add("<UL>");
         method.getLangDoc().getDescriptionList().add(
-                "<LI>ƒIƒuƒWƒFƒNƒg‚ÌƒVƒƒƒ[”ÍˆÍ‚Ì‚İ•¶š—ñ‰»‚Ìˆ—‘ÎÛ‚Æ‚È‚è‚Ü‚·B");
+                "<LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚·ãƒ£ãƒ­ãƒ¼ç¯„å›²ã®ã¿æ–‡å­—åˆ—åŒ–ã®å‡¦ç†å¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚");
         method.getLangDoc().getDescriptionList().add(
-                "<LI>ƒIƒuƒWƒFƒNƒg‚ªzŠÂQÆ‚µ‚Ä‚¢‚éê‡‚É‚ÍA‚±‚Ìƒƒ\ƒbƒh‚Íg‚í‚È‚¢‚Å‚­‚¾‚³‚¢B");
+                "<LI>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå¾ªç’°å‚ç…§ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã¯ä½¿ã‚ãªã„ã§ãã ã•ã„ã€‚");
         method.getLangDoc().getDescriptionList().add("</UL>");
         method.setReturn(fCgFactory.createReturn("java.lang.String",
-                "ƒoƒŠƒ…[ƒIƒuƒWƒFƒNƒg‚Ì•¶š—ñ•\Œ»B"));
+                "ãƒãƒªãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ–‡å­—åˆ—è¡¨ç¾ã€‚"));
         method.getAnnotationList().add("Override");
 
         final List<java.lang.String> listLine = method.getLineList();
@@ -402,25 +402,25 @@ public class BlancoValueObjectXml2JavaClass {
                         + field.getName() + "=\" + f" + fieldNameAdjustered
                         + ");");
             } else {
-                // 2006.05.31 t.iga ”z—ñ‚Ìê‡‚É‚ÍAæ‚É
-                // ‚»‚Ì”z—ñ©g‚ªnull‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒbƒN‚ª•K—v‚Å‚·B
+                // 2006.05.31 t.iga é…åˆ—ã®å ´åˆã«ã¯ã€å…ˆã«
+                // ãã®é…åˆ—è‡ªèº«ãŒnullã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯ãŒå¿…è¦ã§ã™ã€‚
                 listLine.add("if (f" + fieldNameAdjustered + " == null) {");
-                // 0”Ô–Ú‚Ì€–Ú‚Å‚ ‚éê‡‚É‚ÍƒJƒ“ƒ}‚È‚µ‚Ì“Á•Êˆµ‚¢‚ğ‚µ‚Ü‚·B
+                // 0ç•ªç›®ã®é …ç›®ã§ã‚ã‚‹å ´åˆã«ã¯ã‚«ãƒ³ãƒãªã—ã®ç‰¹åˆ¥æ‰±ã„ã‚’ã—ã¾ã™ã€‚
                 listLine.add("buf.append(" + (indexField == 0 ? "\"" :
-                // 0”Ô–Ú‚Å‚Í‚È‚¢ê‡‚É‚ÍAí‚ÉƒJƒ“ƒ}‚ğ•t—^‚µ‚Ü‚·B
+                // 0ç•ªç›®ã§ã¯ãªã„å ´åˆã«ã¯ã€å¸¸ã«ã‚«ãƒ³ãƒã‚’ä»˜ä¸ã—ã¾ã™ã€‚
                         "\",") + field.getName() + "=null\");");
                 listLine.add("} else {");
 
-                // ”z—ñ‚Ìê‡‚É‚ÍƒfƒB[ƒv‚ÉtoString‚µ‚Ü‚·B
+                // é…åˆ—ã®å ´åˆã«ã¯ãƒ‡ã‚£ãƒ¼ãƒ—ã«toStringã—ã¾ã™ã€‚
                 listLine.add("buf.append("
-                // 0”Ô–Ú‚Ì€–Ú‚Å‚ ‚éê‡‚É‚ÍƒJƒ“ƒ}‚È‚µ‚Ì“Á•Êˆµ‚¢‚ğ‚µ‚Ü‚·B
+                // 0ç•ªç›®ã®é …ç›®ã§ã‚ã‚‹å ´åˆã«ã¯ã‚«ãƒ³ãƒãªã—ã®ç‰¹åˆ¥æ‰±ã„ã‚’ã—ã¾ã™ã€‚
                         + (indexField == 0 ? "\"" :
-                        // 0”Ô–Ú‚Å‚Í‚È‚¢ê‡‚É‚ÍAí‚ÉƒJƒ“ƒ}‚ğ•t—^‚µ‚Ü‚·B
+                        // 0ç•ªç›®ã§ã¯ãªã„å ´åˆã«ã¯ã€å¸¸ã«ã‚«ãƒ³ãƒã‚’ä»˜ä¸ã—ã¾ã™ã€‚
                                 "\",") + field.getName() + "=[\");");
                 listLine.add("for (int index = 0; index < f"
                         + fieldNameAdjustered + ".length; index++) {");
                 // 2006.05.31 t.iga
-                // ArrayList‚È‚Ç‚ÌtoString‚Æ“¯—l‚É‚È‚é‚æ‚¤‚ÉAƒJƒ“ƒ}‚Ì‚ ‚Æ‚É”¼ŠpƒXƒy[ƒX‚ğ•t—^‚·‚é‚æ‚¤‚É‚µ‚Ü‚·B
+                // ArrayListãªã©ã®toStringã¨åŒæ§˜ã«ãªã‚‹ã‚ˆã†ã«ã€ã‚«ãƒ³ãƒã®ã‚ã¨ã«åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã‚’ä»˜ä¸ã™ã‚‹ã‚ˆã†ã«ã—ã¾ã™ã€‚
                 listLine.add("buf.append((index == 0 ? \"\" : \", \") + f"
                         + fieldNameAdjustered + "[index]);");
                 listLine.add("}");
@@ -433,11 +433,11 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
-     * ’²®Ï‚İ‚ÌƒtƒB[ƒ‹ƒh–¼‚ğæ“¾‚µ‚Ü‚·B
+     * èª¿æ•´æ¸ˆã¿ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’å–å¾—ã—ã¾ã™ã€‚
      * 
      * @param argFieldStructure
-     *            ƒtƒB[ƒ‹ƒhî•ñB
-     * @return ’²®Œã‚ÌƒtƒB[ƒ‹ƒh–¼B
+     *            ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æƒ…å ±ã€‚
+     * @return èª¿æ•´å¾Œã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã€‚
      */
     private String getFieldNameAdjustered(
             final BlancoValueObjectClassStructure argClassStructure,
