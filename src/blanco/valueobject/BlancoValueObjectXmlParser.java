@@ -13,6 +13,7 @@ import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
 import blanco.valueobject.message.BlancoValueObjectMessage;
+import blanco.valueobject.resourcebundle.BlancoValueObjectResourceBundle;
 import blanco.valueobject.valueobject.BlancoValueObjectClassStructure;
 import blanco.valueobject.valueobject.BlancoValueObjectFieldStructure;
 import blanco.xml.bind.BlancoXmlBindingUtil;
@@ -38,14 +39,19 @@ public class BlancoValueObjectXmlParser {
      */
     private final BlancoValueObjectMessage fMsg = new BlancoValueObjectMessage();
 
+    /**
+     * blancoValueObjectのリソースバンドルオブジェクト。
+     */
+    private final static BlancoValueObjectResourceBundle fBundle = new BlancoValueObjectResourceBundle();
+
     public static Map<String, Integer> mapCommons = new HashMap<String, Integer>() {
-        {put("blancovalueobject-common", BlancoCgSupportedLang.JAVA);}
-        {put("blancovalueobjectcs-common", BlancoCgSupportedLang.CS);}
-        {put("blancovalueobjectjs-common", BlancoCgSupportedLang.JS);}
-        {put("blancovalueobjectvb-common", BlancoCgSupportedLang.VB);}
-        {put("blancovalueobjectphp-common", BlancoCgSupportedLang.PHP);}
-        {put("blancovalueobjectruby-common", BlancoCgSupportedLang.RUBY);}
-        {put("blancovalueobjectpython-common", BlancoCgSupportedLang.PYTHON);}
+        {put(fBundle.getMeta2xmlElementCommon(), BlancoCgSupportedLang.JAVA);}
+        {put(fBundle.getMeta2xmlElementCommonCs(), BlancoCgSupportedLang.CS);}
+        {put(fBundle.getMeta2xmlElementCommonJs(), BlancoCgSupportedLang.JS);}
+        {put(fBundle.getMeta2xmlElementCommonVb(), BlancoCgSupportedLang.VB);}
+        {put(fBundle.getMeta2xmlElementCommonPhp(), BlancoCgSupportedLang.PHP);}
+        {put(fBundle.getMeta2xmlElementCommonRuby(), BlancoCgSupportedLang.RUBY);}
+        {put(fBundle.getMeta2xmlElementCommonPython(), BlancoCgSupportedLang.PYTHON);}
     };
 
     public static Map<String, String> classList = null;
@@ -479,7 +485,7 @@ public class BlancoValueObjectXmlParser {
                     javaType = "java.lang.String";
                 } else
                 if ("array".equalsIgnoreCase(phpType)) {
-                    javaType = "java.util.ArrayList<?>";
+                    javaType = "java.util.ArrayList";
                 } else
                 if ("object".equalsIgnoreCase(phpType)) {
                     javaType = "java.lang.Object";
@@ -495,6 +501,50 @@ public class BlancoValueObjectXmlParser {
                 }
 
                 fieldStructure.setType(javaType);
+
+                /* Generic に対応 */
+                String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
+                if (BlancoStringUtil.null2Blank(phpGeneric).length() != 0) {
+                    String javaGeneric = phpGeneric;
+                    if ("boolean".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.lang.Boolean";
+                    } else
+                    if ("integer".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.lang.Integer";
+                    } else
+                    if ("double".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.lang.Double";
+                    } else
+                    if ("float".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.lang.Double";
+                    } else
+                    if ("string".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.lang.String";
+                    } else
+                    if ("array".equalsIgnoreCase(phpGeneric)) {
+                        throw new IllegalArgumentException(fMsg.getMbvoji06(
+                                objClassStructure.getName(),
+                                fieldStructure.getName(),
+                                phpGeneric,
+                                phpGeneric
+                        ));
+                    } else
+                    if ("object".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.lang.Object";
+                    } else {
+                    /* この名前の package を探す */
+                        String packageName = argClassList.get(phpGeneric);
+                        if (packageName != null) {
+                            javaGeneric = packageName + "." + phpGeneric;
+                        }
+
+                    /* その他はそのまま記述する */
+                        System.out.println("/* tueda */ Unknown php type: " + javaGeneric);
+                    }
+
+                    fieldStructure.setGeneric(javaGeneric);
+                    fieldStructure.setType(javaType + "<" + javaGeneric + ">");
+                }
 
                 fieldStructure.setDescription(BlancoXmlBindingUtil
                         .getTextContent(elementList, "description"));

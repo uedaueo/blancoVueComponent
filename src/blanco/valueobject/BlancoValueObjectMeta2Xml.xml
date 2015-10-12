@@ -114,6 +114,9 @@
         <tablecolumn name="type">
           <value>型</value>
         </tablecolumn>
+        <tablecolumn name="generic">
+          <value>総称型</value>
+        </tablecolumn>
         <tablecolumn name="default">
           <value>デフォルト</value>
         </tablecolumn>
