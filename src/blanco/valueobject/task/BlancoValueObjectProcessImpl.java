@@ -17,6 +17,7 @@ import java.util.Map;
 
 import javax.xml.transform.TransformerException;
 
+import blanco.cg.BlancoCgSupportedLang;
 import blanco.valueobject.BlancoValueObjectConstants;
 import blanco.valueobject.BlancoValueObjectMeta2Xml;
 import blanco.valueobject.BlancoValueObjectXml2JavaClass;
@@ -76,6 +77,7 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                 final BlancoValueObjectXml2JavaClass xml2JavaClass = new BlancoValueObjectXml2JavaClass();
                 xml2JavaClass.setEncoding(input.getEncoding());
                 xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
+                xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
                 xml2JavaClass.process(fileMeta2[index], new File(input
                         .getTargetdir()));
 
@@ -92,6 +94,7 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                 final BlancoValueObjectXml2JavaClass xml2JavaClass = new BlancoValueObjectXml2JavaClass();
                 xml2JavaClass.setEncoding(input.getEncoding());
                 xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
+                xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
                 xml2JavaClass.process(fileMeta3[index], new File(input
                         .getTargetdir()));
 

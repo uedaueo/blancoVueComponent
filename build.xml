@@ -49,7 +49,7 @@
 
 	<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask" classpath="bin:src">
 		<classpath>
-			<fileset dir="lib" includes="*.jar" excludes="blancovalueobject-1.2.0.jar" />
+			<fileset dir="lib" includes="*.jar" excludes="blancovalueobject-1.2.4.jar" />
 		</classpath>
 	</taskdef>
 
@@ -109,7 +109,7 @@
 	<target name="compile">
 		<delete dir="bin" />
 		<mkdir dir="bin" />
-		<javac destdir="bin" debug="true" source="1.8" target="1.8" fork="false" encoding="${encoding}">
+		<javac destdir="bin" debug="true" source="1.7" target="1.7" fork="false" encoding="${encoding}">
 			<src path="blanco/main/" />
 			<src path="src/" />
 			<classpath>
@@ -149,7 +149,7 @@
 		<blancomessage metadir="meta/program" encoding="${encoding}" />
 		<blancometa2xml metadir="meta/program" encoding="${encoding}" />
 		<blancoresourcebundle metadir="meta/program" commenttimestamp="false" encoding="${encoding}" />
-		<blancovalueobject metadir="meta/program" encoding="${encoding}" />
+		<blancovalueobject metadir="meta/program" encoding="${encoding}" sheetType="php"/>
 
 		<!-- TODO: ここに自身のantタスクを追加してください。 -->
 	</target>
