@@ -7,6 +7,7 @@ blancoValueObject は「バリューオブジェクト定義書」というExcel
 [開発者]
  1.伊賀敏樹 (Tosiki Iga / いがぴょん): 開発および維持メンテ担当
  2.山本耕司 (ymoto) : 仕様決定およびリリース判定担当
+ 3.うえだうえお (tied) : php形式の定義書に対応
 
 [ライセンス]
  1.blancoValueObject は ライセンス として GNU Lesser General Public License を採用しています。
@@ -27,3 +28,22 @@ blancoValueObjectは下記のライブラリを利用しています。
    概要: このプロダクトは それ自身が blanco Frameworkにより自動生成されています。
          このプロダクトは 実行時に blanco Framework各種プロダクトに依存して動作します。
    ライセンス: GNU Lesser General Public License
+
+[How to Build]
+
+[Build方法]
+
+* ant -f task.xml clean
+* ant -f task.xml meta
+* ant -f task.xml compile
+* ant cleantmp
+* ant meta
+* ant compile
+* ant jar
+
+生成された jar ファイルを別プロジェクトにコピーする
+
+## CAUTION ##
+
+blancobatchproccess が blancovalueobjectを必要とするので，いずれかの
+バージョンのもの(現行は1.2.0)をlib以下に配置しておく必要がある．
