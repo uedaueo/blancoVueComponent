@@ -15,10 +15,7 @@ import java.util.List;
 
 import blanco.beanutils.BlancoBeanUtils;
 import blanco.cg.BlancoCgObjectFactory;
-<<<<<<< HEAD
-=======
 import blanco.cg.BlancoCgSupportedLang;
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
 import blanco.cg.transformer.BlancoCgTransformerFactory;
 import blanco.cg.valueobject.BlancoCgClass;
 import blanco.cg.valueobject.BlancoCgField;
@@ -52,8 +49,6 @@ public class BlancoValueObjectXml2JavaClass {
     private final BlancoValueObjectResourceBundle fBundle = new BlancoValueObjectResourceBundle();
 
     /**
-<<<<<<< HEAD
-=======
      * 入力シートに期待するプログラミング言語
      */
     private int fSheetLang = BlancoCgSupportedLang.JAVA;
@@ -63,7 +58,6 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
      * 内部的に利用するblancoCg用ファクトリ。
      */
     private BlancoCgObjectFactory fCgFactory = null;
@@ -131,12 +125,9 @@ public class BlancoValueObjectXml2JavaClass {
                 .getAbsolutePath()
                 + "/main");
 
-<<<<<<< HEAD
-=======
 //        /* tueda DEBUG */
 //        System.out.println("/* tueda */ structure2Source : " + argClassStructure.getName());
 
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
         // BlancoCgObjectFactoryクラスのインスタンスを取得します。
         fCgFactory = BlancoCgObjectFactory.getInstance();
 
@@ -230,8 +221,6 @@ public class BlancoValueObjectXml2JavaClass {
     private void buildField(
             final BlancoValueObjectClassStructure argClassStructure,
             final BlancoValueObjectFieldStructure argFieldStructure) {
-<<<<<<< HEAD
-=======
 
         switch (fSheetLang) {
             case BlancoCgSupportedLang.PHP:
@@ -240,7 +229,6 @@ public class BlancoValueObjectXml2JavaClass {
             /* 対応言語を増やす場合はここに case を追記します */
         }
 
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
         final BlancoCgField field = fCgFactory.createField("f"
                 + getFieldNameAdjustered(argClassStructure, argFieldStructure),
                 argFieldStructure.getType(), null);

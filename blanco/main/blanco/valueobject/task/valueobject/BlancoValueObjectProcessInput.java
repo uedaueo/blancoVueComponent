@@ -54,6 +54,14 @@ public class BlancoValueObjectProcessInput {
     private boolean fXmlrootelement = false;
 
     /**
+     * meta定義書が期待しているプログラミング言語を指定します
+     *
+     * フィールド: [sheetType]。
+     * デフォルト: [java]。
+     */
+    private String fSheetType = "java";
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [verboseモードで動作させるかどうか。]。
@@ -190,6 +198,29 @@ public class BlancoValueObjectProcessInput {
     }
 
     /**
+     * フィールド [sheetType] の値を設定します。
+     *
+     * フィールドの説明: [meta定義書が期待しているプログラミング言語を指定します]。
+     *
+     * @param argSheetType フィールド[sheetType]に設定する値。
+     */
+    public void setSheetType(final String argSheetType) {
+        fSheetType = argSheetType;
+    }
+
+    /**
+     * フィールド [sheetType] の値を取得します。
+     *
+     * フィールドの説明: [meta定義書が期待しているプログラミング言語を指定します]。
+     * デフォルト: [java]。
+     *
+     * @return フィールド[sheetType]から取得した値。
+     */
+    public String getSheetType() {
+        return fSheetType;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -210,45 +241,8 @@ public class BlancoValueObjectProcessInput {
         buf.append(",tmpdir=" + fTmpdir);
         buf.append(",encoding=" + fEncoding);
         buf.append(",xmlrootelement=" + fXmlrootelement);
+        buf.append(",sheetType=" + fSheetType);
         buf.append("]");
         return buf.toString();
-    }
-
-    /**
-     * このバリューオブジェクトを指定のターゲットに複写します。
-     *
-     * <P>使用上の注意</P>
-     * <UL>
-     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
-     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
-     * </UL>
-     *
-     * @param target target value object.
-     */
-    public void copyTo(final BlancoValueObjectProcessInput target) {
-        if (target == null) {
-            throw new IllegalArgumentException("Bug: BlancoValueObjectProcessInput#copyTo(target): argument 'target' is null");
-        }
-
-        // No needs to copy parent class.
-
-        // Name: fVerbose
-        // Type: boolean
-        target.fVerbose = this.fVerbose;
-        // Name: fMetadir
-        // Type: java.lang.String
-        target.fMetadir = this.fMetadir;
-        // Name: fTargetdir
-        // Type: java.lang.String
-        target.fTargetdir = this.fTargetdir;
-        // Name: fTmpdir
-        // Type: java.lang.String
-        target.fTmpdir = this.fTmpdir;
-        // Name: fEncoding
-        // Type: java.lang.String
-        target.fEncoding = this.fEncoding;
-        // Name: fXmlrootelement
-        // Type: boolean
-        target.fXmlrootelement = this.fXmlrootelement;
     }
 }

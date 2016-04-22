@@ -9,41 +9,26 @@
  */
 package blanco.valueobject;
 
-<<<<<<< HEAD
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import blanco.commons.util.BlancoNameUtil;
-import blanco.commons.util.BlancoStringUtil;
-import blanco.valueobject.message.BlancoValueObjectMessage;
-=======
-import blanco.cg.BlancoCgSupportedLang;
-import blanco.commons.util.BlancoNameUtil;
-import blanco.commons.util.BlancoStringUtil;
-import blanco.valueobject.message.BlancoValueObjectMessage;
-import blanco.valueobject.resourcebundle.BlancoValueObjectResourceBundle;
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
-import blanco.valueobject.valueobject.BlancoValueObjectClassStructure;
-import blanco.valueobject.valueobject.BlancoValueObjectFieldStructure;
-import blanco.xml.bind.BlancoXmlBindingUtil;
-import blanco.xml.bind.BlancoXmlUnmarshaller;
-<<<<<<< HEAD
-import blanco.xml.bind.valueobject.BlancoXmlDocument;
-import blanco.xml.bind.valueobject.BlancoXmlElement;
-
-=======
-import blanco.xml.bind.valueobject.BlancoXmlAttribute;
-import blanco.xml.bind.valueobject.BlancoXmlDocument;
-import blanco.xml.bind.valueobject.BlancoXmlElement;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
+import blanco.cg.BlancoCgSupportedLang;
+import blanco.commons.util.BlancoNameUtil;
+import blanco.commons.util.BlancoStringUtil;
+import blanco.valueobject.message.BlancoValueObjectMessage;
+import blanco.valueobject.resourcebundle.BlancoValueObjectResourceBundle;
+import blanco.valueobject.valueobject.BlancoValueObjectClassStructure;
+import blanco.valueobject.valueobject.BlancoValueObjectFieldStructure;
+import blanco.xml.bind.BlancoXmlBindingUtil;
+import blanco.xml.bind.BlancoXmlUnmarshaller;
+
+import blanco.xml.bind.valueobject.BlancoXmlAttribute;
+import blanco.xml.bind.valueobject.BlancoXmlDocument;
+import blanco.xml.bind.valueobject.BlancoXmlElement;
+
 /**
  * blancoValueObjectの 中間XMLファイル形式をパース(読み書き)するクラス。
  * 
@@ -56,8 +41,6 @@ public class BlancoValueObjectXmlParser {
     private final BlancoValueObjectMessage fMsg = new BlancoValueObjectMessage();
 
     /**
-<<<<<<< HEAD
-=======
      * blancoValueObjectのリソースバンドルオブジェクト。
      */
     private final static BlancoValueObjectResourceBundle fBundle = new BlancoValueObjectResourceBundle();
@@ -75,7 +58,6 @@ public class BlancoValueObjectXmlParser {
     public static Map<String, String> classList = null;
 
     /**
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
      * 中間XMLファイルのXMLドキュメントをパースして、バリューオブジェクト情報の配列を取得します。
      * 
      * @param argMetaXmlSourceFile
@@ -121,12 +103,6 @@ public class BlancoValueObjectXmlParser {
         for (int index = 0; index < sizeListSheet; index++) {
             final BlancoXmlElement elementSheet = listSheet.get(index);
 
-<<<<<<< HEAD
-            final List<BlancoXmlElement> listCommon = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementSheet,
-                            "blancovalueobject-common");
-            if (listCommon.size() == 0) {
-=======
             /*
              * Java以外の言語用に記述されたシートにも対応．
              */
@@ -155,7 +131,6 @@ public class BlancoValueObjectXmlParser {
             }
 
             if (listCommon == null || listCommon.size() == 0) {
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
                 // commonが無い場合にはスキップします。
                 continue;
             }
@@ -168,9 +143,6 @@ public class BlancoValueObjectXmlParser {
                 continue;
             }
 
-<<<<<<< HEAD
-            final BlancoValueObjectClassStructure objClassStructure = parseElementSheet(elementSheet);
-=======
             BlancoValueObjectClassStructure objClassStructure = null;
             switch (sheetLang) {
                 case BlancoCgSupportedLang.JAVA:
@@ -181,7 +153,6 @@ public class BlancoValueObjectXmlParser {
                     /* NOT YET SUPPORT ANOTHER LANGUAGES */
             }
 
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
             if (objClassStructure != null) {
                 // 得られた情報を記憶します。
                 listStructure.add(objClassStructure);
@@ -356,8 +327,6 @@ public class BlancoValueObjectXmlParser {
 
         return objClassStructure;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * 中間XMLファイル形式の「sheet」XMLエレメント(PHP書式)をパースして、バリューオブジェクト情報を取得します。
@@ -663,5 +632,4 @@ public class BlancoValueObjectXmlParser {
 
         return classList;
     }
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
 }

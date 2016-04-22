@@ -102,6 +102,13 @@ public class BlancoValueObjectClassStructure {
     private List<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure> fFieldList = new java.util.ArrayList<blanco.valueobject.valueobject.BlancoValueObjectFieldStructure>();
 
     /**
+     * ファイル説明
+     *
+     * フィールド: [fileDescription]。
+     */
+    private String fFileDescription;
+
+    /**
      * フィールド [name] の値を設定します。
      *
      * フィールドの説明: [フィールド名を指定します。必須項目です。]。
@@ -374,6 +381,28 @@ public class BlancoValueObjectClassStructure {
     }
 
     /**
+     * フィールド [fileDescription] の値を設定します。
+     *
+     * フィールドの説明: [ファイル説明]。
+     *
+     * @param argFileDescription フィールド[fileDescription]に設定する値。
+     */
+    public void setFileDescription(final String argFileDescription) {
+        fFileDescription = argFileDescription;
+    }
+
+    /**
+     * フィールド [fileDescription] の値を取得します。
+     *
+     * フィールドの説明: [ファイル説明]。
+     *
+     * @return フィールド[fileDescription]から取得した値。
+     */
+    public String getFileDescription() {
+        return fFileDescription;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -400,6 +429,7 @@ public class BlancoValueObjectClassStructure {
         buf.append(",extends=" + fExtends);
         buf.append(",implementsList=" + fImplementsList);
         buf.append(",fieldList=" + fFieldList);
+        buf.append(",fileDescription=" + fFileDescription);
         buf.append("]");
         return buf.toString();
     }
@@ -458,5 +488,8 @@ public class BlancoValueObjectClassStructure {
         // Name: fFieldList
         // Type: java.util.List
         // フィールド[fFieldList]はサポート外の型[java.util.List]です。
+        // Name: fFileDescription
+        // Type: java.lang.String
+        target.fFileDescription = this.fFileDescription;
     }
 }

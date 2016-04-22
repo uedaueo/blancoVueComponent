@@ -3,6 +3,7 @@
 .project
 .idea
 .DS_Store
+*.iml
 /blancoValueObject-*-src.zip
 /tmp
 /blanco/main

@@ -11,16 +11,6 @@ package blanco.valueobject.task;
 
 import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
-
-import javax.xml.transform.TransformerException;
-
-import blanco.valueobject.BlancoValueObjectConstants;
-import blanco.valueobject.BlancoValueObjectMeta2Xml;
-import blanco.valueobject.BlancoValueObjectXml2JavaClass;
-import blanco.valueobject.message.BlancoValueObjectMessage;
-import blanco.valueobject.task.valueobject.BlancoValueObjectProcessInput;
-=======
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +26,6 @@ import blanco.valueobject.message.BlancoValueObjectMessage;
 import blanco.valueobject.task.valueobject.BlancoValueObjectProcessInput;
 import blanco.xml.bind.BlancoXmlBindingUtil;
 import blanco.xml.bind.valueobject.BlancoXmlElement;
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
 
 public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
     /**
@@ -71,8 +60,6 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
             final File[] fileMeta2 = new File(input.getTmpdir()
                     + BlancoValueObjectConstants.TARGET_SUBDIRECTORY)
                     .listFiles();
-<<<<<<< HEAD
-=======
 
         /*
          * まず始めにすべてのシートを検索して，クラス名とpackage名のリストを作ります．
@@ -81,8 +68,6 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
             BlancoValueObjectXmlParser.classList =
                     BlancoValueObjectXmlParser.createClassListFromSheets(fileMeta2);
 
-
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
             for (int index = 0; index < fileMeta2.length; index++) {
                 if (fileMeta2[index].getName().endsWith(".xml") == false) {
                     continue;
@@ -91,10 +76,7 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                 final BlancoValueObjectXml2JavaClass xml2JavaClass = new BlancoValueObjectXml2JavaClass();
                 xml2JavaClass.setEncoding(input.getEncoding());
                 xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
-<<<<<<< HEAD
-=======
                 xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
                 xml2JavaClass.process(fileMeta2[index], new File(input
                         .getTargetdir()));
 
@@ -111,10 +93,7 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
                 final BlancoValueObjectXml2JavaClass xml2JavaClass = new BlancoValueObjectXml2JavaClass();
                 xml2JavaClass.setEncoding(input.getEncoding());
                 xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
-<<<<<<< HEAD
-=======
                 xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
->>>>>>> ddef9439f1640dc425ceb565a018fba98850237a
                 xml2JavaClass.process(fileMeta3[index], new File(input
                         .getTargetdir()));
 

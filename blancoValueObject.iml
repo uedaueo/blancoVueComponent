@@ -6,6 +6,11 @@
     <libelement value="jar://$MODULE_DIR$/lib/blancoxmlbinding-0.2.5.jar!/" />
     <libelement value="file://lib/jxl-2.6.12.jar" />
     <libelement value="jar://$MODULE_DIR$/lib/blancobeanutils-0.0.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/blancocg-2.0.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/blancocommons-2.0.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/blancoxmlbinding-2.0.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jxl-2.6.12-java150.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/buildpurpose/ant.jar!/" />
     <varelement var="file://$ANT_HOME$/lib/ant.jar" value="ANT_HOME/lib/ant.jar" />
     <src_description expected_position="0">
       <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
@@ -22,54 +27,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library">
-      <library name="ant.jar">
-        <CLASSES>
-          <root url="file://$ANT_HOME$/lib/ant.jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="junit3">
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/junit.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="blancocg-1.4.9.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/blancocg-1.4.9.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="blancocommons-1.1.5.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/blancocommons-1.1.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="blancoxmlbinding-0.2.5.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/blancoxmlbinding-0.2.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="jxl-2.6.12.jar">
-        <CLASSES>
-          <root url="file://lib/jxl-2.6.12.jar" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -84,7 +44,50 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jxl-2.6.12-java150" level="project" />
-    <orderEntry type="library" name="ant-antlr" level="project" />
+    <orderEntry type="module-library">
+      <library name="blancocg-2.0.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/blancocg-2.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="blancocommons-2.0.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/blancocommons-2.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="blancoxmlbinding-2.0.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/blancoxmlbinding-2.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jxl-2.6.12-java150.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jxl-2.6.12-java150.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ant.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/buildpurpose/ant.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

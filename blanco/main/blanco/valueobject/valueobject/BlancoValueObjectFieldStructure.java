@@ -31,6 +31,13 @@ public class BlancoValueObjectFieldStructure {
     private String fType;
 
     /**
+     * 型が期待する総称型の具体的な型名を指定します．
+     *
+     * フィールド: [generic]。
+     */
+    private String fGeneric;
+
+    /**
      * デフォルト値を指定します。
      *
      * フィールド: [default]。
@@ -158,6 +165,28 @@ public class BlancoValueObjectFieldStructure {
      */
     public String getType() {
         return fType;
+    }
+
+    /**
+     * フィールド [generic] の値を設定します。
+     *
+     * フィールドの説明: [型が期待する総称型の具体的な型名を指定します．]。
+     *
+     * @param argGeneric フィールド[generic]に設定する値。
+     */
+    public void setGeneric(final String argGeneric) {
+        fGeneric = argGeneric;
+    }
+
+    /**
+     * フィールド [generic] の値を取得します。
+     *
+     * フィールドの説明: [型が期待する総称型の具体的な型名を指定します．]。
+     *
+     * @return フィールド[generic]から取得した値。
+     */
+    public String getGeneric() {
+        return fGeneric;
     }
 
     /**
@@ -377,6 +406,7 @@ public class BlancoValueObjectFieldStructure {
         buf.append("no=" + fNo);
         buf.append(",name=" + fName);
         buf.append(",type=" + fType);
+        buf.append(",generic=" + fGeneric);
         buf.append(",default=" + fDefault);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
@@ -417,6 +447,9 @@ public class BlancoValueObjectFieldStructure {
         // Name: fType
         // Type: java.lang.String
         target.fType = this.fType;
+        // Name: fGeneric
+        // Type: java.lang.String
+        target.fGeneric = this.fGeneric;
         // Name: fDefault
         // Type: java.lang.String
         target.fDefault = this.fDefault;
