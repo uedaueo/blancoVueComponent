@@ -89,7 +89,7 @@
 		<echo>building jar</echo>
 
 		<!-- 定義書読込設定XMLファイル(blancoCalcParserが利用) をコピーします。 -->
-		<copy file="src/blanco/valueobject/BlancoValueObjectMeta2Xml.xml" todir="bin/blanco/valueobject" />
+		<copy file="src/main/resources/blanco/valueobject/BlancoValueObjectMeta2Xml.xml" todir="bin/blanco/valueobject" />
 
 		<delete file="${project.main.jar}" />
 		<jar destfile="${project.main.jar}">
@@ -112,7 +112,7 @@
 		<mkdir dir="bin" />
 		<javac destdir="bin" debug="true" source="1.6" target="1.6" fork="true" encoding="${encoding}">
 			<src path="blanco/main/" />
-			<src path="src/" />
+			<src path="src/main/java/" />
 			<classpath>
 				<!-- ワイルドカードで一括取り込み -->
 				<fileset dir="lib" includes="*.jar" />
@@ -120,19 +120,6 @@
 			</classpath>
 			<include name="**/*.java" />
 		</javac>
-	</target>
-
-	<target name="javadoc">
-		<echo>JavaDocを生成します。</echo>
-		<delete dir="javadoc" />
-		<javadoc destdir="javadoc" encoding="${encoding}">
-			<fileset dir="src" includes="**/*.java" />
-			<fileset dir="blanco/main" includes="**/*.java" />
-			<classpath>
-				<fileset dir="lib" includes="*.jar" />
-				<fileset dir="lib.ant" includes="*.jar" />
-			</classpath>
-		</javadoc>
 	</target>
 
 	<target name="meta.clean">
