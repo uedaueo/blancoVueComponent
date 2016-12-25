@@ -5,11 +5,11 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="lib/blancobeanutils-0.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/blancocg-2.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/blancocommons-2.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/blancoxmlbinding-2.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/jxl-2.6.12-java150.jar"/>
 	<classpathentry kind="lib" path="lib/buildpurpose/ant.jar"/>
+	<classpathentry kind="lib" path="lib/blanco-beanutils-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/blanco-cg-2.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/blanco-commons-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/blanco-xmlbinding-2.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/jxl-2.6.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
