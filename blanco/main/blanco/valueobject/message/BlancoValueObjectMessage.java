@@ -118,9 +118,38 @@ public class BlancoValueObjectMessage {
     }
 
     /**
+     * メッセージ定義ID[BlancoValueObject]、キー[MBVOJI06]の文字列を取得します。
+     *
+     * No.7:
+     * 文字列[クラス名[{0}] フィールド[{1}]の「総称型({2})」がセットされています。しかし「{3}」は総称型をサポートしません。]
+     *
+     * @param arg0 置換文字列{0}の値。
+     * @param arg1 置換文字列{1}の値。
+     * @param arg2 置換文字列{2}の値。
+     * @param arg3 置換文字列{3}の値。
+     * @return メッセージ文字列。
+     */
+    public String getMbvoji06(final String arg0, final String arg1, final String arg2, final String arg3) {
+        if (arg0 == null) {
+            throw new IllegalArgumentException("メソッド[getMbvoji06]のパラメータ[arg0]にnullが与えられました。しかし、このパラメータにnullを与えることはできません。");
+        }
+        if (arg1 == null) {
+            throw new IllegalArgumentException("メソッド[getMbvoji06]のパラメータ[arg1]にnullが与えられました。しかし、このパラメータにnullを与えることはできません。");
+        }
+        if (arg2 == null) {
+            throw new IllegalArgumentException("メソッド[getMbvoji06]のパラメータ[arg2]にnullが与えられました。しかし、このパラメータにnullを与えることはできません。");
+        }
+        if (arg3 == null) {
+            throw new IllegalArgumentException("メソッド[getMbvoji06]のパラメータ[arg3]にnullが与えられました。しかし、このパラメータにnullを与えることはできません。");
+        }
+
+        return "[MBVOJI06] " + fBundle.getMbvoji06(arg0, arg1, arg2, arg3);
+    }
+
+    /**
      * メッセージ定義ID[BlancoValueObject]、キー[MBVOJA01]の文字列を取得します。
      *
-     * No.9:
+     * No.10:
      * 文字列[メタディレクトリ[{0}]が存在しません。]
      *
      * @param arg0 置換文字列{0}の値。

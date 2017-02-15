@@ -1,4 +1,13 @@
+.svn
+.classpath
+.project
+.idea
+.DS_Store
+*.iml
 /blancoValueObject-*-src.zip
 /bin/
 /tmp/
 /target/
+/blanco/main
+/blanco.php/main
+/classes
