@@ -15,6 +15,7 @@ import java.util.List;
 
 import blanco.beanutils.BlancoBeanUtils;
 import blanco.cg.BlancoCgObjectFactory;
+import blanco.cg.BlancoCgSupportedLang;
 import blanco.cg.transformer.BlancoCgTransformerFactory;
 import blanco.cg.valueobject.BlancoCgClass;
 import blanco.cg.valueobject.BlancoCgField;
@@ -46,6 +47,15 @@ public class BlancoValueObjectXml2JavaClass {
      * blancoValueObjectのリソースバンドルオブジェクト。
      */
     private final BlancoValueObjectResourceBundle fBundle = new BlancoValueObjectResourceBundle();
+
+    /**
+     * 入力シートに期待するプログラミング言語
+     */
+    private int fSheetLang = BlancoCgSupportedLang.JAVA;
+
+    public void setSheetLang(final int argSheetLang) {
+        fSheetLang = argSheetLang;
+    }
 
     /**
      * 内部的に利用するblancoCg用ファクトリ。
@@ -114,6 +124,9 @@ public class BlancoValueObjectXml2JavaClass {
         final File fileBlancoMain = new File(argDirectoryTarget
                 .getAbsolutePath()
                 + "/main");
+
+//        /* tueda DEBUG */
+//        System.out.println("/* tueda */ structure2Source : " + argClassStructure.getName());
 
         // BlancoCgObjectFactoryクラスのインスタンスを取得します。
         fCgFactory = BlancoCgObjectFactory.getInstance();
@@ -208,6 +221,14 @@ public class BlancoValueObjectXml2JavaClass {
     private void buildField(
             final BlancoValueObjectClassStructure argClassStructure,
             final BlancoValueObjectFieldStructure argFieldStructure) {
+
+        switch (fSheetLang) {
+            case BlancoCgSupportedLang.PHP:
+                if (argFieldStructure.getType() == "java.lang.Integer") argFieldStructure.setType("java.lang.Long");
+                break;
+            /* 対応言語を増やす場合はここに case を追記します */
+        }
+
         final BlancoCgField field = fCgFactory.createField("f"
                 + getFieldNameAdjustered(argClassStructure, argFieldStructure),
                 argFieldStructure.getType(), null);

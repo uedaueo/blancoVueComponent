@@ -198,6 +198,33 @@ class BlancoValueObjectMessageResourceBundle {
     }
 
     /**
+     * bundle[BlancoValueObjectMessage], key[MBVOJI06]
+     *
+     * [クラス名[{0}] フィールド[{1}]の「総称型({2})」がセットされています。しかし「{3}」は総称型をサポートしません。] (ja)<br>
+     *
+     * @param arg0 置換文字列{0}を置換する値。java.lang.String型を与えてください。
+     * @param arg1 置換文字列{1}を置換する値。java.lang.String型を与えてください。
+     * @param arg2 置換文字列{2}を置換する値。java.lang.String型を与えてください。
+     * @param arg3 置換文字列{3}を置換する値。java.lang.String型を与えてください。
+     * @return key[MBVOJI06]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMbvoji06(final String arg0, final String arg1, final String arg2, final String arg3) {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "クラス名[{0}] フィールド[{1}]の「総称型({2})」がセットされています。しかし「{3}」は総称型をサポートしません。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("MBVOJI06");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        final MessageFormat messageFormat = new MessageFormat(strFormat);
+        final StringBuffer strbuf = new StringBuffer();
+        // 与えられた引数を元に置換文字列を置き換えます。
+        messageFormat.format(new Object[] {arg0, arg1, arg2, arg3}, strbuf, null);
+        return strbuf.toString();
+    }
+
+    /**
      * bundle[BlancoValueObjectMessage], key[MBVOJA01]
      *
      * [メタディレクトリ[{0}]が存在しません。] (ja)<br>

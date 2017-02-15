@@ -57,6 +57,11 @@ public class BlancoValueObjectTask extends Task {
     protected boolean fIsFieldXmlrootelementProcessed = false;
 
     /**
+     * フィールド [sheetType] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldSheetTypeProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -204,6 +209,32 @@ public class BlancoValueObjectTask extends Task {
     }
 
     /**
+     * Antタスクの[sheetType]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 6<br>
+     * meta定義書が期待しているプログラミング言語を指定します<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setSheetType(final String arg) {
+        fInput.setSheetType(arg);
+        fIsFieldSheetTypeProcessed = true;
+    }
+
+    /**
+     * Antタスクの[sheetType]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 6<br>
+     * meta定義書が期待しているプログラミング言語を指定します<br>
+     * デフォルト値[java]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getSheetType() {
+        return fInput.getSheetType();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -224,6 +255,7 @@ public class BlancoValueObjectTask extends Task {
             System.out.println("- tmpdir:[" + getTmpdir() + "]");
             System.out.println("- encoding:[" + getEncoding() + "]");
             System.out.println("- xmlrootelement:[" + getXmlrootelement() + "]");
+            System.out.println("- sheetType:[" + getSheetType() + "]");
         }
 
         try {

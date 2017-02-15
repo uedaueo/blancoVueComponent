@@ -178,7 +178,8 @@ public class BlancoValueObjectMeta2Xml {
             throw new IllegalArgumentException("BlancoMeta2XmlProcessMeta2Xml: list directory [" + fileMetadir.getAbsolutePath() + "] is failed.");
         }
         for (int index = 0; index < fileMeta.length; index++) {
-            if (fileMeta[index].getName().endsWith(".xls") == false) {
+            if (fileMeta[index].getName().endsWith(".xls") == false
+                    && fileMeta[index].getName().endsWith(".xlsx") == false) {
                 // ファイルの拡張子が処理すべきものとは異なるため処理をスキップします。。
                 continue;
             }
