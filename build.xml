@@ -150,6 +150,7 @@
 		<blancometa2xml metadir="meta/program" encoding="${encoding}" />
 		<blancoresourcebundle metadir="meta/program" commenttimestamp="false" encoding="${encoding}" />
 		<blancovalueobject metadir="meta/program" encoding="${encoding}" sheetType="php"/>
+		<blancovalueobject metadir="meta/objects" encoding="${encoding}" sheetType="php"/>
 
 		<!-- TODO: ここに自身のantタスクを追加してください。 -->
 	</target>

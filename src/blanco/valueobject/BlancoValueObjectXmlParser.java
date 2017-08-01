@@ -412,13 +412,16 @@ public class BlancoValueObjectXmlParser {
         if (extendsList != null && extendsList.size() != 0) {
             final BlancoXmlElement elementExtendsRoot = extendsList.get(0);
             String className = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "name");
+            String packageName = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "package");
+            if (packageName == null) {
             /*
              * このクラスのパッケージ名を探す
              */
-            String packageName = argClassList.get(className);
+                packageName = argClassList.get(className);
+            }
             if (packageName != null) {
                 className = packageName + "." + className;
-//                System.out.println("/* tueda */ Extends : " + className);
+                System.out.println("/* tueda */ Extends : " + className);
             }
             objClassStructure.setExtends(className);
         }

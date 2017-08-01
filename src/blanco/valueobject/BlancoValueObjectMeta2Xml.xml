@@ -41,6 +41,9 @@
         <propertykey name="name" waitX="2">
           <value>クラス名</value>
         </propertykey>
+        <propertykey name="package" waitX="2">
+          <value>パッケージ</value>
+        </propertykey>
       </propertyblock>
 
       <tableblock name="blancovalueobject-implements" waitY="2" titleheight="3" rowname="interface">
@@ -81,9 +84,11 @@
         <propertykey name="name" waitX="2">
           <value>クラス名</value>
         </propertykey>
+        <!--
         <propertykey name="namespace" waitX="2">
           <value>名前空間</value>
         </propertykey>
+        -->
         <propertykey name="package" waitX="2">
           <value>パッケージ</value>
         </propertykey>
@@ -99,6 +104,9 @@
         <startstring>バリューオブジェクト定義(php)・継承</startstring>
         <propertykey name="name" waitX="2">
           <value>クラス名</value>
+        </propertykey>
+        <propertykey name="package" waitX="2">
+          <value>パッケージ</value>
         </propertykey>
       </propertyblock>
 
