@@ -17,6 +17,7 @@ import blanco.beanutils.BlancoBeanUtils;
 import blanco.cg.BlancoCgObjectFactory;
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.cg.transformer.BlancoCgTransformerFactory;
+import blanco.cg.util.BlancoCgSourceUtil;
 import blanco.cg.valueobject.BlancoCgClass;
 import blanco.cg.valueobject.BlancoCgField;
 import blanco.cg.valueobject.BlancoCgMethod;
@@ -245,8 +246,8 @@ public class BlancoValueObjectXml2JavaClass {
         if (argFieldStructure.getDefault() != null) {
             // フィールドのデフォルト値を設定します。
             field.getLangDoc().getDescriptionList().add(
-                    fBundle.getXml2javaclassFieldDefault(argFieldStructure
-                            .getDefault()));
+                    BlancoCgSourceUtil.escapeStringAsLangDoc(BlancoCgSupportedLang.JAVA, fBundle.getXml2javaclassFieldDefault(argFieldStructure
+                            .getDefault())));
             if (argClassStructure.getAdjustDefaultValue() == false) {
                 // デフォルト値の変形がoffの場合には、定義書上の値をそのまま採用。
                 field.setDefault(argFieldStructure.getDefault());
@@ -366,8 +367,8 @@ public class BlancoValueObjectXml2JavaClass {
         }
         if (argFieldStructure.getDefault() != null) {
             method.getLangDoc().getDescriptionList().add(
-                    fBundle.getXml2javaclassGetDefaultJavadoc(argFieldStructure
-                            .getDefault()));
+                    BlancoCgSourceUtil.escapeStringAsLangDoc(BlancoCgSupportedLang.JAVA, fBundle.getXml2javaclassGetDefaultJavadoc(argFieldStructure
+                            .getDefault())));
         }
 
         method.setReturn(fCgFactory.createReturn(argFieldStructure.getType(),
