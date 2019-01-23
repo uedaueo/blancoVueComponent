@@ -10,10 +10,7 @@
 package blanco.valueobject;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameUtil;
@@ -376,6 +373,15 @@ public class BlancoValueObjectXmlParser {
             }
         }
 
+        /* クラスの annotation に対応 */
+        String classAnnotation = BlancoXmlBindingUtil.getTextContent(
+                elementCommon, "annotation");
+        if (BlancoStringUtil.null2Blank(classAnnotation).length() > 0) {
+            String [] annotations = classAnnotation.split(",");
+            List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
+            objClassStructure.setAnnotationList(annotationList);
+        }
+
 //        objClassStructure.setAccess(BlancoXmlBindingUtil.getTextContent(
 //                elementCommon, "access"));
         /*
@@ -548,6 +554,15 @@ public class BlancoValueObjectXmlParser {
 
                     fieldStructure.setGeneric(javaGeneric);
                     fieldStructure.setType(javaType + "<" + javaGeneric + ">");
+                }
+
+                /* method の annnotation に対応 */
+                String methodAnnotation = BlancoXmlBindingUtil.getTextContent(elementList, "annotation");
+                if (BlancoStringUtil.null2Blank(methodAnnotation).length() != 0) {
+                    String [] annotations = methodAnnotation.split(",");
+                    List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
+
+                    fieldStructure.setAnnotationList(annotationList);
                 }
 
                 fieldStructure.setDescription(BlancoXmlBindingUtil

@@ -171,6 +171,14 @@ public class BlancoValueObjectXml2JavaClass {
             fCgClass.getLangDoc().getDescriptionList().add(line);
         }
 
+        /* クラスのannotation を設定します */
+        List annotationList = argClassStructure.getAnnotationList();
+        if (annotationList != null && annotationList.size() > 0) {
+            fCgClass.getAnnotationList().addAll(argClassStructure.getAnnotationList());
+            /* tueda DEBUG */
+            System.out.println("/* tueda */ structure2Source : class annotation = " + argClassStructure.getAnnotationList().get(0));
+        }
+
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
                 .size(); indexField++) {
             // おのおののフィールドを処理します。
@@ -291,6 +299,13 @@ public class BlancoValueObjectXml2JavaClass {
                             type));
                 }
             }
+        }
+
+        /* メソッドの annotation を設定します */
+        List annotationList = argFieldStructure.getAnnotationList();
+        if (annotationList != null && annotationList.size() > 0) {
+            field.getAnnotationList().addAll(annotationList);
+            System.out.println("/* tueda */ method annotation = " + field.getAnnotationList().get(0));
         }
     }
 
