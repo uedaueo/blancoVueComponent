@@ -377,7 +377,7 @@ public class BlancoValueObjectXmlParser {
         String classAnnotation = BlancoXmlBindingUtil.getTextContent(
                 elementCommon, "annotation");
         if (BlancoStringUtil.null2Blank(classAnnotation).length() > 0) {
-            String [] annotations = classAnnotation.split(",");
+            String [] annotations = classAnnotation.split("\\\\\\\\");
             List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
             objClassStructure.setAnnotationList(annotationList);
         }
@@ -559,7 +559,7 @@ public class BlancoValueObjectXmlParser {
                 /* method の annnotation に対応 */
                 String methodAnnotation = BlancoXmlBindingUtil.getTextContent(elementList, "annotation");
                 if (BlancoStringUtil.null2Blank(methodAnnotation).length() != 0) {
-                    String [] annotations = methodAnnotation.split(",");
+                    String [] annotations = methodAnnotation.split("\\\\\\\\");
                     List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
 
                     fieldStructure.setAnnotationList(annotationList);
