@@ -6,9 +6,6 @@
 *.iml
 /blancoValueObject-*-src.zip
 /tmp
-/blanco/main
-/blanco.php/main
-/blanco.java/main
 /bin
 /classes
 ~$*

@@ -179,6 +179,14 @@ public class BlancoValueObjectXml2JavaClass {
             System.out.println("/* tueda */ structure2Source : class annotation = " + argClassStructure.getAnnotationList().get(0));
         }
 
+        /* クラスの import を設定します */
+        for (int index = 0; index < argClassStructure.getImportList()
+                .size(); index++) {
+            final String imported = (String) argClassStructure.getImportList()
+                    .get(index);
+            fCgSourceFile.getImportList().add(imported);
+        }
+
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
                 .size(); indexField++) {
             // おのおののフィールドを処理します。

@@ -455,6 +455,29 @@ public class BlancoValueObjectXmlParser {
 //            }
 //        }
 
+        /* import の一覧作成 */
+        final List<BlancoXmlElement> importList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-import");
+        if (importList != null && importList.size() != 0) {
+            final BlancoXmlElement elementImportRoot = importList.get(0);
+            final List<BlancoXmlElement> listImportChildNodes = BlancoXmlBindingUtil
+                    .getElementsByTagName(elementImportRoot, "import");
+            for (int index = 0; index < listImportChildNodes.size(); index++) {
+                final BlancoXmlElement elementList = listImportChildNodes
+                        .get(index);
+
+                final String importName = BlancoXmlBindingUtil
+                        .getTextContent(elementList, "name");
+                System.out.println("/* tueda */ import = " + importName);
+                if (importName == null || importName.trim().length() == 0) {
+                    continue;
+                }
+                objClassStructure.getImportList().add(
+                        BlancoXmlBindingUtil
+                                .getTextContent(elementList, "name"));
+            }
+        }
+
         final List<BlancoXmlElement> listList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet, "blancovalueobjectphp-list");
         if (listList != null && listList.size() != 0) {
