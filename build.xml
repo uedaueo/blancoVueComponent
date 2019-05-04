@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="blancoValueObject" default="build" basedir=".">
 	<!-- blancoAnt(0.2.1)により自動生成されました。 (2010/12/22) -->
-	<property name="version" value="2.0.1" />
+	<property name="version" value="2.0.3" />
 
 	<property name="project" value="blancoValueObject" />
 	<property name="project.lower" value="blancovalueobject" />
@@ -49,7 +49,7 @@
 
 	<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask" classpath="bin:src">
 		<classpath>
-			<fileset dir="lib" includes="*.jar" excludes="blancovalueobject-1.2.4.jar" />
+			<fileset dir="lib" includes="*.jar" excludes="blancovalueobject-1.2.0.jar" />
 		</classpath>
 	</taskdef>
 
@@ -150,6 +150,7 @@
 		<blancometa2xml metadir="meta/program" encoding="${encoding}" />
 		<blancoresourcebundle metadir="meta/program" commenttimestamp="false" encoding="${encoding}" />
 		<blancovalueobject metadir="meta/program" encoding="${encoding}" sheetType="php"/>
+		<blancovalueobject metadir="meta/objects" encoding="${encoding}" sheetType="php"/>
 
 		<!-- TODO: ここに自身のantタスクを追加してください。 -->
 	</target>

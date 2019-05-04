@@ -10,10 +10,7 @@
 package blanco.valueobject;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameUtil;
@@ -376,6 +373,15 @@ public class BlancoValueObjectXmlParser {
             }
         }
 
+        /* クラスの annotation に対応 */
+        String classAnnotation = BlancoXmlBindingUtil.getTextContent(
+                elementCommon, "annotation");
+        if (BlancoStringUtil.null2Blank(classAnnotation).length() > 0) {
+            String [] annotations = classAnnotation.split("\\\\\\\\");
+            List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
+            objClassStructure.setAnnotationList(annotationList);
+        }
+
 //        objClassStructure.setAccess(BlancoXmlBindingUtil.getTextContent(
 //                elementCommon, "access"));
         /*
@@ -412,13 +418,16 @@ public class BlancoValueObjectXmlParser {
         if (extendsList != null && extendsList.size() != 0) {
             final BlancoXmlElement elementExtendsRoot = extendsList.get(0);
             String className = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "name");
+            String packageName = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "package");
+            if (packageName == null) {
             /*
              * このクラスのパッケージ名を探す
              */
-            String packageName = argClassList.get(className);
+                packageName = argClassList.get(className);
+            }
             if (packageName != null) {
                 className = packageName + "." + className;
-//                System.out.println("/* tueda */ Extends : " + className);
+                System.out.println("/* tueda */ Extends : " + className);
             }
             objClassStructure.setExtends(className);
         }
@@ -445,6 +454,29 @@ public class BlancoValueObjectXmlParser {
 //                                .getTextContent(elementList, "name"));
 //            }
 //        }
+
+        /* import の一覧作成 */
+        final List<BlancoXmlElement> importList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-import");
+        if (importList != null && importList.size() != 0) {
+            final BlancoXmlElement elementImportRoot = importList.get(0);
+            final List<BlancoXmlElement> listImportChildNodes = BlancoXmlBindingUtil
+                    .getElementsByTagName(elementImportRoot, "import");
+            for (int index = 0; index < listImportChildNodes.size(); index++) {
+                final BlancoXmlElement elementList = listImportChildNodes
+                        .get(index);
+
+                final String importName = BlancoXmlBindingUtil
+                        .getTextContent(elementList, "name");
+                System.out.println("/* tueda */ import = " + importName);
+                if (importName == null || importName.trim().length() == 0) {
+                    continue;
+                }
+                objClassStructure.getImportList().add(
+                        BlancoXmlBindingUtil
+                                .getTextContent(elementList, "name"));
+            }
+        }
 
         final List<BlancoXmlElement> listList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet, "blancovalueobjectphp-list");
@@ -545,6 +577,15 @@ public class BlancoValueObjectXmlParser {
 
                     fieldStructure.setGeneric(javaGeneric);
                     fieldStructure.setType(javaType + "<" + javaGeneric + ">");
+                }
+
+                /* method の annnotation に対応 */
+                String methodAnnotation = BlancoXmlBindingUtil.getTextContent(elementList, "annotation");
+                if (BlancoStringUtil.null2Blank(methodAnnotation).length() != 0) {
+                    String [] annotations = methodAnnotation.split("\\\\\\\\");
+                    List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
+
+                    fieldStructure.setAnnotationList(annotationList);
                 }
 
                 fieldStructure.setDescription(BlancoXmlBindingUtil
