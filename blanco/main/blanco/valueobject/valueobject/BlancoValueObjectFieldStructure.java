@@ -38,6 +38,14 @@ public class BlancoValueObjectFieldStructure {
     private String fGeneric;
 
     /**
+     * アノテーション文字列です（＠は除く）
+     *
+     * フィールド: [annotationList]。
+     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     */
+    private List<java.lang.String> fAnnotationList = new java.util.ArrayList<java.lang.String>();
+
+    /**
      * デフォルト値を指定します。
      *
      * フィールド: [default]。
@@ -187,6 +195,29 @@ public class BlancoValueObjectFieldStructure {
      */
     public String getGeneric() {
         return fGeneric;
+    }
+
+    /**
+     * フィールド [annotationList] の値を設定します。
+     *
+     * フィールドの説明: [アノテーション文字列です（＠は除く）]。
+     *
+     * @param argAnnotationList フィールド[annotationList]に設定する値。
+     */
+    public void setAnnotationList(final List<java.lang.String> argAnnotationList) {
+        fAnnotationList = argAnnotationList;
+    }
+
+    /**
+     * フィールド [annotationList] の値を取得します。
+     *
+     * フィールドの説明: [アノテーション文字列です（＠は除く）]。
+     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     *
+     * @return フィールド[annotationList]から取得した値。
+     */
+    public List<java.lang.String> getAnnotationList() {
+        return fAnnotationList;
     }
 
     /**
@@ -407,6 +438,7 @@ public class BlancoValueObjectFieldStructure {
         buf.append(",name=" + fName);
         buf.append(",type=" + fType);
         buf.append(",generic=" + fGeneric);
+        buf.append(",annotationList=" + fAnnotationList);
         buf.append(",default=" + fDefault);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
@@ -418,64 +450,5 @@ public class BlancoValueObjectFieldStructure {
         buf.append(",maxInclusive=" + fMaxInclusive);
         buf.append("]");
         return buf.toString();
-    }
-
-    /**
-     * このバリューオブジェクトを指定のターゲットに複写します。
-     *
-     * <P>使用上の注意</P>
-     * <UL>
-     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
-     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
-     * </UL>
-     *
-     * @param target target value object.
-     */
-    public void copyTo(final BlancoValueObjectFieldStructure target) {
-        if (target == null) {
-            throw new IllegalArgumentException("Bug: BlancoValueObjectFieldStructure#copyTo(target): argument 'target' is null");
-        }
-
-        // No needs to copy parent class.
-
-        // Name: fNo
-        // Type: java.lang.String
-        target.fNo = this.fNo;
-        // Name: fName
-        // Type: java.lang.String
-        target.fName = this.fName;
-        // Name: fType
-        // Type: java.lang.String
-        target.fType = this.fType;
-        // Name: fGeneric
-        // Type: java.lang.String
-        target.fGeneric = this.fGeneric;
-        // Name: fDefault
-        // Type: java.lang.String
-        target.fDefault = this.fDefault;
-        // Name: fDescription
-        // Type: java.lang.String
-        target.fDescription = this.fDescription;
-        // Name: fDescriptionList
-        // Type: java.util.List
-        // フィールド[fDescriptionList]はサポート外の型[java.util.List]です。
-        // Name: fPattern
-        // Type: java.lang.String
-        target.fPattern = this.fPattern;
-        // Name: fMinLength
-        // Type: java.lang.String
-        target.fMinLength = this.fMinLength;
-        // Name: fMaxLength
-        // Type: java.lang.String
-        target.fMaxLength = this.fMaxLength;
-        // Name: fLength
-        // Type: java.lang.String
-        target.fLength = this.fLength;
-        // Name: fMinInclusive
-        // Type: java.lang.String
-        target.fMinInclusive = this.fMinInclusive;
-        // Name: fMaxInclusive
-        // Type: java.lang.String
-        target.fMaxInclusive = this.fMaxInclusive;
     }
 }

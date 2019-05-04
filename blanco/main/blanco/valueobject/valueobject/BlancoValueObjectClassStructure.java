@@ -39,6 +39,22 @@ public class BlancoValueObjectClassStructure {
     private List<java.lang.String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
     /**
+     * クラスのアノテーションを指定します。
+     *
+     * フィールド: [annotationList]。
+     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     */
+    private List<java.lang.String> fAnnotationList = new java.util.ArrayList<java.lang.String>();
+
+    /**
+     * importを指定します。
+     *
+     * フィールド: [importList]。
+     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     */
+    private List<java.lang.String> fImportList = new java.util.ArrayList<java.lang.String>();
+
+    /**
      * クラスのアクセス。通常は public。
      *
      * フィールド: [access]。
@@ -195,6 +211,52 @@ public class BlancoValueObjectClassStructure {
      */
     public List<java.lang.String> getDescriptionList() {
         return fDescriptionList;
+    }
+
+    /**
+     * フィールド [annotationList] の値を設定します。
+     *
+     * フィールドの説明: [クラスのアノテーションを指定します。]。
+     *
+     * @param argAnnotationList フィールド[annotationList]に設定する値。
+     */
+    public void setAnnotationList(final List<java.lang.String> argAnnotationList) {
+        fAnnotationList = argAnnotationList;
+    }
+
+    /**
+     * フィールド [annotationList] の値を取得します。
+     *
+     * フィールドの説明: [クラスのアノテーションを指定します。]。
+     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     *
+     * @return フィールド[annotationList]から取得した値。
+     */
+    public List<java.lang.String> getAnnotationList() {
+        return fAnnotationList;
+    }
+
+    /**
+     * フィールド [importList] の値を設定します。
+     *
+     * フィールドの説明: [importを指定します。]。
+     *
+     * @param argImportList フィールド[importList]に設定する値。
+     */
+    public void setImportList(final List<java.lang.String> argImportList) {
+        fImportList = argImportList;
+    }
+
+    /**
+     * フィールド [importList] の値を取得します。
+     *
+     * フィールドの説明: [importを指定します。]。
+     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     *
+     * @return フィールド[importList]から取得した値。
+     */
+    public List<java.lang.String> getImportList() {
+        return fImportList;
     }
 
     /**
@@ -421,6 +483,8 @@ public class BlancoValueObjectClassStructure {
         buf.append(",package=" + fPackage);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
+        buf.append(",annotationList=" + fAnnotationList);
+        buf.append(",importList=" + fImportList);
         buf.append(",access=" + fAccess);
         buf.append(",abstract=" + fAbstract);
         buf.append(",generateToString=" + fGenerateToString);
@@ -432,64 +496,5 @@ public class BlancoValueObjectClassStructure {
         buf.append(",fileDescription=" + fFileDescription);
         buf.append("]");
         return buf.toString();
-    }
-
-    /**
-     * このバリューオブジェクトを指定のターゲットに複写します。
-     *
-     * <P>使用上の注意</P>
-     * <UL>
-     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
-     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
-     * </UL>
-     *
-     * @param target target value object.
-     */
-    public void copyTo(final BlancoValueObjectClassStructure target) {
-        if (target == null) {
-            throw new IllegalArgumentException("Bug: BlancoValueObjectClassStructure#copyTo(target): argument 'target' is null");
-        }
-
-        // No needs to copy parent class.
-
-        // Name: fName
-        // Type: java.lang.String
-        target.fName = this.fName;
-        // Name: fPackage
-        // Type: java.lang.String
-        target.fPackage = this.fPackage;
-        // Name: fDescription
-        // Type: java.lang.String
-        target.fDescription = this.fDescription;
-        // Name: fDescriptionList
-        // Type: java.util.List
-        // フィールド[fDescriptionList]はサポート外の型[java.util.List]です。
-        // Name: fAccess
-        // Type: java.lang.String
-        target.fAccess = this.fAccess;
-        // Name: fAbstract
-        // Type: boolean
-        target.fAbstract = this.fAbstract;
-        // Name: fGenerateToString
-        // Type: boolean
-        target.fGenerateToString = this.fGenerateToString;
-        // Name: fAdjustFieldName
-        // Type: boolean
-        target.fAdjustFieldName = this.fAdjustFieldName;
-        // Name: fAdjustDefaultValue
-        // Type: boolean
-        target.fAdjustDefaultValue = this.fAdjustDefaultValue;
-        // Name: fExtends
-        // Type: java.lang.String
-        target.fExtends = this.fExtends;
-        // Name: fImplementsList
-        // Type: java.util.List
-        // フィールド[fImplementsList]はサポート外の型[java.util.List]です。
-        // Name: fFieldList
-        // Type: java.util.List
-        // フィールド[fFieldList]はサポート外の型[java.util.List]です。
-        // Name: fFileDescription
-        // Type: java.lang.String
-        target.fFileDescription = this.fFileDescription;
     }
 }

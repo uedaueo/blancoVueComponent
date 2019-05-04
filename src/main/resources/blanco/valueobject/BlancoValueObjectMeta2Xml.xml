@@ -41,6 +41,9 @@
         <propertykey name="name" waitX="2">
           <value>クラス名</value>
         </propertykey>
+        <propertykey name="package" waitX="2">
+          <value>パッケージ</value>
+        </propertykey>
       </propertyblock>
 
       <tableblock name="blancovalueobject-implements" waitY="2" titleheight="3" rowname="interface">
@@ -81,11 +84,16 @@
         <propertykey name="name" waitX="2">
           <value>クラス名</value>
         </propertykey>
+        <!--
         <propertykey name="namespace" waitX="2">
           <value>名前空間</value>
         </propertykey>
+        -->
         <propertykey name="package" waitX="2">
           <value>パッケージ</value>
+        </propertykey>
+        <propertykey name="annotation" waitX="2">
+          <value>アノテーション</value>
         </propertykey>
         <propertykey name="description" waitX="2">
           <value>説明</value>
@@ -100,7 +108,22 @@
         <propertykey name="name" waitX="2">
           <value>クラス名</value>
         </propertykey>
+        <propertykey name="package" waitX="2">
+          <value>パッケージ</value>
+        </propertykey>
       </propertyblock>
+
+      <tableblock name="blancovalueobjectphp-import" waitY="2" titleheight="2" rowname="import">
+      <startstring>バリューオブジェクト定義(php)・インポート</startstring>
+
+      <tablecolumn name="no">
+        <value>No.</value>
+      </tablecolumn>
+      <tablecolumn name="name">
+        <value>インポートクラス名</value>
+      </tablecolumn>
+
+      </tableblock>
 
       <tableblock name="blancovalueobjectphp-list" waitY="2" titleheight="3" rowname="field">
         <startstring>バリューオブジェクト定義(php)・一覧</startstring>
@@ -116,6 +139,9 @@
         </tablecolumn>
         <tablecolumn name="generic">
           <value>総称型</value>
+        </tablecolumn>
+        <tablecolumn name="annotation">
+          <value>アノテーション</value>
         </tablecolumn>
         <tablecolumn name="default">
           <value>デフォルト</value>
