@@ -5,7 +5,8 @@
 .DS_Store
 *.iml
 /blancoValueObject-*-src.zip
-/tmp
-/bin
+/bin/
+/tmp/
+/target/
 /classes
 ~$*

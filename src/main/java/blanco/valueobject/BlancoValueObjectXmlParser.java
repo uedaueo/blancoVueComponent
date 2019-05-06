@@ -618,7 +618,7 @@ public class BlancoValueObjectXmlParser {
     }
 
     public static Map<String, String> createClassListFromSheets(final File[] argFileMeta) {
-        Map<String, String> classList = new HashMap<>();
+        Map<String, String> classList = new HashMap<String, String>();
 
         for (int index = 0; index < argFileMeta.length; index++) {
             File metaXmlSourceFile = argFileMeta[index];
