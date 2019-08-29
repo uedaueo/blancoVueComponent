@@ -62,6 +62,11 @@ public class BlancoValueObjectTask extends Task {
     protected boolean fIsFieldSheetTypeProcessed = false;
 
     /**
+     * フィールド [targetStyle] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldTargetStyleProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -235,6 +240,32 @@ public class BlancoValueObjectTask extends Task {
     }
 
     /**
+     * Antタスクの[targetStyle]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 7<br>
+     * 出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setTargetStyle(final String arg) {
+        fInput.setTargetStyle(arg);
+        fIsFieldTargetStyleProcessed = true;
+    }
+
+    /**
+     * Antタスクの[targetStyle]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 7<br>
+     * 出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)<br>
+     * デフォルト値[blanco]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getTargetStyle() {
+        return fInput.getTargetStyle();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -256,6 +287,7 @@ public class BlancoValueObjectTask extends Task {
             System.out.println("- encoding:[" + getEncoding() + "]");
             System.out.println("- xmlrootelement:[" + getXmlrootelement() + "]");
             System.out.println("- sheetType:[" + getSheetType() + "]");
+            System.out.println("- targetStyle:[" + getTargetStyle() + "]");
         }
 
         try {

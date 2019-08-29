@@ -41,7 +41,7 @@ public class BlancoValueObjectFieldStructure {
      * アノテーション文字列です（＠は除く）
      *
      * フィールド: [annotationList]。
-     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
     private List<java.lang.String> fAnnotationList = new java.util.ArrayList<java.lang.String>();
 
@@ -63,7 +63,7 @@ public class BlancoValueObjectFieldStructure {
      * フィールドの補助説明です。文字参照エンコード済みの値を格納してください。
      *
      * フィールド: [descriptionList]。
-     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
     private List<java.lang.String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
@@ -212,7 +212,7 @@ public class BlancoValueObjectFieldStructure {
      * フィールド [annotationList] の値を取得します。
      *
      * フィールドの説明: [アノテーション文字列です（＠は除く）]。
-     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      *
      * @return フィールド[annotationList]から取得した値。
      */
@@ -279,7 +279,7 @@ public class BlancoValueObjectFieldStructure {
      * フィールド [descriptionList] の値を取得します。
      *
      * フィールドの説明: [フィールドの補助説明です。文字参照エンコード済みの値を格納してください。]。
-     * デフォルト: [new java.util.ArrayList<java.lang.String>()]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      *
      * @return フィールド[descriptionList]から取得した値。
      */
@@ -484,7 +484,15 @@ public class BlancoValueObjectFieldStructure {
         target.fGeneric = this.fGeneric;
         // Name: fAnnotationList
         // Type: java.util.List
-        // フィールド[fAnnotationList]はサポート外の型[java.util.List]です。
+        if (this.fAnnotationList != null) {
+            final java.util.Iterator<java.lang.String> iterator = this.fAnnotationList.iterator();
+            for (; iterator.hasNext();) {
+                java.lang.String loopSource = iterator.next();
+                java.lang.String loopTarget = null;
+                loopTarget = loopSource;
+                target.fAnnotationList.add(loopTarget);
+            }
+        }
         // Name: fDefault
         // Type: java.lang.String
         target.fDefault = this.fDefault;
@@ -493,7 +501,15 @@ public class BlancoValueObjectFieldStructure {
         target.fDescription = this.fDescription;
         // Name: fDescriptionList
         // Type: java.util.List
-        // フィールド[fDescriptionList]はサポート外の型[java.util.List]です。
+        if (this.fDescriptionList != null) {
+            final java.util.Iterator<java.lang.String> iterator = this.fDescriptionList.iterator();
+            for (; iterator.hasNext();) {
+                java.lang.String loopSource = iterator.next();
+                java.lang.String loopTarget = null;
+                loopTarget = loopSource;
+                target.fDescriptionList.add(loopTarget);
+            }
+        }
         // Name: fPattern
         // Type: java.lang.String
         target.fPattern = this.fPattern;

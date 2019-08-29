@@ -68,6 +68,8 @@ public class BlancoValueObjectBatchProcess {
                 input.setXmlrootelement(Boolean.valueOf(arg.substring(16)).booleanValue());
             } else if (arg.startsWith("-sheetType=")) {
                 input.setSheetType(arg.substring(11));
+            } else if (arg.startsWith("-targetStyle=")) {
+                input.setTargetStyle(arg.substring(13));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -161,7 +163,7 @@ public class BlancoValueObjectBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoValueObjectBatchProcess: Usage:");
-        System.out.println("  java blanco.valueobject.task.BlancoValueObjectBatchProcess -verbose=値1 -metadir=値2 -targetdir=値3 -tmpdir=値4 -encoding=値5 -xmlrootelement=値6 -sheetType=値7");
+        System.out.println("  java blanco.valueobject.task.BlancoValueObjectBatchProcess -verbose=値1 -metadir=値2 -targetdir=値3 -tmpdir=値4 -encoding=値5 -xmlrootelement=値6 -sheetType=値7 -targetStyle=値8");
         System.out.println("    -verbose");
         System.out.println("      説明[verboseモードで動作させるかどうか。]");
         System.out.println("      型[真偽]");
@@ -189,6 +191,10 @@ public class BlancoValueObjectBatchProcess {
         System.out.println("      説明[meta定義書が期待しているプログラミング言語を指定します]");
         System.out.println("      型[文字列]");
         System.out.println("      デフォルト値[java]");
+        System.out.println("    -targetStyle");
+        System.out.println("      説明[出力先フォルダの書式を指定します。\nblanco: <targetdir>/main\nmaven: <targetdir>/main/java\nfree: <targetdir>(targetdirが無指定の場合はblanco/main)]");
+        System.out.println("      型[文字列]");
+        System.out.println("      デフォルト値[blanco]");
         System.out.println("    -? , -help");
         System.out.println("      説明[使い方を表示します。]");
     }

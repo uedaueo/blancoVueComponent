@@ -62,6 +62,14 @@ public class BlancoValueObjectProcessInput {
     private String fSheetType = "java";
 
     /**
+     * 出力先フォルダの書式を指定します。\nblanco: &amp;lt;targetdir&amp;gt;/main\nmaven: &amp;lt;targetdir&amp;gt;/main/java\nfree: &amp;lt;targetdir&amp;gt;(targetdirが無指定の場合はblanco/main)
+     *
+     * フィールド: [targetStyle]。
+     * デフォルト: [blanco]。
+     */
+    private String fTargetStyle = "blanco";
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [verboseモードで動作させるかどうか。]。
@@ -221,6 +229,29 @@ public class BlancoValueObjectProcessInput {
     }
 
     /**
+     * フィールド [targetStyle] の値を設定します。
+     *
+     * フィールドの説明: [出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)]。
+     *
+     * @param argTargetStyle フィールド[targetStyle]に設定する値。
+     */
+    public void setTargetStyle(final String argTargetStyle) {
+        fTargetStyle = argTargetStyle;
+    }
+
+    /**
+     * フィールド [targetStyle] の値を取得します。
+     *
+     * フィールドの説明: [出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)]。
+     * デフォルト: [blanco]。
+     *
+     * @return フィールド[targetStyle]から取得した値。
+     */
+    public String getTargetStyle() {
+        return fTargetStyle;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -242,7 +273,52 @@ public class BlancoValueObjectProcessInput {
         buf.append(",encoding=" + fEncoding);
         buf.append(",xmlrootelement=" + fXmlrootelement);
         buf.append(",sheetType=" + fSheetType);
+        buf.append(",targetStyle=" + fTargetStyle);
         buf.append("]");
         return buf.toString();
+    }
+
+    /**
+     * このバリューオブジェクトを指定のターゲットに複写します。
+     *
+     * <P>使用上の注意</P>
+     * <UL>
+     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
+     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
+     * </UL>
+     *
+     * @param target target value object.
+     */
+    public void copyTo(final BlancoValueObjectProcessInput target) {
+        if (target == null) {
+            throw new IllegalArgumentException("Bug: BlancoValueObjectProcessInput#copyTo(target): argument 'target' is null");
+        }
+
+        // No needs to copy parent class.
+
+        // Name: fVerbose
+        // Type: boolean
+        target.fVerbose = this.fVerbose;
+        // Name: fMetadir
+        // Type: java.lang.String
+        target.fMetadir = this.fMetadir;
+        // Name: fTargetdir
+        // Type: java.lang.String
+        target.fTargetdir = this.fTargetdir;
+        // Name: fTmpdir
+        // Type: java.lang.String
+        target.fTmpdir = this.fTmpdir;
+        // Name: fEncoding
+        // Type: java.lang.String
+        target.fEncoding = this.fEncoding;
+        // Name: fXmlrootelement
+        // Type: boolean
+        target.fXmlrootelement = this.fXmlrootelement;
+        // Name: fSheetType
+        // Type: java.lang.String
+        target.fSheetType = this.fSheetType;
+        // Name: fTargetStyle
+        // Type: java.lang.String
+        target.fTargetStyle = this.fTargetStyle;
     }
 }
