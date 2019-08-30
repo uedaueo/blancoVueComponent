@@ -9,11 +9,30 @@
 
 ## maven 対応について
 
+### metaファイルからソースコードの生成
+
+* プログラムに必要なコードの生成
+
+```
+mvn clean
+mvn generate-sources
+```
+
+* テスト（テストmetaからのコードの生成）
+
+```
+msv generate-test-source
+```
+
+maven の特性上、lifecycle に沿ってすべての処理が実行されることに注意。
+
 ### jar ファイルの作成
 
 ```
 mvn package
 ```
+
+maven の特性上、lifecycle に沿ってすべての処理が実行されることに注意。
 
 ### deploy
 

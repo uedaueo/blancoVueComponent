@@ -245,6 +245,22 @@
 								<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask" classpathref="maven.runtime.classpath">
 								</taskdef>
 								<blancovalueobject metadir="meta/program" encoding="${project.build.sourceEncoding}" sheetType="php"/>
+<!--								<blancovalueobject metadir="meta/objects" encoding="${project.build.sourceEncoding}" sheetType="php" targetdir="sample" targetStyle="maven" verbose="true" />-->
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>blanco-meta-valueobject-test</id>
+						<phase>generate-test-sources</phase>
+						<configuration>
+							<target>
+								<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask" classpathref="maven.runtime.classpath">
+								</taskdef>
+								<blancovalueobject metadir="meta/objects" encoding="${project.build.sourceEncoding}" sheetType="php" tmpdir="tmpTest" targetdir="sample/blanco" targetStyle="maven" verbose="true" />
 							</target>
 						</configuration>
 						<goals>
@@ -259,6 +275,7 @@
 							<target>
 								<delete dir="tmp" />
 								<delete dir="blanco" />
+								<delete dir="sample" />
 								<delete dir="bin" />
 								<delete dir="classes" />
 								<mkdir dir="bin" />

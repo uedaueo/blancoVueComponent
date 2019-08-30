@@ -37,6 +37,14 @@ public class BlancoValueObjectXmlParser {
      */
     private final BlancoValueObjectMessage fMsg = new BlancoValueObjectMessage();
 
+    private boolean fVerbose = false;
+    public void setVerbose(boolean argVerbose) {
+        this.fVerbose = argVerbose;
+    }
+    public boolean isVerbose() {
+        return fVerbose;
+    }
+
     /**
      * blancoValueObjectのリソースバンドルオブジェクト。
      */
@@ -120,8 +128,10 @@ public class BlancoValueObjectXmlParser {
 
                     elementSheet.getAtts().add(attr);
 
-//                    /* tueda DEBUG */
-//                    System.out.println("/* tueda */ style = " + BlancoXmlBindingUtil.getAttribute(elementSheet, "style"));
+                    /* tueda DEBUG */
+                    if (this.isVerbose()) {
+                        System.out.println("/* tueda */ style = " + BlancoXmlBindingUtil.getAttribute(elementSheet, "style"));
+                    }
 
                     break;
                 }

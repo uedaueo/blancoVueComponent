@@ -59,6 +59,25 @@ public class BlancoValueObjectXml2JavaClass {
     }
 
     /**
+     * ソースコード生成先ディレクトリのスタイル
+     */
+    private boolean fTargetStyleAdvanced = false;
+    public void setTargetStyleAdvanced(boolean argTargetStyleAdvanced) {
+        this.fTargetStyleAdvanced = argTargetStyleAdvanced;
+    }
+    public boolean isTargetStyleAdvanced() {
+        return this.fTargetStyleAdvanced;
+    }
+
+    private boolean fVerbose = false;
+    public void setVerbose(boolean argVerbose) {
+        this.fVerbose = argVerbose;
+    }
+    public boolean isVerbose() {
+        return this.fVerbose;
+    }
+
+    /**
      * 内部的に利用するblancoCg用ファクトリ。
      */
     private BlancoCgObjectFactory fCgFactory = null;
@@ -100,8 +119,9 @@ public class BlancoValueObjectXml2JavaClass {
      */
     public void process(final File argMetaXmlSourceFile,
             final File argDirectoryTarget) throws IOException {
-        final BlancoValueObjectClassStructure[] structures = new BlancoValueObjectXmlParser()
-                .parse(argMetaXmlSourceFile);
+        BlancoValueObjectXmlParser parser = new BlancoValueObjectXmlParser();
+        parser.setVerbose(this.isVerbose());
+        final BlancoValueObjectClassStructure[] structures = parser.parse(argMetaXmlSourceFile);
         for (int index = 0; index < structures.length; index++) {
             // 得られた情報からJavaソースコードを生成します。
             structure2Source(structures[index], argDirectoryTarget);
@@ -121,13 +141,24 @@ public class BlancoValueObjectXml2JavaClass {
     public void structure2Source(
             final BlancoValueObjectClassStructure argClassStructure,
             final File argDirectoryTarget) throws IOException {
-        // 従来と互換性を持たせるため、/mainサブフォルダに出力します。
-        final File fileBlancoMain = new File(argDirectoryTarget
-                .getAbsolutePath()
-                + "/main");
+        /*
+         * 出力ディレクトリはant taskのtargetStyel引数で
+         * 指定された書式で出力されます。
+         * 従来と互換性を保つために、指定がない場合は blanco/main
+         * となります。
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
 
-//        /* tueda DEBUG */
-//        System.out.println("/* tueda */ structure2Source : " + argClassStructure.getName());
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ structure2Source argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
 
         // BlancoCgObjectFactoryクラスのインスタンスを取得します。
         fCgFactory = BlancoCgObjectFactory.getInstance();

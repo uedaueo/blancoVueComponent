@@ -192,7 +192,7 @@ public class BlancoValueObjectBatchProcess {
         System.out.println("      型[文字列]");
         System.out.println("      デフォルト値[java]");
         System.out.println("    -targetStyle");
-        System.out.println("      説明[出力先フォルダの書式を指定します。\nblanco: <targetdir>/main\nmaven: <targetdir>/main/java\nfree: <targetdir>(targetdirが無指定の場合はblanco/main)]");
+        System.out.println("      説明[出力先フォルダの書式を指定します。<br>\nblanco: [targetdir]/main<br>\nmaven: [targetdir]/main/java<br>\nfree: [targetdir](targetdirが無指定の場合はblanco/main)]");
         System.out.println("      型[文字列]");
         System.out.println("      デフォルト値[blanco]");
         System.out.println("    -? , -help");

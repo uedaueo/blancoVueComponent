@@ -30,4 +30,34 @@ public class BlancoValueObjectConstants {
      * 処理の過程で利用されるサブディレクトリ。
      */
     public static final String TARGET_SUBDIRECTORY = "/valueobject";
+
+    /**
+     * 項目番号:5<br>
+     * targetdirに設定される文字列
+     */
+    public static final String TARGET_STYLE_BLANCO = "blanco";
+
+    /**
+     * 項目番号:6<br>
+     * targetdirに設定される文字列
+     */
+    public static final String TARGET_STYLE_MAVEN = "maven";
+
+    /**
+     * 項目番号:7<br>
+     * targetdirに設定される文字列
+     */
+    public static final String TARGET_STYLE_FREE = "free";
+
+    /**
+     * 項目番号:8<br>
+     * 生成したソースコードを保管するディレクトリのsuffix
+     */
+    public static final String TARGET_DIR_SUFFIX_BLANCO = "main";
+
+    /**
+     * 項目番号:8<br>
+     * 生成したソースコードを保管するディレクトリのsuffix
+     */
+    public static final String TARGET_DIR_SUFFIX_MAVEN = "main/java";
 }

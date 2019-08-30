@@ -243,7 +243,7 @@ public class BlancoValueObjectTask extends Task {
      * Antタスクの[targetStyle]アトリビュートのセッターメソッド。
      *
      * 項目番号: 7<br>
-     * 出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)<br>
+     * 出力先フォルダの書式を指定します。&lt;br&gt;\nblanco: [targetdir]/main&lt;br&gt;\nmaven: [targetdir]/main/java&lt;br&gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)<br>
      *
      * @param arg セットしたい値
      */
@@ -256,7 +256,7 @@ public class BlancoValueObjectTask extends Task {
      * Antタスクの[targetStyle]アトリビュートのゲッターメソッド。
      *
      * 項目番号: 7<br>
-     * 出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)<br>
+     * 出力先フォルダの書式を指定します。&lt;br&gt;\nblanco: [targetdir]/main&lt;br&gt;\nmaven: [targetdir]/main/java&lt;br&gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)<br>
      * デフォルト値[blanco]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
      *
      * @return このフィールドの値

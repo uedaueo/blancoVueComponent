@@ -28,6 +28,7 @@ import blanco.xml.bind.BlancoXmlBindingUtil;
 import blanco.xml.bind.valueobject.BlancoXmlElement;
 
 public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
+
     /**
      * メッセージ。
      */
@@ -45,6 +46,33 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
             if (fileMetadir.exists() == false) {
                 throw new IllegalArgumentException(fMsg.getMbvoja01(input
                         .getMetadir()));
+            }
+
+            /*
+             * targetdir, targetStyleの処理。
+             * 生成されたコードの保管場所を設定する。
+             * targetstyle = blanco:
+             *  targetdirの下に main ディレクトリを作成
+             * targetstyle = maven:
+             *  targetdirの下に main/java ディレクトリを作成
+             * targetstyle = free:
+             *  targetdirをそのまま使用してディレクトリを作成。
+             *  ただしtargetdirがからの場合はデフォルト文字列(blanco)使用する。
+             * by tueda, 2019/08/30
+             */
+            String strTarget = input.getTargetdir();
+            String style = input.getTargetStyle();
+            boolean isTargetStyleAdvanced = true;
+            if (style != null && BlancoValueObjectConstants.TARGET_STYLE_MAVEN.equals(style)) {
+                strTarget = strTarget + "/" + BlancoValueObjectConstants.TARGET_DIR_SUFFIX_MAVEN;
+            } else if (style == null ||
+                    !BlancoValueObjectConstants.TARGET_STYLE_FREE.equals(style)) {
+                strTarget = strTarget + "/" + BlancoValueObjectConstants.TARGET_DIR_SUFFIX_BLANCO;
+                isTargetStyleAdvanced = false;
+            }
+            /* style が free だったらtargetdirをそのまま使う */
+            if (input.getVerbose()) {
+                System.out.println("/* tueda */ TARGETDIR = " + strTarget);
             }
 
             // テンポラリディレクトリを作成。
@@ -75,10 +103,11 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
 
                 final BlancoValueObjectXml2JavaClass xml2JavaClass = new BlancoValueObjectXml2JavaClass();
                 xml2JavaClass.setEncoding(input.getEncoding());
+                xml2JavaClass.setVerbose(input.getVerbose());
+                xml2JavaClass.setTargetStyleAdvanced(isTargetStyleAdvanced);
                 xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
                 xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
-                xml2JavaClass.process(fileMeta2[index], new File(input
-                        .getTargetdir()));
+                xml2JavaClass.process(fileMeta2[index], new File(strTarget));
 
                 // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
             }
@@ -92,10 +121,11 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
 
                 final BlancoValueObjectXml2JavaClass xml2JavaClass = new BlancoValueObjectXml2JavaClass();
                 xml2JavaClass.setEncoding(input.getEncoding());
+                xml2JavaClass.setVerbose(input.getVerbose());
+                xml2JavaClass.setTargetStyleAdvanced(isTargetStyleAdvanced);
                 xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
                 xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
-                xml2JavaClass.process(fileMeta3[index], new File(input
-                        .getTargetdir()));
+                xml2JavaClass.process(fileMeta3[index], new File(strTarget));
 
                 // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
             }

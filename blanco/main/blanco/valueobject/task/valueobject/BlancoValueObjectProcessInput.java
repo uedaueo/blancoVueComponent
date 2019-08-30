@@ -62,7 +62,7 @@ public class BlancoValueObjectProcessInput {
     private String fSheetType = "java";
 
     /**
-     * 出力先フォルダの書式を指定します。\nblanco: &amp;lt;targetdir&amp;gt;/main\nmaven: &amp;lt;targetdir&amp;gt;/main/java\nfree: &amp;lt;targetdir&amp;gt;(targetdirが無指定の場合はblanco/main)
+     * 出力先フォルダの書式を指定します。&amp;lt;br&amp;gt;\nblanco: [targetdir]/main&amp;lt;br&amp;gt;\nmaven: [targetdir]/main/java&amp;lt;br&amp;gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)
      *
      * フィールド: [targetStyle]。
      * デフォルト: [blanco]。
@@ -231,7 +231,7 @@ public class BlancoValueObjectProcessInput {
     /**
      * フィールド [targetStyle] の値を設定します。
      *
-     * フィールドの説明: [出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)]。
+     * フィールドの説明: [出力先フォルダの書式を指定します。&lt;br&gt;\nblanco: [targetdir]/main&lt;br&gt;\nmaven: [targetdir]/main/java&lt;br&gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)]。
      *
      * @param argTargetStyle フィールド[targetStyle]に設定する値。
      */
@@ -242,7 +242,7 @@ public class BlancoValueObjectProcessInput {
     /**
      * フィールド [targetStyle] の値を取得します。
      *
-     * フィールドの説明: [出力先フォルダの書式を指定します。\nblanco: &lt;targetdir&gt;/main\nmaven: &lt;targetdir&gt;/main/java\nfree: &lt;targetdir&gt;(targetdirが無指定の場合はblanco/main)]。
+     * フィールドの説明: [出力先フォルダの書式を指定します。&lt;br&gt;\nblanco: [targetdir]/main&lt;br&gt;\nmaven: [targetdir]/main/java&lt;br&gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)]。
      * デフォルト: [blanco]。
      *
      * @return フィールド[targetStyle]から取得した値。
