@@ -37,6 +37,19 @@ maven の特性上、lifecycle に沿ってすべての処理が実行される�
 ### deploy
 
 maven リポジトリは github 上のpublicリポジトリに作成される前提としてます。
+
+```
+mvn deploy
+```
+
+### 独自mavenリポジトリ
+
+独自mavenリポジトリを作成したい場合は以下の手順で。
+
+* https://github.com/uedaueo/blancofw-maven2 を clone
+* github から access_key を取得
+* pom.xml のリポジトリURLをclone先に変更
+
 ~/.m2/settings.xml に以下のように記述することで、deploy可能となります。（useridとaccess_keyは実在のものをご使用下さい）
 
 ```~/.m2/settings.xml
@@ -50,4 +63,3 @@ maven リポジトリは github 上のpublicリポジトリに作成される前
   </servers>
 </settings>
 ```
-
