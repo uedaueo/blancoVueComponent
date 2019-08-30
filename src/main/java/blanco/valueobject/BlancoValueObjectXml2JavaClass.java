@@ -9,10 +9,6 @@
  */
 package blanco.valueobject;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import blanco.beanutils.BlancoBeanUtils;
 import blanco.cg.BlancoCgObjectFactory;
 import blanco.cg.BlancoCgSupportedLang;
@@ -30,6 +26,10 @@ import blanco.valueobject.message.BlancoValueObjectMessage;
 import blanco.valueobject.resourcebundle.BlancoValueObjectResourceBundle;
 import blanco.valueobject.valueobject.BlancoValueObjectClassStructure;
 import blanco.valueobject.valueobject.BlancoValueObjectFieldStructure;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * バリューオブジェクト用中間XMLファイルから Javaソースコードを自動生成するクラス。
@@ -291,6 +291,18 @@ public class BlancoValueObjectXml2JavaClass {
                 fBundle.getXml2javaclassFieldName(argFieldStructure.getName()));
 
         if (argFieldStructure.getDefault() != null) {
+            final String type = field.getType().getName();
+
+            if (type.equals("java.util.Date")) {
+                /*
+                 * java.util.Date 型ではデフォルト値を許容しません。
+                 */
+                throw new IllegalArgumentException(fMsg.getMbvoji05(
+                        argClassStructure.getName(), argFieldStructure
+                                .getName(), argFieldStructure.getDefault(),
+                        type));
+            }
+
             // フィールドのデフォルト値を設定します。
             field.getLangDoc().getDescriptionList().add(
                     BlancoCgSourceUtil.escapeStringAsLangDoc(BlancoCgSupportedLang.JAVA, fBundle.getXml2javaclassFieldDefault(argFieldStructure
@@ -299,7 +311,6 @@ public class BlancoValueObjectXml2JavaClass {
                 // デフォルト値の変形がoffの場合には、定義書上の値をそのまま採用。
                 field.setDefault(argFieldStructure.getDefault());
             } else {
-                final String type = field.getType().getName();
 
                 if (type.equals("java.lang.String")) {
                     // ダブルクオートを付与します。

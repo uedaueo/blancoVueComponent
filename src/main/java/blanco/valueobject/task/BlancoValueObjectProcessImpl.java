@@ -9,14 +9,6 @@
  */
 package blanco.valueobject.task;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.transform.TransformerException;
-
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.valueobject.BlancoValueObjectConstants;
 import blanco.valueobject.BlancoValueObjectMeta2Xml;
@@ -24,8 +16,10 @@ import blanco.valueobject.BlancoValueObjectXml2JavaClass;
 import blanco.valueobject.BlancoValueObjectXmlParser;
 import blanco.valueobject.message.BlancoValueObjectMessage;
 import blanco.valueobject.task.valueobject.BlancoValueObjectProcessInput;
-import blanco.xml.bind.BlancoXmlBindingUtil;
-import blanco.xml.bind.valueobject.BlancoXmlElement;
+
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.IOException;
 
 public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
 
@@ -62,13 +56,13 @@ public class BlancoValueObjectProcessImpl implements BlancoValueObjectProcess {
              */
             String strTarget = input.getTargetdir();
             String style = input.getTargetStyle();
+            // ここを通ったら常にtrue
             boolean isTargetStyleAdvanced = true;
             if (style != null && BlancoValueObjectConstants.TARGET_STYLE_MAVEN.equals(style)) {
                 strTarget = strTarget + "/" + BlancoValueObjectConstants.TARGET_DIR_SUFFIX_MAVEN;
             } else if (style == null ||
                     !BlancoValueObjectConstants.TARGET_STYLE_FREE.equals(style)) {
                 strTarget = strTarget + "/" + BlancoValueObjectConstants.TARGET_DIR_SUFFIX_BLANCO;
-                isTargetStyleAdvanced = false;
             }
             /* style が free だったらtargetdirをそのまま使う */
             if (input.getVerbose()) {

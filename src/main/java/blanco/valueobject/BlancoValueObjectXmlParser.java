@@ -9,9 +9,6 @@
  */
 package blanco.valueobject;
 
-import java.io.File;
-import java.util.*;
-
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
@@ -21,10 +18,12 @@ import blanco.valueobject.valueobject.BlancoValueObjectClassStructure;
 import blanco.valueobject.valueobject.BlancoValueObjectFieldStructure;
 import blanco.xml.bind.BlancoXmlBindingUtil;
 import blanco.xml.bind.BlancoXmlUnmarshaller;
-
 import blanco.xml.bind.valueobject.BlancoXmlAttribute;
 import blanco.xml.bind.valueobject.BlancoXmlDocument;
 import blanco.xml.bind.valueobject.BlancoXmlElement;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * blancoValueObjectの 中間XMLファイル形式をパース(読み書き)するクラス。
@@ -527,6 +526,9 @@ public class BlancoValueObjectXmlParser {
                 if ("string".equalsIgnoreCase(phpType)) {
                     javaType = "java.lang.String";
                 } else
+                if ("datetime".equalsIgnoreCase(phpType)) {
+                    javaType = "java.util.Date";
+                } else
                 if ("array".equalsIgnoreCase(phpType)) {
                     javaType = "java.util.ArrayList";
                 } else
@@ -563,6 +565,9 @@ public class BlancoValueObjectXmlParser {
                     } else
                     if ("string".equalsIgnoreCase(phpGeneric)) {
                         javaGeneric = "java.lang.String";
+                    } else
+                    if ("datetime".equalsIgnoreCase(phpGeneric)) {
+                        javaGeneric = "java.util.Date";
                     } else
                     if ("array".equalsIgnoreCase(phpGeneric)) {
                         throw new IllegalArgumentException(fMsg.getMbvoji06(
@@ -612,6 +617,21 @@ public class BlancoValueObjectXmlParser {
                                 lines[indexLine]);
                     }
                 }
+
+                fieldStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
+                        elementList, "default"));
+                fieldStructure.setMinLength(BlancoXmlBindingUtil
+                        .getTextContent(elementList, "minLength"));
+                fieldStructure.setMaxLength(BlancoXmlBindingUtil
+                        .getTextContent(elementList, "maxLength"));
+                fieldStructure.setLength(BlancoXmlBindingUtil.getTextContent(
+                        elementList, "length"));
+                fieldStructure.setMinInclusive(BlancoXmlBindingUtil
+                        .getTextContent(elementList, "minInclusive"));
+                fieldStructure.setMaxInclusive(BlancoXmlBindingUtil
+                        .getTextContent(elementList, "maxInclusive"));
+                fieldStructure.setPattern(BlancoXmlBindingUtil.getTextContent(
+                        elementList, "pattern"));
 
                 if (fieldStructure.getType() == null
                         || fieldStructure.getType().trim().length() == 0) {
