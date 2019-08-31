@@ -101,6 +101,17 @@
         <propertykey name="fileDescription" waitX="2">
           <value>ファイル説明</value>
         </propertykey>
+        <propertykey name="generateToString" waitX="2">
+          <value>toStringメソッドの生成</value>
+        </propertykey>
+        <propertykey name="adjustFieldName" waitX="2">
+          <value>フィールド名の変形</value>
+        </propertykey>
+
+        <valuemapping>
+          <result>true</result>
+          <source>○</source>
+        </valuemapping>
       </propertyblock>
 
       <propertyblock name="blancovalueobjectphp-extends" waitY="1">
