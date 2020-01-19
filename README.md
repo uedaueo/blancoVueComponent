@@ -1,11 +1,14 @@
-# blancoValueObject 上田版
+# blancoValueObjectKt
 
-このプロジェクトはblancoValueObjectの上田版です。
-本家との相違は概ね以下の通りです。
+このプロジェクトはblancoValueObjectの上田オリジナル版です。
 
-* annotation 対応
-* 明示的 import 対応
-  * これは主に annotation のために用意しました。
+blancoValueObject は「バリューオブジェクト定義書」というExcel様式を記入するだけで 簡単に バリューオブジェクトのJavaクラスが作成できるようにするためのツールです。
+
+ 1.ごく普通の バリューオブジェクトのためのソースコードを生成します。
+ 2.生成後のソースコードは それ単独で動作することができます。余計な *.jarファイルなどの実行時ライブラリを一切必要としません。
+ 3.導入すると、ドキュメントとソースコードが必ず一致するという効果があります。
+
+いまのところblancoValueObjectKtは本家にはありません。
 
 ## maven 対応について
 

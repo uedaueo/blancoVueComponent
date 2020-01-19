@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>blanco.valueobject</groupId>
-	<artifactId>blanco-valueobject</artifactId>
+	<groupId>blanco.valueobjectkt</groupId>
+	<artifactId>blanco-valueobjectkt</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0.4</version>
-	<name>blanco-valueobject</name>
+	<version>0.0.1</version>
+	<name>blanco-valueobject-kt</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 
 	<!-- basic spec for jar -->
@@ -52,6 +52,13 @@
 	</repositories>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>blanco.anttask</groupId>
@@ -245,7 +252,6 @@
 								<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask" classpathref="maven.runtime.classpath">
 								</taskdef>
 								<blancovalueobject metadir="meta/program" encoding="${project.build.sourceEncoding}" sheetType="php"/>
-<!--								<blancovalueobject metadir="meta/objects" encoding="${project.build.sourceEncoding}" sheetType="php" targetdir="sample" targetStyle="maven" verbose="true" />-->
 							</target>
 						</configuration>
 						<goals>
@@ -253,20 +259,20 @@
 						</goals>
 					</execution>
 
-					<execution>
-						<id>blanco-meta-valueobject-test</id>
-						<phase>generate-test-sources</phase>
-						<configuration>
-							<target>
-								<taskdef name="blancovalueobject" classname="blanco.valueobject.task.BlancoValueObjectTask" classpathref="maven.runtime.classpath">
-								</taskdef>
-								<blancovalueobject metadir="meta/objects" encoding="${project.build.sourceEncoding}" sheetType="php" tmpdir="tmpTest" targetdir="sample/blanco" targetStyle="maven" verbose="true" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
+<!--					<execution>-->
+<!--						<id>blanco-meta-valueobject-test</id>-->
+<!--						<phase>generate-test-sources</phase>-->
+<!--						<configuration>-->
+<!--							<target>-->
+<!--								<taskdef name="blancovalueobjectkt" classname="blanco.valueobject.task.BlancoValueObjectKtTask" classpathref="maven.runtime.classpath">-->
+<!--								</taskdef>-->
+<!--								<blancovalueobject metadir="meta/objects" encoding="${project.build.sourceEncoding}" sheetType="php" tmpdir="tmpTest" targetdir="sample/blanco" targetStyle="maven" verbose="true" />-->
+<!--							</target>-->
+<!--						</configuration>-->
+<!--						<goals>-->
+<!--							<goal>run</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
 
 					<execution>
 						<id>blanco-clean</id>
