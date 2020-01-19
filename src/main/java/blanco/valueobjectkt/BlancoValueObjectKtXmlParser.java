@@ -593,7 +593,7 @@ public class BlancoValueObjectKtXmlParser {
                     }
 
                     fieldStructure.setGeneric(javaGeneric);
-                    fieldStructure.setType(javaType + "<" + javaGeneric + ">");
+                    fieldStructure.setType(javaType);
                 }
 
                 /* method の annnotation に対応 */

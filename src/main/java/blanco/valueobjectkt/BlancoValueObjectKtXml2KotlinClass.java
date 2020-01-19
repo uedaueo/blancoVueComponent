@@ -305,6 +305,18 @@ public class BlancoValueObjectKtXml2KotlinClass {
                 argFieldStructure.getType(), null);
 
         /*
+         * Generic に対応します。blancoCg 側では <> が付いている前提かつ
+         * package部をtrimするので、ここで設定しないと正しく設定されません。
+         */
+        String generic = argFieldStructure.getGeneric();
+        if (generic != null && generic.length() > 0) {
+            field.getType().setGenerics(generic);
+        }
+
+        System.out.println("!!! type = " + argFieldStructure.getType());
+        System.out.println("!!! generic = " + field.getType().getGenerics());
+
+        /*
          * 当面の間、blancoValueObjectKt ではprivateやgetter/setter,
          * open には対応しません。
          */
