@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>blanco.valueobjectkt</groupId>
-	<artifactId>blanco-valueobjectkt</artifactId>
+	<groupId>blanco.valueobjectTs</groupId>
+	<artifactId>blanco-valueobjectTs</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1</version>
 	<name>blanco-valueobject-kt</name>
@@ -264,7 +264,7 @@
 <!--						<phase>generate-test-sources</phase>-->
 <!--						<configuration>-->
 <!--							<target>-->
-<!--								<taskdef name="blancovalueobjectkt" classname="blanco.valueobject.task.BlancoValueObjectKtTask" classpathref="maven.runtime.classpath">-->
+<!--								<taskdef name="blancovalueobjectTs" classname="blanco.valueobject.task.BlancovalueobjectTsTask" classpathref="maven.runtime.classpath">-->
 <!--								</taskdef>-->
 <!--								<blancovalueobject metadir="meta/objects" encoding="${project.build.sourceEncoding}" sheetType="php" tmpdir="tmpTest" targetdir="sample/blanco" targetStyle="maven" verbose="true" />-->
 <!--							</target>-->
