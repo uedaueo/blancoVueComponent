@@ -146,7 +146,7 @@
         </propertykey>
       </propertyblock>
 
-      <tableblock name="blancovalueobjectphp-implements" waitY="2" titleheight="2" rowname="import">
+      <tableblock name="blancovalueobjectphp-implements" waitY="2" titleheight="2" rowname="interface">
         <startstring>バリューオブジェクト定義(php)・実装</startstring>
 
         <tablecolumn name="no">

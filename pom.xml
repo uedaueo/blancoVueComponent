@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>blanco.valueobjectTs</groupId>
-	<artifactId>blanco-valueobjectTs</artifactId>
+	<groupId>blanco.valueobjectts</groupId>
+	<artifactId>blanco-valueobjectts</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1</version>
-	<name>blanco-valueobject-kt</name>
+	<name>blanco-valueobject-ts</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 
 	<!-- basic spec for jar -->

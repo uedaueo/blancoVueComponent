@@ -10,7 +10,6 @@
 package blanco.valueobjectts;
 
 import blanco.cg.BlancoCgSupportedLang;
-import blanco.cg.valueobject.BlancoCgSourceFile;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
 import blanco.valueobjectts.message.BlancoValueObjectTsMessage;
@@ -409,6 +408,8 @@ public class BlancoValueObjectTsXmlParser {
                 .getTextContent(elementCommon, "abstract")));
         objClassStructure.setData("true".equals(BlancoXmlBindingUtil
                 .getTextContent(elementCommon, "data")));
+        objClassStructure.setInterface("true".equals(BlancoXmlBindingUtil
+                .getTextContent(elementCommon, "interface")));
         objClassStructure.setGenerateToString("true"
                 .equals(BlancoXmlBindingUtil.getTextContent(elementCommon,
                         "generateToString")));
@@ -440,27 +441,29 @@ public class BlancoValueObjectTsXmlParser {
         if (extendsList != null && extendsList.size() != 0) {
             final BlancoXmlElement elementExtendsRoot = extendsList.get(0);
             String className = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "name");
-            String classNameCanon = className;
-            String packageName = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "package");
-            if (packageName == null) {
-            /*
-             * このクラスのパッケージ名を探す
-             */
-                packageName = argClassList.get(className);
-            }
-            if (packageName != null) {
-                classNameCanon = packageName + "." + className;
-            }
-            if (isVerbose()) {
-                System.out.println("/* tueda */ Extends : " + classNameCanon);
-            }
-            objClassStructure.setExtends(classNameCanon);
+            if (className != null) {
+                String classNameCanon = className;
+                String packageName = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "package");
+                if (packageName == null) {
+                    /*
+                     * このクラスのパッケージ名を探す
+                     */
+                    packageName = argClassList.get(className);
+                }
+                if (packageName != null) {
+                    classNameCanon = packageName + "." + className;
+                }
+                if (isVerbose()) {
+                    System.out.println("/* tueda */ Extends : " + classNameCanon);
+                }
+                objClassStructure.setExtends(classNameCanon);
 
-            /*
-             * TypeScript 用 import 情報の作成
-             */
-            if (objClassStructure.getCreateImportList()) {
-                this.makeImportHeaderList(packageName, className, objClassStructure.getBasedir());
+                /*
+                 * TypeScript 用 import 情報の作成
+                 */
+                if (objClassStructure.getCreateImportList()) {
+                    this.makeImportHeaderList(packageName, className, objClassStructure);
+                }
             }
         }
 
@@ -472,7 +475,10 @@ public class BlancoValueObjectTsXmlParser {
             final BlancoXmlElement elementInterfaceRoot = interfaceList.get(0);
             final List<BlancoXmlElement> listInterfaceChildNodes = BlancoXmlBindingUtil
                     .getElementsByTagName(elementInterfaceRoot, "interface");
-            for (int index = 0; index < listInterfaceChildNodes.size(); index++) {
+            for (int index = 0;
+                 listInterfaceChildNodes != null &&
+                         index < listInterfaceChildNodes.size();
+                 index++) {
                 final BlancoXmlElement elementList = listInterfaceChildNodes
                         .get(index);
 
@@ -497,54 +503,8 @@ public class BlancoValueObjectTsXmlParser {
                          */
                         packageName = argClassList.get(className);
                     }
-                    this.makeImportHeaderList(packageName, className, objClassStructure.getBasedir());
+                    this.makeImportHeaderList(packageName, className, objClassStructure);
                 }
-            }
-        }
-
-        /* import の一覧作成 */
-//        final List<BlancoXmlElement> importList = BlancoXmlBindingUtil
-//                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-import");
-//        if (importList != null && importList.size() != 0) {
-//            final BlancoXmlElement elementImportRoot = importList.get(0);
-//            final List<BlancoXmlElement> listImportChildNodes = BlancoXmlBindingUtil
-//                    .getElementsByTagName(elementImportRoot, "import");
-//            for (int index = 0; index < listImportChildNodes.size(); index++) {
-//                final BlancoXmlElement elementList = listImportChildNodes
-//                        .get(index);
-//
-//                final String importName = BlancoXmlBindingUtil
-//                        .getTextContent(elementList, "name");
-//                System.out.println("/* tueda */ import = " + importName);
-//                if (importName == null || importName.trim().length() == 0) {
-//                    continue;
-//                }
-//                objClassStructure.getImportList().add(
-//                        BlancoXmlBindingUtil
-//                                .getTextContent(elementList, "name"));
-//            }
-//        }
-
-        /* header の一覧作成 */
-        final List<BlancoXmlElement> headerList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-header");
-        if (headerList != null && headerList.size() != 0) {
-            final BlancoXmlElement elementHeaderRoot = headerList.get(0);
-            final List<BlancoXmlElement> listHeaderChildNodes = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementHeaderRoot, "header");
-            for (int index = 0; index < listHeaderChildNodes.size(); index++) {
-                final BlancoXmlElement elementList = listHeaderChildNodes
-                        .get(index);
-
-                final String headerName = BlancoXmlBindingUtil
-                        .getTextContent(elementList, "name");
-                System.out.println("/* tueda */ header = " + headerName);
-                if (headerName == null || headerName.trim().length() == 0) {
-                    continue;
-                }
-                objClassStructure.getHeaderList().add(
-                        BlancoXmlBindingUtil
-                                .getTextContent(elementList, "name"));
             }
         }
 
@@ -598,12 +558,23 @@ public class BlancoValueObjectTsXmlParser {
                 } else {
                     /* この名前の package を探す */
                     String packageName = argClassList.get(phpType);
+                    if (packageName == null) {
+                        // package 名の分離を試みる
+
+                    }
                     if (packageName != null) {
                         javaType = packageName + "." + phpType;
                     }
 
                     /* その他はそのまま記述する */
                     System.out.println("/* tueda */ Unknown php type: " + javaType);
+
+                    /*
+                     * TypeScript 用 import 情報の作成
+                     */
+                    if (objClassStructure.getCreateImportList()) {
+                        this.makeImportHeaderList(packageName, phpType, objClassStructure);
+                    }
                 }
 
                 fieldStructure.setType(javaType);
@@ -649,6 +620,13 @@ public class BlancoValueObjectTsXmlParser {
 
                     /* その他はそのまま記述する */
                         System.out.println("/* tueda */ Unknown php type: " + javaGeneric);
+
+                        /*
+                         * TypeScript 用 import 情報の作成
+                         */
+                        if (objClassStructure.getCreateImportList()) {
+                            this.makeImportHeaderList(packageName, phpGeneric, objClassStructure);
+                        }
                     }
 
                     fieldStructure.setGeneric(javaGeneric);
@@ -718,6 +696,60 @@ public class BlancoValueObjectTsXmlParser {
             }
         }
 
+        /*
+         * header の一覧作成
+         * まず、定義書に書かれたものをそのまま出力します。
+         */
+        final List<BlancoXmlElement> headerList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-header");
+        if (headerList != null && headerList.size() != 0) {
+            final BlancoXmlElement elementHeaderRoot = headerList.get(0);
+            final List<BlancoXmlElement> listHeaderChildNodes = BlancoXmlBindingUtil
+                    .getElementsByTagName(elementHeaderRoot, "header");
+            for (int index = 0; index < listHeaderChildNodes.size(); index++) {
+                final BlancoXmlElement elementList = listHeaderChildNodes
+                        .get(index);
+
+                final String headerName = BlancoXmlBindingUtil
+                        .getTextContent(elementList, "name");
+                if (this.isVerbose()) {
+                    System.out.println("/* tueda */ header = " + headerName);
+                }
+                if (headerName == null || headerName.trim().length() == 0) {
+                    continue;
+                }
+                objClassStructure.getHeaderList().add(
+                        BlancoXmlBindingUtil
+                                .getTextContent(elementList, "name"));
+            }
+        }
+
+        /*
+         * 次に、自動生成されたものを出力します。
+         * 現在の方式だと、以下の前提が必要。
+         *  * 1ファイルに1クラスの定義
+         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
+         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
+         */
+        Set<String> fromList = this.importHeaderList.keySet();
+        for (String strFrom : fromList) {
+            StringBuffer sb = new StringBuffer();
+            sb.append("import { ");
+            List<String> classNameList = this.importHeaderList.get(strFrom);
+            int count = 0;
+            for (String className : classNameList) {
+                if (count > 0) {
+                    sb.append(", ");
+                }
+                sb.append(className);
+                count++;
+            }
+            if (count > 0) {
+                sb.append(" } from \"" + strFrom + "\"");
+                objClassStructure.getHeaderList().add(sb.toString());
+            }
+        }
+
         return objClassStructure;
     }
 
@@ -780,16 +812,22 @@ public class BlancoValueObjectTsXmlParser {
 
     /**
      * インポート文を生成する
-     *
      * @param className
-     * @param basedir
+     * @param objClassStructure
      */
-    private void makeImportHeaderList(String packageName, String className, String basedir) {
-        if (basedir == null) {
-            basedir = "/";
+    private void makeImportHeaderList(String packageName, String className, BlancoValueObjectTsClassStructure objClassStructure) {
+        if (objClassStructure == null) {
+            throw new IllegalArgumentException("objClassStructure should not be NULL.");
         }
+        if (className == null || className.length() == 0) {
+            System.out.println("/* tueda */ className is not specified. SKIP.");
+            return;
+        }
+        String basedir = objClassStructure.getBasedir();
         String importFrom = "./" + className;
-        if (packageName != null && packageName.length() != 0) {
+        if (packageName != null &&
+                packageName.length() != 0 &&
+                packageName.equals(objClassStructure.getPackage()) != true) {
             String classNameCanon = packageName.replace('.', '/') + "/" + className;
             importFrom = "@" + basedir + "/" + classNameCanon;
         }

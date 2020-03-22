@@ -228,7 +228,9 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         if (annotationList != null && annotationList.size() > 0) {
             fCgClass.getAnnotationList().addAll(argClassStructure.getAnnotationList());
             /* tueda DEBUG */
-            System.out.println("/* tueda */ generateClass : class annotation = " + argClassStructure.getAnnotationList().get(0));
+            if (this.isVerbose()) {
+                System.out.println("/* tueda */ generateClass : class annotation = " + argClassStructure.getAnnotationList().get(0));
+            }
         }
 
         /* TypeScript では import の代わりに header を設定します */
@@ -259,7 +261,12 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
             buildField(argClassStructure, fieldStructure, false);
 
             // セッターメソッドの生成。
-            buildMethodSet(argClassStructure, fieldStructure);
+            if (!fieldStructure.getValue()) {
+                /*
+                 * 定数値に対してはsetterを生成しません。
+                 */
+                buildMethodSet(argClassStructure, fieldStructure);
+            }
 
             // ゲッターメソッドの生成。
             buildMethodGet(argClassStructure, fieldStructure);
@@ -335,23 +342,25 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         // インタフェイスに実装はありません。
 
         if (fIsXmlRootElement) {
-            fCgClass.getAnnotationList().add("XmlRootElement");
+            fCgInterface.getAnnotationList().add("XmlRootElement");
             fCgSourceFile.getImportList().add(
                     "javax.xml.bind.annotation.XmlRootElement");
         }
 
         // クラスのJavaDocを設定します。
-        fCgClass.setDescription(argInterfaceStructure.getDescription());
+        fCgInterface.setDescription(argInterfaceStructure.getDescription());
         for (String line : argInterfaceStructure.getDescriptionList()) {
-            fCgClass.getLangDoc().getDescriptionList().add(line);
+            fCgInterface.getLangDoc().getDescriptionList().add(line);
         }
 
         /* クラスのannotation を設定します */
         List annotationList = argInterfaceStructure.getAnnotationList();
         if (annotationList != null && annotationList.size() > 0) {
-            fCgClass.getAnnotationList().addAll(argInterfaceStructure.getAnnotationList());
+            fCgInterface.getAnnotationList().addAll(argInterfaceStructure.getAnnotationList());
             /* tueda DEBUG */
-            System.out.println("/* tueda */ generateInterface : class annotation = " + argInterfaceStructure.getAnnotationList().get(0));
+            if (this.isVerbose()) {
+                System.out.println("/* tueda */ generateInterface : class annotation = " + argInterfaceStructure.getAnnotationList().get(0));
+            }
         }
 
         /* TypeScript では import の代わりに header を設定します */
@@ -436,8 +445,10 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
             field.getType().setGenerics(generic);
         }
 
-        System.out.println("!!! type = " + argFieldStructure.getType());
-        System.out.println("!!! generic = " + field.getType().getGenerics());
+        if (this.isVerbose()) {
+            System.out.println("!!! type = " + argFieldStructure.getType());
+            System.out.println("!!! generic = " + field.getType().getGenerics());
+        }
 
         if (isInterface != true) {
             field.setAccess("private");
@@ -511,7 +522,9 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         List annotationList = argFieldStructure.getAnnotationList();
         if (annotationList != null && annotationList.size() > 0) {
             field.getAnnotationList().addAll(annotationList);
-            System.out.println("/* tueda */ method annotation = " + field.getAnnotationList().get(0));
+            if (this.isVerbose()) {
+                System.out.println("/* tueda */ method annotation = " + field.getAnnotationList().get(0));
+            }
         }
     }
 
