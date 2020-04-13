@@ -555,13 +555,18 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
             method.getLangDoc().getDescriptionList().add(line);
         }
 
-        method.getParameterList().add(
-                fCgFactory.createParameter("arg"
+        BlancoCgParameter param = fCgFactory.createParameter("arg"
                         + getFieldNameAdjustered(argClassStructure,
-                                argFieldStructure),
-                        argFieldStructure.getType(),
-                        fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
-                                .getName())));
+                argFieldStructure),
+                argFieldStructure.getType(),
+                fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
+                        .getName()));
+        method.getParameterList().add(param);
+        // generic があれば対応
+        String generic = argFieldStructure.getGeneric();
+        if (generic != null && generic.length() > 0) {
+            param.getType().setGenerics(generic);
+        }
 
         // メソッドの実装
         method.getLineList().add(
@@ -607,6 +612,11 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
 
         method.setReturn(fCgFactory.createReturn(argFieldStructure.getType(),
                 fBundle.getXml2javaclassGetReturnJavadoc(argFieldStructure.getName())));
+        // generic があれば対応
+        String generic = argFieldStructure.getGeneric();
+        if (generic != null && generic.length() > 0) {
+            method.getReturn().getType().setGenerics(generic);
+        }
 
         // メソッドの実装
         method.getLineList().add(

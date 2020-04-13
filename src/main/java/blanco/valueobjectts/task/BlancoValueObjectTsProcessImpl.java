@@ -90,6 +90,7 @@ public class BlancoValueObjectTsProcessImpl implements BlancoValueObjectTsProces
             BlancoValueObjectTsXmlParser.classList =
                     BlancoValueObjectTsXmlParser.createClassListFromSheets(fileMeta2);
 
+            // 次にメタディレクトリとして指定されているディレクトリを走査
             for (int index = 0; index < fileMeta2.length; index++) {
                 if (fileMeta2[index].getName().endsWith(".xml") == false) {
                     continue;
@@ -106,23 +107,23 @@ public class BlancoValueObjectTsProcessImpl implements BlancoValueObjectTsProces
                 // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
             }
 
-            // 次にメタディレクトリとして指定されているディレクトリを走査
-            final File[] fileMeta3 = fileMetadir.listFiles();
-            for (int index = 0; index < fileMeta3.length; index++) {
-                if (fileMeta3[index].getName().endsWith(".xml") == false) {
-                    continue;
-                }
-
-                final BlancoValueObjectTsXml2TypeScriptClass xml2JavaClass = new BlancoValueObjectTsXml2TypeScriptClass();
-                xml2JavaClass.setEncoding(input.getEncoding());
-                xml2JavaClass.setVerbose(input.getVerbose());
-                xml2JavaClass.setTargetStyleAdvanced(isTargetStyleAdvanced);
-                xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
-                xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
-                xml2JavaClass.process(fileMeta3[index], new File(strTarget));
-
-                // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
-            }
+//            // 次にメタディレクトリとして指定されているディレクトリを走査
+//            final File[] fileMeta3 = fileMetadir.listFiles();
+//            for (int index = 0; index < fileMeta3.length; index++) {
+//                if (fileMeta3[index].getName().endsWith(".xml") == false) {
+//                    continue;
+//                }
+//
+//                final BlancoValueObjectTsXml2TypeScriptClass xml2JavaClass = new BlancoValueObjectTsXml2TypeScriptClass();
+//                xml2JavaClass.setEncoding(input.getEncoding());
+//                xml2JavaClass.setVerbose(input.getVerbose());
+//                xml2JavaClass.setTargetStyleAdvanced(isTargetStyleAdvanced);
+//                xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
+//                xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
+//                xml2JavaClass.process(fileMeta3[index], new File(strTarget));
+//
+//                // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
+//            }
 
             return BlancoValueObjectTsBatchProcess.END_SUCCESS;
         } catch (TransformerException e) {
