@@ -824,6 +824,9 @@ public class BlancoValueObjectTsXmlParser {
             return;
         }
         String basedir = objClassStructure.getBasedir();
+        if (basedir == null) {
+            basedir = "";
+        }
         String importFrom = "./" + className;
         if (packageName != null &&
                 packageName.length() != 0 &&
