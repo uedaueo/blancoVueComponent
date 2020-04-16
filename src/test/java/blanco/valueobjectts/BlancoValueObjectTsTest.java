@@ -24,7 +24,7 @@ import java.io.IOException;
 public class BlancoValueObjectTsTest {
 
     @Test
-    public void testBlancoValueObjectKt() {
+    public void testBlancoValueObjectTs() {
         BlancoValueObjectTsProcessInput input = new BlancoValueObjectTsProcessInput();
         input.setMetadir("meta/objects");
         input.setEncoding("UTF-8");

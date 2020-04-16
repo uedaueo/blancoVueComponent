@@ -16,7 +16,6 @@ import blanco.cg.util.BlancoCgSourceUtil;
 import blanco.cg.valueobject.*;
 import blanco.commons.util.BlancoJavaSourceUtil;
 import blanco.commons.util.BlancoNameAdjuster;
-import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
 import blanco.valueobjectts.message.BlancoValueObjectTsMessage;
 import blanco.valueobjectts.resourcebundle.BlancoValueObjectTsResourceBundle;
@@ -561,6 +560,9 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
                 argFieldStructure.getType(),
                 fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
                         .getName()));
+        if (!argFieldStructure.getNullable()) {
+            param.setNotnull(true);
+        }
         method.getParameterList().add(param);
         // generic があれば対応
         String generic = argFieldStructure.getGeneric();
@@ -593,6 +595,11 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
                         .getName()));
         fCgClass.getMethodList().add(method);
 
+        // Notnull に対応
+        if (!argFieldStructure.getNullable()) {
+            method.setNotnull(true);
+        }
+
         method.setAccess("get");
 
         // メソッドの JavaDoc設定。
@@ -610,8 +617,9 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
                             .getDefault())));
         }
 
-        method.setReturn(fCgFactory.createReturn(argFieldStructure.getType(),
-                fBundle.getXml2javaclassGetReturnJavadoc(argFieldStructure.getName())));
+        BlancoCgReturn cgReturn = fCgFactory.createReturn(argFieldStructure.getType(),
+                fBundle.getXml2javaclassGetReturnJavadoc(argFieldStructure.getName()));
+        method.setReturn(cgReturn);
         // generic があれば対応
         String generic = argFieldStructure.getGeneric();
         if (generic != null && generic.length() > 0) {
