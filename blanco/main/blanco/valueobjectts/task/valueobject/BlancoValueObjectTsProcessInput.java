@@ -43,6 +43,14 @@ public class BlancoValueObjectTsProcessInput {
     private String fEncoding;
 
     /**
+     * タブをwhite spaceいくつで置き換えるか、という値です。
+     *
+     * フィールド: [tabs]。
+     * デフォルト: [4]。
+     */
+    private int fTabs = 4;
+
+    /**
      * XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。
      *
      * フィールド: [xmlrootelement]。
@@ -180,6 +188,29 @@ public class BlancoValueObjectTsProcessInput {
     }
 
     /**
+     * フィールド [tabs] の値を設定します。
+     *
+     * フィールドの説明: [タブをwhite spaceいくつで置き換えるか、という値です。]。
+     *
+     * @param argTabs フィールド[tabs]に設定する値。
+     */
+    public void setTabs(final int argTabs) {
+        fTabs = argTabs;
+    }
+
+    /**
+     * フィールド [tabs] の値を取得します。
+     *
+     * フィールドの説明: [タブをwhite spaceいくつで置き換えるか、という値です。]。
+     * デフォルト: [4]。
+     *
+     * @return フィールド[tabs]から取得した値。
+     */
+    public int getTabs() {
+        return fTabs;
+    }
+
+    /**
      * フィールド [xmlrootelement] の値を設定します。
      *
      * フィールドの説明: [XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。]。
@@ -268,6 +299,7 @@ public class BlancoValueObjectTsProcessInput {
         buf.append(",targetdir=" + fTargetdir);
         buf.append(",tmpdir=" + fTmpdir);
         buf.append(",encoding=" + fEncoding);
+        buf.append(",tabs=" + fTabs);
         buf.append(",xmlrootelement=" + fXmlrootelement);
         buf.append(",sheetType=" + fSheetType);
         buf.append(",targetStyle=" + fTargetStyle);
@@ -308,6 +340,9 @@ public class BlancoValueObjectTsProcessInput {
         // Name: fEncoding
         // Type: java.lang.String
         target.fEncoding = this.fEncoding;
+        // Name: fTabs
+        // Type: int
+        target.fTabs = this.fTabs;
         // Name: fXmlrootelement
         // Type: boolean
         target.fXmlrootelement = this.fXmlrootelement;

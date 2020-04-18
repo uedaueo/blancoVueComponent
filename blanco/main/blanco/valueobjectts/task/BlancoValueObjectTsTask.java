@@ -49,6 +49,11 @@ public class BlancoValueObjectTsTask extends Task {
     protected boolean fIsFieldEncodingProcessed = false;
 
     /**
+     * フィールド [tabs] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldTabsProcessed = false;
+
+    /**
      * フィールド [xmlrootelement] に値がセットされたかどうか。
      */
     protected boolean fIsFieldXmlrootelementProcessed = false;
@@ -185,9 +190,39 @@ public class BlancoValueObjectTsTask extends Task {
     }
 
     /**
-     * Antタスクの[xmlrootelement]アトリビュートのセッターメソッド。
+     * Antタスクの[tabs]アトリビュートのセッターメソッド。
      *
      * 項目番号: 5<br>
+     * タブをwhite spaceいくつで置き換えるか、という値です。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setTabs(final String arg) {
+        try {
+            fInput.setTabs(Integer.parseInt(arg));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Antタスクの[tabs]アトリビュートに与えられた値の数値解析に失敗しました。" + e.toString());
+        }
+        fIsFieldTabsProcessed = true;
+    }
+
+    /**
+     * Antタスクの[tabs]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 5<br>
+     * タブをwhite spaceいくつで置き換えるか、という値です。<br>
+     * デフォルト値[4]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getTabs() {
+        return String.valueOf(fInput.getTabs());
+    }
+
+    /**
+     * Antタスクの[xmlrootelement]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 6<br>
      * XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。<br>
      *
      * @param arg セットしたい値
@@ -200,7 +235,7 @@ public class BlancoValueObjectTsTask extends Task {
     /**
      * Antタスクの[xmlrootelement]アトリビュートのゲッターメソッド。
      *
-     * 項目番号: 5<br>
+     * 項目番号: 6<br>
      * XML ルート要素のアノテーションを出力するかどうか。JDK 1.6 以降が必要。<br>
      * デフォルト値[false]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
      *
@@ -213,7 +248,7 @@ public class BlancoValueObjectTsTask extends Task {
     /**
      * Antタスクの[sheetType]アトリビュートのセッターメソッド。
      *
-     * 項目番号: 6<br>
+     * 項目番号: 7<br>
      * meta定義書が期待しているプログラミング言語を指定します<br>
      *
      * @param arg セットしたい値
@@ -226,7 +261,7 @@ public class BlancoValueObjectTsTask extends Task {
     /**
      * Antタスクの[sheetType]アトリビュートのゲッターメソッド。
      *
-     * 項目番号: 6<br>
+     * 項目番号: 7<br>
      * meta定義書が期待しているプログラミング言語を指定します<br>
      * デフォルト値[java]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
      *
@@ -239,7 +274,7 @@ public class BlancoValueObjectTsTask extends Task {
     /**
      * Antタスクの[targetStyle]アトリビュートのセッターメソッド。
      *
-     * 項目番号: 7<br>
+     * 項目番号: 8<br>
      * 出力先フォルダの書式を指定します。&lt;br&gt;\nblanco: [targetdir]/main&lt;br&gt;\nmaven: [targetdir]/main/java&lt;br&gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)<br>
      *
      * @param arg セットしたい値
@@ -252,7 +287,7 @@ public class BlancoValueObjectTsTask extends Task {
     /**
      * Antタスクの[targetStyle]アトリビュートのゲッターメソッド。
      *
-     * 項目番号: 7<br>
+     * 項目番号: 8<br>
      * 出力先フォルダの書式を指定します。&lt;br&gt;\nblanco: [targetdir]/main&lt;br&gt;\nmaven: [targetdir]/main/java&lt;br&gt;\nfree: [targetdir](targetdirが無指定の場合はblanco/main)<br>
      * デフォルト値[blanco]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
      *
@@ -282,6 +317,7 @@ public class BlancoValueObjectTsTask extends Task {
             System.out.println("- targetdir:[" + getTargetdir() + "]");
             System.out.println("- tmpdir:[" + getTmpdir() + "]");
             System.out.println("- encoding:[" + getEncoding() + "]");
+            System.out.println("- tabs:[" + getTabs() + "]");
             System.out.println("- xmlrootelement:[" + getXmlrootelement() + "]");
             System.out.println("- sheetType:[" + getSheetType() + "]");
             System.out.println("- targetStyle:[" + getTargetStyle() + "]");

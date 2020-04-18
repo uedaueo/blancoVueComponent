@@ -32,6 +32,7 @@ public class BlancoValueObjectTsTest {
         input.setTmpdir("tmpTest");
         input.setTargetdir("sample/blanco");
         input.setTargetStyle("maven");
+        input.setTabs(2);
         input.setVerbose(true);
 
         BlancoValueObjectTsProcessImpl imple = new BlancoValueObjectTsProcessImpl();

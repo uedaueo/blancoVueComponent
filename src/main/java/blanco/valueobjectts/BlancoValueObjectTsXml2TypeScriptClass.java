@@ -73,6 +73,14 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         return this.fVerbose;
     }
 
+    private int fTabs = 4;
+    public int getTabs() {
+        return fTabs;
+    }
+    public void setTabs(int fTabs) {
+        this.fTabs = fTabs;
+    }
+
     /**
      * 内部的に利用するblancoCg用ファクトリ。
      */
@@ -173,6 +181,7 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
                 .getPackage(), null);
         fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
 
         // クラスを作成します。
         fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
@@ -323,6 +332,7 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         fCgSourceFile = fCgFactory.createSourceFile(argInterfaceStructure
                 .getPackage(), null);
         fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
 
         // インタフェイスを作成します。
         fCgInterface = fCgFactory.createInterface(argInterfaceStructure.getName(), "");
