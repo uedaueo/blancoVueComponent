@@ -428,6 +428,8 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
             final BlancoValueObjectTsFieldStructure argFieldStructure,
             boolean isInterface) {
 
+//        System.out.println("%%% " + argFieldStructure.toString());
+
         /*
          * blancoValueObjectではプロパティ名の前にfをつける流儀であるが、
          * TypeScript では、Interface にはつけない。
@@ -475,10 +477,7 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
         field.setConst(argFieldStructure.getValue());
 
         // nullable に対応します。
-        Boolean isNullable = argFieldStructure.getNullable();
-        if (isNullable != null && isNullable) {
-            field.setNotnull(false);
-        } else {
+        if (!argFieldStructure.getNullable()) {
             field.setNotnull(true);
         }
 
@@ -494,11 +493,12 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
          * TypeScript ではプロパティのデフォルト値は原則必須
          * ただし、interface では設定不可。
          */
-        if (isInterface != true && argFieldStructure.getDefault() != null) {
+        if (isInterface != true) {
             final String type = field.getType().getName();
             String defaultRawValue = argFieldStructure.getDefault();
-            if (defaultRawValue == null || defaultRawValue.length() <= 0) {
-                System.err.println("/* tueda */ フィールドにデフォルト値が設定されていません。interface でない場合は必ずデフォルト値を設定してください。");
+            boolean isNullable = argFieldStructure.getNullable();
+            if (!isNullable && (defaultRawValue == null || defaultRawValue.length() <= 0)) {
+                System.err.println("/* tueda */ フィールドにデフォルト値が設定されていません。interface でない場合は必ずデフォルト値を設定するか、Nullableを設定してください。");
                 throw new IllegalArgumentException(fMsg
                         .getMbvoji08(argClassStructure.getName(), argFieldStructure.getName()));
             }

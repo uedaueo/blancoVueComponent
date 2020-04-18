@@ -692,6 +692,10 @@ public class BlancoValueObjectTsXmlParser {
                                     .getName()));
                 }
 
+//                if (this.isVerbose()) {
+//                    System.out.println("fieldStructure: " + fieldStructure.get+ fieldStructure.toString());
+//                }
+
                 objClassStructure.getFieldList().add(fieldStructure);
             }
         }
