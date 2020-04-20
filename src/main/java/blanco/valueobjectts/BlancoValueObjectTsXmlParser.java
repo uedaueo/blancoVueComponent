@@ -836,7 +836,7 @@ public class BlancoValueObjectTsXmlParser {
                 packageName.length() != 0 &&
                 packageName.equals(objClassStructure.getPackage()) != true) {
             String classNameCanon = packageName.replace('.', '/') + "/" + className;
-            importFrom = "@" + basedir + "/" + classNameCanon;
+            importFrom = basedir + "/" + classNameCanon;
         }
 
         List<String> importClassList = this.importHeaderList.get(importFrom);
