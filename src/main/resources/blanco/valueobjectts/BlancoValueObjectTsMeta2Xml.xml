@@ -97,7 +97,7 @@
           <value>パッケージ</value>
         </propertykey>
           <propertykey name="annotation" waitX="2">
-          <value>アノテーション</value>
+          <value>デコレーション</value>
         </propertykey>
         <propertykey name="description" waitX="2">
           <value>説明</value>
