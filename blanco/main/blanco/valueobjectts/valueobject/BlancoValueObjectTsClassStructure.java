@@ -21,6 +21,13 @@ public class BlancoValueObjectTsClassStructure {
     private String fPackage;
 
     /**
+     * listClassが指定された場合に、プロパティ名として使われます。未指定の場合はnameをlowerCamelCaseに変換して使用します。
+     *
+     * フィールド: [classAlias]。
+     */
+    private String fClassAlias;
+
+    /**
      * 本番時にファイルを配置する歳のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。
      *
      * フィールド: [basedir]。
@@ -218,6 +225,28 @@ public class BlancoValueObjectTsClassStructure {
      */
     public String getPackage() {
         return fPackage;
+    }
+
+    /**
+     * フィールド [classAlias] の値を設定します。
+     *
+     * フィールドの説明: [listClassが指定された場合に、プロパティ名として使われます。未指定の場合はnameをlowerCamelCaseに変換して使用します。]。
+     *
+     * @param argClassAlias フィールド[classAlias]に設定する値。
+     */
+    public void setClassAlias(final String argClassAlias) {
+        fClassAlias = argClassAlias;
+    }
+
+    /**
+     * フィールド [classAlias] の値を取得します。
+     *
+     * フィールドの説明: [listClassが指定された場合に、プロパティ名として使われます。未指定の場合はnameをlowerCamelCaseに変換して使用します。]。
+     *
+     * @return フィールド[classAlias]から取得した値。
+     */
+    public String getClassAlias() {
+        return fClassAlias;
     }
 
     /**
@@ -693,6 +722,7 @@ public class BlancoValueObjectTsClassStructure {
         buf.append("blanco.valueobjectts.valueobject.BlancoValueObjectTsClassStructure[");
         buf.append("name=" + fName);
         buf.append(",package=" + fPackage);
+        buf.append(",classAlias=" + fClassAlias);
         buf.append(",basedir=" + fBasedir);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
@@ -741,6 +771,9 @@ public class BlancoValueObjectTsClassStructure {
         // Name: fPackage
         // Type: java.lang.String
         target.fPackage = this.fPackage;
+        // Name: fClassAlias
+        // Type: java.lang.String
+        target.fClassAlias = this.fClassAlias;
         // Name: fBasedir
         // Type: java.lang.String
         target.fBasedir = this.fBasedir;

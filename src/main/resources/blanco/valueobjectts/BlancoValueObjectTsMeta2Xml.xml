@@ -90,6 +90,9 @@
 <!--        <propertykey name="namespace" waitX="2">-->
 <!--          <value>名前空間</value>-->
 <!--        </propertykey>-->
+        <propertykey name="classAlias" waitX="2">
+          <value>エイリアス名</value>
+        </propertykey>
         <propertykey name="basedir" waitX="2">
           <value>配置ディレクトリ</value>
         </propertykey>

@@ -173,6 +173,10 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
             listClassStructure.getFieldList().add(fieldStructure);
 
             String propertyName = BlancoNameAdjuster.toLowerCaseTitle(className);
+            String aliasName = structure.getClassAlias();
+            if (aliasName != null && aliasName.length() > 0) {
+                propertyName = aliasName;
+            }
             fieldStructure.setName(propertyName);
             fieldStructure.setType(classType);
             fieldStructure.setDefault("new " + className + "()");

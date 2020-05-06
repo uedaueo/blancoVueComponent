@@ -371,6 +371,8 @@ public class BlancoValueObjectTsXmlParser {
                 elementCommon, "name"));
         objClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(
                 elementCommon, "package"));
+        objClassStructure.setClassAlias(BlancoXmlBindingUtil.getTextContent(
+                elementCommon, "classAlias"));
         objClassStructure.setBasedir(BlancoXmlBindingUtil.getTextContent(
                 elementCommon, "basedir"));
 
