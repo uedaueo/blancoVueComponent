@@ -62,7 +62,7 @@ public class BlancoValueObjectTsXmlParser {
     };
 
     public static Map<String, String> classList = null;
-    private Map<String, List<String>> importHeaderList = new HashMap<>();
+    public Map<String, List<String>> importHeaderList = new HashMap<>();
 
     /**
      * 中間XMLファイルのXMLドキュメントをパースして、バリューオブジェクト情報の配列を取得します。
@@ -819,7 +819,7 @@ public class BlancoValueObjectTsXmlParser {
      * @param className
      * @param objClassStructure
      */
-    private void makeImportHeaderList(String packageName, String className, BlancoValueObjectTsClassStructure objClassStructure) {
+    public void makeImportHeaderList(String packageName, String className, BlancoValueObjectTsClassStructure objClassStructure) {
         if (objClassStructure == null) {
             throw new IllegalArgumentException("objClassStructure should not be NULL.");
         }

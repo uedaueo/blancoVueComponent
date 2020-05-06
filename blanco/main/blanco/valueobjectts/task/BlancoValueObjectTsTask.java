@@ -69,6 +69,11 @@ public class BlancoValueObjectTsTask extends Task {
     protected boolean fIsFieldTargetStyleProcessed = false;
 
     /**
+     * フィールド [listClass] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldListClassProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -298,6 +303,31 @@ public class BlancoValueObjectTsTask extends Task {
     }
 
     /**
+     * Antタスクの[listClass]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 9<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setListClass(final String arg) {
+        fInput.setListClass(arg);
+        fIsFieldListClassProcessed = true;
+    }
+
+    /**
+     * Antタスクの[listClass]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 9<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getListClass() {
+        return fInput.getListClass();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -321,6 +351,7 @@ public class BlancoValueObjectTsTask extends Task {
             System.out.println("- xmlrootelement:[" + getXmlrootelement() + "]");
             System.out.println("- sheetType:[" + getSheetType() + "]");
             System.out.println("- targetStyle:[" + getTargetStyle() + "]");
+            System.out.println("- listClass:[" + getListClass() + "]");
         }
 
         try {

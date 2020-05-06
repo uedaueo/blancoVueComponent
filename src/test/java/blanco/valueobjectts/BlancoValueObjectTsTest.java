@@ -43,4 +43,24 @@ public class BlancoValueObjectTsTest {
         }
     }
 
+    @Test
+    public void testCreateListClass() {
+        BlancoValueObjectTsProcessInput input = new BlancoValueObjectTsProcessInput();
+        input.setMetadir("meta/objects");
+        input.setEncoding("UTF-8");
+        input.setSheetType("php");
+        input.setTmpdir("tmpTest");
+        input.setTargetdir("sample/blanco");
+        input.setTargetStyle("maven");
+        input.setTabs(2);
+        input.setVerbose(true);
+        input.setListClass("ListClassSample");
+
+        BlancoValueObjectTsProcessImpl imple = new BlancoValueObjectTsProcessImpl();
+        try {
+            imple.execute(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -74,6 +74,8 @@ public class BlancoValueObjectTsBatchProcess {
                 input.setSheetType(arg.substring(11));
             } else if (arg.startsWith("-targetStyle=")) {
                 input.setTargetStyle(arg.substring(13));
+            } else if (arg.startsWith("-listClass=")) {
+                input.setListClass(arg.substring(11));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -167,7 +169,7 @@ public class BlancoValueObjectTsBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoValueObjectTsBatchProcess: Usage:");
-        System.out.println("  java blanco.valueobjectts.task.BlancoValueObjectTsBatchProcess -verbose=値1 -metadir=値2 -targetdir=値3 -tmpdir=値4 -encoding=値5 -tabs=値6 -xmlrootelement=値7 -sheetType=値8 -targetStyle=値9");
+        System.out.println("  java blanco.valueobjectts.task.BlancoValueObjectTsBatchProcess -verbose=値1 -metadir=値2 -targetdir=値3 -tmpdir=値4 -encoding=値5 -tabs=値6 -xmlrootelement=値7 -sheetType=値8 -targetStyle=値9 -listClass=値10");
         System.out.println("    -verbose");
         System.out.println("      説明[verboseモードで動作させるかどうか。]");
         System.out.println("      型[真偽]");
@@ -203,6 +205,9 @@ public class BlancoValueObjectTsBatchProcess {
         System.out.println("      説明[出力先フォルダの書式を指定します。<br>\nblanco: [targetdir]/main<br>\nmaven: [targetdir]/main/java<br>\nfree: [targetdir](targetdirが無指定の場合はblanco/main)]");
         System.out.println("      型[文字列]");
         System.out.println("      デフォルト値[blanco]");
+        System.out.println("    -listClass");
+        System.out.println("      説明[未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。]");
+        System.out.println("      型[文字列]");
         System.out.println("    -? , -help");
         System.out.println("      説明[使い方を表示します。]");
     }

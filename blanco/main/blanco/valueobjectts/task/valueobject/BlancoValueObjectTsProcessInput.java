@@ -75,6 +75,13 @@ public class BlancoValueObjectTsProcessInput {
     private String fTargetStyle = "blanco";
 
     /**
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。
+     *
+     * フィールド: [listClass]。
+     */
+    private String fListClass;
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [verboseモードで動作させるかどうか。]。
@@ -280,6 +287,28 @@ public class BlancoValueObjectTsProcessInput {
     }
 
     /**
+     * フィールド [listClass] の値を設定します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。]。
+     *
+     * @param argListClass フィールド[listClass]に設定する値。
+     */
+    public void setListClass(final String argListClass) {
+        fListClass = argListClass;
+    }
+
+    /**
+     * フィールド [listClass] の値を取得します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。]。
+     *
+     * @return フィールド[listClass]から取得した値。
+     */
+    public String getListClass() {
+        return fListClass;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -303,6 +332,7 @@ public class BlancoValueObjectTsProcessInput {
         buf.append(",xmlrootelement=" + fXmlrootelement);
         buf.append(",sheetType=" + fSheetType);
         buf.append(",targetStyle=" + fTargetStyle);
+        buf.append(",listClass=" + fListClass);
         buf.append("]");
         return buf.toString();
     }
@@ -352,5 +382,8 @@ public class BlancoValueObjectTsProcessInput {
         // Name: fTargetStyle
         // Type: java.lang.String
         target.fTargetStyle = this.fTargetStyle;
+        // Name: fListClass
+        // Type: java.lang.String
+        target.fListClass = this.fListClass;
     }
 }

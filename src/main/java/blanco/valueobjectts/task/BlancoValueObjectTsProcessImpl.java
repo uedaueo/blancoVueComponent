@@ -16,10 +16,13 @@ import blanco.valueobjectts.BlancoValueObjectTsXml2TypeScriptClass;
 import blanco.valueobjectts.BlancoValueObjectTsXmlParser;
 import blanco.valueobjectts.message.BlancoValueObjectTsMessage;
 import blanco.valueobjectts.task.valueobject.BlancoValueObjectTsProcessInput;
+import blanco.valueobjectts.valueobject.BlancoValueObjectTsClassStructure;
 
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlancoValueObjectTsProcessImpl implements BlancoValueObjectTsProcess {
 
@@ -90,41 +93,66 @@ public class BlancoValueObjectTsProcessImpl implements BlancoValueObjectTsProces
             BlancoValueObjectTsXmlParser.classList =
                     BlancoValueObjectTsXmlParser.createClassListFromSheets(fileMeta2);
 
+            /*
+             * listClass が指定されている場合は、自動生成したクラスの一覧を
+             * 保持するValueObjectを作成する準備をします。
+             */
+            boolean createClassList = false;
+            String listClassName = input.getListClass();
+            BlancoValueObjectTsClassStructure listClassStructure = null;
+            List<BlancoValueObjectTsClassStructure> listClassStructures = new ArrayList<>();
+            if (listClassName != null && listClassName.length() > 0) {
+                createClassList = true;
+            }
+
             // 次にメタディレクトリとして指定されているディレクトリを走査
             for (int index = 0; index < fileMeta2.length; index++) {
                 if (fileMeta2[index].getName().endsWith(".xml") == false) {
                     continue;
                 }
 
-                final BlancoValueObjectTsXml2TypeScriptClass xml2KotlinClass = new BlancoValueObjectTsXml2TypeScriptClass();
-                xml2KotlinClass.setEncoding(input.getEncoding());
-                xml2KotlinClass.setVerbose(input.getVerbose());
-                xml2KotlinClass.setTargetStyleAdvanced(isTargetStyleAdvanced);
-                xml2KotlinClass.setXmlRootElement(input.getXmlrootelement());
-                xml2KotlinClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
-                xml2KotlinClass.setTabs(input.getTabs());
-                xml2KotlinClass.process(fileMeta2[index], new File(strTarget));
+                final BlancoValueObjectTsXml2TypeScriptClass xml2Class = new BlancoValueObjectTsXml2TypeScriptClass();
+                xml2Class.setEncoding(input.getEncoding());
+                xml2Class.setVerbose(input.getVerbose());
+                xml2Class.setTargetStyleAdvanced(isTargetStyleAdvanced);
+                xml2Class.setXmlRootElement(input.getXmlrootelement());
+                xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
+                xml2Class.setTabs(input.getTabs());
+                BlancoValueObjectTsClassStructure [] structures = xml2Class.process(fileMeta2[index], new File(strTarget));
 
+                /*
+                 * listClass が指定されている場合は、自動生成した
+                 * クラスの一覧を収集します。
+                 */
+                for (int index2 = 0; createClassList && index2 < structures.length; index2++) {
+                    BlancoValueObjectTsClassStructure classStructure = structures[index2];
+                    if (listClassName.equals(classStructure.getName())) {
+                        listClassStructure = classStructure;
+                    } else {
+                        listClassStructures.add(classStructure);
+                    }
+                }
                 // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
             }
 
-//            // 次にメタディレクトリとして指定されているディレクトリを走査
-//            final File[] fileMeta3 = fileMetadir.listFiles();
-//            for (int index = 0; index < fileMeta3.length; index++) {
-//                if (fileMeta3[index].getName().endsWith(".xml") == false) {
-//                    continue;
-//                }
-//
-//                final BlancoValueObjectTsXml2TypeScriptClass xml2JavaClass = new BlancoValueObjectTsXml2TypeScriptClass();
-//                xml2JavaClass.setEncoding(input.getEncoding());
-//                xml2JavaClass.setVerbose(input.getVerbose());
-//                xml2JavaClass.setTargetStyleAdvanced(isTargetStyleAdvanced);
-//                xml2JavaClass.setXmlRootElement(input.getXmlrootelement());
-//                xml2JavaClass.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
-//                xml2JavaClass.process(fileMeta3[index], new File(strTarget));
-//
-//                // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
-//            }
+            /*
+             * listClass が指定されている場合は、自動生成したクラスの一覧を
+             * 保持するValueObjectを作成します。
+             */
+            if (createClassList) {
+                if (listClassStructure == null) {
+                    System.out.println("[WARN] listClass is specified but no meta file. : " + listClassName);
+                    return BlancoValueObjectTsBatchProcess.END_SUCCESS;
+                }
+                final BlancoValueObjectTsXml2TypeScriptClass xml2Class = new BlancoValueObjectTsXml2TypeScriptClass();
+                xml2Class.setEncoding(input.getEncoding());
+                xml2Class.setVerbose(input.getVerbose());
+                xml2Class.setTargetStyleAdvanced(isTargetStyleAdvanced);
+                xml2Class.setXmlRootElement(input.getXmlrootelement());
+                xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
+                xml2Class.setTabs(input.getTabs());
+                xml2Class.processListClass(listClassStructures, listClassStructure, new File(strTarget));
+            }
 
             return BlancoValueObjectTsBatchProcess.END_SUCCESS;
         } catch (TransformerException e) {

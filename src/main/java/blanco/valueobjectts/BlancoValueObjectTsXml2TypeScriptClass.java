@@ -25,6 +25,8 @@ import blanco.valueobjectts.valueobject.BlancoValueObjectTsFieldStructure;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * バリューオブジェクト用中間XMLファイルから TypeScript ソースコードを自動生成するクラス。
@@ -125,8 +127,10 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
      *            ソースコード生成先ディレクトリ
      * @throws IOException
      *             入出力例外が発生した場合
+     * @return
      */
-    public void process(final File argMetaXmlSourceFile,
+    public BlancoValueObjectTsClassStructure[] process(
+            final File argMetaXmlSourceFile,
             final File argDirectoryTarget) throws IOException {
         BlancoValueObjectTsXmlParser parser = new BlancoValueObjectTsXmlParser();
         parser.setVerbose(this.isVerbose());
@@ -141,6 +145,79 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
                 generateInterface(classStructure, argDirectoryTarget);
             }
         }
+        return structures;
+    }
+
+    public void processListClass(
+            final List<BlancoValueObjectTsClassStructure> classStructures,
+            final BlancoValueObjectTsClassStructure listClassStructure,
+            final File argDirectoryTarget) throws IOException {
+        List<BlancoValueObjectTsFieldStructure> fieldList = listClassStructure.getFieldList();
+
+        BlancoValueObjectTsXmlParser parser = new BlancoValueObjectTsXmlParser();
+
+        if (this.isVerbose()) {
+            System.out.println("**** processListClass : " + listClassStructure.getName());
+        }
+
+        for (BlancoValueObjectTsClassStructure structure : classStructures) {
+            String className = structure.getName();
+            String classPackageName = structure.getPackage();
+            String classDescription = structure.getDescription();
+            String classType = className;
+            if (classPackageName != null && classPackageName.length() > 0) {
+                classType = classPackageName + "." + className;
+            }
+
+            BlancoValueObjectTsFieldStructure fieldStructure = new BlancoValueObjectTsFieldStructure();
+            listClassStructure.getFieldList().add(fieldStructure);
+
+            String propertyName = BlancoNameAdjuster.toLowerCaseTitle(className);
+            fieldStructure.setName(propertyName);
+            fieldStructure.setType(classType);
+            fieldStructure.setDefault("new " + className + "()");
+            fieldStructure.setDescription(classDescription);
+
+            /*
+             * import list の作成
+             */
+            if (listClassStructure.getCreateImportList()) {
+                parser.makeImportHeaderList(classPackageName, className, listClassStructure);
+            }
+        }
+
+        /*
+         * 自動生成されたものを出力します。
+         * 現在の方式だと、以下の前提が必要。
+         *  * 1ファイルに1クラスの定義
+         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
+         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
+         */
+        if (listClassStructure.getCreateImportList()) {
+            Map<String, List<String>> importHeaderList = parser.importHeaderList;
+            Set<String> fromList = importHeaderList.keySet();
+            for (String strFrom : fromList) {
+                StringBuffer sb = new StringBuffer();
+                sb.append("import { ");
+                List<String> classNameList = importHeaderList.get(strFrom);
+                int count = 0;
+                for (String className : classNameList) {
+                    if (count > 0) {
+                        sb.append(", ");
+                    }
+                    sb.append(className);
+                    count++;
+                }
+                if (count > 0) {
+                    sb.append(" } from \"" + strFrom + "\"");
+                    listClassStructure.getHeaderList().add(sb.toString());
+                }
+            }
+        }
+        /*
+         * クラスファイルを（上書き）生成
+         */
+        generateClass(listClassStructure, argDirectoryTarget);
     }
 
     /**
