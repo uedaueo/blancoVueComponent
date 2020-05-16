@@ -185,7 +185,9 @@ public class BlancoValueObjectTsXml2TypeScriptClass {
             /*
              * import list の作成
              */
-            if (listClassStructure.getCreateImportList()) {
+            if (listClassStructure.getCreateImportList()
+                    && classPackageName != null
+                    && classPackageName.length() > 0) {
                 parser.makeImportHeaderList(classPackageName, className, listClassStructure);
             }
         }

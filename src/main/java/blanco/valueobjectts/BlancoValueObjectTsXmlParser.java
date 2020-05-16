@@ -463,7 +463,7 @@ public class BlancoValueObjectTsXmlParser {
                 /*
                  * TypeScript 用 import 情報の作成
                  */
-                if (objClassStructure.getCreateImportList()) {
+                if (objClassStructure.getCreateImportList() && packageName != null && packageName.length() > 0) {
                     this.makeImportHeaderList(packageName, className, objClassStructure);
                 }
             }
@@ -505,7 +505,9 @@ public class BlancoValueObjectTsXmlParser {
                          */
                         packageName = argClassList.get(className);
                     }
-                    this.makeImportHeaderList(packageName, className, objClassStructure);
+                    if (packageName != null && packageName.length() > 0) {
+                        this.makeImportHeaderList(packageName, className, objClassStructure);
+                    }
                 }
             }
         }
@@ -574,7 +576,7 @@ public class BlancoValueObjectTsXmlParser {
                     /*
                      * TypeScript 用 import 情報の作成
                      */
-                    if (objClassStructure.getCreateImportList()) {
+                    if (objClassStructure.getCreateImportList() && packageName != null && packageName.length() > 0) {
                         this.makeImportHeaderList(packageName, phpType, objClassStructure);
                     }
                 }
@@ -626,7 +628,7 @@ public class BlancoValueObjectTsXmlParser {
                         /*
                          * TypeScript 用 import 情報の作成
                          */
-                        if (objClassStructure.getCreateImportList()) {
+                        if (objClassStructure.getCreateImportList() && packageName != null && packageName.length() > 0) {
                             this.makeImportHeaderList(packageName, phpGeneric, objClassStructure);
                         }
                     }
