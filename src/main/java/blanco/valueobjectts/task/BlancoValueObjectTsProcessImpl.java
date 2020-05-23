@@ -10,6 +10,7 @@
 package blanco.valueobjectts.task;
 
 import blanco.cg.BlancoCgSupportedLang;
+import blanco.commons.util.BlancoStringUtil;
 import blanco.valueobjectts.BlancoValueObjectTsConstants;
 import blanco.valueobjectts.BlancoValueObjectTsMeta2Xml;
 import blanco.valueobjectts.BlancoValueObjectTsXml2TypeScriptClass;
@@ -44,6 +45,21 @@ public class BlancoValueObjectTsProcessImpl implements BlancoValueObjectTsProces
                 throw new IllegalArgumentException(fMsg.getMbvoja01(input
                         .getMetadir()));
             }
+
+            /*
+             * 改行コードを決定します。
+             */
+            String LF = "\n";
+            String CR = "\r";
+            String CRLF = CR + LF;
+            String lineSeparatorMark = input.getLineSeparator();
+            String lineSeparator = LF;
+            if ("CR".equals(lineSeparatorMark)) {
+                lineSeparator = CR;
+            } else if ("CRLF".equals(lineSeparatorMark)) {
+                lineSeparator = CRLF;
+            }
+            System.setProperty("line.separator", lineSeparator);
 
             /*
              * targetdir, targetStyleの処理。
