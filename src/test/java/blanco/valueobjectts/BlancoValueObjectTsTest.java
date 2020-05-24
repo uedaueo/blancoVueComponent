@@ -34,7 +34,7 @@ public class BlancoValueObjectTsTest {
         input.setTargetStyle("maven");
         input.setTabs(2);
         input.setVerbose(true);
-        input.setLineSeparator("CRLF");
+        input.setLineSeparator("CR");
 
         BlancoValueObjectTsProcessImpl imple = new BlancoValueObjectTsProcessImpl();
         try {
