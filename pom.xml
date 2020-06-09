@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>blanco.valueobjectts</groupId>
-	<artifactId>blanco-valueobjectts</artifactId>
+	<groupId>blanco.vuecomponent</groupId>
+	<artifactId>blanco-vuecomponent</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.13</version>
-	<name>blanco-valueobject-ts</name>
+	<version>0.0.1</version>
+	<name>blanco-vuecomponent</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 
 	<!-- basic spec for jar -->
@@ -88,6 +88,12 @@
 			<groupId>blanco.valueobject</groupId>
 			<artifactId>blanco-valueobject</artifactId>
 			<version>[2.0,3.0)</version>
+		</dependency>
+
+		<dependency>
+			<groupId>blanco.valueobjectts</groupId>
+			<artifactId>blanco-valueobjectts</artifactId>
+			<version>[0.0,1.0)</version>
 		</dependency>
 
 		<dependency>

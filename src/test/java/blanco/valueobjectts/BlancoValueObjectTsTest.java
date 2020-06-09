@@ -9,7 +9,7 @@
  */
 package blanco.valueobjectts;
 
-import blanco.valueobjectts.task.BlancoValueObjectTsProcessImpl;
+import blanco.vuecomponent.task.BlancoVueComponentProcessImpl;
 import blanco.valueobjectts.task.valueobject.BlancoValueObjectTsProcessInput;
 import org.junit.Test;
 
@@ -36,7 +36,7 @@ public class BlancoValueObjectTsTest {
         input.setVerbose(true);
         input.setLineSeparator("CR");
 
-        BlancoValueObjectTsProcessImpl imple = new BlancoValueObjectTsProcessImpl();
+        BlancoVueComponentProcessImpl imple = new BlancoVueComponentProcessImpl();
         try {
             imple.execute(input);
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class BlancoValueObjectTsTest {
         input.setVerbose(true);
         input.setListClass("ListClassSample");
 
-        BlancoValueObjectTsProcessImpl imple = new BlancoValueObjectTsProcessImpl();
+        BlancoVueComponentProcessImpl imple = new BlancoVueComponentProcessImpl();
         try {
             imple.execute(input);
         } catch (IOException e) {
