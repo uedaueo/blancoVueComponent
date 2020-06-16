@@ -67,9 +67,9 @@ public class BlancoVueComponentMeta2Xml {
 
         if (fCacheMetaDefXml == null) {
             // このクラス自身とおなじクラスローダからXML設定ファイルのロードをおこないます。
-            final InputStream meta2xmlStream = getClass().getClassLoader().getResourceAsStream("blanco/vuecomponent/BlancoVueComponetMeta2Xml.xml");
+            final InputStream meta2xmlStream = getClass().getClassLoader().getResourceAsStream("blanco/vuecomponent/BlancoVueComponentMeta2Xml.xml");
             if (meta2xmlStream == null) {
-                throw new IllegalArgumentException("BlancoVueComponentMeta2Xml: リソース[blanco/vuecomponent/BlancoVueComponetMeta2Xml.xml]の取得に失敗しました.");
+                throw new IllegalArgumentException("BlancoVueComponentMeta2Xml: リソース[blanco/vuecomponent/BlancoVueComponentMeta2Xml.xml]の取得に失敗しました.");
             }
             final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
             final byte[] bufWrk = new byte[8192];

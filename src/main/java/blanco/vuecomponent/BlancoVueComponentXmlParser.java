@@ -12,6 +12,7 @@ package blanco.vuecomponent;
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
+import blanco.valueobjectts.valueobject.BlancoValueObjectTsClassStructure;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
@@ -37,9 +38,11 @@ public class BlancoVueComponentXmlParser {
     private final BlancoVueComponentMessage fMsg = new BlancoVueComponentMessage();
 
     private boolean fVerbose = false;
+
     public void setVerbose(boolean argVerbose) {
         this.fVerbose = argVerbose;
     }
+
     public boolean isVerbose() {
         return fVerbose;
     }
@@ -50,25 +53,47 @@ public class BlancoVueComponentXmlParser {
     private final static BlancoVueComponentResourceBundle fBundle = new BlancoVueComponentResourceBundle();
 
     public static Map<String, Integer> mapCommons = new HashMap<String, Integer>() {
-        {put(fBundle.getMeta2xmlElementCommon(), BlancoCgSupportedLang.JAVA);}
-        {put(fBundle.getMeta2xmlElementCommonCs(), BlancoCgSupportedLang.CS);}
-        {put(fBundle.getMeta2xmlElementCommonJs(), BlancoCgSupportedLang.JS);}
-        {put(fBundle.getMeta2xmlElementCommonVb(), BlancoCgSupportedLang.VB);}
-        {put(fBundle.getMeta2xmlElementCommonPhp(), BlancoCgSupportedLang.PHP);}
-        {put(fBundle.getMeta2xmlElementCommonRuby(), BlancoCgSupportedLang.RUBY);}
-        {put(fBundle.getMeta2xmlElementCommonPython(), BlancoCgSupportedLang.PYTHON);}
-        {put(fBundle.getMeta2xmlElementCommonKt(), BlancoCgSupportedLang.KOTLIN);}
-        {put(fBundle.getMeta2xmlElementCommonTs(), BlancoCgSupportedLang.TS);}
-    };
+        {
+            put(fBundle.getMeta2xmlElementCommon(), BlancoCgSupportedLang.PHP);
+        } // PHP タイプシートにのみ対応
 
-    public static Map<String, String> classList = null;
-    public Map<String, List<String>> importHeaderList = new HashMap<>();
+        {
+            put(fBundle.getMeta2xmlElementCommonCs(), BlancoCgSupportedLang.CS);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonJs(), BlancoCgSupportedLang.JS);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonVb(), BlancoCgSupportedLang.VB);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonPhp(), BlancoCgSupportedLang.PHP);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonRuby(), BlancoCgSupportedLang.RUBY);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonPython(), BlancoCgSupportedLang.PYTHON);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonKt(), BlancoCgSupportedLang.KOTLIN);
+        }
+
+        {
+            put(fBundle.getMeta2xmlElementCommonTs(), BlancoCgSupportedLang.TS);
+        }
+    };
 
     /**
      * 中間XMLファイルのXMLドキュメントをパースして、バリューオブジェクト情報の配列を取得します。
      *
-     * @param argMetaXmlSourceFile
-     *            中間XMLファイル。
+     * @param argMetaXmlSourceFile 中間XMLファイル。
      * @return パースの結果得られたバリューオブジェクト情報の配列。
      */
     public BlancoVueComponentClassStructure[] parse(
@@ -86,8 +111,7 @@ public class BlancoVueComponentXmlParser {
     /**
      * 中間XMLファイル形式のXMLドキュメントをパースして、バリューオブジェクト情報の配列を取得します。
      *
-     * @param argXmlDocument
-     *            中間XMLファイルのXMLドキュメント。
+     * @param argXmlDocument 中間XMLファイルのXMLドキュメント。
      * @return パースの結果得られたバリューオブジェクト情報の配列。
      */
     public BlancoVueComponentClassStructure[] parse(
@@ -152,15 +176,13 @@ public class BlancoVueComponentXmlParser {
                 continue;
             }
 
-            BlancoVueComponentClassStructure objClassStructure = null;
-            switch (sheetLang) {
-                case BlancoCgSupportedLang.JAVA:
-                    objClassStructure = parseElementSheet(elementSheet);
-                    break;
-                case BlancoCgSupportedLang.PHP:
-                    objClassStructure = parseElementSheetPhp(elementSheet, classList);
-                    /* NOT YET SUPPORT ANOTHER LANGUAGES */
+            if (sheetLang != BlancoCgSupportedLang.PHP) {
+                System.out.println("### ERROR Just PHP SheetLang is permitted.");
+                throw new IllegalArgumentException("### ERROR: Invalid SheetLang : " + sheetLang);
             }
+
+            BlancoVueComponentClassStructure objClassStructure = parseElementSheetPhp(elementSheet);
+            ;
 
             if (objClassStructure != null) {
                 // 得られた情報を記憶します。
@@ -175,587 +197,79 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * 中間XMLファイル形式の「sheet」XMLエレメントをパースして、バリューオブジェクト情報を取得します。
-     *
-     * @param argElementSheet
-     *            中間XMLファイルの「sheet」XMLエレメント。
-     * @return パースの結果得られたバリューオブジェクト情報。「name」が見つからなかった場合には nullを戻します。
-     */
-    public BlancoVueComponentClassStructure parseElementSheet(
-            final BlancoXmlElement argElementSheet) {
-        final BlancoVueComponentClassStructure objClassStructure = new BlancoVueComponentClassStructure();
-        final List<BlancoXmlElement> listCommon = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet,
-                        "blancovalueobject-common");
-        if (listCommon == null || listCommon.size() == 0) {
-            // commonが無い場合にはスキップします。
-            return null;
-        }
-        final BlancoXmlElement elementCommon = listCommon.get(0);
-        objClassStructure.setName(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "name"));
-        objClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "package"));
-
-        objClassStructure.setDescription(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "description"));
-        if (BlancoStringUtil.null2Blank(objClassStructure.getDescription())
-                .length() > 0) {
-            final String[] lines = BlancoNameUtil.splitString(objClassStructure
-                    .getDescription(), '\n');
-            for (int index = 0; index < lines.length; index++) {
-                if (index == 0) {
-                    objClassStructure.setDescription(lines[index]);
-                } else {
-                    // 複数行の description については、これを分割して格納します。
-                    // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
-                    objClassStructure.getDescriptionList().add(lines[index]);
-                }
-            }
-        }
-
-        objClassStructure.setAccess(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "access"));
-        objClassStructure.setAbstract("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "abstract")));
-        objClassStructure.setData("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "data")));
-        objClassStructure.setInterface("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "interface")));
-        objClassStructure.setGenerateToString("true"
-                .equals(BlancoXmlBindingUtil.getTextContent(elementCommon,
-                        "generateToString")));
-        objClassStructure.setAdjustFieldName("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "adjustFieldName")));
-        objClassStructure.setAdjustDefaultValue("true"
-                .equals(BlancoXmlBindingUtil.getTextContent(elementCommon,
-                        "adjustDefaultValue")));
-        objClassStructure
-                .setFieldList(new ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>());
-
-        if (BlancoStringUtil.null2Blank(objClassStructure.getName()).trim()
-                .length() == 0) {
-            // 名前が無いものはスキップします。
-            return null;
-        }
-
-        if (objClassStructure.getPackage() == null) {
-            throw new IllegalArgumentException(fMsg
-                    .getMbvoji01(objClassStructure.getName()));
-        }
-
-        final List<BlancoXmlElement> extendsList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet,
-                        "blancovalueobject-extends");
-        if (extendsList != null && extendsList.size() != 0) {
-            final BlancoXmlElement elementExtendsRoot = extendsList.get(0);
-            objClassStructure.setExtends(BlancoXmlBindingUtil.getTextContent(
-                    elementExtendsRoot, "name"));
-        }
-
-        final List<BlancoXmlElement> interfaceList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet,
-                        "blancovalueobject-implements");
-        if (interfaceList != null && interfaceList.size() != 0) {
-            final BlancoXmlElement elementInterfaceRoot = interfaceList.get(0);
-            final List<BlancoXmlElement> listInterfaceChildNodes = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementInterfaceRoot, "interface");
-            for (int index = 0; index < listInterfaceChildNodes.size(); index++) {
-                final BlancoXmlElement elementList = listInterfaceChildNodes
-                        .get(index);
-
-                final String interfaceName = BlancoXmlBindingUtil
-                        .getTextContent(elementList, "name");
-                if (interfaceName == null || interfaceName.trim().length() == 0) {
-                    continue;
-                }
-                objClassStructure.getImplementsList().add(
-                        BlancoXmlBindingUtil
-                                .getTextContent(elementList, "name"));
-            }
-        }
-
-        final List<BlancoXmlElement> listList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet, "blancovalueobject-list");
-        if (listList != null && listList.size() != 0) {
-            final BlancoXmlElement elementListRoot = listList.get(0);
-            final List<BlancoXmlElement> listChildNodes = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementListRoot, "field");
-            for (int index = 0; index < listChildNodes.size(); index++) {
-                final BlancoXmlElement elementList = listChildNodes.get(index);
-                final BlancoVueComponentFieldStructure fieldStructure = new BlancoVueComponentFieldStructure();
-
-                fieldStructure.setNo(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "no"));
-                fieldStructure.setName(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "name"));
-                if (fieldStructure.getName() == null
-                        || fieldStructure.getName().trim().length() == 0) {
-                    continue;
-                }
-
-                fieldStructure.setType(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "type"));
-
-                fieldStructure.setDescription(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "description"));
-                final String[] lines = BlancoNameUtil.splitString(
-                        fieldStructure.getDescription(), '\n');
-                for (int indexLine = 0; indexLine < lines.length; indexLine++) {
-                    if (indexLine == 0) {
-                        fieldStructure.setDescription(lines[indexLine]);
-                    } else {
-                        // 複数行の description については、これを分割して格納します。
-                        // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
-                        fieldStructure.getDescriptionList().add(
-                                lines[indexLine]);
-                    }
-                }
-
-                fieldStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "default"));
-                fieldStructure.setMinLength(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "minLength"));
-                fieldStructure.setMaxLength(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "maxLength"));
-                fieldStructure.setLength(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "length"));
-                fieldStructure.setMinInclusive(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "minInclusive"));
-                fieldStructure.setMaxInclusive(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "maxInclusive"));
-                fieldStructure.setPattern(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "pattern"));
-
-                if (fieldStructure.getType() == null
-                        || fieldStructure.getType().trim().length() == 0) {
-                    throw new IllegalArgumentException(fMsg.getMbvoji02(
-                            objClassStructure.getName(), fieldStructure
-                                    .getName()));
-                }
-
-                objClassStructure.getFieldList().add(fieldStructure);
-            }
-        }
-
-        return objClassStructure;
-    }
-
-    /**
      * 中間XMLファイル形式の「sheet」XMLエレメント(PHP書式)をパースして、バリューオブジェクト情報を取得します。
      *
-     * @param argElementSheet
-     *            中間XMLファイルの「sheet」XMLエレメント。
+     * @param argElementSheet 中間XMLファイルの「sheet」XMLエレメント。
      * @return パースの結果得られたバリューオブジェクト情報。「name」が見つからなかった場合には nullを戻します。
      */
     public BlancoVueComponentClassStructure parseElementSheetPhp(
-            final BlancoXmlElement argElementSheet,
-            final Map<String, String> argClassList) {
+            final BlancoXmlElement argElementSheet
+    ) {
+
         final BlancoVueComponentClassStructure objClassStructure = new BlancoVueComponentClassStructure();
-        final List<BlancoXmlElement> listCommon = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet,
-                        "blancovalueobjectphp-common");
-        if (listCommon == null || listCommon.size() == 0) {
-            // commonが無い場合にはスキップします。
+        /*
+         * componentを生成するときに使用します。objClassStructure#headerList に格納します。
+         */
+        final Map<String, List<String>> componentHeaderList = new HashMap<>();
+        /*
+         * interface を生成するときに使用します。objClassStructure#importList に格納します。
+         */
+        final Map<String, List<String>> interfaceHeaderList = new HashMap<>();
+
+        // 共通情報を取得します。
+        final BlancoXmlElement elementCommon = BlancoXmlBindingUtil
+                .getElement(argElementSheet, fBundle
+                        .getMeta2xmlElementCommon());
+        if (elementCommon == null) {
+            // commonが無い場合には、このシートの処理をスキップします。
             return null;
         }
 
-        if (argClassList == null) {
-            // classList が無い場合もスキップします
-            System.out.println("### ERROR ### NO CLASS LIST DEFINED.");
+        final String name = BlancoXmlBindingUtil.getTextContent(
+                elementCommon, "name");
+        if (BlancoStringUtil.null2Blank(name).trim().length() == 0) {
+            // nameが空の場合には処理をスキップします。
             return null;
         }
 
-        final BlancoXmlElement elementCommon = listCommon.get(0);
-        objClassStructure.setName(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "name"));
-        objClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "package"));
-        objClassStructure.setClassAlias(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "classAlias"));
-        objClassStructure.setBasedir(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "basedir"));
-
-        objClassStructure.setDescription(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "description"));
-        if (BlancoStringUtil.null2Blank(objClassStructure.getDescription())
-                .length() > 0) {
-            final String[] lines = BlancoNameUtil.splitString(objClassStructure
-                    .getDescription(), '\n');
-            for (int index = 0; index < lines.length; index++) {
-                if (index == 0) {
-                    objClassStructure.setDescription(lines[index]);
-                } else {
-                    // 複数行の description については、これを分割して格納します。
-                    // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
-                    objClassStructure.getDescriptionList().add(lines[index]);
-                }
-            }
+        if (this.isVerbose()) {
+            System.out.println("BlancoVueComponent#parseElementPhp name = " + name);
         }
 
-        /* クラスの annotation に対応 */
-        String classAnnotation = BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "annotation");
-        if (BlancoStringUtil.null2Blank(classAnnotation).length() > 0) {
-            String [] annotations = classAnnotation.split("\\\\\\\\");
-            List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
-            objClassStructure.setAnnotationList(annotationList);
-        }
+        // Vueコンポーネント定義・共通
+        this.parseVueComponentCommon(elementCommon, objClassStructure);
 
-        objClassStructure.setAccess(BlancoXmlBindingUtil.getTextContent(
-                elementCommon, "access"));
-        objClassStructure.setFinal("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "final")));
-        objClassStructure.setAbstract("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "abstract")));
-        objClassStructure.setData("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "data")));
-        objClassStructure.setInterface("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "interface")));
-        objClassStructure.setGenerateToString("true"
-                .equals(BlancoXmlBindingUtil.getTextContent(elementCommon,
-                        "generateToString")));
-        objClassStructure.setAdjustFieldName("true".equals(BlancoXmlBindingUtil
-                .getTextContent(elementCommon, "adjustFieldName")));
-        objClassStructure.setAdjustDefaultValue("true"
-                .equals(BlancoXmlBindingUtil.getTextContent(elementCommon,
-                        "adjustDefaultValue")));
-        objClassStructure.setCreateImportList("true"
-                .equals(BlancoXmlBindingUtil.getTextContent(elementCommon,
-                        "createImportList")));
-        objClassStructure
-                .setFieldList(new ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>());
+        // Vueコンポーネント定義・継承
+        this.parseVueComponentExtends(componentHeaderList, objClassStructure);
 
-        if (BlancoStringUtil.null2Blank(objClassStructure.getName()).trim()
-                .length() == 0) {
-            // 名前が無いものはスキップします。
-            return null;
-        }
-
-        if (objClassStructure.getPackage() == null) {
-            throw new IllegalArgumentException(fMsg
-                    .getMbvoji01(objClassStructure.getName()));
-        }
-
-        final List<BlancoXmlElement> extendsList = BlancoXmlBindingUtil
+        // Vueコンポーネント・使用コンポーネント
+        final List<BlancoXmlElement> componentList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
-                        "blancovalueobjectphp-extends");
-        if (extendsList != null && extendsList.size() != 0) {
-            final BlancoXmlElement elementExtendsRoot = extendsList.get(0);
-            String className = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "name");
-            if (className != null) {
-                String classNameCanon = className;
-                String packageName = BlancoXmlBindingUtil.getTextContent(elementExtendsRoot, "package");
-                if (packageName == null) {
-                    /*
-                     * このクラスのパッケージ名を探す
-                     */
-                    packageName = argClassList.get(className);
-                }
-                if (packageName != null) {
-                    classNameCanon = packageName + "." + className;
-                }
-                if (isVerbose()) {
-                    System.out.println("/* tueda */ Extends : " + classNameCanon);
-                }
-                objClassStructure.setExtends(classNameCanon);
-
-                /*
-                 * TypeScript 用 import 情報の作成
-                 */
-                if (objClassStructure.getCreateImportList() && packageName != null && packageName.length() > 0) {
-                    this.makeImportHeaderList(packageName, className, objClassStructure);
-                }
-            }
+                        fBundle.getMeta2xmlElementComponents());
+        if (componentList != null && componentList.size() != 0) {
+            final BlancoXmlElement elementComponentRoot = componentList.get(0);
+            this.parseVueComponentComponents(elementComponentRoot, componentHeaderList, objClassStructure);
         }
 
-        /* 実装 */
-        final List<BlancoXmlElement> interfaceList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet,
-                        "blancovalueobjectphp-implements");
-        if (interfaceList != null && interfaceList.size() != 0) {
-            final BlancoXmlElement elementInterfaceRoot = interfaceList.get(0);
-            final List<BlancoXmlElement> listInterfaceChildNodes = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementInterfaceRoot, "interface");
-            for (int index = 0;
-                 listInterfaceChildNodes != null &&
-                         index < listInterfaceChildNodes.size();
-                 index++) {
-                final BlancoXmlElement elementList = listInterfaceChildNodes
-                        .get(index);
-
-                final String interfaceName = BlancoXmlBindingUtil
-                        .getTextContent(elementList, "name");
-                if (interfaceName == null || interfaceName.trim().length() == 0) {
-                    continue;
-                }
-
-                objClassStructure.getImplementsList().add(
-                        BlancoXmlBindingUtil
-                                .getTextContent(elementList, "name"));
-                /*
-                 * TypeScript 用 import 情報の作成
-                 */
-                if (objClassStructure.getCreateImportList()) {
-                    String packageName = this.getPackageName(interfaceName);
-                    String className = this.getSimpleClassName(interfaceName);
-                    if (packageName.length() == 0) {
-                        /*
-                         * このクラスのパッケージ名を探す
-                         */
-                        packageName = argClassList.get(className);
-                    }
-                    if (packageName != null && packageName.length() > 0) {
-                        this.makeImportHeaderList(packageName, className, objClassStructure);
-                    }
-                }
-            }
-        }
-
+        // Vueコンポーネント・プロパティ
         final List<BlancoXmlElement> listList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-list");
+                .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementList());
         if (listList != null && listList.size() != 0) {
             final BlancoXmlElement elementListRoot = listList.get(0);
-            final List<BlancoXmlElement> listChildNodes = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementListRoot, "field");
-            for (int index = 0; index < listChildNodes.size(); index++) {
-                final BlancoXmlElement elementList = listChildNodes.get(index);
-                final BlancoVueComponentFieldStructure fieldStructure = new BlancoVueComponentFieldStructure();
-
-                fieldStructure.setNo(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "no"));
-                fieldStructure.setName(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "name"));
-                if (fieldStructure.getName() == null
-                        || fieldStructure.getName().trim().length() == 0) {
-                    continue;
-                }
-
-                /*
-                 * 型の取得．ここで TypeScript 風の型名に変えておく
-                 */
-                String phpType = BlancoXmlBindingUtil.getTextContent(elementList, "type");
-                String javaType = phpType;
-                if ("boolean".equalsIgnoreCase(phpType)) {
-                    javaType = "boolean";
-                } else
-                if ("integer".equalsIgnoreCase(phpType)) {
-                    javaType = "number";
-                } else
-                if ("double".equalsIgnoreCase(phpType)) {
-                    javaType = "number";
-                } else
-                if ("float".equalsIgnoreCase(phpType)) {
-                    javaType = "number";
-                } else
-                if ("string".equalsIgnoreCase(phpType)) {
-                    javaType = "string";
-                } else
-//                if ("datetime".equalsIgnoreCase(phpType)) {
-//                    javaType = "java.util.Date";
-//                } else
-                if ("array".equalsIgnoreCase(phpType)) {
-                    javaType = "Array";
-                } else
-                if ("object".equalsIgnoreCase(phpType)) {
-                    javaType = "any";
-                } else {
-                    /* この名前の package を探す */
-                    String packageName = argClassList.get(phpType);
-                    if (packageName == null) {
-                        // package 名の分離を試みる
-
-                    }
-                    if (packageName != null) {
-                        javaType = packageName + "." + phpType;
-                    }
-
-                    /* その他はそのまま記述する */
-                    System.out.println("/* tueda */ Unknown php type: " + javaType);
-
-                    /*
-                     * TypeScript 用 import 情報の作成
-                     */
-                    if (objClassStructure.getCreateImportList() && packageName != null && packageName.length() > 0) {
-                        this.makeImportHeaderList(packageName, phpType, objClassStructure);
-                    }
-                }
-
-                fieldStructure.setType(javaType);
-
-                /* Generic に対応 */
-                String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
-                if (BlancoStringUtil.null2Blank(phpGeneric).length() != 0) {
-                    String javaGeneric = phpGeneric;
-                    if ("boolean".equalsIgnoreCase(phpGeneric)) {
-                        javaGeneric = "boolean";
-                    } else
-                    if ("integer".equalsIgnoreCase(phpGeneric)) {
-                        javaGeneric = "number";
-                    } else
-                    if ("double".equalsIgnoreCase(phpGeneric)) {
-                        javaGeneric = "number";
-                    } else
-                    if ("float".equalsIgnoreCase(phpGeneric)) {
-                        javaGeneric = "number";
-                    } else
-                    if ("string".equalsIgnoreCase(phpGeneric)) {
-                        javaGeneric = "string";
-                    } else
-//                    if ("datetime".equalsIgnoreCase(phpGeneric)) {
-//                        javaGeneric = "java.util.Date";
-//                    } else
-                    if ("array".equalsIgnoreCase(phpGeneric)) {
-                        throw new IllegalArgumentException(fMsg.getMbvoji06(
-                                objClassStructure.getName(),
-                                fieldStructure.getName(),
-                                phpGeneric,
-                                phpGeneric
-                        ));
-                    } else
-                    if ("object".equalsIgnoreCase(phpGeneric)) {
-                        javaGeneric = "any";
-                    } else {
-                    /* この名前の package を探す */
-                        String packageName = argClassList.get(phpGeneric);
-                        if (packageName != null) {
-                            javaGeneric = packageName + "." + phpGeneric;
-                        }
-
-                    /* その他はそのまま記述する */
-                        System.out.println("/* tueda */ Unknown php type: " + javaGeneric);
-
-                        /*
-                         * TypeScript 用 import 情報の作成
-                         */
-                        if (objClassStructure.getCreateImportList() && packageName != null && packageName.length() > 0) {
-                            this.makeImportHeaderList(packageName, phpGeneric, objClassStructure);
-                        }
-                    }
-
-                    fieldStructure.setGeneric(javaGeneric);
-                    fieldStructure.setType(javaType);
-                }
-
-                /* method の annnotation に対応 */
-                String methodAnnotation = BlancoXmlBindingUtil.getTextContent(elementList, "annotation");
-                if (BlancoStringUtil.null2Blank(methodAnnotation).length() != 0) {
-                    String [] annotations = methodAnnotation.split("\\\\\\\\");
-                    List<String> annotationList = new ArrayList<>(Arrays.asList(annotations));
-
-                    fieldStructure.setAnnotationList(annotationList);
-                }
-
-                // abstract に対応
-                fieldStructure.setAbstract("true".equals(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "abstract")));
-                // Nullable に対応
-                fieldStructure.setNullable("true".equals(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "nullable")));
-                // value に対応
-                fieldStructure.setValue("true".equals(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "fixedValue")));
-                // constructorArg に対応
-                fieldStructure.setConstArg("true".equals(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "constructorArg")));
-
-                fieldStructure.setDescription(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "description"));
-                final String[] lines = BlancoNameUtil.splitString(
-                        fieldStructure.getDescription(), '\n');
-                for (int indexLine = 0; indexLine < lines.length; indexLine++) {
-                    if (indexLine == 0) {
-                        fieldStructure.setDescription(lines[indexLine]);
-                    } else {
-                        // 複数行の description については、これを分割して格納します。
-                        // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
-                        fieldStructure.getDescriptionList().add(
-                                lines[indexLine]);
-                    }
-                }
-
-                fieldStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "default"));
-                fieldStructure.setMinLength(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "minLength"));
-                fieldStructure.setMaxLength(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "maxLength"));
-                fieldStructure.setLength(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "length"));
-                fieldStructure.setMinInclusive(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "minInclusive"));
-                fieldStructure.setMaxInclusive(BlancoXmlBindingUtil
-                        .getTextContent(elementList, "maxInclusive"));
-                fieldStructure.setPattern(BlancoXmlBindingUtil.getTextContent(
-                        elementList, "pattern"));
-
-                if (fieldStructure.getType() == null
-                        || fieldStructure.getType().trim().length() == 0) {
-                    throw new IllegalArgumentException(fMsg.getMbvoji02(
-                            objClassStructure.getName(), fieldStructure
-                                    .getName()));
-                }
-
-//                if (this.isVerbose()) {
-//                    System.out.println("fieldStructure: " + fieldStructure.get+ fieldStructure.toString());
-//                }
-
-                objClassStructure.getFieldList().add(fieldStructure);
-            }
+            this.parseVueComponentProperties(elementListRoot, componentHeaderList, interfaceHeaderList, objClassStructure);
         }
 
-        /*
-         * header の一覧作成
-         * まず、定義書に書かれたものをそのまま出力します。
-         */
-        final List<BlancoXmlElement> headerList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet, "blancovalueobjectphp-header");
-        if (headerList != null && headerList.size() != 0) {
-            final BlancoXmlElement elementHeaderRoot = headerList.get(0);
-            final List<BlancoXmlElement> listHeaderChildNodes = BlancoXmlBindingUtil
-                    .getElementsByTagName(elementHeaderRoot, "header");
-            for (int index = 0; index < listHeaderChildNodes.size(); index++) {
-                final BlancoXmlElement elementList = listHeaderChildNodes
-                        .get(index);
-
-                final String headerName = BlancoXmlBindingUtil
-                        .getTextContent(elementList, "name");
-                if (this.isVerbose()) {
-                    System.out.println("/* tueda */ header = " + headerName);
-                }
-                if (headerName == null || headerName.trim().length() == 0) {
-                    continue;
-                }
-                objClassStructure.getHeaderList().add(
-                        BlancoXmlBindingUtil
-                                .getTextContent(elementList, "name"));
-            }
+        // ヘッダ情報を取得します。
+        final List<BlancoXmlElement> headerElementList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet,
+                        fBundle.getMeta2xmlElementHeader());
+        List<String> headerList = this.parseHeaderList(headerElementList, componentHeaderList);
+        if (headerList != null && headerList.size() > 0) {
+            objClassStructure.getComponentHeaderList().addAll(headerList);
         }
-
-        /*
-         * 次に、自動生成されたものを出力します。
-         * 現在の方式だと、以下の前提が必要。
-         *  * 1ファイルに1クラスの定義
-         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
-         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
-         */
-        Set<String> fromList = this.importHeaderList.keySet();
-        for (String strFrom : fromList) {
-            StringBuffer sb = new StringBuffer();
-            sb.append("import { ");
-            List<String> classNameList = this.importHeaderList.get(strFrom);
-            int count = 0;
-            for (String className : classNameList) {
-                if (count > 0) {
-                    sb.append(", ");
-                }
-                sb.append(className);
-                count++;
-            }
-            if (count > 0) {
-                sb.append(" } from \"" + strFrom + "\"");
-                objClassStructure.getHeaderList().add(sb.toString());
-            }
+        headerList = this.parseHeaderList(headerElementList, interfaceHeaderList);
+        if (headerList != null && headerList.size() > 0) {
+            objClassStructure.getInterfaceHeaderList().addAll(headerList);
         }
 
         return objClassStructure;
@@ -791,9 +305,9 @@ public class BlancoVueComponentXmlParser {
 
 
             for (BlancoXmlElement elementSheet : listSheet) {
-            /*
-             * Java以外の言語用に記述されたシートにも対応．
-             */
+                /*
+                 * Java以外の言語用に記述されたシートにも対応．
+                 */
                 List<BlancoXmlElement> listCommon = null;
                 for (String common : mapCommons.keySet()) {
                     listCommon = BlancoXmlBindingUtil
@@ -819,87 +333,375 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * インポート文を生成する
-     * @param className
-     * @param objClassStructure
+     * 中間XMLファイルをパースして、「Vueコンポーネント定義・共通」を取得します。
+     *
+     * @param argElementCommon
+     * @param argObjClassStructure
      */
-    public void makeImportHeaderList(String packageName, String className, BlancoVueComponentClassStructure objClassStructure) {
-        if (objClassStructure == null) {
-            throw new IllegalArgumentException("objClassStructure should not be NULL.");
-        }
-        if (className == null || className.length() == 0) {
-            System.out.println("/* tueda */ className is not specified. SKIP.");
-            return;
-        }
-        String basedir = objClassStructure.getBasedir();
-        if (basedir == null) {
-            basedir = "";
-        }
-        String importFrom = "./" + className;
-        if (packageName != null &&
-                packageName.length() != 0 &&
-                packageName.equals(objClassStructure.getPackage()) != true) {
-            String classNameCanon = packageName.replace('.', '/') + "/" + className;
-            importFrom = basedir + "/" + classNameCanon;
+    private void parseVueComponentCommon(
+            final BlancoXmlElement argElementCommon,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+        argObjClassStructure.setName(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "name"));
+        argObjClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "package"));
+        argObjClassStructure.setClassAlias(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "classAlias"));
+        argObjClassStructure.setRouterName(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "route-name"));
+        argObjClassStructure.setRouterPath(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "route-path"));
+        argObjClassStructure.setBasedir(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "basedir"));
+        argObjClassStructure.setImpledir(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "impledir"));
+
+        argObjClassStructure.setDescription(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "description"));
+        if (BlancoStringUtil.null2Blank(argObjClassStructure.getDescription())
+                .length() > 0) {
+            final String[] lines = BlancoNameUtil.splitString(argObjClassStructure
+                    .getDescription(), '\n');
+            for (int index = 0; index < lines.length; index++) {
+                if (index == 0) {
+                    argObjClassStructure.setDescription(lines[index]);
+                } else {
+                    // 複数行の description については、これを分割して格納します。
+                    // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
+                    argObjClassStructure.getDescriptionList().add(lines[index]);
+                }
+            }
         }
 
-        List<String> importClassList = this.importHeaderList.get(importFrom);
-        if (importClassList == null) {
-            importClassList = new ArrayList<>();
-            this.importHeaderList.put(importFrom, importClassList);
-        }
-        boolean isMatch = false;
-        for (String myClass : importClassList) {
-            if (className.equals(myClass)) {
-                isMatch = true;
-                break;
+        /*
+         * コンポーネントの種類： screen or part
+         */
+        argObjClassStructure.setComponentKind(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "componentKind"));
+
+        argObjClassStructure.setAuthRequired("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "authRequired")));
+        argObjClassStructure.setForceReload("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "forceReload")));
+        argObjClassStructure.setUseTemplate("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "useTemplate")));
+        argObjClassStructure.setUseScript("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "useScript")));
+        argObjClassStructure.setUseStyle("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "useStyle")));
+
+        argObjClassStructure.setAdjustFieldName("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "adjustFieldName")));
+        argObjClassStructure.setAdjustDefaultValue("true"
+                .equals(BlancoXmlBindingUtil.getTextContent(argElementCommon,
+                        "adjustDefaultValue")));
+        argObjClassStructure.setCreateImportList("true"
+                .equals(BlancoXmlBindingUtil.getTextContent(argElementCommon,
+                        "createImportList")));
+        argObjClassStructure
+                .setFieldList(new ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>());
+    }
+
+    /**
+     * VueComponent では、"Mixins(実装コンポーネント) "関数が自動的に拡張されます。
+     *
+     * @param argImportHeaderList
+     * @param argObjClassStructure
+     */
+    private void parseVueComponentExtends(
+            final Map<String, List<String>> argImportHeaderList,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+
+        final String impleClassName = argObjClassStructure.getName() + BlancoVueComponentConstants.IMPLECLASS_SUFFIX;
+        String mixins = "Mixins(" + impleClassName + ")";
+        argObjClassStructure.setExtends(mixins);
+
+        /*
+         * import { Mixins } from "vue-property-decorator";
+         */
+        BlancoVueComponentUtil.addImportHeaderList("Mixins", "vue-property-decorator", argImportHeaderList);
+
+        /*
+         * import { HogeImple } from "HogeImple";
+         */
+        BlancoVueComponentUtil.makeImportHeaderList(
+                argObjClassStructure.getPackage(),
+                impleClassName,
+                argImportHeaderList,
+                argObjClassStructure.getImpledir(),
+                ""
+        );
+    }
+
+    /**
+     * 使用するコンポーネントのリストを作成する。
+     * import 文は自動生成しないので、定義書に記載すること。
+     *
+     * @param argElementComponent
+     * @param argImportHeaderList
+     * @param argObjClassStructure
+     */
+    private void parseVueComponentComponents(
+            final BlancoXmlElement argElementComponent,
+            final Map<String, List<String>> argImportHeaderList,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+        /* 使用するコンポーネントのリスト */
+        final List<BlancoXmlElement> listComponentsChildNodes = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementComponent, "components");
+        for (int index = 0;
+             listComponentsChildNodes != null &&
+                     index < listComponentsChildNodes.size();
+             index++) {
+            final BlancoXmlElement elementList = listComponentsChildNodes
+                    .get(index);
+
+            final String componentName = BlancoXmlBindingUtil
+                    .getTextContent(elementList, "name");
+            if (componentName == null || componentName.trim().length() == 0) {
+                continue;
             }
+
+            argObjClassStructure.getComponentList().add(
+                    BlancoXmlBindingUtil
+                            .getTextContent(elementList, "name"));
         }
-        if (!isMatch) {
-            importClassList.add(className);
-            if (this.isVerbose()) {
-                System.out.println("/* tueda */ new import { " + className + " } from \"" + importFrom + "\"");
+    }
+
+    private void parseVueComponentProperties(
+            final BlancoXmlElement argElementProperties,
+            final Map<String, List<String>> argComponentHeaderList,
+            final Map<String, List<String>> argInterfaceHeaderList,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+        final List<BlancoXmlElement> listChildNodes = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementProperties, "field");
+        for (int index = 0; index < listChildNodes.size(); index++) {
+            final BlancoXmlElement elementList = listChildNodes.get(index);
+            final BlancoVueComponentFieldStructure fieldStructure = new BlancoVueComponentFieldStructure();
+
+            fieldStructure.setNo(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "no"));
+            fieldStructure.setName(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "name"));
+            if (fieldStructure.getName() == null
+                    || fieldStructure.getName().trim().length() == 0) {
+                continue;
             }
+
+            /*
+             * 型の取得．ここで TypeScript 風の型名に変えておく
+             */
+            String phpType = BlancoXmlBindingUtil.getTextContent(elementList, "type");
+            String targetType = phpType;
+            if ("boolean".equalsIgnoreCase(phpType)) {
+                targetType = "boolean";
+            } else if ("integer".equalsIgnoreCase(phpType)) {
+                targetType = "number";
+            } else if ("double".equalsIgnoreCase(phpType)) {
+                targetType = "number";
+            } else if ("float".equalsIgnoreCase(phpType)) {
+                targetType = "number";
+            } else if ("string".equalsIgnoreCase(phpType)) {
+                targetType = "string";
+            } else if ("array".equalsIgnoreCase(phpType)) {
+                    targetType = "Array";
+            } else if ("object".equalsIgnoreCase(phpType)) {
+                targetType = "any";
+            } else {
+                /* この名前の package を探す */
+                BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(phpType);
+
+                String packageName = null;
+                if (voStructure != null) {
+                    packageName = voStructure.getPackage();
+                }
+                if (packageName == null) {
+                    // package 名の分離を試みる
+                    String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpType);
+                    if (simpleName != null && !simpleName.equals(phpType)) {
+                        packageName = BlancoVueComponentUtil.getPackageName(phpType);
+                        phpType = simpleName;
+                    }
+                }
+                if (packageName != null) {
+                    targetType = packageName + "." + phpType;
+                }
+
+                /* その他はそのまま記述する */
+//                System.out.println("/* tueda */ Unknown php type: " + targetType);
+
+                /*
+                 * TypeScript 用 import 情報の作成
+                 * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
+                 */
+                if (argObjClassStructure.getCreateImportList()) {
+                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, argObjClassStructure.getBasedir(), "");
+                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argInterfaceHeaderList, argObjClassStructure.getBasedir(), "");
+                }
+            }
+
+            fieldStructure.setType(targetType);
+
+            /* Generic に対応 */
+            String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
+            if (BlancoStringUtil.null2Blank(phpGeneric).length() != 0) {
+                String targetGeneric = phpGeneric;
+                if ("boolean".equalsIgnoreCase(phpGeneric)) {
+                    targetGeneric = "boolean";
+                } else if ("integer".equalsIgnoreCase(phpGeneric)) {
+                    targetGeneric = "number";
+                } else if ("double".equalsIgnoreCase(phpGeneric)) {
+                    targetGeneric = "number";
+                } else if ("float".equalsIgnoreCase(phpGeneric)) {
+                    targetGeneric = "number";
+                } else if ("string".equalsIgnoreCase(phpGeneric)) {
+                    targetGeneric = "string";
+                } else if ("array".equalsIgnoreCase(phpGeneric)) {
+                    throw new IllegalArgumentException(fMsg.getMbvoji06(
+                            argObjClassStructure.getName(),
+                            fieldStructure.getName(),
+                            phpGeneric,
+                            phpGeneric
+                    ));
+                } else if ("object".equalsIgnoreCase(phpGeneric)) {
+                    targetGeneric = "any";
+                } else {
+                    /* この名前の package を探す */
+                    BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(phpGeneric);
+
+                    String packageName = null;
+                    if (voStructure != null) {
+                        packageName = voStructure.getPackage();
+                    }
+                    if (packageName == null) {
+                        // package 名の分離を試みる
+                        String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpGeneric);
+                        if (simpleName != null && !simpleName.equals(phpGeneric)) {
+                            packageName = BlancoVueComponentUtil.getPackageName(phpGeneric);
+                            phpGeneric = simpleName;
+                        }
+                    }
+                    if (packageName != null) {
+                        targetGeneric = packageName + "." + phpGeneric;
+                    }
+
+                    /* その他はそのまま記述する */
+//                System.out.println("/* tueda */ Unknown php type: " + targetType);
+
+                    /*
+                     * TypeScript 用 import 情報の作成
+                     * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
+                     */
+                    if (argObjClassStructure.getCreateImportList()) {
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, argObjClassStructure.getBasedir(), "");
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, argObjClassStructure.getBasedir(), "");
+                    }
+
+                    fieldStructure.setGeneric(targetGeneric);
+                    fieldStructure.setType(targetType);
+                }
+            }
+
+            // Nullable に対応
+            fieldStructure.setNullable("true".equals(BlancoXmlBindingUtil
+                    .getTextContent(elementList, "nullable")));
+
+            fieldStructure.setDescription(BlancoXmlBindingUtil
+                    .getTextContent(elementList, "description"));
+            final String[] lines = BlancoNameUtil.splitString(
+                    fieldStructure.getDescription(), '\n');
+            for (int indexLine = 0; indexLine < lines.length; indexLine++) {
+                if (indexLine == 0) {
+                    fieldStructure.setDescription(lines[indexLine]);
+                } else {
+                    // 複数行の description については、これを分割して格納します。
+                    // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
+                    fieldStructure.getDescriptionList().add(
+                            lines[indexLine]);
+                }
+            }
+
+            fieldStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "default"));
+
+            argObjClassStructure.getFieldList().add(fieldStructure);
         }
     }
 
     /**
-     * Make canonical classname into Simple.
      *
-     * @param argClassNameCanon
-     * @return simpleName
-     */
-    private String getSimpleClassName(final String argClassNameCanon) {
-        if (argClassNameCanon == null) {
-            return "";
-        }
-
-        String simpleName = "";
-        final int findLastDot = argClassNameCanon.lastIndexOf('.');
-        if (findLastDot == -1) {
-            simpleName = argClassNameCanon;
-        } else if (findLastDot != argClassNameCanon.length() - 1) {
-            simpleName = argClassNameCanon.substring(findLastDot + 1);
-        }
-        return simpleName;
-    }
-
-    /**
-     * Make canonical classname into packageName
      *
-     * @param argClassNameCanon
+     * @param argHeaderElementList
+     * @param argImportHeaderList
      * @return
      */
-    private String getPackageName(final String argClassNameCanon) {
-        if (argClassNameCanon == null) {
-            return "";
+    private List<String> parseHeaderList(final List<BlancoXmlElement> argHeaderElementList, final Map<String, List<String>> argImportHeaderList) {
+        if (this.isVerbose()) {
+            System.out.println("BlancoVueComponent#parseHeaderList: Start parseHeaderList.");
         }
 
-        String simpleName = "";
-        final int findLastDot = argClassNameCanon.lastIndexOf('.');
-        if (findLastDot > 0) {
-            simpleName = argClassNameCanon.substring(0, findLastDot);
+        List<String> headerList = new ArrayList<>();
+
+        /*
+         * header の一覧作成
+         * まず、定義書に書かれたものをそのまま出力します。
+         */
+        if (argHeaderElementList != null && argHeaderElementList.size() > 0) {
+            final BlancoXmlElement elementHeaderRoot = argHeaderElementList.get(0);
+            final List<BlancoXmlElement> listHeaderChildNodes = BlancoXmlBindingUtil
+                    .getElementsByTagName(elementHeaderRoot, "header");
+            for (int index = 0; index < listHeaderChildNodes.size(); index++) {
+                final BlancoXmlElement elementList = listHeaderChildNodes
+                        .get(index);
+
+                final String headerName = BlancoXmlBindingUtil
+                        .getTextContent(elementList, "name");
+                if (this.isVerbose()) {
+                    System.out.println("BlancoVueComponent#parseHeaderList header = " + headerName);
+                }
+                if (headerName == null || headerName.trim().length() == 0) {
+                    continue;
+                }
+                headerList.add(
+                        BlancoXmlBindingUtil
+                                .getTextContent(elementList, "name"));
+            }
         }
-        return simpleName;
+
+        /*
+         * 次に、自動生成されたものを出力します。
+         * 現在の方式だと、以下の前提が必要。
+         *  * 1ファイルに1クラスの定義
+         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
+         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
+         */
+        if (argImportHeaderList != null && argImportHeaderList.size() > 0) {
+            Set<String> fromList = argImportHeaderList.keySet();
+            for (String strFrom : fromList) {
+                StringBuffer sb = new StringBuffer();
+                sb.append("import { ");
+                List<String> classNameList = argImportHeaderList.get(strFrom);
+                int count = 0;
+                for (String className : classNameList) {
+                    if (count > 0) {
+                        sb.append(", ");
+                    }
+                    sb.append(className);
+                    count++;
+                }
+                if (count > 0) {
+                    sb.append(" } from \"" + strFrom + "\"");
+                    if (this.isVerbose()) {
+                        System.out.println("BlancoRestGeneratorTsXmlParser#parseHeaderList import = " + sb.toString());
+                    }
+                    headerList.add(sb.toString());
+                }
+            }
+        }
+
+        return headerList;
     }
 }

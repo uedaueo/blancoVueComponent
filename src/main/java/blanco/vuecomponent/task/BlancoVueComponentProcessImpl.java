@@ -10,10 +10,7 @@
 package blanco.vuecomponent.task;
 
 import blanco.cg.BlancoCgSupportedLang;
-import blanco.vuecomponent.BlancoVueComponentConstants;
-import blanco.vuecomponent.BlancoVueComponentMeta2Xml;
-import blanco.vuecomponent.BlancoVueComponentXml2TypeScriptClass;
-import blanco.vuecomponent.BlancoVueComponentXmlParser;
+import blanco.vuecomponent.*;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.task.valueobject.BlancoVueComponentProcessInput;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
@@ -122,8 +119,8 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
          * まず始めにすべてのシートを検索して，クラス名とpackage名のリストを作ります．
          * php形式の定義書では，クラスを指定する際にpackage名が指定されていないからです．
          */
-            BlancoVueComponentXmlParser.classList =
-                    BlancoVueComponentXmlParser.createClassListFromSheets(fileMeta2);
+            BlancoVueComponentUtil.isVerbose = input.getVerbose();
+            BlancoVueComponentUtil.processValueObjects(input);
 
             /*
              * listClass が指定されている場合は、自動生成したクラスの一覧を

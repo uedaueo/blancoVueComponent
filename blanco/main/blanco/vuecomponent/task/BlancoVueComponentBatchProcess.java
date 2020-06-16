@@ -78,6 +78,8 @@ public class BlancoVueComponentBatchProcess {
                 input.setListClass(arg.substring(11));
             } else if (arg.startsWith("-lineSeparator=")) {
                 input.setLineSeparator(arg.substring(15));
+            } else if (arg.startsWith("-searchTmpdir=")) {
+                input.setSearchTmpdir(arg.substring(14));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -171,7 +173,7 @@ public class BlancoVueComponentBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoVueComponentBatchProcess: Usage:");
-        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=値1 -metadir=値2 -targetdir=値3 -tmpdir=値4 -encoding=値5 -tabs=値6 -xmlrootelement=値7 -sheetType=値8 -targetStyle=値9 -listClass=値10 -lineSeparator=値11");
+        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=値1 -metadir=値2 -targetdir=値3 -tmpdir=値4 -encoding=値5 -tabs=値6 -xmlrootelement=値7 -sheetType=値8 -targetStyle=値9 -listClass=値10 -lineSeparator=値11 -searchTmpdir=値12");
         System.out.println("    -verbose");
         System.out.println("      説明[verboseモードで動作させるかどうか。]");
         System.out.println("      型[真偽]");
@@ -214,6 +216,9 @@ public class BlancoVueComponentBatchProcess {
         System.out.println("      説明[行末記号をしていします。LF=0x0a, CR=0x0d, CFLF=0x0d0x0a とします。LFがデフォルトです。]");
         System.out.println("      型[文字列]");
         System.out.println("      デフォルト値[LF]");
+        System.out.println("    -searchTmpdir");
+        System.out.println("      説明[import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリの下にxmlを探しにいきます。]");
+        System.out.println("      型[文字列]");
         System.out.println("    -? , -help");
         System.out.println("      説明[使い方を表示します。]");
     }

@@ -174,6 +174,46 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_COMPONENTS]
+     *
+     * [blancovuecomponent-components] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_COMPONENTS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementComponents() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-components";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_COMPONENTS");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER]
+     *
+     * [blancovuecomponent-header] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_HEADER]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementHeader() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-header";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2JAVACLASS.FIELD.NAME]
      *
      * [フィールド: [{0}]。] (ja)<br>

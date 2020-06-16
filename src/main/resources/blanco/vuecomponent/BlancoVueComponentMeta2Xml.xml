@@ -2,11 +2,14 @@
 <!-- blancoCalcParser define file for blancoValueObject -->
 <blanco version="0.1.0">
   <target name="blancoCalcParser">
-    <blancocalcparser name="vuecomponent">
+    <blancocalcparser name="valueobject">
       <propertyblock name="blancovuecomponent-common" waitY="1">
         <startstring>Vueコンポーネント定義・共通</startstring>
-        <propertykey name="name" waitX="2">
+        <propertykey name="subject" waitX="2">
           <value>コンポーネント名</value>
+        </propertykey>
+        <propertykey name="name" waitX="2">
+          <value>コンポーネントID</value>
         </propertykey>
         <propertykey name="package" waitX="2">
           <value>パッケージ</value>
@@ -61,16 +64,14 @@
           <result>true</result>
           <source>○</source>
         </valuemapping>
-      </propertyblock>
-
-      <propertyblock name="blancovuecomponent-extends" waitY="1">
-        <startstring>Vueコンポーネント定義・継承</startstring>
-        <propertykey name="name" waitX="2">
-          <value>クラス名</value>
-        </propertykey>
-        <propertykey name="package" waitX="2">
-          <value>パッケージ</value>
-        </propertykey>
+        <valuemapping>
+          <result>screen</result>
+          <source>画面</source>
+        </valuemapping>
+        <valuemapping>
+          <result>part</result>
+          <source>部品</source>
+        </valuemapping>
       </propertyblock>
 
       <tableblock name="blancovuecomponent-header" waitY="2" titleheight="2" rowname="header">
@@ -83,7 +84,7 @@
         </tablecolumn>
       </tableblock>
 
-      <tableblock name="blancovuecomponent-component" waitY="2" titleheight="2" rowname="header">
+      <tableblock name="blancovuecomponent-components" waitY="2" titleheight="2" rowname="components">
         <startstring>Vueコンポーネント定義・使用コンポーネント</startstring>
         <tablecolumn name="no">
           <value>No.</value>

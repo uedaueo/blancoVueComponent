@@ -28,11 +28,32 @@ public class BlancoVueComponentClassStructure {
     private String fClassAlias;
 
     /**
-     * 本番時にファイルを配置する歳のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。
+     * vue-routerのpathとして使用されます。
+     *
+     * フィールド: [routerPath]。
+     */
+    private String fRouterPath;
+
+    /**
+     * vue-routerのnameとして使用されます。
+     *
+     * フィールド: [routerName]。
+     */
+    private String fRouterName;
+
+    /**
+     * 本番時にファイルを配置する際のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。
      *
      * フィールド: [basedir]。
      */
     private String fBasedir;
+
+    /**
+     * 本番時に実装クラスを配置する際のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。
+     *
+     * フィールド: [impledir]。
+     */
+    private String fImpledir;
 
     /**
      * クラスの説明です。
@@ -50,76 +71,68 @@ public class BlancoVueComponentClassStructure {
     private List<java.lang.String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * クラスのアノテーションを指定します。
+     * Interface source コードの先頭に書かれるコード群です。
      *
-     * フィールド: [annotationList]。
+     * フィールド: [interfaceHeaderList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fAnnotationList = new java.util.ArrayList<java.lang.String>();
+    private List<java.lang.String> fInterfaceHeaderList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * importを指定します。
+     * component source コードの先頭に書かれるコード群です。
      *
-     * フィールド: [importList]。
+     * フィールド: [componentHeaderList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fImportList = new java.util.ArrayList<java.lang.String>();
+    private List<java.lang.String> fComponentHeaderList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * source コードの先頭に書かれるコード群です。
+     * コンポーネントの種別。screen or part
      *
-     * フィールド: [headerList]。
-     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     * フィールド: [componentKind]。
+     * デフォルト: [&quot;screen&quot;]。
      */
-    private List<java.lang.String> fHeaderList = new java.util.ArrayList<java.lang.String>();
+    private String fComponentKind = "screen";
 
     /**
-     * クラスのアクセス。通常は public。
+     * 認証が必要なクラスかどうか
      *
-     * フィールド: [access]。
-     * デフォルト: [&quot;public&quot;]。
+     * フィールド: [authRequired]。
+     * デフォルト: [false]。
      */
-    private String fAccess = "public";
-
-    /**
-     * dataクラスかどうか。
-     *
-     * フィールド: [data]。
-     * デフォルト: [true]。
-     */
-    private Boolean fData = true;
+    private Boolean fAuthRequired = false;
 
     /**
      * クラスが拡張可能かどうか。kotlin では通常は true。
      *
-     * フィールド: [final]。
-     * デフォルト: [true]。
-     */
-    private Boolean fFinal = true;
-
-    /**
-     * 抽象クラスかどうか。通常は false。
-     *
-     * フィールド: [abstract]。
+     * フィールド: [forceReload]。
      * デフォルト: [false]。
      */
-    private Boolean fAbstract = false;
+    private Boolean fForceReload = false;
 
     /**
-     * インタフェイスかどうか。通常は false。
+     * templateを使用するかどうか
      *
-     * フィールド: [interface]。
+     * フィールド: [useTemplate]。
      * デフォルト: [false]。
      */
-    private Boolean fInterface = false;
+    private Boolean fUseTemplate = false;
 
     /**
-     * toStringメソッドを生成するかどうか。
+     * scriptを使用するかどうか
      *
-     * フィールド: [generateToString]。
-     * デフォルト: [true]。
+     * フィールド: [useScript]。
+     * デフォルト: [false]。
      */
-    private Boolean fGenerateToString = true;
+    private Boolean fUseScript = false;
+
+    /**
+     * styleを使用するかどうか
+     *
+     * フィールド: [useStyle]。
+     * デフォルト: [false]。
+     */
+    private Boolean fUseStyle = false;
 
     /**
      * フィールド名の名前変形をおこなうかどうか。
@@ -133,9 +146,9 @@ public class BlancoVueComponentClassStructure {
      * デフォルト値の変形をおこなうかどうか。※なるべく変形を利用しないことを推奨したい。※プログラムAPIとして生成する際には、このフィールドを明示的に設定してください。
      *
      * フィールド: [adjustDefaultValue]。
-     * デフォルト: [true]。
+     * デフォルト: [false]。
      */
-    private Boolean fAdjustDefaultValue = true;
+    private Boolean fAdjustDefaultValue = false;
 
     /**
      * TypeScript 独自。blancoで一括生成されたクラスについて、import文を自動生成します。
@@ -153,12 +166,12 @@ public class BlancoVueComponentClassStructure {
     private String fExtends;
 
     /**
-     * 実装するインタフェース(java.lang.String)の一覧。
+     * 使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、importHeaderListに明示的に記載する必要があります。
      *
-     * フィールド: [implementsList]。
+     * フィールド: [componentList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fImplementsList = new java.util.ArrayList<java.lang.String>();
+    private List<java.lang.String> fComponentList = new java.util.ArrayList<java.lang.String>();
 
     /**
      * フィールドを記憶するリストを指定します。
@@ -182,6 +195,13 @@ public class BlancoVueComponentClassStructure {
      * デフォルト: [new java.util.ArrayList&lt;blanco.cg.valueobject.BlancoCgField&gt;()]。
      */
     private List<blanco.cg.valueobject.BlancoCgField> fConstructorArgList = new java.util.ArrayList<blanco.cg.valueobject.BlancoCgField>();
+
+    /**
+     * コンポーネントの表示名を定義します。
+     *
+     * フィールド: [subject]。
+     */
+    private String fSubject;
 
     /**
      * フィールド [name] の値を設定します。
@@ -250,9 +270,53 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [routerPath] の値を設定します。
+     *
+     * フィールドの説明: [vue-routerのpathとして使用されます。]。
+     *
+     * @param argRouterPath フィールド[routerPath]に設定する値。
+     */
+    public void setRouterPath(final String argRouterPath) {
+        fRouterPath = argRouterPath;
+    }
+
+    /**
+     * フィールド [routerPath] の値を取得します。
+     *
+     * フィールドの説明: [vue-routerのpathとして使用されます。]。
+     *
+     * @return フィールド[routerPath]から取得した値。
+     */
+    public String getRouterPath() {
+        return fRouterPath;
+    }
+
+    /**
+     * フィールド [routerName] の値を設定します。
+     *
+     * フィールドの説明: [vue-routerのnameとして使用されます。]。
+     *
+     * @param argRouterName フィールド[routerName]に設定する値。
+     */
+    public void setRouterName(final String argRouterName) {
+        fRouterName = argRouterName;
+    }
+
+    /**
+     * フィールド [routerName] の値を取得します。
+     *
+     * フィールドの説明: [vue-routerのnameとして使用されます。]。
+     *
+     * @return フィールド[routerName]から取得した値。
+     */
+    public String getRouterName() {
+        return fRouterName;
+    }
+
+    /**
      * フィールド [basedir] の値を設定します。
      *
-     * フィールドの説明: [本番時にファイルを配置する歳のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。]。
+     * フィールドの説明: [本番時にファイルを配置する際のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。]。
      *
      * @param argBasedir フィールド[basedir]に設定する値。
      */
@@ -263,12 +327,34 @@ public class BlancoVueComponentClassStructure {
     /**
      * フィールド [basedir] の値を取得します。
      *
-     * フィールドの説明: [本番時にファイルを配置する歳のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。]。
+     * フィールドの説明: [本番時にファイルを配置する際のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。]。
      *
      * @return フィールド[basedir]から取得した値。
      */
     public String getBasedir() {
         return fBasedir;
+    }
+
+    /**
+     * フィールド [impledir] の値を設定します。
+     *
+     * フィールドの説明: [本番時に実装クラスを配置する際のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。]。
+     *
+     * @param argImpledir フィールド[impledir]に設定する値。
+     */
+    public void setImpledir(final String argImpledir) {
+        fImpledir = argImpledir;
+    }
+
+    /**
+     * フィールド [impledir] の値を取得します。
+     *
+     * フィールドの説明: [本番時に実装クラスを配置する際のベースディレクトリ。主にTypeScriptのimport文生成時に使用する事を想定しています。]。
+     *
+     * @return フィールド[impledir]から取得した値。
+     */
+    public String getImpledir() {
+        return fImpledir;
     }
 
     /**
@@ -317,210 +403,187 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
-     * フィールド [annotationList] の値を設定します。
+     * フィールド [interfaceHeaderList] の値を設定します。
      *
-     * フィールドの説明: [クラスのアノテーションを指定します。]。
+     * フィールドの説明: [Interface source コードの先頭に書かれるコード群です。]。
      *
-     * @param argAnnotationList フィールド[annotationList]に設定する値。
+     * @param argInterfaceHeaderList フィールド[interfaceHeaderList]に設定する値。
      */
-    public void setAnnotationList(final List<java.lang.String> argAnnotationList) {
-        fAnnotationList = argAnnotationList;
+    public void setInterfaceHeaderList(final List<java.lang.String> argInterfaceHeaderList) {
+        fInterfaceHeaderList = argInterfaceHeaderList;
     }
 
     /**
-     * フィールド [annotationList] の値を取得します。
+     * フィールド [interfaceHeaderList] の値を取得します。
      *
-     * フィールドの説明: [クラスのアノテーションを指定します。]。
+     * フィールドの説明: [Interface source コードの先頭に書かれるコード群です。]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      *
-     * @return フィールド[annotationList]から取得した値。
+     * @return フィールド[interfaceHeaderList]から取得した値。
      */
-    public List<java.lang.String> getAnnotationList() {
-        return fAnnotationList;
+    public List<java.lang.String> getInterfaceHeaderList() {
+        return fInterfaceHeaderList;
     }
 
     /**
-     * フィールド [importList] の値を設定します。
+     * フィールド [componentHeaderList] の値を設定します。
      *
-     * フィールドの説明: [importを指定します。]。
+     * フィールドの説明: [component source コードの先頭に書かれるコード群です。]。
      *
-     * @param argImportList フィールド[importList]に設定する値。
+     * @param argComponentHeaderList フィールド[componentHeaderList]に設定する値。
      */
-    public void setImportList(final List<java.lang.String> argImportList) {
-        fImportList = argImportList;
+    public void setComponentHeaderList(final List<java.lang.String> argComponentHeaderList) {
+        fComponentHeaderList = argComponentHeaderList;
     }
 
     /**
-     * フィールド [importList] の値を取得します。
+     * フィールド [componentHeaderList] の値を取得します。
      *
-     * フィールドの説明: [importを指定します。]。
+     * フィールドの説明: [component source コードの先頭に書かれるコード群です。]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      *
-     * @return フィールド[importList]から取得した値。
+     * @return フィールド[componentHeaderList]から取得した値。
      */
-    public List<java.lang.String> getImportList() {
-        return fImportList;
+    public List<java.lang.String> getComponentHeaderList() {
+        return fComponentHeaderList;
     }
 
     /**
-     * フィールド [headerList] の値を設定します。
+     * フィールド [componentKind] の値を設定します。
      *
-     * フィールドの説明: [source コードの先頭に書かれるコード群です。]。
+     * フィールドの説明: [コンポーネントの種別。screen or part]。
      *
-     * @param argHeaderList フィールド[headerList]に設定する値。
+     * @param argComponentKind フィールド[componentKind]に設定する値。
      */
-    public void setHeaderList(final List<java.lang.String> argHeaderList) {
-        fHeaderList = argHeaderList;
+    public void setComponentKind(final String argComponentKind) {
+        fComponentKind = argComponentKind;
     }
 
     /**
-     * フィールド [headerList] の値を取得します。
+     * フィールド [componentKind] の値を取得します。
      *
-     * フィールドの説明: [source コードの先頭に書かれるコード群です。]。
-     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     * フィールドの説明: [コンポーネントの種別。screen or part]。
+     * デフォルト: [&quot;screen&quot;]。
      *
-     * @return フィールド[headerList]から取得した値。
+     * @return フィールド[componentKind]から取得した値。
      */
-    public List<java.lang.String> getHeaderList() {
-        return fHeaderList;
+    public String getComponentKind() {
+        return fComponentKind;
     }
 
     /**
-     * フィールド [access] の値を設定します。
+     * フィールド [authRequired] の値を設定します。
      *
-     * フィールドの説明: [クラスのアクセス。通常は public。]。
+     * フィールドの説明: [認証が必要なクラスかどうか]。
      *
-     * @param argAccess フィールド[access]に設定する値。
+     * @param argAuthRequired フィールド[authRequired]に設定する値。
      */
-    public void setAccess(final String argAccess) {
-        fAccess = argAccess;
+    public void setAuthRequired(final Boolean argAuthRequired) {
+        fAuthRequired = argAuthRequired;
     }
 
     /**
-     * フィールド [access] の値を取得します。
+     * フィールド [authRequired] の値を取得します。
      *
-     * フィールドの説明: [クラスのアクセス。通常は public。]。
-     * デフォルト: [&quot;public&quot;]。
+     * フィールドの説明: [認証が必要なクラスかどうか]。
+     * デフォルト: [false]。
      *
-     * @return フィールド[access]から取得した値。
+     * @return フィールド[authRequired]から取得した値。
      */
-    public String getAccess() {
-        return fAccess;
+    public Boolean getAuthRequired() {
+        return fAuthRequired;
     }
 
     /**
-     * フィールド [data] の値を設定します。
-     *
-     * フィールドの説明: [dataクラスかどうか。]。
-     *
-     * @param argData フィールド[data]に設定する値。
-     */
-    public void setData(final Boolean argData) {
-        fData = argData;
-    }
-
-    /**
-     * フィールド [data] の値を取得します。
-     *
-     * フィールドの説明: [dataクラスかどうか。]。
-     * デフォルト: [true]。
-     *
-     * @return フィールド[data]から取得した値。
-     */
-    public Boolean getData() {
-        return fData;
-    }
-
-    /**
-     * フィールド [final] の値を設定します。
+     * フィールド [forceReload] の値を設定します。
      *
      * フィールドの説明: [クラスが拡張可能かどうか。kotlin では通常は true。]。
      *
-     * @param argFinal フィールド[final]に設定する値。
+     * @param argForceReload フィールド[forceReload]に設定する値。
      */
-    public void setFinal(final Boolean argFinal) {
-        fFinal = argFinal;
+    public void setForceReload(final Boolean argForceReload) {
+        fForceReload = argForceReload;
     }
 
     /**
-     * フィールド [final] の値を取得します。
+     * フィールド [forceReload] の値を取得します。
      *
      * フィールドの説明: [クラスが拡張可能かどうか。kotlin では通常は true。]。
-     * デフォルト: [true]。
-     *
-     * @return フィールド[final]から取得した値。
-     */
-    public Boolean getFinal() {
-        return fFinal;
-    }
-
-    /**
-     * フィールド [abstract] の値を設定します。
-     *
-     * フィールドの説明: [抽象クラスかどうか。通常は false。]。
-     *
-     * @param argAbstract フィールド[abstract]に設定する値。
-     */
-    public void setAbstract(final Boolean argAbstract) {
-        fAbstract = argAbstract;
-    }
-
-    /**
-     * フィールド [abstract] の値を取得します。
-     *
-     * フィールドの説明: [抽象クラスかどうか。通常は false。]。
      * デフォルト: [false]。
      *
-     * @return フィールド[abstract]から取得した値。
+     * @return フィールド[forceReload]から取得した値。
      */
-    public Boolean getAbstract() {
-        return fAbstract;
+    public Boolean getForceReload() {
+        return fForceReload;
     }
 
     /**
-     * フィールド [interface] の値を設定します。
+     * フィールド [useTemplate] の値を設定します。
      *
-     * フィールドの説明: [インタフェイスかどうか。通常は false。]。
+     * フィールドの説明: [templateを使用するかどうか]。
      *
-     * @param argInterface フィールド[interface]に設定する値。
+     * @param argUseTemplate フィールド[useTemplate]に設定する値。
      */
-    public void setInterface(final Boolean argInterface) {
-        fInterface = argInterface;
+    public void setUseTemplate(final Boolean argUseTemplate) {
+        fUseTemplate = argUseTemplate;
     }
 
     /**
-     * フィールド [interface] の値を取得します。
+     * フィールド [useTemplate] の値を取得します。
      *
-     * フィールドの説明: [インタフェイスかどうか。通常は false。]。
+     * フィールドの説明: [templateを使用するかどうか]。
      * デフォルト: [false]。
      *
-     * @return フィールド[interface]から取得した値。
+     * @return フィールド[useTemplate]から取得した値。
      */
-    public Boolean getInterface() {
-        return fInterface;
+    public Boolean getUseTemplate() {
+        return fUseTemplate;
     }
 
     /**
-     * フィールド [generateToString] の値を設定します。
+     * フィールド [useScript] の値を設定します。
      *
-     * フィールドの説明: [toStringメソッドを生成するかどうか。]。
+     * フィールドの説明: [scriptを使用するかどうか]。
      *
-     * @param argGenerateToString フィールド[generateToString]に設定する値。
+     * @param argUseScript フィールド[useScript]に設定する値。
      */
-    public void setGenerateToString(final Boolean argGenerateToString) {
-        fGenerateToString = argGenerateToString;
+    public void setUseScript(final Boolean argUseScript) {
+        fUseScript = argUseScript;
     }
 
     /**
-     * フィールド [generateToString] の値を取得します。
+     * フィールド [useScript] の値を取得します。
      *
-     * フィールドの説明: [toStringメソッドを生成するかどうか。]。
-     * デフォルト: [true]。
+     * フィールドの説明: [scriptを使用するかどうか]。
+     * デフォルト: [false]。
      *
-     * @return フィールド[generateToString]から取得した値。
+     * @return フィールド[useScript]から取得した値。
      */
-    public Boolean getGenerateToString() {
-        return fGenerateToString;
+    public Boolean getUseScript() {
+        return fUseScript;
+    }
+
+    /**
+     * フィールド [useStyle] の値を設定します。
+     *
+     * フィールドの説明: [styleを使用するかどうか]。
+     *
+     * @param argUseStyle フィールド[useStyle]に設定する値。
+     */
+    public void setUseStyle(final Boolean argUseStyle) {
+        fUseStyle = argUseStyle;
+    }
+
+    /**
+     * フィールド [useStyle] の値を取得します。
+     *
+     * フィールドの説明: [styleを使用するかどうか]。
+     * デフォルト: [false]。
+     *
+     * @return フィールド[useStyle]から取得した値。
+     */
+    public Boolean getUseStyle() {
+        return fUseStyle;
     }
 
     /**
@@ -561,7 +624,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド [adjustDefaultValue] の値を取得します。
      *
      * フィールドの説明: [デフォルト値の変形をおこなうかどうか。※なるべく変形を利用しないことを推奨したい。※プログラムAPIとして生成する際には、このフィールドを明示的に設定してください。]。
-     * デフォルト: [true]。
+     * デフォルト: [false]。
      *
      * @return フィールド[adjustDefaultValue]から取得した値。
      */
@@ -615,26 +678,26 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
-     * フィールド [implementsList] の値を設定します。
+     * フィールド [componentList] の値を設定します。
      *
-     * フィールドの説明: [実装するインタフェース(java.lang.String)の一覧。]。
+     * フィールドの説明: [使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、importHeaderListに明示的に記載する必要があります。]。
      *
-     * @param argImplementsList フィールド[implementsList]に設定する値。
+     * @param argComponentList フィールド[componentList]に設定する値。
      */
-    public void setImplementsList(final List<java.lang.String> argImplementsList) {
-        fImplementsList = argImplementsList;
+    public void setComponentList(final List<java.lang.String> argComponentList) {
+        fComponentList = argComponentList;
     }
 
     /**
-     * フィールド [implementsList] の値を取得します。
+     * フィールド [componentList] の値を取得します。
      *
-     * フィールドの説明: [実装するインタフェース(java.lang.String)の一覧。]。
+     * フィールドの説明: [使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、importHeaderListに明示的に記載する必要があります。]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      *
-     * @return フィールド[implementsList]から取得した値。
+     * @return フィールド[componentList]から取得した値。
      */
-    public List<java.lang.String> getImplementsList() {
-        return fImplementsList;
+    public List<java.lang.String> getComponentList() {
+        return fComponentList;
     }
 
     /**
@@ -706,6 +769,28 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [subject] の値を設定します。
+     *
+     * フィールドの説明: [コンポーネントの表示名を定義します。]。
+     *
+     * @param argSubject フィールド[subject]に設定する値。
+     */
+    public void setSubject(final String argSubject) {
+        fSubject = argSubject;
+    }
+
+    /**
+     * フィールド [subject] の値を取得します。
+     *
+     * フィールドの説明: [コンポーネントの表示名を定義します。]。
+     *
+     * @return フィールド[subject]から取得した値。
+     */
+    public String getSubject() {
+        return fSubject;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -723,26 +808,29 @@ public class BlancoVueComponentClassStructure {
         buf.append("name=" + fName);
         buf.append(",package=" + fPackage);
         buf.append(",classAlias=" + fClassAlias);
+        buf.append(",routerPath=" + fRouterPath);
+        buf.append(",routerName=" + fRouterName);
         buf.append(",basedir=" + fBasedir);
+        buf.append(",impledir=" + fImpledir);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
-        buf.append(",annotationList=" + fAnnotationList);
-        buf.append(",importList=" + fImportList);
-        buf.append(",headerList=" + fHeaderList);
-        buf.append(",access=" + fAccess);
-        buf.append(",data=" + fData);
-        buf.append(",final=" + fFinal);
-        buf.append(",abstract=" + fAbstract);
-        buf.append(",interface=" + fInterface);
-        buf.append(",generateToString=" + fGenerateToString);
+        buf.append(",interfaceHeaderList=" + fInterfaceHeaderList);
+        buf.append(",componentHeaderList=" + fComponentHeaderList);
+        buf.append(",componentKind=" + fComponentKind);
+        buf.append(",authRequired=" + fAuthRequired);
+        buf.append(",forceReload=" + fForceReload);
+        buf.append(",useTemplate=" + fUseTemplate);
+        buf.append(",useScript=" + fUseScript);
+        buf.append(",useStyle=" + fUseStyle);
         buf.append(",adjustFieldName=" + fAdjustFieldName);
         buf.append(",adjustDefaultValue=" + fAdjustDefaultValue);
         buf.append(",createImportList=" + fCreateImportList);
         buf.append(",extends=" + fExtends);
-        buf.append(",implementsList=" + fImplementsList);
+        buf.append(",componentList=" + fComponentList);
         buf.append(",fieldList=" + fFieldList);
         buf.append(",fileDescription=" + fFileDescription);
         buf.append(",constructorArgList=" + fConstructorArgList);
+        buf.append(",subject=" + fSubject);
         buf.append("]");
         return buf.toString();
     }
@@ -774,9 +862,18 @@ public class BlancoVueComponentClassStructure {
         // Name: fClassAlias
         // Type: java.lang.String
         target.fClassAlias = this.fClassAlias;
+        // Name: fRouterPath
+        // Type: java.lang.String
+        target.fRouterPath = this.fRouterPath;
+        // Name: fRouterName
+        // Type: java.lang.String
+        target.fRouterName = this.fRouterName;
         // Name: fBasedir
         // Type: java.lang.String
         target.fBasedir = this.fBasedir;
+        // Name: fImpledir
+        // Type: java.lang.String
+        target.fImpledir = this.fImpledir;
         // Name: fDescription
         // Type: java.lang.String
         target.fDescription = this.fDescription;
@@ -791,57 +888,46 @@ public class BlancoVueComponentClassStructure {
                 target.fDescriptionList.add(loopTarget);
             }
         }
-        // Name: fAnnotationList
+        // Name: fInterfaceHeaderList
         // Type: java.util.List
-        if (this.fAnnotationList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fAnnotationList.iterator();
+        if (this.fInterfaceHeaderList != null) {
+            final java.util.Iterator<java.lang.String> iterator = this.fInterfaceHeaderList.iterator();
             for (; iterator.hasNext();) {
                 java.lang.String loopSource = iterator.next();
                 java.lang.String loopTarget = null;
                 loopTarget = loopSource;
-                target.fAnnotationList.add(loopTarget);
+                target.fInterfaceHeaderList.add(loopTarget);
             }
         }
-        // Name: fImportList
+        // Name: fComponentHeaderList
         // Type: java.util.List
-        if (this.fImportList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fImportList.iterator();
+        if (this.fComponentHeaderList != null) {
+            final java.util.Iterator<java.lang.String> iterator = this.fComponentHeaderList.iterator();
             for (; iterator.hasNext();) {
                 java.lang.String loopSource = iterator.next();
                 java.lang.String loopTarget = null;
                 loopTarget = loopSource;
-                target.fImportList.add(loopTarget);
+                target.fComponentHeaderList.add(loopTarget);
             }
         }
-        // Name: fHeaderList
-        // Type: java.util.List
-        if (this.fHeaderList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fHeaderList.iterator();
-            for (; iterator.hasNext();) {
-                java.lang.String loopSource = iterator.next();
-                java.lang.String loopTarget = null;
-                loopTarget = loopSource;
-                target.fHeaderList.add(loopTarget);
-            }
-        }
-        // Name: fAccess
+        // Name: fComponentKind
         // Type: java.lang.String
-        target.fAccess = this.fAccess;
-        // Name: fData
+        target.fComponentKind = this.fComponentKind;
+        // Name: fAuthRequired
         // Type: java.lang.Boolean
-        target.fData = this.fData;
-        // Name: fFinal
+        target.fAuthRequired = this.fAuthRequired;
+        // Name: fForceReload
         // Type: java.lang.Boolean
-        target.fFinal = this.fFinal;
-        // Name: fAbstract
+        target.fForceReload = this.fForceReload;
+        // Name: fUseTemplate
         // Type: java.lang.Boolean
-        target.fAbstract = this.fAbstract;
-        // Name: fInterface
+        target.fUseTemplate = this.fUseTemplate;
+        // Name: fUseScript
         // Type: java.lang.Boolean
-        target.fInterface = this.fInterface;
-        // Name: fGenerateToString
+        target.fUseScript = this.fUseScript;
+        // Name: fUseStyle
         // Type: java.lang.Boolean
-        target.fGenerateToString = this.fGenerateToString;
+        target.fUseStyle = this.fUseStyle;
         // Name: fAdjustFieldName
         // Type: java.lang.Boolean
         target.fAdjustFieldName = this.fAdjustFieldName;
@@ -854,15 +940,15 @@ public class BlancoVueComponentClassStructure {
         // Name: fExtends
         // Type: java.lang.String
         target.fExtends = this.fExtends;
-        // Name: fImplementsList
+        // Name: fComponentList
         // Type: java.util.List
-        if (this.fImplementsList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fImplementsList.iterator();
+        if (this.fComponentList != null) {
+            final java.util.Iterator<java.lang.String> iterator = this.fComponentList.iterator();
             for (; iterator.hasNext();) {
                 java.lang.String loopSource = iterator.next();
                 java.lang.String loopTarget = null;
                 loopTarget = loopSource;
-                target.fImplementsList.add(loopTarget);
+                target.fComponentList.add(loopTarget);
             }
         }
         // Name: fFieldList
@@ -890,5 +976,8 @@ public class BlancoVueComponentClassStructure {
                 target.fConstructorArgList.add(loopTarget);
             }
         }
+        // Name: fSubject
+        // Type: java.lang.String
+        target.fSubject = this.fSubject;
     }
 }

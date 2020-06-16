@@ -53,8 +53,20 @@ public class BlancoVueComponentConstants {
     public static final String TARGET_DIR_SUFFIX_BLANCO = "main";
 
     /**
-     * 項目番号:8<br>
+     * 項目番号:9<br>
      * 生成したソースコードを保管するディレクトリのsuffix
      */
     public static final String TARGET_DIR_SUFFIX_MAVEN = "main/typescript";
+
+    /**
+     * 項目番号:10<br>
+     * valueobjectが格納されているサブディレクトリ
+     */
+    public static final String OBJECT_SUBDIRECTORY = "/valueobjectts";
+
+    /**
+     * 項目番号:11<br>
+     * 実装クラス名のサフィックス
+     */
+    public static final String IMPLECLASS_SUFFIX = "Imple";
 }
