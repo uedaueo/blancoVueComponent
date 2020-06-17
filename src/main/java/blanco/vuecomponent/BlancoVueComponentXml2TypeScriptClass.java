@@ -27,6 +27,7 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -147,13 +148,9 @@ public class BlancoVueComponentXml2TypeScriptClass {
             /* 次に、interface を作成します */
             generateInterface(classStructure, argDirectoryTarget);
 
-//            if (!classStructure.getInterface()) {
-//                // 得られた情報から TypeScript ソースコードを生成します。
-//                generateClass(classStructure, argDirectoryTarget);
-//            } else {
-//                // interface として定義します。
-//                generateInterface(classStructure, argDirectoryTarget);
-//            }
+            /* 次に、class を作成します */
+            generateClass(classStructure, argDirectoryTarget);
+
         }
         return structures;
     }
@@ -279,6 +276,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         // クラスを作成します。
         fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
         fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("default");
 
         // 継承
         if (BlancoStringUtil.null2Blank(argClassStructure.getExtends())
@@ -306,9 +304,31 @@ public class BlancoVueComponentXml2TypeScriptClass {
             fCgSourceFile.getHeaderList().add(header);
         }
 
+        /* Component decorator を設定します。 */
+        List<String> decorators = new ArrayList<>();
+        StringBuffer lineBuffer = new StringBuffer();
+        lineBuffer.append("Component");
+        List<String> subComponents = argClassStructure.getComponentList();
+        if (subComponents != null && subComponents.size() > 0) {
+            lineBuffer.append("({" + this.getLineSeparator());
+            lineBuffer.append(this.getTabSpace() + "components: {" + this.getLineSeparator());
+            int i = 0;
+            for (String subComponent : subComponents) {
+                if (i != 0) {
+                    lineBuffer.append("," + this.getLineSeparator());
+                }
+                lineBuffer.append(this.getTabSpace() + this.getTabSpace() + subComponent);
+                i++;
+            }
+            lineBuffer.append(this.getLineSeparator() + this.getTabSpace() + "}" + this.getLineSeparator());
+            lineBuffer.append("})");
+        }
+        decorators.add(lineBuffer.toString());
+        fCgClass.getAnnotationList().addAll(decorators);
+
+        /* プロパティを設定します */
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
                 .size(); indexField++) {
-            // おのおののフィールドを処理します。
             final BlancoVueComponentFieldStructure fieldStructure = (BlancoVueComponentFieldStructure) argClassStructure
                     .getFieldList().get(indexField);
 
@@ -325,16 +345,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
             // フィールドの生成。
             buildProp(argClassStructure, fieldStructure, false);
 
-            // セッターメソッドの生成。
-            if (!fieldStructure.getValue()) {
-                /*
-                 * 定数値に対してはsetterを生成しません。
-                 */
-                buildMethodSet(argClassStructure, fieldStructure);
-            }
+            // Getter/Setterは生成しません。
+            // 代わりに、実装クラスに property の変更を通知するメソッドを生成します。
+            buildOnChange(argClassStructure, fieldStructure);
 
-            // ゲッターメソッドの生成。
-            buildMethodGet(argClassStructure, fieldStructure);
         }
 
         // TODO toString メソッドの生成方式を検討する
@@ -567,11 +581,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
             System.out.println("!!! generic = " + field.getType().getGenerics());
         }
 
-        if (isInterface != true) {
-            field.setAccess("private");
-        } else {
-            field.setAccess("public");
-        }
+        /*
+         * Getter / Setter は作らないので、すべて public にします。
+         */
+        field.setAccess("public");
         /*
          * 当面、final には対応しません。
          */
@@ -631,12 +644,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
                     field.setDefault(argFieldStructure.getDefault());
                 }
             }
-        }
 
-        /* メソッドの annotation を設定します */
-        List annotationList = argFieldStructure.getAnnotationList();
-        if (annotationList != null && annotationList.size() > 0) {
-            field.getAnnotationList().addAll(annotationList);
+            /* Prop デコレータを設定します。 */
+            boolean required = argFieldStructure.getRequired();
+            List<String> decorators = new ArrayList<>();
+            decorators.add("Prop(" +
+                    (required ? "{ required: true }" : "") +
+                    ")");
+            field.getAnnotationList().addAll(decorators);
             if (this.isVerbose()) {
                 System.out.println("/* tueda */ method annotation = " + field.getAnnotationList().get(0));
             }
@@ -644,69 +659,18 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * setメソッドを生成します。
+     * プロパティの変更を実装クラスに通知するメソッドを生成します。
      *
+     * @param argClassStructure
      * @param argFieldStructure
-     *            フィールド情報。
      */
-    private void buildMethodSet(
+    private void buildOnChange(
             final BlancoVueComponentClassStructure argClassStructure,
-            final BlancoVueComponentFieldStructure argFieldStructure) {
-        // おのおののフィールドに対するセッターメソッドを生成します。
-        final BlancoCgMethod method = fCgFactory.createMethod(argFieldStructure.getName(),
-                fBundle.getXml2javaclassSetJavadoc01(argFieldStructure
-                        .getName()));
-        fCgClass.getMethodList().add(method);
+            final BlancoVueComponentFieldStructure argFieldStructure
+    ) {
+        String methodName = "onChange" + BlancoNameAdjuster.toClassName(argFieldStructure.getName());
 
-        method.setAccess("set");
-
-        // メソッドの JavaDoc設定。
-        if (argFieldStructure.getDescription() != null) {
-            method.getLangDoc().getDescriptionList().add(
-                    fBundle.getXml2javaclassSetJavadoc02(argFieldStructure
-                            .getDescription()));
-        }
-        for (String line : argFieldStructure.getDescriptionList()) {
-            method.getLangDoc().getDescriptionList().add(line);
-        }
-
-        BlancoCgParameter param = fCgFactory.createParameter("arg"
-                        + getFieldNameAdjustered(argClassStructure,
-                argFieldStructure),
-                argFieldStructure.getType(),
-                fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
-                        .getName()));
-        if (!argFieldStructure.getNullable()) {
-            param.setNotnull(true);
-        }
-        method.getParameterList().add(param);
-        // generic があれば対応
-        String generic = argFieldStructure.getGeneric();
-        if (generic != null && generic.length() > 0) {
-            param.getType().setGenerics(generic);
-        }
-
-        // メソッドの実装
-        method.getLineList().add(
-                "this.f"
-                        + getFieldNameAdjustered(argClassStructure, argFieldStructure)
-                        + " = "
-                        + "arg"
-                        + getFieldNameAdjustered(argClassStructure,
-                                argFieldStructure) + ";");
-    }
-
-    /**
-     * getメソッドを生成します。
-     *
-     * @param argFieldStructure
-     *            フィールド情報。
-     */
-    private void buildMethodGet(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final BlancoVueComponentFieldStructure argFieldStructure) {
-        // おのおののフィールドに対するゲッターメソッドを生成します。
-        final BlancoCgMethod method = fCgFactory.createMethod(argFieldStructure.getName(),
+        final BlancoCgMethod method = fCgFactory.createMethod(methodName,
                 fBundle.getXml2javaclassGetJavadoc01(argFieldStructure
                         .getName()));
         fCgClass.getMethodList().add(method);
@@ -716,114 +680,65 @@ public class BlancoVueComponentXml2TypeScriptClass {
             method.setNotnull(true);
         }
 
-        method.setAccess("get");
-
         // メソッドの JavaDoc設定。
-        if (argFieldStructure.getDescription() != null) {
-            method.getLangDoc().getDescriptionList().add(
-                    fBundle.getXml2javaclassGetJavadoc02(argFieldStructure
-                            .getDescription()));
-        }
-        for (String line : argFieldStructure.getDescriptionList()) {
-            method.getLangDoc().getDescriptionList().add(line);
-        }
-        if (argFieldStructure.getDefault() != null) {
-            method.getLangDoc().getDescriptionList().add(
-                    BlancoCgSourceUtil.escapeStringAsLangDoc(BlancoCgSupportedLang.JAVA, fBundle.getXml2javaclassGetDefaultJavadoc(argFieldStructure
-                            .getDefault())));
-        }
+        // TODO: リソースバンドル化して、国際化対応した方がよい。
+        List<String> lines = new ArrayList<>();
+        lines.add("Watch " + argFieldStructure
+                .getName() + " and notify changes to implements.");
+        lines.add("immedeate: act on initialized.");
+        lines.add("deep: follow inside of objects.");
+        method.getLangDoc().getDescriptionList().addAll(lines);
 
-        BlancoCgReturn cgReturn = fCgFactory.createReturn(argFieldStructure.getType(),
-                fBundle.getXml2javaclassGetReturnJavadoc(argFieldStructure.getName()));
-        method.setReturn(cgReturn);
-        // generic があれば対応
-        String generic = argFieldStructure.getGeneric();
-        if (generic != null && generic.length() > 0) {
-            method.getReturn().getType().setGenerics(generic);
-        }
+        // デコレーションを設定
+        List<String> decorates = new ArrayList<>();
+        decorates.add("Watch(\"" +
+                argFieldStructure.getName() +
+                "\", {immediate: true, deep: true})"
+                );
+        method.getAnnotationList().addAll(decorates);
+
+        // パラメータの実装
+        method.getParameterList().add(this.createParameter(argClassStructure, argFieldStructure, "new"));
+        method.getParameterList().add(this.createParameter(argClassStructure, argFieldStructure, "old"));
 
         // メソッドの実装
         method.getLineList().add(
-                "return this.f"
-                        + this.getFieldNameAdjustered(argClassStructure, argFieldStructure) + ";");
+                "this.p"
+                        + getFieldNameAdjustered(argClassStructure, argFieldStructure)
+                        + " = "
+                        + "new"
+                        + getFieldNameAdjustered(argClassStructure,
+                        argFieldStructure) + ";");
     }
 
     /**
-     * toStringメソッドを生成します。
+     * パラメータを生成します。
      *
      * @param argClassStructure
-     *            クラス情報。
+     * @param argFieldStructure
+     * @param prefix
+     * @return
      */
-    @Deprecated
-    private void buildMethodToString(
-            final BlancoVueComponentClassStructure argClassStructure) {
-        final BlancoCgMethod method = fCgFactory.createMethod("toString",
-                "このバリューオブジェクトの文字列表現を取得します。");
-        fCgClass.getMethodList().add(method);
-
-        method.getLangDoc().getDescriptionList().add("<P>使用上の注意</P>");
-        method.getLangDoc().getDescriptionList().add("<UL>");
-        method.getLangDoc().getDescriptionList().add(
-                "<LI>オブジェクトのシャロー範囲のみ文字列化の処理対象となります。");
-        method.getLangDoc().getDescriptionList().add(
-                "<LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。");
-        method.getLangDoc().getDescriptionList().add("</UL>");
-        method.setReturn(fCgFactory.createReturn("java.lang.String",
-                "バリューオブジェクトの文字列表現。"));
-        method.getAnnotationList().add("Override");
-
-        /*
-         * 当面の間、BlancoValueObjectTs ではtoStringのoverrideを許しません。
-         */
-        method.setFinal(true);
-
-        final List<java.lang.String> listLine = method.getLineList();
-
-        listLine.add("final StringBuffer buf = new StringBuffer();");
-        listLine.add("buf.append(\"" + argClassStructure.getPackage() + "."
-                + argClassStructure.getName() + "[\");");
-        for (int indexField = 0; indexField < argClassStructure.getFieldList()
-                .size(); indexField++) {
-            final BlancoVueComponentFieldStructure field = (BlancoVueComponentFieldStructure) argClassStructure
-                    .getFieldList().get(indexField);
-
-            final String fieldNameAdjustered = (argClassStructure
-                    .getAdjustFieldName() == false ? field.getName()
-                    : BlancoNameAdjuster.toClassName(field.getName()));
-
-            if (field.getType().endsWith("[]") == false) {
-                listLine.add("buf.append(\"" + (indexField == 0 ? "" : ",")
-                        + field.getName() + "=\" + f" + fieldNameAdjustered
-                        + ");");
-            } else {
-                // 2006.05.31 t.iga 配列の場合には、先に
-                // その配列自身がnullかどうかのチェックが必要です。
-                listLine.add("if (f" + fieldNameAdjustered + " == null) {");
-                // 0番目の項目である場合にはカンマなしの特別扱いをします。
-                listLine.add("buf.append(" + (indexField == 0 ? "\"" :
-                // 0番目ではない場合には、常にカンマを付与します。
-                        "\",") + field.getName() + "=null\");");
-                listLine.add("} else {");
-
-                // 配列の場合にはディープにtoStringします。
-                listLine.add("buf.append("
-                // 0番目の項目である場合にはカンマなしの特別扱いをします。
-                        + (indexField == 0 ? "\"" :
-                        // 0番目ではない場合には、常にカンマを付与します。
-                                "\",") + field.getName() + "=[\");");
-                listLine.add("for (int index = 0; index < f"
-                        + fieldNameAdjustered + ".length; index++) {");
-                // 2006.05.31 t.iga
-                // ArrayListなどのtoStringと同様になるように、カンマのあとに半角スペースを付与するようにします。
-                listLine.add("buf.append((index == 0 ? \"\" : \", \") + f"
-                        + fieldNameAdjustered + "[index]);");
-                listLine.add("}");
-                listLine.add("buf.append(\"]\");");
-                listLine.add("}");
-            }
+    private BlancoCgParameter createParameter(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final BlancoVueComponentFieldStructure argFieldStructure,
+            final String prefix
+    ) {
+        BlancoCgParameter param = fCgFactory.createParameter(prefix
+                        + getFieldNameAdjustered(argClassStructure,
+                argFieldStructure),
+                argFieldStructure.getType(),
+                fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
+                        .getName()));
+        if (!argFieldStructure.getNullable()) {
+            param.setNotnull(true);
         }
-        listLine.add("buf.append(\"]\");");
-        listLine.add("return buf.toString();");
+        // generic があれば対応
+        String generic = argFieldStructure.getGeneric();
+        if (generic != null && generic.length() > 0) {
+            param.getType().setGenerics(generic);
+        }
+        return param;
     }
 
     /**
@@ -839,5 +754,17 @@ public class BlancoVueComponentXml2TypeScriptClass {
         return (argClassStructure.getAdjustFieldName() == false ? argFieldStructure
                 .getName()
                 : BlancoNameAdjuster.toClassName(argFieldStructure.getName()));
+    }
+
+    private String getTabSpace() {
+        StringBuffer spc = new StringBuffer();
+        for (int i = this.getTabs(); i > 0; i--) {
+            spc.append(" ");
+        }
+        return spc.toString();
+    }
+
+    private String getLineSeparator() {
+        return System.getProperty("line.separator", "\n");
     }
 }

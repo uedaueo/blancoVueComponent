@@ -6,8 +6,7 @@
 *.iml
 /blancoValueObject-*-src.zip
 /bin/
-/tmp/
-/tmpTest/
+/tmp*/
 /sample/
 /target/
 /classes

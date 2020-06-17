@@ -75,7 +75,17 @@
       </propertyblock>
 
       <tableblock name="blancovuecomponent-header" waitY="2" titleheight="2" rowname="header">
-        <startstring>Vueコンポーネント定義・ヘッダ情報</startstring>
+        <startstring>Vueコンポーネント定義・ヘッダ情報（クラス用）</startstring>
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>ヘッダ記述文</value>
+        </tablecolumn>
+      </tableblock>
+
+      <tableblock name="blancovuecomponent-header-interface" waitY="2" titleheight="2" rowname="header">
+        <startstring>Vueコンポーネント定義・ヘッダ情報（インタフェイス用）</startstring>
         <tablecolumn name="no">
           <value>No.</value>
         </tablecolumn>

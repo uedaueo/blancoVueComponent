@@ -139,6 +139,14 @@ public class BlancoVueComponentFieldStructure {
     private String fMaxInclusive;
 
     /**
+     * 必須プロパティかどうか
+     *
+     * フィールド: [required]。
+     * デフォルト: [false]。
+     */
+    private Boolean fRequired = false;
+
+    /**
      * フィールド [no] の値を設定します。
      *
      * フィールドの説明: [項目番号。省略可能です。]。
@@ -541,6 +549,29 @@ public class BlancoVueComponentFieldStructure {
     }
 
     /**
+     * フィールド [required] の値を設定します。
+     *
+     * フィールドの説明: [必須プロパティかどうか]。
+     *
+     * @param argRequired フィールド[required]に設定する値。
+     */
+    public void setRequired(final Boolean argRequired) {
+        fRequired = argRequired;
+    }
+
+    /**
+     * フィールド [required] の値を取得します。
+     *
+     * フィールドの説明: [必須プロパティかどうか]。
+     * デフォルト: [false]。
+     *
+     * @return フィールド[required]から取得した値。
+     */
+    public Boolean getRequired() {
+        return fRequired;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -573,6 +604,7 @@ public class BlancoVueComponentFieldStructure {
         buf.append(",length=" + fLength);
         buf.append(",minInclusive=" + fMinInclusive);
         buf.append(",maxInclusive=" + fMaxInclusive);
+        buf.append(",required=" + fRequired);
         buf.append("]");
         return buf.toString();
     }
@@ -665,5 +697,8 @@ public class BlancoVueComponentFieldStructure {
         // Name: fMaxInclusive
         // Type: java.lang.String
         target.fMaxInclusive = this.fMaxInclusive;
+        // Name: fRequired
+        // Type: java.lang.Boolean
+        target.fRequired = this.fRequired;
     }
 }

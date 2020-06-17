@@ -260,13 +260,16 @@ public class BlancoVueComponentXmlParser {
         }
 
         // ヘッダ情報を取得します。
-        final List<BlancoXmlElement> headerElementList = BlancoXmlBindingUtil
+        List<BlancoXmlElement> headerElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
                         fBundle.getMeta2xmlElementHeader());
         List<String> headerList = this.parseHeaderList(headerElementList, componentHeaderList);
         if (headerList != null && headerList.size() > 0) {
             objClassStructure.getComponentHeaderList().addAll(headerList);
         }
+        headerElementList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet,
+                        fBundle.getMeta2xmlElementHeaderInterface());
         headerList = this.parseHeaderList(headerElementList, interfaceHeaderList);
         if (headerList != null && headerList.size() > 0) {
             objClassStructure.getInterfaceHeaderList().addAll(headerList);
@@ -419,9 +422,12 @@ public class BlancoVueComponentXmlParser {
         argObjClassStructure.setExtends(mixins);
 
         /*
-         * import { Mixins } from "vue-property-decorator";
+         * import { Component, Mixins, Prop, Vue, Watch } from "vue-property-decorator";
          */
+        BlancoVueComponentUtil.addImportHeaderList("Component", "vue-property-decorator", argImportHeaderList);
         BlancoVueComponentUtil.addImportHeaderList("Mixins", "vue-property-decorator", argImportHeaderList);
+        BlancoVueComponentUtil.addImportHeaderList("Prop", "vue-property-decorator", argImportHeaderList);
+        BlancoVueComponentUtil.addImportHeaderList("Watch", "vue-property-decorator", argImportHeaderList);
 
         /*
          * import { HogeImple } from "HogeImple";

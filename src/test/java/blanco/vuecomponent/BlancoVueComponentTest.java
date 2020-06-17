@@ -32,7 +32,7 @@ public class BlancoVueComponentTest {
         input.setMetadir("meta/objects");
         input.setEncoding("UTF-8");
         input.setSheetType("php");
-        input.setTmpdir("tmpTest");
+        input.setTmpdir("tmpObjects");
         input.setTargetdir("sample/blanco");
         input.setTargetStyle("maven");
         input.setTabs(2);
@@ -52,6 +52,7 @@ public class BlancoVueComponentTest {
         inputComponent.setEncoding("UTF-8");
         inputComponent.setSheetType("php");
         inputComponent.setTmpdir("tmpTest");
+        inputComponent.setSearchTmpdir("tmpObjects");
         inputComponent.setTargetdir("sample/blanco");
         inputComponent.setTargetStyle("maven");
         inputComponent.setTabs(2);

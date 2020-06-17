@@ -53,8 +53,7 @@ public class BlancoVueComponentUtil {
         if (fileMeta3 == null) {
             System.out.println("!!! NO FILES in " + tmpdir
                     + BlancoVueComponentConstants.OBJECT_SUBDIRECTORY);
-            throw new IllegalArgumentException("!!! NO FILES in " + tmpdir
-                    + BlancoVueComponentConstants.OBJECT_SUBDIRECTORY);
+            return;
         }
 
         for (int index = 0; index < fileMeta3.length; index++) {

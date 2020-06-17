@@ -214,6 +214,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER_INTERFACE]
+     *
+     * [blancovuecomponent-header-interface] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_HEADER_INTERFACE]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementHeaderInterface() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-header-interface";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER_INTERFACE");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2JAVACLASS.FIELD.NAME]
      *
      * [フィールド: [{0}]。] (ja)<br>
