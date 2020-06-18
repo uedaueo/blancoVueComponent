@@ -352,9 +352,9 @@ public class BlancoVueComponentXmlParser {
         argObjClassStructure.setClassAlias(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "classAlias"));
         argObjClassStructure.setRouterName(BlancoXmlBindingUtil.getTextContent(
-                argElementCommon, "route-name"));
+                argElementCommon, "router-name"));
         argObjClassStructure.setRouterPath(BlancoXmlBindingUtil.getTextContent(
-                argElementCommon, "route-path"));
+                argElementCommon, "router-path"));
         argObjClassStructure.setBasedir(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "basedir"));
         argObjClassStructure.setImpledir(BlancoXmlBindingUtil.getTextContent(

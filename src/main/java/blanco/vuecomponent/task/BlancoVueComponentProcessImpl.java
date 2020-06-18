@@ -123,8 +123,12 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             BlancoVueComponentUtil.processValueObjects(input);
 
             /*
-             * listClass が指定されている場合は、自動生成したクラスの一覧を
-             * 保持するValueObjectを作成する準備をします。
+             * listClass が指定されている場合は、RouterConfig クラスと
+             * RouterConfig クラスの一覧（配列）を保持するクラスを生成します。
+             * RouterConfigは各コンポーネントクラスと同じ場所に保持され、
+             * 一覧を保持するクラスは、targetDir/listClassに置かれます。
+             * listClassはJavaのパッケージと同じ書式で指定することで、
+             * Sub directory を指定することができます。
              */
             boolean createClassList = false;
             String listClassName = input.getListClass();

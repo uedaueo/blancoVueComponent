@@ -53,8 +53,8 @@ public class BlancoVueComponentTest {
         inputComponent.setSheetType("php");
         inputComponent.setTmpdir("tmpTest");
         inputComponent.setSearchTmpdir("tmpObjects");
-        inputComponent.setTargetdir("sample/blanco");
-        inputComponent.setTargetStyle("maven");
+        inputComponent.setTargetdir("sample/blanco/main/vuecomponent");
+        inputComponent.setTargetStyle("free");
         inputComponent.setTabs(2);
         inputComponent.setVerbose(true);
         inputComponent.setListClass("RouterPath");

@@ -29,8 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * バリューオブジェクト用中間XMLファイルから TypeScript ソースコードを自動生成するクラス。
@@ -150,6 +148,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
             /* 次に、class を作成します */
             generateClass(classStructure, argDirectoryTarget);
+
+            /* 画面の場合は、RouterConfig を作成します。 */
+            if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
+                generateRouteConfig(classStructure, argDirectoryTarget);
+            }
 
         }
         return structures;
@@ -373,7 +376,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
      */
     private void generateComponent(
             final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget) {
+            final File argDirectoryTarget
+    ) {
         /*
          * 出力ディレクトリはant taskのtargetStyel引数で
          * 指定された書式で出力されます。
@@ -438,6 +442,104 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         transformer.closeTransform();
+    }
+
+    /**
+     * 画面コンポーネントの場合はvue-router用のRouteConfigを作成します。
+     *
+     * @param argClassStructure
+     * @param argDirectoryTarget
+     */
+    private void generateRouteConfig(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final File argDirectoryTarget
+    ) {
+        /*
+         * 出力ディレクトリはant taskのtargetStyel引数で
+         * 指定された書式で出力されます。
+         * 従来と互換性を保つために、指定がない場合は blanco/main
+         * となります。
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateRouteConfig argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        /*
+         * 必要な情報を用意します。
+         */
+        String suffix = "RouteConfig";
+        String className = argClassStructure.getName() + suffix;
+        String strImport = "import { RouteConfig } from \"vue-router\"";
+        String strPackage = argClassStructure.getPackage();
+
+        String propPathValue = "\"" + argClassStructure.getRouterPath() + "\"";
+        String propNameValue = "\"" + argClassStructure.getRouterName() + "\"";
+        String propMetaValue = "{ reload: " +
+                (argClassStructure.getForceReload() ? "true" : "false") +
+                " }";
+        String propComponentValue = "() => import(\"" +
+                argClassStructure.getBasedir() + "/" +
+                strPackage.replace(".", "/") + "/" +
+                argClassStructure.getName() + ".vue\")";
+
+        // BlancoCgObjectFactoryクラスのインスタンスを取得します。
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+
+        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
+                .getPackage(), null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // クラスを作成します。
+        fCgClass = fCgFactory.createClass(className, fBundle.getXml2sourceFileRouteconfigClass(argClassStructure.getName()));
+        fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("public");
+
+        // RouteConfig を実装します
+        fCgClass.getImplementInterfaceList().add(
+                fCgFactory.createType(suffix));
+
+        // RouteConfig を import します。
+        fCgSourceFile.getHeaderList().add(strImport);
+
+        // field を public で作成します。Getter / Setter は作りません。
+        this.buildRouteConfigField("path", "string", propPathValue);
+        this.buildRouteConfigField("name", "string", propNameValue);
+        this.buildRouteConfigField("component", "object", propComponentValue);
+        this.buildRouteConfigField("meta", "any", propMetaValue);
+
+        // 収集された情報を元に実際のソースコードを自動生成。
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * RouteConfig の field を生成します。
+     * @param fieldName
+     * @param fieldType
+     * @param defaultValue
+     */
+    private void buildRouteConfigField(
+            String fieldName,
+            String fieldType,
+            String defaultValue
+    ) {
+        final BlancoCgField field = fCgFactory.createField(fieldName,
+                fieldType, fBundle.getXml2sourceFileRouteconfigParameter(fieldName));
+        fCgClass.getFieldList().add(field);
+
+        field.setAccess("public");
+        field.setNotnull(true);
+        field.setDefault(defaultValue);
     }
 
     /**
