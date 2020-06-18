@@ -85,6 +85,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
         this.fTabs = fTabs;
     }
 
+    private String fListClass = "";
+    public String getListClass() {
+        return this.fListClass;
+    }
+    public void setListClass(String listClass) {
+        this.fListClass = listClass;
+    }
+
     /**
      * 内部的に利用するblancoCg用ファクトリ。
      */
@@ -159,81 +167,84 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     public void processListClass(
-            final List<BlancoVueComponentClassStructure> classStructures,
-            final BlancoVueComponentClassStructure listClassStructure,
+            final List<BlancoVueComponentClassStructure> argClassStructures,
             final File argDirectoryTarget) throws IOException {
-        List<BlancoVueComponentFieldStructure> fieldList = listClassStructure.getFieldList();
+        /*
+         * 出力ディレクトリはant taskのtargetStyel引数で
+         * 指定された書式で出力されます。
+         * 従来と互換性を保つために、指定がない場合は blanco/main
+         * となります。
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
 
-        BlancoVueComponentXmlParser parser = new BlancoVueComponentXmlParser();
-
+        /* tueda DEBUG */
         if (this.isVerbose()) {
-            System.out.println("**** processListClass : " + listClassStructure.getName());
+            System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
         }
 
-        for (BlancoVueComponentClassStructure structure : classStructures) {
-            String className = structure.getName();
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(this.getListClass());
+        String packageName = BlancoVueComponentUtil.getPackageName(this.getListClass());
+
+        // BlancoCgObjectFactoryクラスのインスタンスを取得します。
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // クラスを作成します。
+        fCgClass = fCgFactory.createClass(simpleClassName, fBundle.getXml2sourceFileRouteconfigList());
+        fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("public");
+        fCgSourceFile.getHeaderList().add("import { RouteConfig } from \"vue-router\"");
+
+        final BlancoCgField field = fCgFactory.createField(BlancoVueComponentConstants.ROUTE_PAGEDEFS,
+                "Array", "The Array of RouteConfig.");
+        fCgClass.getFieldList().add(field);
+
+        field.getType().setGenerics("RouteConfig");
+        field.setStatic(true);
+        field.setNotnull(true);
+        field.setAccess("public");
+
+        StringBuffer defaultValue = new StringBuffer();
+        defaultValue.append("[" + this.getLineSeparator());
+
+        String suffix = "RouteConfig";
+        int i = 0;
+        for (BlancoVueComponentClassStructure structure : argClassStructures) {
+            String className = structure.getName() + suffix;
             String classPackageName = structure.getPackage();
-            String classDescription = structure.getDescription();
-            String classType = className;
-            if (classPackageName != null && classPackageName.length() > 0) {
-                classType = classPackageName + "." + className;
+            if (classPackageName == null) {
+                classPackageName = "";
             }
-
-            BlancoVueComponentFieldStructure fieldStructure = new BlancoVueComponentFieldStructure();
-            listClassStructure.getFieldList().add(fieldStructure);
-
-            String propertyName = BlancoNameAdjuster.toLowerCaseTitle(className);
-            String aliasName = structure.getClassAlias();
-            if (aliasName != null && aliasName.length() > 0) {
-                propertyName = aliasName;
+            if (i != 0) {
+                defaultValue.append("," + this.getLineSeparator());
             }
-            fieldStructure.setName(propertyName);
-            fieldStructure.setType(classType);
-            fieldStructure.setDefault("new " + className + "()");
-            fieldStructure.setDescription(classDescription);
+            i++;
+
+            defaultValue.append(this.getTabSpace() + this.getTabSpace() + "new " + className + "()");
 
             /*
              * import list の作成
+             * 重複してはいけないので、むしろ重複チェックはせずに、
+             * コンパイル時にエラーを発生させる作戦です。
              */
-            if (listClassStructure.getCreateImportList()
-                    && classPackageName != null
-                    && classPackageName.length() > 0) {
-//                BlancoVueComponentUtil.makeImportHeaderList(classPackageName, className, listClassStructure);
-            }
+            String importHeader = "import { " + className + " } from \"" + structure.getBasedir() + "/" + classPackageName.replace(".", "/") + "/" + className + "\"";
+            fCgSourceFile.getHeaderList().add(importHeader);
         }
+        defaultValue.append(this.getLineSeparator() + this.getTabSpace() + "]");
 
-        /*
-         * 自動生成されたものを出力します。
-         * 現在の方式だと、以下の前提が必要。
-         *  * 1ファイルに1クラスの定義
-         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
-         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
-         */
-//        if (listClassStructure.getCreateImportList()) {
-//            Map<String, List<String>> importHeaderList = parser.importHeaderList;
-//            Set<String> fromList = importHeaderList.keySet();
-//            for (String strFrom : fromList) {
-//                StringBuffer sb = new StringBuffer();
-//                sb.append("import { ");
-//                List<String> classNameList = importHeaderList.get(strFrom);
-//                int count = 0;
-//                for (String className : classNameList) {
-//                    if (count > 0) {
-//                        sb.append(", ");
-//                    }
-//                    sb.append(className);
-//                    count++;
-//                }
-//                if (count > 0) {
-//                    sb.append(" } from \"" + strFrom + "\"");
-//                    listClassStructure.getHeaderList().add(sb.toString());
-//                }
-//            }
-//        }
-        /*
-         * クラスファイルを（上書き）生成
-         */
-        generateClass(listClassStructure, argDirectoryTarget);
+        field.setDefault(defaultValue.toString());
+
+        // 収集された情報を元に実際のソースコードを自動生成。
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
     }
 
     /**
@@ -328,6 +339,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
         decorators.add(lineBuffer.toString());
         fCgClass.getAnnotationList().addAll(decorators);
+
+        /* caption, routerPath, routerName を設定します */
+        buildMetaGet("caption", argClassStructure.getSubject());
+        buildMetaGet("routerPath", argClassStructure.getRouterPath());
+        buildMetaGet("routerName", argClassStructure.getRouterName());
 
         /* プロパティを設定します */
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
@@ -841,6 +857,25 @@ public class BlancoVueComponentXml2TypeScriptClass {
             param.getType().setGenerics(generic);
         }
         return param;
+    }
+
+    private void buildMetaGet(
+            String name,
+            String meta
+    ) {
+        final BlancoCgMethod method = fCgFactory.createMethod(name,
+                fBundle.getXml2javaclassGetJavadoc01(name));
+        fCgClass.getMethodList().add(method);
+
+        method.setNotnull(true);
+        method.setAccess("get");
+
+        BlancoCgReturn cgReturn = fCgFactory.createReturn("string",
+                fBundle.getXml2javaclassGetReturnJavadoc(name));
+        method.setReturn(cgReturn);
+
+        // メソッドの実装
+        method.getLineList().add("return \"" + meta + "\";");
     }
 
     /**

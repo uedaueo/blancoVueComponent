@@ -57,7 +57,7 @@ public class BlancoVueComponentTest {
         inputComponent.setTargetStyle("free");
         inputComponent.setTabs(2);
         inputComponent.setVerbose(true);
-        inputComponent.setListClass("RouterPath");
+        inputComponent.setListClass("sample.views.RoutePath");
 
         BlancoVueComponentProcessImpl imple2 = new BlancoVueComponentProcessImpl();
         try {

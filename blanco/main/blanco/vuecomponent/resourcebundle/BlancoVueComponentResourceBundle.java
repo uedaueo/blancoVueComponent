@@ -1008,6 +1008,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTECONFIG.LIST]
+     *
+     * [ページコンポーネントをvue-routerでロードするための設定ファイルです] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.ROUTECONFIG.LIST]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileRouteconfigList() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "ページコンポーネントをvue-routerでロードするための設定ファイルです";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTECONFIG.LIST");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[META2XML.ELEMENT_COMMON_CS]
      *
      * [blancovalueobjectcs-common] (ja)<br>

@@ -69,4 +69,10 @@ public class BlancoVueComponentConstants {
      * 実装クラス名のサフィックス
      */
     public static final String IMPLECLASS_SUFFIX = "Imple";
+
+    /**
+     * 項目番号:12<br>
+     * RouteConfig配列を保持する変数名
+     */
+    public static final String ROUTE_PAGEDEFS = "pagedefs";
 }

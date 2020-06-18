@@ -345,6 +345,8 @@ public class BlancoVueComponentXmlParser {
             final BlancoXmlElement argElementCommon,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
+        argObjClassStructure.setSubject(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "subject"));
         argObjClassStructure.setName(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "name"));
         argObjClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(

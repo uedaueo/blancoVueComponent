@@ -132,8 +132,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
              */
             boolean createClassList = false;
             String listClassName = input.getListClass();
-            BlancoVueComponentClassStructure listClassStructure = null;
-            List<BlancoVueComponentClassStructure> listClassStructures = new ArrayList<>();
+            List<BlancoVueComponentClassStructure> screenComponentStructures = new ArrayList<>();
             if (listClassName != null && listClassName.length() > 0) {
                 createClassList = true;
             }
@@ -159,10 +158,8 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                  */
                 for (int index2 = 0; createClassList && index2 < structures.length; index2++) {
                     BlancoVueComponentClassStructure classStructure = structures[index2];
-                    if (listClassName.equals(classStructure.getName())) {
-                        listClassStructure = classStructure;
-                    } else {
-                        listClassStructures.add(classStructure);
+                    if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
+                        screenComponentStructures.add(classStructure);
                     }
                 }
                 // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
@@ -173,7 +170,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
              * 保持するValueObjectを作成します。
              */
             if (createClassList) {
-                if (listClassStructure == null) {
+                if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
                     System.out.println("[WARN] listClass is specified but no meta file. : " + listClassName);
                     return BlancoVueComponentBatchProcess.END_SUCCESS;
                 }
@@ -184,7 +181,8 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                 xml2Class.setXmlRootElement(input.getXmlrootelement());
                 xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
                 xml2Class.setTabs(input.getTabs());
-                xml2Class.processListClass(listClassStructures, listClassStructure, new File(strTarget));
+                xml2Class.setListClass(listClassName);
+                xml2Class.processListClass(screenComponentStructures, new File(strTarget));
             }
 
             return BlancoVueComponentBatchProcess.END_SUCCESS;
