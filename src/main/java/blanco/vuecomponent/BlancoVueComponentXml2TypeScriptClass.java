@@ -873,6 +873,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
             String name,
             String meta
     ) {
+        if (meta == null) {
+            return;
+        }
+
         final BlancoCgMethod method = fCgFactory.createMethod(name,
                 fBundle.getXml2javaclassGetJavadoc01(name));
         fCgClass.getMethodList().add(method);
