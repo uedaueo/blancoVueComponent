@@ -431,6 +431,16 @@ public class BlancoVueComponentXml2TypeScriptClass {
             impleDir = ".";
         }
 
+        /*
+         * package （配置位置）を実装クラスに合わせる
+         */
+        String packageName = argClassStructure.getPackage();
+        if (packageName == null) {
+            packageName = "";
+        }
+        String packageDir = packageName.replace(".", "/");
+        impleDir += "/" + packageDir;
+
         if (useTemplate) {
             Document docTemplate = BlancoXmlUtil.newDocument();
             Element templateElement = docTemplate.createElement("template");

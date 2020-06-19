@@ -212,6 +212,11 @@ public class BlancoVueComponentXmlParser {
          */
         final Map<String, List<String>> componentHeaderList = new HashMap<>();
         /*
+         * component を import するときに使用します。
+         * component は export default されているので、imoprt 時に
+         * { } でくくってはいけません。
+         */
+        final Map<String, List<String>> defaultExportedHeaderList = new HashMap<>();        /*
          * interface を生成するときに使用します。objClassStructure#importList に格納します。
          */
         final Map<String, List<String>> interfaceHeaderList = new HashMap<>();
@@ -240,7 +245,7 @@ public class BlancoVueComponentXmlParser {
         this.parseVueComponentCommon(elementCommon, objClassStructure);
 
         // Vueコンポーネント定義・継承
-        this.parseVueComponentExtends(componentHeaderList, objClassStructure);
+        this.parseVueComponentExtends(componentHeaderList, defaultExportedHeaderList, objClassStructure);
 
         // Vueコンポーネント・使用コンポーネント
         final List<BlancoXmlElement> componentList = BlancoXmlBindingUtil
@@ -263,14 +268,14 @@ public class BlancoVueComponentXmlParser {
         List<BlancoXmlElement> headerElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
                         fBundle.getMeta2xmlElementHeader());
-        List<String> headerList = this.parseHeaderList(headerElementList, componentHeaderList);
+        List<String> headerList = this.parseHeaderList(headerElementList, componentHeaderList, defaultExportedHeaderList);
         if (headerList != null && headerList.size() > 0) {
             objClassStructure.getComponentHeaderList().addAll(headerList);
         }
         headerElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
                         fBundle.getMeta2xmlElementHeaderInterface());
-        headerList = this.parseHeaderList(headerElementList, interfaceHeaderList);
+        headerList = this.parseHeaderList(headerElementList, interfaceHeaderList, null);
         if (headerList != null && headerList.size() > 0) {
             objClassStructure.getInterfaceHeaderList().addAll(headerList);
         }
@@ -416,6 +421,7 @@ public class BlancoVueComponentXmlParser {
      */
     private void parseVueComponentExtends(
             final Map<String, List<String>> argImportHeaderList,
+            final Map<String, List<String>> argDefaultExportedHeaderList,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
 
@@ -432,12 +438,14 @@ public class BlancoVueComponentXmlParser {
         BlancoVueComponentUtil.addImportHeaderList("Watch", "vue-property-decorator", argImportHeaderList);
 
         /*
-         * import { HogeImple } from "HogeImple";
+         * import HogeImple from "HogeImple";
+         * Component は export default されているので、{ } で
+         * くくってはいけない。
          */
         BlancoVueComponentUtil.makeImportHeaderList(
                 argObjClassStructure.getPackage(),
                 impleClassName,
-                argImportHeaderList,
+                argDefaultExportedHeaderList,
                 argObjClassStructure.getImpledir(),
                 ""
         );
@@ -646,7 +654,11 @@ public class BlancoVueComponentXmlParser {
      * @param argImportHeaderList
      * @return
      */
-    private List<String> parseHeaderList(final List<BlancoXmlElement> argHeaderElementList, final Map<String, List<String>> argImportHeaderList) {
+    private List<String> parseHeaderList(
+            final List<BlancoXmlElement> argHeaderElementList,
+            final Map<String, List<String>> argImportHeaderList,
+            final Map<String, List<String>> argDefaultExportedHeaderList
+    ) {
         if (this.isVerbose()) {
             System.out.println("BlancoVueComponent#parseHeaderList: Start parseHeaderList.");
         }
@@ -686,11 +698,36 @@ public class BlancoVueComponentXmlParser {
          *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
          * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
          */
+        this.parseGeneratedHeaderList(headerList, argImportHeaderList, false);
+
+        /*
+         * 次に、expor default されたものを出力します。
+         * 現在の方式だと、以下の前提が必要。
+         *  * 1ファイルに1クラスの定義
+         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
+         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
+         */
+        if (argDefaultExportedHeaderList != null && argDefaultExportedHeaderList.size() > 0) {
+            this.parseGeneratedHeaderList(headerList, argDefaultExportedHeaderList, true);
+        }
+
+        return headerList;
+    }
+
+    private void parseGeneratedHeaderList(
+            List<String> argHeaderList,
+            final Map<String, List<String>> argImportHeaderList,
+            boolean isDefaultExported
+    ) {
         if (argImportHeaderList != null && argImportHeaderList.size() > 0) {
             Set<String> fromList = argImportHeaderList.keySet();
             for (String strFrom : fromList) {
                 StringBuffer sb = new StringBuffer();
-                sb.append("import { ");
+                if (isDefaultExported) {
+                    sb.append("import ");
+                } else {
+                    sb.append("import { ");
+                }
                 List<String> classNameList = argImportHeaderList.get(strFrom);
                 int count = 0;
                 for (String className : classNameList) {
@@ -701,15 +738,17 @@ public class BlancoVueComponentXmlParser {
                     count++;
                 }
                 if (count > 0) {
-                    sb.append(" } from \"" + strFrom + "\"");
-                    if (this.isVerbose()) {
-                        System.out.println("BlancoRestGeneratorTsXmlParser#parseHeaderList import = " + sb.toString());
+                    if (isDefaultExported) {
+                        sb.append(" from \"" + strFrom + "\"");
+                    } else {
+                        sb.append(" } from \"" + strFrom + "\"");
                     }
-                    headerList.add(sb.toString());
+                    if (this.isVerbose()) {
+                        System.out.println("BlancoRestGeneratorTsXmlParser#parseGeneratedHeaderList import = " + sb.toString());
+                    }
+                    argHeaderList.add(sb.toString());
                 }
             }
         }
-
-        return headerList;
     }
 }
