@@ -615,10 +615,9 @@ public class BlancoVueComponentXmlParser {
                         BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, argObjClassStructure.getBasedir(), "");
                         BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, argObjClassStructure.getBasedir(), "");
                     }
-
-                    fieldStructure.setGeneric(targetGeneric);
-                    fieldStructure.setType(targetType);
                 }
+                fieldStructure.setGeneric(targetGeneric);
+                fieldStructure.setType(targetType);
             }
 
             // Nullable に対応
