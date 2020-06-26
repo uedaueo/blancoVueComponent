@@ -135,14 +135,14 @@ public class BlancoVueComponentUtil {
      * @param argClassName
      * @param argImportHeaderList
      * @param argBasedir
-     * @param argTelegramPackage
+     * @param argPropertyPackage
      */
     static public void makeImportHeaderList(
             final String argPackageName,
             final String argClassName,
             final Map<String, List<String>> argImportHeaderList,
             final String argBasedir,
-            final String argTelegramPackage) {
+            final String argPropertyPackage) {
         if (argClassName == null || argClassName.length() == 0) {
             System.out.println("BlancoVueComponentUtil#makeImportHeaderList className is not specified. SKIP.");
             return;
@@ -153,7 +153,7 @@ public class BlancoVueComponentUtil {
         String importFrom = "./" + argClassName;
         if (argPackageName != null &&
                 argPackageName.length() != 0 &&
-                argPackageName.equals(argTelegramPackage) != true) {
+                argPackageName.equals(argPropertyPackage) != true) {
             String classNameCanon = argPackageName.replace('.', '/') + "/" + argClassName;
 
             String basedir = "";

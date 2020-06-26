@@ -554,8 +554,8 @@ public class BlancoVueComponentXmlParser {
                  * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
                  */
                 if (argObjClassStructure.getCreateImportList()) {
-                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, argObjClassStructure.getBasedir(), "");
-                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argInterfaceHeaderList, argObjClassStructure.getBasedir(), "");
+                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, voStructure.getBasedir(), "");
+                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argInterfaceHeaderList, voStructure.getBasedir(), "");
                 }
             }
 
@@ -612,8 +612,8 @@ public class BlancoVueComponentXmlParser {
                      * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
                      */
                     if (argObjClassStructure.getCreateImportList()) {
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, argObjClassStructure.getBasedir(), "");
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, argObjClassStructure.getBasedir(), "");
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, voStructure.getBasedir(), "");
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, voStructure.getBasedir(), "");
                     }
                 }
                 fieldStructure.setGeneric(targetGeneric);
