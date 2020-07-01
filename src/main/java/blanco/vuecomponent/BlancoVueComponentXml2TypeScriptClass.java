@@ -152,7 +152,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
             generateComponent(classStructure, argDirectoryTarget);
 
             /* 次に、interface を作成します */
-            generateInterface(classStructure, argDirectoryTarget);
+            /*
+             * mixins では property を重複宣言する方が便利なので廃止
+             * 2020/07/01 by tueda
+             */
+//            generateInterface(classStructure, argDirectoryTarget);
 
             /* 次に、class を作成します */
             generateClass(classStructure, argDirectoryTarget);
@@ -366,7 +370,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
             // Getter/Setterは生成しません。
             // 代わりに、実装クラスに property の変更を通知するメソッドを生成します。
-            buildOnChange(argClassStructure, fieldStructure);
+            /*
+             * mixins では property を重複宣言する方が便利なので廃止
+             * 2020/07/01 by tueda
+             */
+//            buildOnChange(argClassStructure, fieldStructure);
 
         }
 
