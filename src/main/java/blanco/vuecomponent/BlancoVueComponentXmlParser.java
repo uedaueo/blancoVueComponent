@@ -533,29 +533,28 @@ public class BlancoVueComponentXmlParser {
                 String packageName = null;
                 if (voStructure != null) {
                     packageName = voStructure.getPackage();
-                }
-                if (packageName == null) {
-                    // package 名の分離を試みる
-                    String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpType);
-                    if (simpleName != null && !simpleName.equals(phpType)) {
-                        packageName = BlancoVueComponentUtil.getPackageName(phpType);
-                        phpType = simpleName;
+                    if (packageName == null) {
+                        // package 名の分離を試みる
+                        String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpType);
+                        if (simpleName != null && !simpleName.equals(phpType)) {
+                            packageName = BlancoVueComponentUtil.getPackageName(phpType);
+                            phpType = simpleName;
+                        }
                     }
-                }
-                if (packageName != null) {
-                    targetType = packageName + "." + phpType;
-                }
+                    if (packageName != null) {
+                        targetType = packageName + "." + phpType;
+                    }
 
-                /* その他はそのまま記述する */
-//                System.out.println("/* tueda */ Unknown php type: " + targetType);
+                    /* その他はそのまま記述する */
 
-                /*
-                 * TypeScript 用 import 情報の作成
-                 * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
-                 */
-                if (argObjClassStructure.getCreateImportList()) {
-                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, voStructure.getBasedir(), "");
-                    BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argInterfaceHeaderList, voStructure.getBasedir(), "");
+                    /*
+                     * TypeScript 用 import 情報の作成
+                     * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
+                     */
+                    if (argObjClassStructure.getCreateImportList()) {
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, voStructure.getBasedir(), "");
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argInterfaceHeaderList, voStructure.getBasedir(), "");
+                    }
                 }
             }
 
@@ -591,33 +590,31 @@ public class BlancoVueComponentXmlParser {
                     String packageName = null;
                     if (voStructure != null) {
                         packageName = voStructure.getPackage();
-                    }
-                    if (packageName == null) {
-                        // package 名の分離を試みる
-                        String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpGeneric);
-                        if (simpleName != null && !simpleName.equals(phpGeneric)) {
-                            packageName = BlancoVueComponentUtil.getPackageName(phpGeneric);
-                            phpGeneric = simpleName;
+                        if (packageName == null) {
+                            // package 名の分離を試みる
+                            String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpGeneric);
+                            if (simpleName != null && !simpleName.equals(phpGeneric)) {
+                                packageName = BlancoVueComponentUtil.getPackageName(phpGeneric);
+                                phpGeneric = simpleName;
+                            }
                         }
-                    }
-                    if (packageName != null) {
-                        targetGeneric = packageName + "." + phpGeneric;
-                    }
+                        if (packageName != null) {
+                            targetGeneric = packageName + "." + phpGeneric;
+                        }
 
-                    /* その他はそのまま記述する */
-//                System.out.println("/* tueda */ Unknown php type: " + targetType);
+                        /* その他はそのまま記述する */
 
-                    /*
-                     * TypeScript 用 import 情報の作成
-                     * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
-                     */
-                    if (argObjClassStructure.getCreateImportList()) {
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, voStructure.getBasedir(), "");
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, voStructure.getBasedir(), "");
+                        /*
+                         * TypeScript 用 import 情報の作成
+                         * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
+                         */
+                        if (argObjClassStructure.getCreateImportList()) {
+                            BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, voStructure.getBasedir(), "");
+                            BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, voStructure.getBasedir(), "");
+                        }
                     }
                 }
                 fieldStructure.setGeneric(targetGeneric);
-                fieldStructure.setType(targetType);
             }
 
             // Nullable に対応
