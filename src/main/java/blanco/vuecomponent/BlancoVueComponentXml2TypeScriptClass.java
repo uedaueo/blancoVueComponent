@@ -517,9 +517,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         String propPathValue = "\"" + argClassStructure.getRouterPath() + "\"";
         String propNameValue = "\"" + argClassStructure.getRouterName() + "\"";
-        String propMetaValue = "{ reload: " +
-                (argClassStructure.getForceReload() ? "true" : "false") +
-                " }";
+        String propMetaValue = "{" + this.getLineSeparator() +
+                this.getTabSpace() + this.getTabSpace() + "reload: " + (argClassStructure.getForceReload() ? "true" : "false") + "," + this.getLineSeparator() +
+                this.getTabSpace() + this.getTabSpace() + "authRequired: " + (argClassStructure.getAuthRequired() ? "true" : "false") + this.getLineSeparator() +
+                this.getTabSpace() + "}";
         String propComponentValue = "() => import(\"" +
                 argClassStructure.getBasedir() + "/" +
                 strPackage.replace(".", "/") + "/" +
