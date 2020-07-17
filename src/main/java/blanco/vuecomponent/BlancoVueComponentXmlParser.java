@@ -621,6 +621,11 @@ public class BlancoVueComponentXmlParser {
             fieldStructure.setNullable("true".equals(BlancoXmlBindingUtil
                     .getTextContent(elementList, "nullable")));
 
+            // クエリ文字列に対応
+            fieldStructure.setQueryParam(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "queryParam"));
+
+            // 説明に対応
             fieldStructure.setDescription(BlancoXmlBindingUtil
                     .getTextContent(elementList, "description"));
             final String[] lines = BlancoNameUtil.splitString(

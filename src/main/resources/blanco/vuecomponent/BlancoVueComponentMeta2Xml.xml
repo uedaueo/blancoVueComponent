@@ -128,6 +128,9 @@
         <tablecolumn name="nullable">
           <value>Nullable</value>
         </tablecolumn>
+        <tablecolumn name="queryParam">
+          <value>クエリ文字列</value>
+        </tablecolumn>
         <tablecolumn name="description">
           <value>説明</value>
         </tablecolumn>

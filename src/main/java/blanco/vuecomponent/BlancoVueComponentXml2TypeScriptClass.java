@@ -27,8 +27,7 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * バリューオブジェクト用中間XMLファイルから TypeScript ソースコードを自動生成するクラス。
@@ -158,12 +157,15 @@ public class BlancoVueComponentXml2TypeScriptClass {
              */
 //            generateInterface(classStructure, argDirectoryTarget);
 
+            /* クエリ文字列をもつプロパティを保存します */
+            Map<String, String> queryProps = new HashMap<>();
+
             /* 次に、class を作成します */
-            generateClass(classStructure, argDirectoryTarget);
+            generateClass(classStructure, argDirectoryTarget, queryProps);
 
             /* 画面の場合は、RouterConfig を作成します。 */
             if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
-                generateRouteConfig(classStructure, argDirectoryTarget);
+                generateRouteConfig(classStructure, argDirectoryTarget, queryProps);
             }
 
         }
@@ -258,12 +260,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
      *            クラス情報
      * @param argDirectoryTarget
      *            TypeScript ソースコードの出力先ディレクトリ
+     * @param argQueryProps
      * @throws IOException
      *             入出力例外が発生した場合。
      */
     public void generateClass(
             final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget) throws IOException {
+            final File argDirectoryTarget,
+            final Map<String, String> argQueryProps) throws IOException {
         /*
          * 出力ディレクトリはant taskのtargetStyel引数で
          * 指定された書式で出力されます。
@@ -344,7 +348,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
         decorators.add(lineBuffer.toString());
         fCgClass.getAnnotationList().addAll(decorators);
 
-        /* caption, routerPath, routerName を設定します */
+        /* componentId, caption, routerPath, routerName を設定します */
+        buildMetaGet("componentId", argClassStructure.getName());
         buildMetaGet("caption", argClassStructure.getSubject());
         buildMetaGet("routerPath", argClassStructure.getRouterPath());
         buildMetaGet("routerName", argClassStructure.getRouterName());
@@ -366,7 +371,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             }
 
             // フィールドの生成。
-            buildProp(argClassStructure, fieldStructure, false);
+            buildProp(argClassStructure, fieldStructure, false, argQueryProps);
 
             // Getter/Setterは生成しません。
             // 代わりに、実装クラスに property の変更を通知するメソッドを生成します。
@@ -480,14 +485,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
     /**
      * 画面コンポーネントの場合はvue-router用のRouteConfigを作成します。
-     *
-     * @param argClassStructure
+     *  @param argClassStructure
      * @param argDirectoryTarget
+     * @param argQueryProps
      */
     private void generateRouteConfig(
             final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget
-    ) {
+            final File argDirectoryTarget,
+            final Map<String, String> argQueryProps) {
         /*
          * 出力ディレクトリはant taskのtargetStyel引数で
          * 指定された書式で出力されます。
@@ -513,6 +518,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         String suffix = "RouteConfig";
         String className = argClassStructure.getName() + suffix;
         String strImport = "import { RouteConfig } from \"vue-router\"";
+        String strImport2 = "import { RoutePropsFunction } from \"vue-router/types/router\"";
         String strPackage = argClassStructure.getPackage();
 
         String propPathValue = "\"" + argClassStructure.getRouterPath() + "\"";
@@ -525,6 +531,25 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 argClassStructure.getBasedir() + "/" +
                 strPackage.replace(".", "/") + "/" +
                 argClassStructure.getName() + ".vue\")";
+
+        String propPropsValue = "";
+        if (argQueryProps != null && argQueryProps.size() > 0) {
+            StringBuffer sb = new StringBuffer();
+            Set<String> keySet = argQueryProps.keySet();
+
+            sb.append("route => ({" + this.getLineSeparator());
+            int i = 0;
+            for (String key : keySet) {
+                if (i > 0) {
+                    sb.append("," + this.getLineSeparator());
+                }
+                sb.append(this.getTabSpace() + this.getTabSpace() + key + ": route.query." + argQueryProps.get(key));
+                i++;
+            }
+            sb.append(this.getLineSeparator());
+            sb.append(this.getTabSpace() + "})");
+            propPropsValue = sb.toString();
+        }
 
         // BlancoCgObjectFactoryクラスのインスタンスを取得します。
         fCgFactory = BlancoCgObjectFactory.getInstance();
@@ -551,6 +576,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
         this.buildRouteConfigField("name", "string", propNameValue);
         this.buildRouteConfigField("component", "object", propComponentValue);
         this.buildRouteConfigField("meta", "any", propMetaValue);
+        if (propPropsValue != null && propPropsValue.length() > 0) {
+            fCgSourceFile.getHeaderList().add(strImport2);
+            this.buildRouteConfigField("props", "RoutePropsFunction", propPropsValue);
+        }
 
         // 収集された情報を元に実際のソースコードを自動生成。
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
@@ -589,7 +618,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
      */
     private void generateInterface(
             final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget) throws IOException {
+            final File argDirectoryTarget,
+            final Map<String, String> argQueryProps) throws IOException {
         /*
          * 出力ディレクトリはant taskのtargetStyel引数で
          * 指定された書式で出力されます。
@@ -655,7 +685,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             }
 
             // フィールドの生成。
-            buildProp(argClassStructure, fieldStructure, true);
+            buildProp(argClassStructure, fieldStructure, true, argQueryProps);
 
             // インタフェイスには Getter/Setter はありません。
         }
@@ -676,15 +706,17 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
     /**
      * コンポーネントのプロパティを生成します。
-     *  @param argClassStructure
+     * @param argClassStructure
      *            クラス情報。
      * @param argFieldStructure
      * @param isInterface
+     * @param argQueryProps
      */
     private void buildProp(
             final BlancoVueComponentClassStructure argClassStructure,
             final BlancoVueComponentFieldStructure argFieldStructure,
-            boolean isInterface) {
+            boolean isInterface,
+            final Map<String, String> argQueryProps) {
 
 //        System.out.println("%%% " + argFieldStructure.toString());
 
@@ -735,6 +767,12 @@ public class BlancoVueComponentXml2TypeScriptClass {
         // nullable に対応します。
         if (!argFieldStructure.getNullable()) {
             field.setNotnull(true);
+        }
+
+        // クエリ文字列を保管します。
+        String queryParam = argFieldStructure.getQueryParam();
+        if (argQueryProps != null && queryParam != null && queryParam.length() > 0) {
+            argQueryProps.put(fieldName, queryParam);
         }
 
         // フィールドのJavaDocを設定します。

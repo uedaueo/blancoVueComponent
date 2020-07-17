@@ -147,6 +147,14 @@ public class BlancoVueComponentFieldStructure {
     private Boolean fRequired = false;
 
     /**
+     * 対応するクエリ文字列パラメータを指定します。
+     *
+     * フィールド: [queryParam]。
+     * デフォルト: [&quot;&quot;]。
+     */
+    private String fQueryParam = "";
+
+    /**
      * フィールド [no] の値を設定します。
      *
      * フィールドの説明: [項目番号。省略可能です。]。
@@ -572,6 +580,29 @@ public class BlancoVueComponentFieldStructure {
     }
 
     /**
+     * フィールド [queryParam] の値を設定します。
+     *
+     * フィールドの説明: [対応するクエリ文字列パラメータを指定します。]。
+     *
+     * @param argQueryParam フィールド[queryParam]に設定する値。
+     */
+    public void setQueryParam(final String argQueryParam) {
+        fQueryParam = argQueryParam;
+    }
+
+    /**
+     * フィールド [queryParam] の値を取得します。
+     *
+     * フィールドの説明: [対応するクエリ文字列パラメータを指定します。]。
+     * デフォルト: [&quot;&quot;]。
+     *
+     * @return フィールド[queryParam]から取得した値。
+     */
+    public String getQueryParam() {
+        return fQueryParam;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -605,6 +636,7 @@ public class BlancoVueComponentFieldStructure {
         buf.append(",minInclusive=" + fMinInclusive);
         buf.append(",maxInclusive=" + fMaxInclusive);
         buf.append(",required=" + fRequired);
+        buf.append(",queryParam=" + fQueryParam);
         buf.append("]");
         return buf.toString();
     }
@@ -700,5 +732,8 @@ public class BlancoVueComponentFieldStructure {
         // Name: fRequired
         // Type: java.lang.Boolean
         target.fRequired = this.fRequired;
+        // Name: fQueryParam
+        // Type: java.lang.String
+        target.fQueryParam = this.fQueryParam;
     }
 }
