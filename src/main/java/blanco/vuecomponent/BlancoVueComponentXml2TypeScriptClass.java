@@ -349,10 +349,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgClass.getAnnotationList().addAll(decorators);
 
         /* componentId, caption, routerPath, routerName を設定します */
-        buildMetaGet("componentId", argClassStructure.getName());
-        buildMetaGet("caption", argClassStructure.getSubject());
-        buildMetaGet("routerPath", argClassStructure.getRouterPath());
-        buildMetaGet("routerName", argClassStructure.getRouterName());
+        buildMetaGet("componentId", argClassStructure.getName(), false);
+        buildMetaGet("caption", argClassStructure.getSubject(), false);
+        buildMetaGet("routerPath", argClassStructure.getRouterPath(), true);
+        buildMetaGet("routerName", argClassStructure.getRouterName(), true);
 
         /* プロパティを設定します */
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
@@ -918,8 +918,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
     private void buildMetaGet(
             String name,
-            String meta
-    ) {
+            String meta,
+            boolean isStatic) {
         if (meta == null) {
             return;
         }
@@ -930,6 +930,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         method.setNotnull(true);
         method.setAccess("get");
+        method.setStatic(isStatic);
 
         BlancoCgReturn cgReturn = fCgFactory.createReturn("string",
                 fBundle.getXml2javaclassGetReturnJavadoc(name));
