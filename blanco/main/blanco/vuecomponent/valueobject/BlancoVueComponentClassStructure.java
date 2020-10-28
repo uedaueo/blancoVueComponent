@@ -2,6 +2,8 @@ package blanco.vuecomponent.valueobject;
 
 import java.util.List;
 
+import blanco.cg.valueobject.BlancoCgField;
+
 /**
  * Vueコンポーネントのクラスをあらわすバリューオブジェクトクラス。このクラスの設定情報をもとにクラスが自動生成されます。
  */
@@ -68,7 +70,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド: [descriptionList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
+    private List<String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
     /**
      * Interface source コードの先頭に書かれるコード群です。
@@ -76,7 +78,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド: [interfaceHeaderList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fInterfaceHeaderList = new java.util.ArrayList<java.lang.String>();
+    private List<String> fInterfaceHeaderList = new java.util.ArrayList<java.lang.String>();
 
     /**
      * component source コードの先頭に書かれるコード群です。
@@ -84,7 +86,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド: [componentHeaderList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fComponentHeaderList = new java.util.ArrayList<java.lang.String>();
+    private List<String> fComponentHeaderList = new java.util.ArrayList<java.lang.String>();
 
     /**
      * コンポーネントの種別。screen or part
@@ -171,7 +173,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド: [componentList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
-    private List<java.lang.String> fComponentList = new java.util.ArrayList<java.lang.String>();
+    private List<String> fComponentList = new java.util.ArrayList<java.lang.String>();
 
     /**
      * フィールドを記憶するリストを指定します。
@@ -179,7 +181,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド: [fieldList]。
      * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure&gt;()]。
      */
-    private List<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure> fFieldList = new java.util.ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>();
+    private List<BlancoVueComponentFieldStructure> fFieldList = new java.util.ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>();
 
     /**
      * ファイル説明
@@ -194,7 +196,7 @@ public class BlancoVueComponentClassStructure {
      * フィールド: [constructorArgList]。
      * デフォルト: [new java.util.ArrayList&lt;blanco.cg.valueobject.BlancoCgField&gt;()]。
      */
-    private List<blanco.cg.valueobject.BlancoCgField> fConstructorArgList = new java.util.ArrayList<blanco.cg.valueobject.BlancoCgField>();
+    private List<BlancoCgField> fConstructorArgList = new java.util.ArrayList<blanco.cg.valueobject.BlancoCgField>();
 
     /**
      * コンポーネントの表示名を定義します。
@@ -386,7 +388,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @param argDescriptionList フィールド[descriptionList]に設定する値。
      */
-    public void setDescriptionList(final List<java.lang.String> argDescriptionList) {
+    public void setDescriptionList(final List<String> argDescriptionList) {
         fDescriptionList = argDescriptionList;
     }
 
@@ -398,7 +400,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @return フィールド[descriptionList]から取得した値。
      */
-    public List<java.lang.String> getDescriptionList() {
+    public List<String> getDescriptionList() {
         return fDescriptionList;
     }
 
@@ -409,7 +411,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @param argInterfaceHeaderList フィールド[interfaceHeaderList]に設定する値。
      */
-    public void setInterfaceHeaderList(final List<java.lang.String> argInterfaceHeaderList) {
+    public void setInterfaceHeaderList(final List<String> argInterfaceHeaderList) {
         fInterfaceHeaderList = argInterfaceHeaderList;
     }
 
@@ -421,7 +423,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @return フィールド[interfaceHeaderList]から取得した値。
      */
-    public List<java.lang.String> getInterfaceHeaderList() {
+    public List<String> getInterfaceHeaderList() {
         return fInterfaceHeaderList;
     }
 
@@ -432,7 +434,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @param argComponentHeaderList フィールド[componentHeaderList]に設定する値。
      */
-    public void setComponentHeaderList(final List<java.lang.String> argComponentHeaderList) {
+    public void setComponentHeaderList(final List<String> argComponentHeaderList) {
         fComponentHeaderList = argComponentHeaderList;
     }
 
@@ -444,7 +446,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @return フィールド[componentHeaderList]から取得した値。
      */
-    public List<java.lang.String> getComponentHeaderList() {
+    public List<String> getComponentHeaderList() {
         return fComponentHeaderList;
     }
 
@@ -684,7 +686,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @param argComponentList フィールド[componentList]に設定する値。
      */
-    public void setComponentList(final List<java.lang.String> argComponentList) {
+    public void setComponentList(final List<String> argComponentList) {
         fComponentList = argComponentList;
     }
 
@@ -696,7 +698,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @return フィールド[componentList]から取得した値。
      */
-    public List<java.lang.String> getComponentList() {
+    public List<String> getComponentList() {
         return fComponentList;
     }
 
@@ -707,7 +709,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @param argFieldList フィールド[fieldList]に設定する値。
      */
-    public void setFieldList(final List<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure> argFieldList) {
+    public void setFieldList(final List<BlancoVueComponentFieldStructure> argFieldList) {
         fFieldList = argFieldList;
     }
 
@@ -719,7 +721,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @return フィールド[fieldList]から取得した値。
      */
-    public List<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure> getFieldList() {
+    public List<BlancoVueComponentFieldStructure> getFieldList() {
         return fFieldList;
     }
 
@@ -752,7 +754,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @param argConstructorArgList フィールド[constructorArgList]に設定する値。
      */
-    public void setConstructorArgList(final List<blanco.cg.valueobject.BlancoCgField> argConstructorArgList) {
+    public void setConstructorArgList(final List<BlancoCgField> argConstructorArgList) {
         fConstructorArgList = argConstructorArgList;
     }
 
@@ -764,7 +766,7 @@ public class BlancoVueComponentClassStructure {
      *
      * @return フィールド[constructorArgList]から取得した値。
      */
-    public List<blanco.cg.valueobject.BlancoCgField> getConstructorArgList() {
+    public List<BlancoCgField> getConstructorArgList() {
         return fConstructorArgList;
     }
 
@@ -879,37 +881,13 @@ public class BlancoVueComponentClassStructure {
         target.fDescription = this.fDescription;
         // Name: fDescriptionList
         // Type: java.util.List
-        if (this.fDescriptionList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fDescriptionList.iterator();
-            for (; iterator.hasNext();) {
-                java.lang.String loopSource = iterator.next();
-                java.lang.String loopTarget = null;
-                loopTarget = loopSource;
-                target.fDescriptionList.add(loopTarget);
-            }
-        }
+        // フィールド[fDescriptionList]はサポート外の型[java.util.Listjava.lang.String]です。
         // Name: fInterfaceHeaderList
         // Type: java.util.List
-        if (this.fInterfaceHeaderList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fInterfaceHeaderList.iterator();
-            for (; iterator.hasNext();) {
-                java.lang.String loopSource = iterator.next();
-                java.lang.String loopTarget = null;
-                loopTarget = loopSource;
-                target.fInterfaceHeaderList.add(loopTarget);
-            }
-        }
+        // フィールド[fInterfaceHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
         // Name: fComponentHeaderList
         // Type: java.util.List
-        if (this.fComponentHeaderList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fComponentHeaderList.iterator();
-            for (; iterator.hasNext();) {
-                java.lang.String loopSource = iterator.next();
-                java.lang.String loopTarget = null;
-                loopTarget = loopSource;
-                target.fComponentHeaderList.add(loopTarget);
-            }
-        }
+        // フィールド[fComponentHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
         // Name: fComponentKind
         // Type: java.lang.String
         target.fComponentKind = this.fComponentKind;
@@ -942,40 +920,16 @@ public class BlancoVueComponentClassStructure {
         target.fExtends = this.fExtends;
         // Name: fComponentList
         // Type: java.util.List
-        if (this.fComponentList != null) {
-            final java.util.Iterator<java.lang.String> iterator = this.fComponentList.iterator();
-            for (; iterator.hasNext();) {
-                java.lang.String loopSource = iterator.next();
-                java.lang.String loopTarget = null;
-                loopTarget = loopSource;
-                target.fComponentList.add(loopTarget);
-            }
-        }
+        // フィールド[fComponentList]はサポート外の型[java.util.Listjava.lang.String]です。
         // Name: fFieldList
         // Type: java.util.List
-        if (this.fFieldList != null) {
-            final java.util.Iterator<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure> iterator = this.fFieldList.iterator();
-            for (; iterator.hasNext();) {
-                blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure loopSource = iterator.next();
-                blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure loopTarget = null;
-                // フィールド[generics]はサポート外の型[blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure]です。
-                target.fFieldList.add(loopTarget);
-            }
-        }
+        // フィールド[fFieldList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure]です。
         // Name: fFileDescription
         // Type: java.lang.String
         target.fFileDescription = this.fFileDescription;
         // Name: fConstructorArgList
         // Type: java.util.List
-        if (this.fConstructorArgList != null) {
-            final java.util.Iterator<blanco.cg.valueobject.BlancoCgField> iterator = this.fConstructorArgList.iterator();
-            for (; iterator.hasNext();) {
-                blanco.cg.valueobject.BlancoCgField loopSource = iterator.next();
-                blanco.cg.valueobject.BlancoCgField loopTarget = null;
-                // フィールド[generics]はサポート外の型[blanco.cg.valueobject.BlancoCgField]です。
-                target.fConstructorArgList.add(loopTarget);
-            }
-        }
+        // フィールド[fConstructorArgList]はサポート外の型[java.util.Listblanco.cg.valueobject.BlancoCgField]です。
         // Name: fSubject
         // Type: java.lang.String
         target.fSubject = this.fSubject;
