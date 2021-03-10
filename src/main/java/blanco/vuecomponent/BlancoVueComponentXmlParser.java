@@ -409,6 +409,9 @@ public class BlancoVueComponentXmlParser {
         argObjClassStructure.setCreateImportList("true"
                 .equals(BlancoXmlBindingUtil.getTextContent(argElementCommon,
                         "createImportList")));
+        argObjClassStructure.setExpectConsistentAfterTransition("true"
+                .equals(BlancoXmlBindingUtil.getTextContent(argElementCommon,
+                        "expectConsistentAfterTransition")));
         argObjClassStructure
                 .setFieldList(new ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>());
     }

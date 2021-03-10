@@ -353,6 +353,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         buildMetaGet("caption", argClassStructure.getSubject(), false);
         buildMetaGet("routerPath", argClassStructure.getRouterPath(), true);
         buildMetaGet("routerName", argClassStructure.getRouterName(), true);
+        buildBooleanGet("expectConsistentAfterTransition", argClassStructure.getExpectConsistentAfterTransition(), true);
 
         /* プロパティを設定します */
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
@@ -938,6 +939,28 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         // メソッドの実装
         method.getLineList().add("return \"" + meta + "\";");
+    }
+
+    private void buildBooleanGet(
+            String name,
+            boolean meta,
+            boolean isStatic) {
+
+        final BlancoCgMethod method = fCgFactory.createMethod(name,
+                fBundle.getXml2javaclassGetJavadoc01(name));
+        fCgClass.getMethodList().add(method);
+
+        method.setNotnull(true);
+        method.setAccess("get");
+        method.setStatic(isStatic);
+
+        BlancoCgReturn cgReturn = fCgFactory.createReturn("boolean",
+                fBundle.getXml2javaclassGetReturnJavadoc(name));
+        method.setReturn(cgReturn);
+
+        // メソッドの実装
+        String strMeta = meta ? "true" : "false";
+        method.getLineList().add("return " + strMeta + ";");
     }
 
     /**

@@ -206,6 +206,14 @@ public class BlancoVueComponentClassStructure {
     private String fSubject;
 
     /**
+     * 遷移後の参照に一貫性を期待
+     *
+     * フィールド: [expectConsistentAfterTransition]。
+     * デフォルト: [false]。
+     */
+    private Boolean fExpectConsistentAfterTransition = false;
+
+    /**
      * フィールド [name] の値を設定します。
      *
      * フィールドの説明: [フィールド名を指定します。必須項目です。]。
@@ -793,6 +801,29 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [expectConsistentAfterTransition] の値を設定します。
+     *
+     * フィールドの説明: [遷移後の参照に一貫性を期待]。
+     *
+     * @param argExpectConsistentAfterTransition フィールド[expectConsistentAfterTransition]に設定する値。
+     */
+    public void setExpectConsistentAfterTransition(final Boolean argExpectConsistentAfterTransition) {
+        fExpectConsistentAfterTransition = argExpectConsistentAfterTransition;
+    }
+
+    /**
+     * フィールド [expectConsistentAfterTransition] の値を取得します。
+     *
+     * フィールドの説明: [遷移後の参照に一貫性を期待]。
+     * デフォルト: [false]。
+     *
+     * @return フィールド[expectConsistentAfterTransition]から取得した値。
+     */
+    public Boolean getExpectConsistentAfterTransition() {
+        return fExpectConsistentAfterTransition;
+    }
+
+    /**
      * このバリューオブジェクトの文字列表現を取得します。
      *
      * <P>使用上の注意</P>
@@ -833,6 +864,7 @@ public class BlancoVueComponentClassStructure {
         buf.append(",fileDescription=" + fFileDescription);
         buf.append(",constructorArgList=" + fConstructorArgList);
         buf.append(",subject=" + fSubject);
+        buf.append(",expectConsistentAfterTransition=" + fExpectConsistentAfterTransition);
         buf.append("]");
         return buf.toString();
     }
@@ -933,5 +965,8 @@ public class BlancoVueComponentClassStructure {
         // Name: fSubject
         // Type: java.lang.String
         target.fSubject = this.fSubject;
+        // Name: fExpectConsistentAfterTransition
+        // Type: java.lang.Boolean
+        target.fExpectConsistentAfterTransition = this.fExpectConsistentAfterTransition;
     }
 }

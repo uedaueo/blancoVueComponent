@@ -59,6 +59,9 @@
         <propertykey name="createImportList" waitX="2">
           <value>import文の自動生成</value>
         </propertykey>
+        <propertykey name="expectConsistentAfterTransition" waitX="2">
+          <value>遷移後の参照に一貫性を期待</value>
+        </propertykey>
 
         <valuemapping>
           <result>true</result>
