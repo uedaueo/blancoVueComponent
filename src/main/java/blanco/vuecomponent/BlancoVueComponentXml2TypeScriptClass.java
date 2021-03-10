@@ -353,7 +353,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         buildMetaGet("caption", argClassStructure.getSubject(), false);
         buildMetaGet("routerPath", argClassStructure.getRouterPath(), true);
         buildMetaGet("routerName", argClassStructure.getRouterName(), true);
-        buildBooleanGet("expectConsistentAfterTransition", argClassStructure.getExpectConsistentAfterTransition(), true);
+        buildBooleanGet("expectConsistentAfterTransition", argClassStructure.getExpectConsistentAfterTransition(), false);
 
         /* プロパティを設定します */
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
