@@ -27,13 +27,13 @@ import java.io.File;
 import java.util.*;
 
 /**
- * blancoValueObjectの 中間XMLファイル形式をパース(読み書き)するクラス。
+ * A class that parses (reads and writes) the intermediate XML file format of blancoValueObject.
  *
  * @author IGA Tosiki
  */
 public class BlancoVueComponentXmlParser {
     /**
-     * メッセージ。
+     * A message.
      */
     private final BlancoVueComponentMessage fMsg = new BlancoVueComponentMessage();
 
@@ -48,14 +48,14 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * blancoValueObjectのリソースバンドルオブジェクト。
+     * A resource bundle object for blancoValueObject.
      */
     private final static BlancoVueComponentResourceBundle fBundle = new BlancoVueComponentResourceBundle();
 
     public static Map<String, Integer> mapCommons = new HashMap<String, Integer>() {
         {
             put(fBundle.getMeta2xmlElementCommon(), BlancoCgSupportedLang.PHP);
-        } // PHP タイプシートにのみ対応
+        } // Supports PHP type sheets only.
 
         {
             put(fBundle.getMeta2xmlElementCommonCs(), BlancoCgSupportedLang.CS);
@@ -91,10 +91,10 @@ public class BlancoVueComponentXmlParser {
     };
 
     /**
-     * 中間XMLファイルのXMLドキュメントをパースして、バリューオブジェクト情報の配列を取得します。
+     * Parses an XML document in an intermediate XML file to get an array of information.
      *
-     * @param argMetaXmlSourceFile 中間XMLファイル。
-     * @return パースの結果得られたバリューオブジェクト情報の配列。
+     * @param argMetaXmlSourceFile An intermediate XML file.
+     * @return An array of information obtained as a result of parsing.
      */
     public BlancoVueComponentClassStructure[] parse(
             final File argMetaXmlSourceFile) {
@@ -109,24 +109,24 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * 中間XMLファイル形式のXMLドキュメントをパースして、バリューオブジェクト情報の配列を取得します。
+     * Parses an XML document in an intermediate XML file to get an array of value object information.
      *
-     * @param argXmlDocument 中間XMLファイルのXMLドキュメント。
-     * @return パースの結果得られたバリューオブジェクト情報の配列。
+     * @param argXmlDocument XML document of an intermediate XML file.
+     * @return An array of value object information obtained as a result of parsing.
      */
     public BlancoVueComponentClassStructure[] parse(
             final BlancoXmlDocument argXmlDocument) {
         final List<BlancoVueComponentClassStructure> listStructure = new ArrayList<BlancoVueComponentClassStructure>();
 
-        // ルートエレメントを取得します。
+        // Gets the root element.
         final BlancoXmlElement elementRoot = BlancoXmlBindingUtil
                 .getDocumentElement(argXmlDocument);
         if (elementRoot == null) {
-            // ルートエレメントが無い場合には処理中断します。
+            // The process is aborted if there is no root element.
             return null;
         }
 
-        // sheet(Excelシート)のリストを取得します。
+        // Gets a list of sheets (Excel sheets).
         final List<BlancoXmlElement> listSheet = BlancoXmlBindingUtil
                 .getElementsByTagName(elementRoot, "sheet");
 
@@ -135,7 +135,7 @@ public class BlancoVueComponentXmlParser {
             final BlancoXmlElement elementSheet = listSheet.get(index);
 
             /*
-             * Java以外の言語用に記述されたシートにも対応．
+             * Supports sheets written for languages other than Java.
              */
             List<BlancoXmlElement> listCommon = null;
             int sheetLang = BlancoCgSupportedLang.JAVA;
@@ -164,11 +164,11 @@ public class BlancoVueComponentXmlParser {
             }
 
             if (listCommon == null || listCommon.size() == 0) {
-                // commonが無い場合にはスキップします。
+                // Skips if there is no common.
                 continue;
             }
 
-            // 最初のアイテムのみ処理しています。
+            // Processes only the first item.
             final BlancoXmlElement elementCommon = listCommon.get(0);
             final String name = BlancoXmlBindingUtil.getTextContent(
                     elementCommon, "name");
@@ -185,7 +185,7 @@ public class BlancoVueComponentXmlParser {
             ;
 
             if (objClassStructure != null) {
-                // 得られた情報を記憶します。
+                // Saves the obtained information.
                 listStructure.add(objClassStructure);
             }
         }
@@ -197,10 +197,10 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * 中間XMLファイル形式の「sheet」XMLエレメント(PHP書式)をパースして、バリューオブジェクト情報を取得します。
+     * Parses the "sheet" XML element (PHP format) in the intermediate XML file to get the value object information.
      *
-     * @param argElementSheet 中間XMLファイルの「sheet」XMLエレメント。
-     * @return パースの結果得られたバリューオブジェクト情報。「name」が見つからなかった場合には nullを戻します。
+     * @param argElementSheet "sheet" XML element in the intermediate XML file.
+     * @return Value object information obtained as a result of parsing. Null is returned if "name" is not found.
      */
     public BlancoVueComponentClassStructure parseElementSheetPhp(
             final BlancoXmlElement argElementSheet
@@ -208,32 +208,31 @@ public class BlancoVueComponentXmlParser {
 
         final BlancoVueComponentClassStructure objClassStructure = new BlancoVueComponentClassStructure();
         /*
-         * componentを生成するときに使用します。objClassStructure#headerList に格納します。
+         * Used to generate a component. Stores it  in objClassStructure#headerList.
          */
         final Map<String, List<String>> componentHeaderList = new HashMap<>();
         /*
-         * component を import するときに使用します。
-         * component は export default されているので、imoprt 時に
-         * { } でくくってはいけません。
+         * Used to import a component.
+         * Since the component is default exported, it should not be wrapped in "{ }" when import.
          */
         final Map<String, List<String>> defaultExportedHeaderList = new HashMap<>();        /*
-         * interface を生成するときに使用します。objClassStructure#importList に格納します。
+         * Used to generate an interface. Stores it in objClassStructure#importList.
          */
         final Map<String, List<String>> interfaceHeaderList = new HashMap<>();
 
-        // 共通情報を取得します。
+        // Gets the common information.
         final BlancoXmlElement elementCommon = BlancoXmlBindingUtil
                 .getElement(argElementSheet, fBundle
                         .getMeta2xmlElementCommon());
         if (elementCommon == null) {
-            // commonが無い場合には、このシートの処理をスキップします。
+            // Skips the processing of this sheet if there is no common.
             return null;
         }
 
         final String name = BlancoXmlBindingUtil.getTextContent(
                 elementCommon, "name");
         if (BlancoStringUtil.null2Blank(name).trim().length() == 0) {
-            // nameが空の場合には処理をスキップします。
+            // Skips if name is empty.
             return null;
         }
 
@@ -241,13 +240,13 @@ public class BlancoVueComponentXmlParser {
             System.out.println("BlancoVueComponent#parseElementPhp name = " + name);
         }
 
-        // Vueコンポーネント定義・共通
+        // Vue component definition common.
         this.parseVueComponentCommon(elementCommon, objClassStructure);
 
-        // Vueコンポーネント定義・継承
+        // Vue component definition inheritance.
         this.parseVueComponentExtends(componentHeaderList, defaultExportedHeaderList, objClassStructure);
 
-        // Vueコンポーネント・使用コンポーネント
+        // Vue component definition using component.
         final List<BlancoXmlElement> componentList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
                         fBundle.getMeta2xmlElementComponents());
@@ -256,7 +255,7 @@ public class BlancoVueComponentXmlParser {
             this.parseVueComponentComponents(elementComponentRoot, componentHeaderList, objClassStructure);
         }
 
-        // Vueコンポーネント・プロパティ
+        // Vue component definition property.
         final List<BlancoXmlElement> listList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementList());
         if (listList != null && listList.size() != 0) {
@@ -264,7 +263,7 @@ public class BlancoVueComponentXmlParser {
             this.parseVueComponentProperties(elementListRoot, componentHeaderList, interfaceHeaderList, objClassStructure);
         }
 
-        // ヘッダ情報を取得します。
+        // Gets the header information.
         List<BlancoXmlElement> headerElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
                         fBundle.getMeta2xmlElementHeader());
@@ -299,22 +298,22 @@ public class BlancoVueComponentXmlParser {
                 continue;
             }
 
-            // ルートエレメントを取得します。
+            // Gets the root element.
             final BlancoXmlElement elementRoot = BlancoXmlBindingUtil
                     .getDocumentElement(documentMeta);
             if (elementRoot == null) {
-                // ルートエレメントが無い場合には処理中断します。
+                // The process is aborted if there is no root element.
                 continue;
             }
 
-            // sheet(Excelシート)のリストを取得します。
+            // Gets a list of sheets (Excel sheets).
             final List<BlancoXmlElement> listSheet = BlancoXmlBindingUtil
                     .getElementsByTagName(elementRoot, "sheet");
 
 
             for (BlancoXmlElement elementSheet : listSheet) {
                 /*
-                 * Java以外の言語用に記述されたシートにも対応．
+                 * Supports sheets written for languages other than Java.
                  */
                 List<BlancoXmlElement> listCommon = null;
                 for (String common : mapCommons.keySet()) {
@@ -341,7 +340,7 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * 中間XMLファイルをパースして、「Vueコンポーネント定義・共通」を取得します。
+     * Parses the intermediate XML file to get "Vue component definition common".
      *
      * @param argElementCommon
      * @param argObjClassStructure
@@ -377,15 +376,15 @@ public class BlancoVueComponentXmlParser {
                 if (index == 0) {
                     argObjClassStructure.setDescription(lines[index]);
                 } else {
-                    // 複数行の description については、これを分割して格納します。
-                    // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
+                    // For a multi-line description, it will be split and stored.
+                    // From the second line, assumes that character reference encoding has been properly implemented. 
                     argObjClassStructure.getDescriptionList().add(lines[index]);
                 }
             }
         }
 
         /*
-         * コンポーネントの種類： screen or part
+         * Component type: screen or part
          */
         argObjClassStructure.setComponentKind(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "componentKind"));
@@ -417,7 +416,7 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * VueComponent では、"Mixins(実装コンポーネント) "関数が自動的に拡張されます。
+     * In VueComponent, the "Mixins (implementation components)" function is automatically extended.
      *
      * @param argImportHeaderList
      * @param argObjClassStructure
@@ -442,8 +441,7 @@ public class BlancoVueComponentXmlParser {
 
         /*
          * import HogeImple from "HogeImple";
-         * Component は export default されているので、{ } で
-         * くくってはいけない。
+         * Component is default exported, so it should not be wrapped in "{ }".
          */
         BlancoVueComponentUtil.makeImportHeaderList(
                 argObjClassStructure.getPackage(),
@@ -455,8 +453,8 @@ public class BlancoVueComponentXmlParser {
     }
 
     /**
-     * 使用するコンポーネントのリストを作成する。
-     * import 文は自動生成しないので、定義書に記載すること。
+     * Creates a list of components to be used.
+     * Since the import statement is not generated, it should be described in the definition document.
      *
      * @param argElementComponent
      * @param argImportHeaderList
@@ -467,7 +465,7 @@ public class BlancoVueComponentXmlParser {
             final Map<String, List<String>> argImportHeaderList,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
-        /* 使用するコンポーネントのリスト */
+        /* A list of components to be used. */
         final List<BlancoXmlElement> listComponentsChildNodes = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementComponent, "components");
         for (int index = 0;
@@ -511,7 +509,7 @@ public class BlancoVueComponentXmlParser {
             }
 
             /*
-             * 型の取得．ここで TypeScript 風の型名に変えておく
+             * Gets the type. Changes the type name to TypeScript style.
              */
             String phpType = BlancoXmlBindingUtil.getTextContent(elementList, "type");
             String targetType = phpType;
@@ -530,14 +528,14 @@ public class BlancoVueComponentXmlParser {
             } else if ("object".equalsIgnoreCase(phpType)) {
                 targetType = "any";
             } else {
-                /* この名前の package を探す */
+                /* Searches for a package name with this name. */
                 BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(phpType);
 
                 String packageName = null;
                 if (voStructure != null) {
                     packageName = voStructure.getPackage();
                     if (packageName == null) {
-                        // package 名の分離を試みる
+                        // Tries to isolate the package name.
                         String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpType);
                         if (simpleName != null && !simpleName.equals(phpType)) {
                             packageName = BlancoVueComponentUtil.getPackageName(phpType);
@@ -548,11 +546,11 @@ public class BlancoVueComponentXmlParser {
                         targetType = packageName + "." + phpType;
                     }
 
-                    /* その他はそのまま記述する */
+                    /* Others are written as is. */
 
                     /*
-                     * TypeScript 用 import 情報の作成
-                     * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
+                     * Creates import information for TypeScript.
+                     * Note that the package may be the same as the component, but the basedir may be different.
                      */
                     if (argObjClassStructure.getCreateImportList()) {
                         BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, voStructure.getBasedir(), "");
@@ -563,7 +561,7 @@ public class BlancoVueComponentXmlParser {
 
             fieldStructure.setType(targetType);
 
-            /* Generic に対応 */
+            /* Supports Generic. */
             String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
             if (BlancoStringUtil.null2Blank(phpGeneric).length() != 0) {
                 String targetGeneric = phpGeneric;
@@ -587,14 +585,14 @@ public class BlancoVueComponentXmlParser {
                 } else if ("object".equalsIgnoreCase(phpGeneric)) {
                     targetGeneric = "any";
                 } else {
-                    /* この名前の package を探す */
+                    /* Searches for a package with this name. */
                     BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(phpGeneric);
 
                     String packageName = null;
                     if (voStructure != null) {
                         packageName = voStructure.getPackage();
                         if (packageName == null) {
-                            // package 名の分離を試みる
+                            // Tries to isolate package name.
                             String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpGeneric);
                             if (simpleName != null && !simpleName.equals(phpGeneric)) {
                                 packageName = BlancoVueComponentUtil.getPackageName(phpGeneric);
@@ -605,11 +603,11 @@ public class BlancoVueComponentXmlParser {
                             targetGeneric = packageName + "." + phpGeneric;
                         }
 
-                        /* その他はそのまま記述する */
+                        /* Others are written as is. */
 
                         /*
-                         * TypeScript 用 import 情報の作成
-                         * コンポーネントとはパッケージが同じでもbasedirが違う可能性がある事に注意。
+                         * Creates import information for TypeScript.
+                         * Note that the package may be the same as the component, but the basedir may be different.
                          */
                         if (argObjClassStructure.getCreateImportList()) {
                             BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, voStructure.getBasedir(), "");
@@ -620,15 +618,15 @@ public class BlancoVueComponentXmlParser {
                 fieldStructure.setGeneric(targetGeneric);
             }
 
-            // Nullable に対応
+            // Supports Nullable.
             fieldStructure.setNullable("true".equals(BlancoXmlBindingUtil
                     .getTextContent(elementList, "nullable")));
 
-            // クエリ文字列に対応
+            // Supports query string.
             fieldStructure.setQueryParam(BlancoXmlBindingUtil.getTextContent(
                     elementList, "queryParam"));
 
-            // 説明に対応
+            // Supports description.
             fieldStructure.setDescription(BlancoXmlBindingUtil
                     .getTextContent(elementList, "description"));
             final String[] lines = BlancoNameUtil.splitString(
@@ -637,8 +635,8 @@ public class BlancoVueComponentXmlParser {
                 if (indexLine == 0) {
                     fieldStructure.setDescription(lines[indexLine]);
                 } else {
-                    // 複数行の description については、これを分割して格納します。
-                    // ２行目からは、適切に文字参照エンコーディングが実施されているものと仮定します。
+                    // For a multi-line description, it will be split and stored.
+                    // From the second line, assumes that character reference encoding has been properly implemented. 
                     fieldStructure.getDescriptionList().add(
                             lines[indexLine]);
                 }
@@ -670,8 +668,8 @@ public class BlancoVueComponentXmlParser {
         List<String> headerList = new ArrayList<>();
 
         /*
-         * header の一覧作成
-         * まず、定義書に書かれたものをそのまま出力します。
+         * Creates a list of header.
+         * First, outputs what is written in the definition document as is.
          */
         if (argHeaderElementList != null && argHeaderElementList.size() > 0) {
             final BlancoXmlElement elementHeaderRoot = argHeaderElementList.get(0);
@@ -696,20 +694,20 @@ public class BlancoVueComponentXmlParser {
         }
 
         /*
-         * 次に、自動生成されたものを出力します。
-         * 現在の方式だと、以下の前提が必要。
-         *  * 1ファイルに1クラスの定義
-         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
-         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
+         * Next, outputs the auto-generated one.
+         * The current method requires the following assumptions.
+         *  * One class definition per file
+         *  * Represents directories with Java/Kotlin style package notation in the definition sheet
+         * TODO: Should it be possible to define the directory where the files are located on the definition sheet?
          */
         this.parseGeneratedHeaderList(headerList, argImportHeaderList, false);
 
         /*
-         * 次に、expor default されたものを出力します。
-         * 現在の方式だと、以下の前提が必要。
-         *  * 1ファイルに1クラスの定義
-         *  * 定義シートでは Java/kotlin 式の package 表記でディレクトリを表現
-         * TODO: 定義シート上にファイルの配置ディレクトリを定義できるようにすべし？
+         * Next, outputs the default exported one.
+         * The current method requires the following assumptions.
+         *  * One class definition per file
+         *  * Represents directories with Java/Kotlin style package notation in the definition sheet
+         * TODO: Should it be possible to define the directory where the files are located on the definition sheet?
          */
         if (argDefaultExportedHeaderList != null && argDefaultExportedHeaderList.size() > 0) {
             this.parseGeneratedHeaderList(headerList, argDefaultExportedHeaderList, true);

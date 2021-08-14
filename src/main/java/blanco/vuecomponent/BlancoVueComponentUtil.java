@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * BlancoValueObject で作成されているObjectの一覧を XML から取得し，保持しておきます
+ * Gets the list of objects created in BlancoValueObject from XML and stores it.
  *
  * Created by tueda on 15/07/05.
  */
@@ -24,9 +24,9 @@ public class BlancoVueComponentUtil {
             System.out.println("BlancoVueComponentUtil : processValueObjects start !");
         }
 
-        /* tmpdir はユニーク */
+        /* tmpdir is unique. */
         String baseTmpdir = input.getTmpdir();
-        /* searchTmpdir はカンマ区切り */
+        /* searchTmpdir is comma separated. */
         String tmpTmpdirs = input.getSearchTmpdir();
         List<String> searchTmpdirList = null;
         if (tmpTmpdirs != null && !tmpTmpdirs.equals(baseTmpdir)) {
@@ -45,7 +45,7 @@ public class BlancoVueComponentUtil {
 
     static private void searchTmpdir(String tmpdir) {
 
-        // XML化された中間ファイルから情報を読み込む
+        // Reads information from XML-ized intermediate files.
         final File[] fileMeta3 = new File(tmpdir
                 + BlancoVueComponentConstants.OBJECT_SUBDIRECTORY)
                 .listFiles();
@@ -64,8 +64,8 @@ public class BlancoVueComponentUtil {
             BlancoValueObjectTsXmlParser parser = new BlancoValueObjectTsXmlParser();
 //            parser.setVerbose(this.isVerbose());
             /*
-             * まず始めにすべてのシートを検索して，クラス名とpackage名のリストを作ります．
-             * php形式の定義書では，クラスを指定する際にpackage名が指定されていないからです．
+             * First, searches all the sheets and makes a list of class and package names.
+             * This is because the package name is not specified when specifying a class in the PHP format definition.
              */
             final BlancoValueObjectTsClassStructure[] structures = parser.parse(fileMeta3[index]);
 
@@ -128,7 +128,7 @@ public class BlancoVueComponentUtil {
     }
 
     /**
-     * インポート文を生成する
+     * Generates import statements.
      * @param argPackageName
      * @param argClassName
      * @param argImportHeaderList
@@ -182,7 +182,7 @@ public class BlancoVueComponentUtil {
     }
 
     /**
-     * importHeaderList に重複のチェックだけをして追加します。
+     * Adds to importHeaderList with only checking for duplicates.
      *
      * @param className
      * @param importFrom

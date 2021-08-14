@@ -24,7 +24,7 @@ import java.util.List;
 public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess {
 
     /**
-     * メッセージ。
+     * A message.
      */
     private final BlancoVueComponentMessage fMsg = new BlancoVueComponentMessage();
 
@@ -43,7 +43,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             }
 
             /*
-             * 改行コードを決定します。
+             * Determines the newline code.
              */
             String LF = "\n";
             String CR = "\r";
@@ -75,20 +75,20 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             }
 
             /*
-             * targetdir, targetStyleの処理。
-             * 生成されたコードの保管場所を設定する。
+             * Processes targetdir and targetStyle.
+             * Sets the storage location for the generated code.
              * targetstyle = blanco:
-             *  targetdirの下に main ディレクトリを作成
+             *  Creates a main directory under targetdir.
              * targetstyle = maven:
-             *  targetdirの下に main/java ディレクトリを作成
+             *  Creates a main/java directory under targetdir.
              * targetstyle = free:
-             *  targetdirをそのまま使用してディレクトリを作成。
-             *  ただしtargetdirがからの場合はデフォルト文字列(blanco)使用する。
+             *  Creates a directory using targetdir as is.
+             *  However, if targetdir is empty, the default string (blanco) is used.
              * by tueda, 2019/08/30
              */
             String strTarget = input.getTargetdir();
             String style = input.getTargetStyle();
-            // ここを通ったら常にtrue
+            // Always true when passing through here.
             boolean isTargetStyleAdvanced = true;
             if (style != null && BlancoVueComponentConstants.TARGET_STYLE_MAVEN.equals(style)) {
                 strTarget = strTarget + "/" + BlancoVueComponentConstants.TARGET_DIR_SUFFIX_MAVEN;
@@ -96,12 +96,12 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                     !BlancoVueComponentConstants.TARGET_STYLE_FREE.equals(style)) {
                 strTarget = strTarget + "/" + BlancoVueComponentConstants.TARGET_DIR_SUFFIX_BLANCO;
             }
-            /* style が free だったらtargetdirをそのまま使う */
+            /* If style is free, uses targetdir as is. */
             if (input.getVerbose()) {
                 System.out.println("/* tueda */ TARGETDIR = " + strTarget);
             }
 
-            // テンポラリディレクトリを作成。
+            // Creates a temporary directory.
             new File(input.getTmpdir()
                     + BlancoVueComponentConstants.TARGET_SUBDIRECTORY).mkdirs();
 
@@ -109,26 +109,23 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                     .getTmpdir()
                     + BlancoVueComponentConstants.TARGET_SUBDIRECTORY);
 
-            // XML化されたメタファイルからValueObjectを生成
-            // 最初にテンポラリフォルダを走査
+            // Generates ValueObject from XML-ized meta file.
+            // Scans the temporary folder first.
             final File[] fileMeta2 = new File(input.getTmpdir()
                     + BlancoVueComponentConstants.TARGET_SUBDIRECTORY)
                     .listFiles();
 
         /*
-         * まず始めにすべてのシートを検索して，クラス名とpackage名のリストを作ります．
-         * php形式の定義書では，クラスを指定する際にpackage名が指定されていないからです．
+         * First, searches all the sheets and makes a list of structures from the class names.
+         * The reason is that in the PHP-style definitions, the package name is not specified when specifying a class.
          */
             BlancoVueComponentUtil.isVerbose = input.getVerbose();
             BlancoVueComponentUtil.processValueObjects(input);
 
             /*
-             * listClass が指定されている場合は、RouterConfig クラスと
-             * RouterConfig クラスの一覧（配列）を保持するクラスを生成します。
-             * RouterConfigは各コンポーネントクラスと同じ場所に保持され、
-             * 一覧を保持するクラスは、targetDir/listClassに置かれます。
-             * listClassはJavaのパッケージと同じ書式で指定することで、
-             * Sub directory を指定することができます。
+             * If the listClass is specified, generates the RouterConfig class and a class that holds a list (array) of RouterConfig classes.
+             * RouterConfig is kept in the same location as each component class, and the class that holds the list is placed in targetDir/listClass.
+             * The listClass can specify the sub directory with being specified in the same as a Java package.
              */
             boolean createClassList = false;
             String listClassName = input.getListClass();
@@ -137,7 +134,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                 createClassList = true;
             }
 
-            // 次にメタディレクトリとして指定されているディレクトリを走査
+            // Next, scans the directory specified as the meta directory.
             for (int index = 0; index < fileMeta2.length; index++) {
                 if (fileMeta2[index].getName().endsWith(".xml") == false) {
                     continue;
@@ -153,8 +150,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                 BlancoVueComponentClassStructure [] structures = xml2Class.process(fileMeta2[index], new File(strTarget));
 
                 /*
-                 * listClass が指定されている場合は、自動生成した
-                 * クラスの一覧を収集します。
+                 * If the listClass is specified, it will collect a list of auto-generated classes.
                  */
                 for (int index2 = 0; createClassList && index2 < structures.length; index2++) {
                     BlancoVueComponentClassStructure classStructure = structures[index2];
@@ -162,12 +158,11 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                         screenComponentStructures.add(classStructure);
                     }
                 }
-                // 単体試験コードの自動生成機能は 0.9.1以降では削除されました。
+                // The auto-generation of unit test codes has been removed in 0.9.1 and later.
             }
 
             /*
-             * listClass が指定されている場合は、自動生成したクラスの一覧を
-             * 保持するValueObjectを作成します。
+             * If the listClass is specified, it will create a ValueObject that holds the list of auto-generated classes.
              */
             if (createClassList) {
                 if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
@@ -187,7 +182,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
 
             return BlancoVueComponentBatchProcess.END_SUCCESS;
         } catch (TransformerException e) {
-            throw new IOException("XML変換の過程で例外が発生しました: " + e.toString());
+            throw new IOException("An exception has occurred during the XML conversion process: " + e.toString());
         }
     }
 

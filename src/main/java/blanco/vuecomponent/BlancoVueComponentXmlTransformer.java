@@ -10,17 +10,17 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 /**
- * XMLファイルを出力するための transformer クラスです。
+ * This is a transformer class for outputting XML files.
  */
 public class BlancoVueComponentXmlTransformer {
 
     /**
-     * デバッグモードで動作させるかどうか。
+     * Whether to run in debug mode.
      */
     private static final boolean IS_DEBUG = false;
 
     /**
-     * タブ数
+     * The number of tabs.
      */
     private int tabs = 2;
 
@@ -39,28 +39,28 @@ public class BlancoVueComponentXmlTransformer {
             final BlancoVueComponentClassStructure argClassStructure) {
         if (argOutputDirectory == null) {
             throw new IllegalArgumentException(
-                    "出力先ルートディレクトリにnullが与えられました。処理中断します。");
+                    "An output destination root directory was given as null. Aborts the process.");
         }
 
         if (argOutputDirectory.exists() == false) {
             if (argOutputDirectory.mkdirs() == false) {
-                throw new IllegalArgumentException("出力先ルートディレクトリ["
+                throw new IllegalArgumentException("The output destination root directory ["
                         + argOutputDirectory.getAbsolutePath()
-                        + "]が存在しなかったので作成しようとしましたがディレクトリ作成に失敗しました。処理中断します。");
+                        + "] does not exist, so we tried to create it, but failed. Aborts the process.");
             }
         }
         if (argOutputDirectory.isDirectory() == false) {
-            throw new IllegalArgumentException("出力先ルートディレクトリにディレクトリではないファイル["
-                    + argOutputDirectory.getAbsolutePath() + "]が与えられました。処理中断します。");
+            throw new IllegalArgumentException("A file ["
+                    + argOutputDirectory.getAbsolutePath() + "] that is not a directory was given as the output root directory. Aborts the process.");
         }
 
         try {
-            // パッケージ名からディレクトリ名へと変換。
+            // Converts a package name to a directory name.
             String strSubdirectory = BlancoStringUtil.replaceAll(
                     BlancoStringUtil.null2Blank(argClassStructure.getPackage()),
                     '.', '/');
             if (strSubdirectory.length() > 0) {
-                // サブディレクトリが存在する場合にのみスラッシュを追加します。
+                // Adds a slash only if subdirectories exist.
                 strSubdirectory = "/" + strSubdirectory;
             }
 
@@ -69,13 +69,13 @@ public class BlancoVueComponentXmlTransformer {
                     + strSubdirectory);
             if (targetPackageDirectory.exists() == false) {
                 if (targetPackageDirectory.mkdirs() == false) {
-                    throw new IllegalArgumentException("出力先のパッケージディレクトリ["
+                    throw new IllegalArgumentException("Failed to generate the output destination package directory ["
                             + targetPackageDirectory.getAbsolutePath()
-                            + "]の生成に失敗しました。");
+                            + "].");
                 }
             }
 
-            // 出力先のファイルを確定します。
+            // Finalizes the output destination file.
             final File fileTarget = new File(targetPackageDirectory
                     .getAbsolutePath()
                     + "/" + argClassStructure.getName() + ".vue");
@@ -84,7 +84,7 @@ public class BlancoVueComponentXmlTransformer {
                     new FileOutputStream(fileTarget));
 
         } catch (IOException ex) {
-            throw new IllegalArgumentException("ソースコードを出力する過程で例外が発生しました。"
+            throw new IllegalArgumentException("An exception occurred in the process of outputting the source code."
                     + ex.toString());
         }
     }
@@ -104,11 +104,11 @@ public class BlancoVueComponentXmlTransformer {
 
         if (argDocument == null) {
             throw new IllegalArgumentException(
-                    "DOMツリーを出力XMLストリームに変換する処理に、XMLドキュメントとしてnullが渡されました。XMLドキュメントにはnull以外を与えてください。");
+                    "The process of converting the DOM tree to the output XML stream was given null as the XML document. Give it a non-null value as the XML document.");
         }
         if (this.outputStream == null) {
             throw new IllegalArgumentException(
-                    "DOMツリーを出力XMLストリームに変換する処理に、ストリームとしてnullが渡されました。ストリームにはnull以外を与えてください。");
+                    "The process of converting the DOM tree to the output XML stream was given null as the stream. Give it a non-null value as stream.");
         }
 
         try {
@@ -122,9 +122,9 @@ public class BlancoVueComponentXmlTransformer {
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
             throw new IllegalArgumentException(
-                    "想定しない例外: XML変換コンフィグレーション例外が発生しました。" + e.toString());
+                    "Unexpected exception: XML transformation configuration exception occurred." + e.toString());
         } catch (TransformerException e) {
-            throw new IllegalArgumentException("想定しない例外: XML変換例外が発生しました。"
+            throw new IllegalArgumentException("Unexpected exception: An XML conversion exception occurred."
                     + e.toString());
         }
     }

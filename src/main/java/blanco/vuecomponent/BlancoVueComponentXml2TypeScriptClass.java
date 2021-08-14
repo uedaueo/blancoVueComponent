@@ -30,26 +30,26 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * バリューオブジェクト用中間XMLファイルから TypeScript ソースコードを自動生成するクラス。
+ * This is a class to auto-generate TypeScript source code from intermediate XML files for value objects.
  *
- * BlancoValueObjectTsの主たるクラスのひとつです。
+ * This is one of the main classes of BlancoValueObjectTs.
  *
  * @author IGA Tosiki
  * @author tueda
  */
 public class BlancoVueComponentXml2TypeScriptClass {
     /**
-     * メッセージ。
+     * A message.
      */
     private final BlancoVueComponentMessage fMsg = new BlancoVueComponentMessage();
 
     /**
-     * blancoValueObjectのリソースバンドルオブジェクト。
+     * A resource bundle object for blancoValueObject.
      */
     private final BlancoVueComponentResourceBundle fBundle = new BlancoVueComponentResourceBundle();
 
     /**
-     * 入力シートに期待するプログラミング言語
+     * A programming language expected for the input sheet.
      */
     private int fSheetLang = BlancoCgSupportedLang.PHP;
 
@@ -58,7 +58,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * ソースコード生成先ディレクトリのスタイル
+     * Style of the source code generation destination directory
      */
     private boolean fTargetStyleAdvanced = false;
     public void setTargetStyleAdvanced(boolean argTargetStyleAdvanced) {
@@ -93,27 +93,27 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * 内部的に利用するblancoCg用ファクトリ。
+     * A factory for blancoCg to be used internally.
      */
     private BlancoCgObjectFactory fCgFactory = null;
 
     /**
-     * 内部的に利用するblancoCg用ソースファイル情報。
+     * Source file information for blancoCg to be used internally.
      */
     private BlancoCgSourceFile fCgSourceFile = null;
 
     /**
-     * 内部的に利用するblancoCg用クラス情報。
+     * Class information for blancoCg to be used internally.
      */
     private BlancoCgClass fCgClass = null;
 
     /**
-     * 内部的に利用するblancoCg用インタフェイス情報。
+     * Interface information for blancoCg to be used internally.
      */
     private BlancoCgInterface fCgInterface = null;
 
     /**
-     * 自動生成するソースファイルの文字エンコーディング。
+     * Character encoding of auto-generated source files.
      */
     private String fEncoding = null;
 
@@ -128,14 +128,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * バリューオブジェクトを表現する中間XMLファイルから、Javaソースコードを自動生成します。
+     * Auto-generates TypeScript source code from an intermediate XML file representing a value object.
      *
      * @param argMetaXmlSourceFile
-     *            ValueObjectに関するメタ情報が含まれているXMLファイル
+     *            An XML file containing meta-information about the ValueObject.
      * @param argDirectoryTarget
-     *            ソースコード生成先ディレクトリ
+     *            Source code generation destination directory.
      * @throws IOException
-     *             入出力例外が発生した場合
+     *             If an I/O exception occurs.
      * @return
      */
     public BlancoVueComponentClassStructure[] process(
@@ -147,23 +147,23 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         for (int index = 0; index < structures.length; index++) {
             BlancoVueComponentClassStructure classStructure = structures[index];
-            /* まず、.vue ファイルを作成します */
+            /* First, creates a .vue file. */
             generateComponent(classStructure, argDirectoryTarget);
 
-            /* 次に、interface を作成します */
+            /* Next, creates an interface. */
             /*
-             * mixins では property を重複宣言する方が便利なので廃止
+             * In mixins, it is more convenient to declare property in duplicate, so it is deprecated.
              * 2020/07/01 by tueda
              */
 //            generateInterface(classStructure, argDirectoryTarget);
 
-            /* クエリ文字列をもつプロパティを保存します */
+            /* Saves a property with a query string */
             Map<String, String> queryProps = new HashMap<>();
 
-            /* 次に、class を作成します */
+            /* Then, creates a class. */
             generateClass(classStructure, argDirectoryTarget, queryProps);
 
-            /* 画面の場合は、RouterConfig を作成します。 */
+            /* In the case of the screen, creates a RouterConfig. */
             if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
                 generateRouteConfig(classStructure, argDirectoryTarget, queryProps);
             }
@@ -176,10 +176,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
             final List<BlancoVueComponentClassStructure> argClassStructures,
             final File argDirectoryTarget) throws IOException {
         /*
-         * 出力ディレクトリはant taskのtargetStyel引数で
-         * 指定された書式で出力されます。
-         * 従来と互換性を保つために、指定がない場合は blanco/main
-         * となります。
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
          * by tueda, 2019/08/30
          */
         String strTarget = argDirectoryTarget
@@ -197,13 +195,13 @@ public class BlancoVueComponentXml2TypeScriptClass {
         String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(this.getListClass());
         String packageName = BlancoVueComponentUtil.getPackageName(this.getListClass());
 
-        // BlancoCgObjectFactoryクラスのインスタンスを取得します。
+        // Gets an instance of the BlancoCgObjectFactory class.
         fCgFactory = BlancoCgObjectFactory.getInstance();
         fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
 
-        // クラスを作成します。
+        // Creates a class.
         fCgClass = fCgFactory.createClass(simpleClassName, fBundle.getXml2sourceFileRouteconfigList());
         fCgSourceFile.getClassList().add(fCgClass);
         fCgClass.setAccess("public");
@@ -237,9 +235,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
             defaultValue.append(this.getTabSpace() + this.getTabSpace() + "new " + className + "()");
 
             /*
-             * import list の作成
-             * 重複してはいけないので、むしろ重複チェックはせずに、
-             * コンパイル時にエラーを発生させる作戦です。
+             * Creates an import list.
+             * Since duplicates are not allowed, the strategy is rather not to check for duplicates, but rather to generate errors at compiling.
              */
             String importHeader = "import { " + className + " } from \"" + structure.getBasedir() + "/" + classPackageName.replace(".", "/") + "/" + className + "\"";
             fCgSourceFile.getHeaderList().add(importHeader);
@@ -248,31 +245,29 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         field.setDefault(defaultValue.toString());
 
-        // 収集された情報を元に実際のソースコードを自動生成。
+        // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
                 fCgSourceFile, fileBlancoMain);
     }
 
     /**
-     * 与えられたクラス情報バリューオブジェクトから、ソースコードを自動生成します。
+     * Auto-generates source code from a given class information value object.
      *
      * @param argClassStructure
-     *            クラス情報
+     *            Class information.
      * @param argDirectoryTarget
-     *            TypeScript ソースコードの出力先ディレクトリ
+     *            Output directory for TypeScript source code.
      * @param argQueryProps
      * @throws IOException
-     *             入出力例外が発生した場合。
+     *             If an I/O exception occurs.
      */
     public void generateClass(
             final BlancoVueComponentClassStructure argClassStructure,
             final File argDirectoryTarget,
             final Map<String, String> argQueryProps) throws IOException {
         /*
-         * 出力ディレクトリはant taskのtargetStyel引数で
-         * 指定された書式で出力されます。
-         * 従来と互換性を保つために、指定がない場合は blanco/main
-         * となります。
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
          * by tueda, 2019/08/30
          */
         String strTarget = argDirectoryTarget
@@ -287,7 +282,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
         }
 
-        // BlancoCgObjectFactoryクラスのインスタンスを取得します。
+        // Gets an instance of the BlancoCgObjectFactory class.
         fCgFactory = BlancoCgObjectFactory.getInstance();
 
         fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
@@ -295,12 +290,12 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
 
-        // クラスを作成します。
+        // Creates a class.
         fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
         fCgSourceFile.getClassList().add(fCgClass);
         fCgClass.setAccess("default");
 
-        // 継承
+        // Inheritance
         if (BlancoStringUtil.null2Blank(argClassStructure.getExtends())
                 .length() > 0) {
             fCgClass.getExtendClassList().add(
@@ -312,13 +307,13 @@ public class BlancoVueComponentXml2TypeScriptClass {
                     "javax.xml.bind.annotation.XmlRootElement");
         }
 
-        // クラスのJavaDocを設定します。
+        // Sets the JavaDoc for the class.
         fCgClass.setDescription(argClassStructure.getDescription());
         for (String line : argClassStructure.getDescriptionList()) {
             fCgClass.getLangDoc().getDescriptionList().add(line);
         }
 
-        /* TypeScript では import の代わりに header を設定します */
+        /* In TypeScript, sets the header instead of import. */
         for (int index = 0; index < argClassStructure.getComponentHeaderList()
                 .size(); index++) {
             final String header = (String) argClassStructure.getComponentHeaderList()
@@ -326,7 +321,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             fCgSourceFile.getHeaderList().add(header);
         }
 
-        /* Component decorator を設定します。 */
+        /* Sets the Component decorator. */
         List<String> decorators = new ArrayList<>();
         StringBuffer lineBuffer = new StringBuffer();
         lineBuffer.append("Component");
@@ -348,20 +343,20 @@ public class BlancoVueComponentXml2TypeScriptClass {
         decorators.add(lineBuffer.toString());
         fCgClass.getAnnotationList().addAll(decorators);
 
-        /* componentId, caption, routerPath, routerName を設定します */
+        /* Sets componentId, caption, routerPath and routerName. */
         buildMetaGet("componentId", argClassStructure.getName(), false);
         buildMetaGet("caption", argClassStructure.getSubject(), false);
         buildMetaGet("routerPath", argClassStructure.getRouterPath(), true);
         buildMetaGet("routerName", argClassStructure.getRouterName(), true);
         buildBooleanGet("expectConsistentAfterTransition", argClassStructure.getExpectConsistentAfterTransition(), false);
 
-        /* プロパティを設定します */
+        /* Sets the property. */
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
                 .size(); indexField++) {
             final BlancoVueComponentFieldStructure fieldStructure = (BlancoVueComponentFieldStructure) argClassStructure
                     .getFieldList().get(indexField);
 
-            // 必須項目が未設定の場合には例外処理を実施します。
+            // If a required field is not set, exception processing will be performed.
             if (fieldStructure.getName() == null) {
                 throw new IllegalArgumentException(fMsg
                         .getMbvoji03(argClassStructure.getName()));
@@ -371,35 +366,35 @@ public class BlancoVueComponentXml2TypeScriptClass {
                         argClassStructure.getName(), fieldStructure.getName()));
             }
 
-            // フィールドの生成。
+            // Generates a field.
             buildProp(argClassStructure, fieldStructure, false, argQueryProps);
 
-            // Getter/Setterは生成しません。
-            // 代わりに、実装クラスに property の変更を通知するメソッドを生成します。
+            // Getter/Setter is not generated.
+            // Instead, generates a method that notifies the implementing class of property changes.
             /*
-             * mixins では property を重複宣言する方が便利なので廃止
+             * In mixins, it is more convenient to declare properties in duplicate, so it is deprecated.
              * 2020/07/01 by tueda
              */
 //            buildOnChange(argClassStructure, fieldStructure);
 
         }
 
-        // TODO toString メソッドの生成方式を検討する
+        // TODO: Consider how to generate the toString method.
 //        if (argClassStructure.getGenerateToString()) {
-//            // toStringメソッドの生成。
+//            // Generates the toString method.
 //            buildMethodToString(argClassStructure);
 //        }
 
-        // TODO copyTo メソッドの生成有無を外部フラグ化するかどうか検討すること。
+        // TODO: Considers whether to externally flag whether to generate copyTo method.
 //        BlancoBeanUtils.generateCopyToMethod(fCgSourceFile, fCgClass);
 
-        // 収集された情報を元に実際のソースコードを自動生成。
+        // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
                 fCgSourceFile, fileBlancoMain);
     }
 
     /**
-     * 与えられたコンポーネント定義情報から、.vue ファイルを作成します。
+     * Creates a .vue file from the given component definition information.
      *
      * @param argClassStructure
      * @param argDirectoryTarget
@@ -409,10 +404,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
             final File argDirectoryTarget
     ) {
         /*
-         * 出力ディレクトリはant taskのtargetStyel引数で
-         * 指定された書式で出力されます。
-         * 従来と互換性を保つために、指定がない場合は blanco/main
-         * となります。
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
          * by tueda, 2019/08/30
          */
         String strTarget = argDirectoryTarget
@@ -446,7 +439,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         /*
-         * package （配置位置）を実装クラスに合わせる
+         * Matches the package (placement position) to the implementation class.
          */
         String packageName = argClassStructure.getPackage();
         if (packageName == null) {
@@ -485,7 +478,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * 画面コンポーネントの場合はvue-router用のRouteConfigを作成します。
+     * For the screen component, creates a RouteConfig for vue-router.
      *  @param argClassStructure
      * @param argDirectoryTarget
      * @param argQueryProps
@@ -495,10 +488,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
             final File argDirectoryTarget,
             final Map<String, String> argQueryProps) {
         /*
-         * 出力ディレクトリはant taskのtargetStyel引数で
-         * 指定された書式で出力されます。
-         * 従来と互換性を保つために、指定がない場合は blanco/main
-         * となります。
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
          * by tueda, 2019/08/30
          */
         String strTarget = argDirectoryTarget
@@ -514,7 +505,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         /*
-         * 必要な情報を用意します。
+         * Prepares the necessary information.
          */
         String suffix = "RouteConfig";
         String className = argClassStructure.getName() + suffix;
@@ -552,7 +543,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             propPropsValue = sb.toString();
         }
 
-        // BlancoCgObjectFactoryクラスのインスタンスを取得します。
+        // Gets an instance of the BlancoCgObjectFactory class.
         fCgFactory = BlancoCgObjectFactory.getInstance();
 
         fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
@@ -560,19 +551,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
 
-        // クラスを作成します。
+        // Creates a class.
         fCgClass = fCgFactory.createClass(className, fBundle.getXml2sourceFileRouteconfigClass(argClassStructure.getName()));
         fCgSourceFile.getClassList().add(fCgClass);
         fCgClass.setAccess("public");
 
-        // RouteConfig を実装します
+        // Implements the RouteConfig.
         fCgClass.getImplementInterfaceList().add(
                 fCgFactory.createType(suffix));
 
-        // RouteConfig を import します。
+        // Imports the RouteConfig.
         fCgSourceFile.getHeaderList().add(strImport);
 
-        // field を public で作成します。Getter / Setter は作りません。
+        // Creates the field as public. It doesn't create a Getter/Setter.
         this.buildRouteConfigField("path", "string", propPathValue);
         this.buildRouteConfigField("name", "string", propNameValue);
         this.buildRouteConfigField("component", "object", propComponentValue);
@@ -582,13 +573,13 @@ public class BlancoVueComponentXml2TypeScriptClass {
             this.buildRouteConfigField("props", "RoutePropsFunction", propPropsValue);
         }
 
-        // 収集された情報を元に実際のソースコードを自動生成。
+        // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
                 fCgSourceFile, fileBlancoMain);
     }
 
     /**
-     * RouteConfig の field を生成します。
+     * Generates the field of RouteConfig.
      * @param fieldName
      * @param fieldType
      * @param defaultValue
@@ -608,24 +599,22 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * 与えられたプロパティ情報から、実装クラスにプロパティの実装を強制するためのインタフェイスソースコードを自動生成します。
+     * Auto-generates the interface source code to force the implementation class to implement the property from the given property information.
      *
      * @param argClassStructure
-     *            クラス情報
+     *            Class information.
      * @param argDirectoryTarget
-     *            TypeScript ソースコードの出力先ディレクトリ
+     *            Output directory for TypeScript source code.
      * @throws IOException
-     *             入出力例外が発生した場合。
+     *             If an I/O exception occurs.
      */
     private void generateInterface(
             final BlancoVueComponentClassStructure argClassStructure,
             final File argDirectoryTarget,
             final Map<String, String> argQueryProps) throws IOException {
         /*
-         * 出力ディレクトリはant taskのtargetStyel引数で
-         * 指定された書式で出力されます。
-         * 従来と互換性を保つために、指定がない場合は blanco/main
-         * となります。
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
          * by tueda, 2019/08/30
          */
         String strTarget = argDirectoryTarget
@@ -640,7 +629,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             System.out.println("/* tueda */ generateInterface argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
         }
 
-        // BlancoCgObjectFactoryクラスのインスタンスを取得します。
+        // Gets an instance of the BlancoCgObjectFactory class.
         fCgFactory = BlancoCgObjectFactory.getInstance();
 
         fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
@@ -648,20 +637,20 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
 
-        // インタフェイスを作成します。
+        // Creates an interface.
         fCgInterface = fCgFactory.createInterface(argClassStructure.getName() + "Interface", "");
         fCgSourceFile.getInterfaceList().add(fCgInterface);
 
-        // インタフェイスではアクセス指定は無視します（常にpublic）。
+        // In the case of an interface, ignores the access specification (always public).
         fCgInterface.setAccess("public");
 
-        // クラスのJavaDocを設定します。
+        // Sets the JavaDoc for the class.
         fCgInterface.setDescription(argClassStructure.getDescription());
         for (String line : argClassStructure.getDescriptionList()) {
             fCgInterface.getLangDoc().getDescriptionList().add(line);
         }
 
-        /* TypeScript では import の代わりに header を設定します */
+        /* In TypeScript, sets the header instead of import. */
         for (int index = 0; index < argClassStructure.getInterfaceHeaderList()
                 .size(); index++) {
             final String header = (String) argClassStructure.getInterfaceHeaderList()
@@ -671,11 +660,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         for (int indexField = 0; indexField < argClassStructure.getFieldList()
                 .size(); indexField++) {
-            // おのおののフィールドを処理します。
+            // Processes each field.
             final BlancoVueComponentFieldStructure fieldStructure = (BlancoVueComponentFieldStructure) argClassStructure
                     .getFieldList().get(indexField);
 
-            // 必須項目が未設定の場合には例外処理を実施します。
+            // If a required field is not set, exception processing will be performed.
             if (fieldStructure.getName() == null) {
                 throw new IllegalArgumentException(fMsg
                         .getMbvoji03(argClassStructure.getName()));
@@ -685,30 +674,30 @@ public class BlancoVueComponentXml2TypeScriptClass {
                         argClassStructure.getName(), fieldStructure.getName()));
             }
 
-            // フィールドの生成。
+            // Generates a field.
             buildProp(argClassStructure, fieldStructure, true, argQueryProps);
 
-            // インタフェイスには Getter/Setter はありません。
+            // The interface does not have a Getter/Setter.
         }
 
-        // TODO インタフェイスに toString メソッドは必要か？
+        // TODO: Does the interface need a toString method?
 //        if (argInterfaceStructure.getGenerateToString()) {
-//            // toStringメソッドの生成。
+//            // Generates the toString method.
 //            buildMethodToString(argInterfaceStructure);
 //        }
 
-        // TODO copyTo メソッドの生成有無を外部フラグ化するかどうか検討すること。
+        // TODO: Considers whether to externally flag whether to generate copyTo method.
 //        BlancoBeanUtils.generateCopyToMethod(fCgSourceFile, fCgClass);
 
-        // 収集された情報を元に実際のソースコードを自動生成。
+        // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
                 fCgSourceFile, fileBlancoMain);
     }
 
     /**
-     * コンポーネントのプロパティを生成します。
+     * Generates the properties of the component.
      * @param argClassStructure
-     *            クラス情報。
+     *            Class information.
      * @param argFieldStructure
      * @param isInterface
      * @param argQueryProps
@@ -722,7 +711,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
 //        System.out.println("%%% " + argFieldStructure.toString());
 
         /*
-         * Interface ではプロパティ名の前にpをつける。
+         * In interface, prefixes the property name with "p".
          */
         String fieldName = argFieldStructure.getName();
         if (isInterface) {
@@ -738,8 +727,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         /*
-         * Generic に対応します。blancoCg 側では <> が付いている前提かつ
-         * package部をtrimするので、ここで設定しないと正しく設定されません。
+         * Supports Generic. Since blancoCg assumes that <> is attached and trims the package part, it will not be set correctly if it is not set here.
          */
         String generic = argFieldStructure.getGeneric();
         if (generic != null && generic.length() > 0) {
@@ -752,31 +740,31 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         /*
-         * Getter / Setter は作らないので、すべて public にします。
+         * Since Getter / Setter is not created, it will make them all public.
          */
         field.setAccess("public");
         /*
-         * 当面、final には対応しません。
+         * For the time being, final will not be supported.
          */
         field.setFinal(false);
 
         /*
-         * const (kotlin では val）に対応します。
+         * Supports const (val in Kotlin).
          */
         field.setConst(argFieldStructure.getValue());
 
-        // nullable に対応します。
+        // Supports nullable.
         if (!argFieldStructure.getNullable()) {
             field.setNotnull(true);
         }
 
-        // クエリ文字列を保管します。
+        // Stores the query string.
         String queryParam = argFieldStructure.getQueryParam();
         if (argQueryProps != null && queryParam != null && queryParam.length() > 0) {
             argQueryProps.put(fieldName, queryParam);
         }
 
-        // フィールドのJavaDocを設定します。
+        // Sets the JavaDoc for the field.
         field.setDescription(argFieldStructure.getDescription());
         for (String line : argFieldStructure.getDescriptionList()) {
             field.getLangDoc().getDescriptionList().add(line);
@@ -785,43 +773,43 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 fBundle.getXml2javaclassFieldName(argFieldStructure.getName()));
 
         /*
-         * TypeScript ではプロパティのデフォルト値は原則必須
-         * ただし、interface では設定不可。
+         * In TypeScript, the default value of a property is mandatory in principle.
+         * However, it cannot be set for interface.
          */
         if (isInterface != true) {
             final String type = field.getType().getName();
             String defaultRawValue = argFieldStructure.getDefault();
             boolean isNullable = argFieldStructure.getNullable();
             if (!isNullable && (defaultRawValue == null || defaultRawValue.length() <= 0)) {
-                System.err.println("/* tueda */ フィールドにデフォルト値が設定されていません。interface でない場合は必ずデフォルト値を設定するか、Nullableを設定してください。");
+                System.err.println("/* tueda */ The field does not have a default value. If it is not an interface, be sure to set the default value or set it to Nullable.");
                 throw new IllegalArgumentException(fMsg
                         .getMbvoji08(argClassStructure.getName(), argFieldStructure.getName()));
             }
 
-            // フィールドのデフォルト値を設定します。
+            // Sets the default value for the field.
             field.getLangDoc().getDescriptionList().add(
                     BlancoCgSourceUtil.escapeStringAsLangDoc(BlancoCgSupportedLang.KOTLIN, fBundle.getXml2javaclassFieldDefault(argFieldStructure
                             .getDefault())));
             if (argClassStructure.getAdjustDefaultValue() == false) {
-                // デフォルト値の変形がoffの場合には、定義書上の値をそのまま採用。
+                // If the variant of the default value is off, the value on the definition sheet is adopted as it is.
                 field.setDefault(argFieldStructure.getDefault());
             } else {
 
                 if (type.equals("string")) {
-                    // ダブルクオートを付与します。
+                    // Adds double-quotes.
                     field.setDefault("\""
                             + BlancoJavaSourceUtil
                                     .escapeStringAsJavaSource(argFieldStructure
                                             .getDefault()) + "\"");
                 } else {
                     /*
-                     * その他の型については当面、与えられた値をそのまま記述します。
+                     * For other types, for the time being, the given value is written as is.
                      */
                     field.setDefault(argFieldStructure.getDefault());
                 }
             }
 
-            /* Prop デコレータを設定します。 */
+            /* Sets the Prop decorator. */
             boolean required = argFieldStructure.getRequired();
             List<String> decorators = new ArrayList<>();
             decorators.add("Prop(" +
@@ -835,7 +823,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * プロパティの変更を実装クラスに通知するメソッドを生成します。
+     * Generates a method to notify the implementing class of property changes.
      *
      * @param argClassStructure
      * @param argFieldStructure
@@ -851,13 +839,13 @@ public class BlancoVueComponentXml2TypeScriptClass {
                         .getName()));
         fCgClass.getMethodList().add(method);
 
-        // Notnull に対応
+        // Supports Notnull.
         if (!argFieldStructure.getNullable()) {
             method.setNotnull(true);
         }
 
-        // メソッドの JavaDoc設定。
-        // TODO: リソースバンドル化して、国際化対応した方がよい。
+        // Sets the JavaDoc for the method.
+        // TODO: It would better to make it resource bundle and support internationalization.
         List<String> lines = new ArrayList<>();
         lines.add("Watch " + argFieldStructure
                 .getName() + " and notify changes to implements.");
@@ -865,7 +853,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         lines.add("deep: follow inside of objects.");
         method.getLangDoc().getDescriptionList().addAll(lines);
 
-        // デコレーションを設定
+        // Sets the decorations.
         List<String> decorates = new ArrayList<>();
         decorates.add("Watch(\"" +
                 argFieldStructure.getName() +
@@ -873,11 +861,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 );
         method.getAnnotationList().addAll(decorates);
 
-        // パラメータの実装
+        // Implements parameters.
         method.getParameterList().add(this.createParameter(argClassStructure, argFieldStructure, "new"));
         method.getParameterList().add(this.createParameter(argClassStructure, argFieldStructure, "old"));
 
-        // メソッドの実装
+        // Implements methods.
         method.getLineList().add(
                 "this.p"
                         + getFieldNameAdjustered(argClassStructure, argFieldStructure)
@@ -888,7 +876,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * パラメータを生成します。
+     * Generates parameters.
      *
      * @param argClassStructure
      * @param argFieldStructure
@@ -909,7 +897,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         if (!argFieldStructure.getNullable()) {
             param.setNotnull(true);
         }
-        // generic があれば対応
+        // Supports generic if available.
         String generic = argFieldStructure.getGeneric();
         if (generic != null && generic.length() > 0) {
             param.getType().setGenerics(generic);
@@ -937,7 +925,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 fBundle.getXml2javaclassGetReturnJavadoc(name));
         method.setReturn(cgReturn);
 
-        // メソッドの実装
+        // Implements methods.
         method.getLineList().add("return \"" + meta + "\";");
     }
 
@@ -958,17 +946,17 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 fBundle.getXml2javaclassGetReturnJavadoc(name));
         method.setReturn(cgReturn);
 
-        // メソッドの実装
+        // Implements methods.
         String strMeta = meta ? "true" : "false";
         method.getLineList().add("return " + strMeta + ";");
     }
 
     /**
-     * 調整済みのフィールド名を取得します。
+     * Gets the adjusted field name.
      *
      * @param argFieldStructure
-     *            フィールド情報。
-     * @return 調整後のフィールド名。
+     *            Field information.
+     * @return Adjusted field name.
      */
     private String getFieldNameAdjustered(
             final BlancoVueComponentClassStructure argClassStructure,

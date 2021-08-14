@@ -18,7 +18,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- * Kotlin言語用の生成試験。
+ * Generation test for TypeScript.
  *
  * @author IGA Tosiki
  * @author tueda
@@ -27,7 +27,7 @@ public class BlancoVueComponentTest {
 
     @Test
     public void testBlancoVueComponent() {
-        /* はじめに ValueObject を生成 */
+        /* First, creates a ValueObject. */
         BlancoValueObjectTsProcessInput input = new BlancoValueObjectTsProcessInput();
         input.setMetadir("meta/objects");
         input.setEncoding("UTF-8");
@@ -46,7 +46,7 @@ public class BlancoVueComponentTest {
             e.printStackTrace();
         }
 
-        /* 次に VueComponent を生成 */
+        /* Next, creates a VueComponent. */
         BlancoVueComponentProcessInput inputComponent = new BlancoVueComponentProcessInput();
         inputComponent.setMetadir("meta/components");
         inputComponent.setEncoding("UTF-8");
