@@ -513,6 +513,11 @@ public class BlancoVueComponentXmlParser {
         if (argObjClassStructure.getUseData()) {
             BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Data", classNameCannon + "Data", argNamedExportedHeaderList);
         }
+
+        // make import info for render
+        if (!argObjClassStructure.getUseTemplate()) {
+            BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Render", classNameCannon + "Render", argNamedExportedHeaderList);
+        }
     }
 
     /**

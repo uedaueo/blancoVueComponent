@@ -12,22 +12,24 @@ package blanco.vuecomponent;
 import blanco.cg.BlancoCgObjectFactory;
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.cg.transformer.BlancoCgTransformerFactory;
-import blanco.cg.util.BlancoCgSourceUtil;
-import blanco.cg.valueobject.*;
-import blanco.commons.util.BlancoJavaSourceUtil;
+import blanco.cg.valueobject.BlancoCgClass;
+import blanco.cg.valueobject.BlancoCgField;
+import blanco.cg.valueobject.BlancoCgInterface;
+import blanco.cg.valueobject.BlancoCgSourceFile;
 import blanco.commons.util.BlancoNameAdjuster;
-import blanco.commons.util.BlancoStringUtil;
 import blanco.commons.util.BlancoXmlUtil;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
-import blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This is a class to auto-generate TypeScript source code from intermediate XML files for value objects.
@@ -150,18 +152,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
             /* First, creates a .vue file. */
             generateComponent(classStructure, argDirectoryTarget);
 
-            /* Next, creates an interface. */
-            /*
-             * In mixins, it is more convenient to declare property in duplicate, so it is deprecated.
-             * 2020/07/01 by tueda
-             */
-//            generateInterface(classStructure, argDirectoryTarget);
-
             /* Saves a property with a query string */
             Map<String, String> queryProps = new HashMap<>();
 
-            /* Then, creates a class. */
-            generateClass(classStructure, argDirectoryTarget, queryProps);
+            /* Generate defineComponent calling. */
+            generateDefineComponent(classStructure, argDirectoryTarget);
 
             /* In the case of the screen, creates a RouterConfig. */
             if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
@@ -251,22 +246,21 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
-     * Auto-generates source code from a given class information value object.
+     * Generate options for defineComponent argument.
      *
      * @param argClassStructure
      *            Class information.
      * @param argDirectoryTarget
      *            Output directory for TypeScript source code.
-     * @param argQueryProps
      * @throws IOException
      *             If an I/O exception occurs.
      */
-    public void generateClass(
+    public void generateDefineComponent(
             final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget,
-            final Map<String, String> argQueryProps) throws IOException {
+            final File argDirectoryTarget) throws IOException {
         /*
-         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * The output directory will be in the format specified by the targetStyle argument of
+         the ant task.
          * For compatibility, the output directory will be blanco/main if it is not specified.
          * by tueda, 2019/08/30
          */
@@ -282,6 +276,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
             System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
         }
 
+        boolean useTemplate = argClassStructure.getUseTemplate();
+        boolean useSetup = argClassStructure.getUseSetup();
+        boolean useData = argClassStructure.getUseData();
+        boolean existsComponents = argClassStructure.getComponentList().size() != 0;
+        boolean existsEmits = argClassStructure.getEmitsList().size() != 0;
+
+        /*
+         * Props always have subject and alias properties at least.
+         * if useTemplate is false, render function should be implemented.
+         */
+        String propsType = argClassStructure.getName() + "Props";
+        String propsConst = BlancoNameAdjuster.toParameterName(propsType);
+
         // Gets an instance of the BlancoCgObjectFactory class.
         fCgFactory = BlancoCgObjectFactory.getInstance();
 
@@ -293,19 +300,45 @@ public class BlancoVueComponentXml2TypeScriptClass {
         // Creates a class.
         fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
         fCgSourceFile.getClassList().add(fCgClass);
-        fCgClass.setAccess("default");
+        // Do not declare class for defineComponent calling.
+        fCgClass.setNoClassDeclare(true);
 
-        // Inheritance
-        if (BlancoStringUtil.null2Blank(argClassStructure.getExtends())
-                .length() > 0) {
-            fCgClass.getExtendClassList().add(
-                    fCgFactory.createType(argClassStructure.getExtends()));
+        List<String> plainTextList = fCgClass.getPlainTextList();
+        // defineComponent call
+        plainTextList.add("export default defineComponent({");
+        plainTextList.add("name: \"" + argClassStructure.getName() + "\",");
+        plainTextList.add("props: " + propsConst);
+        if (existsComponents) {
+            plainTextList.add(",\ncomponents: {\n");
+            int loop = 0;
+            for (String comp : argClassStructure.getComponentList()) {
+                if (loop > 0) {
+                    plainTextList.add(",\n");
+                }
+                plainTextList.add("\t\t" + comp);
+                loop++;
+            }
+            plainTextList.add("\t}");
         }
-        if (fIsXmlRootElement) {
-            fCgClass.getAnnotationList().add("XmlRootElement");
-            fCgSourceFile.getImportList().add(
-                    "javax.xml.bind.annotation.XmlRootElement");
+        if (existsEmits) {
+            plainTextList.add(",\nemits: " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Emits");
         }
+        if (useSetup) {
+            plainTextList.add(",\nsetup: (props, context) => {\n");
+            plainTextList.add("\t\treturn " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context);");
+            plainTextList.add("\t}");
+        }
+        if (useData) {
+            plainTextList.add(",\ndata: () => {\n");
+            plainTextList.add("\t\treturn " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Data();");
+            plainTextList.add("\t}");
+        }
+        if (!useTemplate) {
+            plainTextList.add(",\nrender: () => {\n");
+            plainTextList.add("\t\treturn " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Render();");
+            plainTextList.add("\t}");
+        }
+        plainTextList.add("});");
 
         // Sets the JavaDoc for the class.
         fCgClass.setDescription(argClassStructure.getDescription());
@@ -320,73 +353,6 @@ public class BlancoVueComponentXml2TypeScriptClass {
                     .get(index);
             fCgSourceFile.getHeaderList().add(header);
         }
-
-        /* Sets the Component decorator. */
-        List<String> decorators = new ArrayList<>();
-        StringBuffer lineBuffer = new StringBuffer();
-        lineBuffer.append("Component");
-        List<String> subComponents = argClassStructure.getComponentList();
-        if (subComponents != null && subComponents.size() > 0) {
-            lineBuffer.append("({" + this.getLineSeparator());
-            lineBuffer.append(this.getTabSpace() + "components: {" + this.getLineSeparator());
-            int i = 0;
-            for (String subComponent : subComponents) {
-                if (i != 0) {
-                    lineBuffer.append("," + this.getLineSeparator());
-                }
-                lineBuffer.append(this.getTabSpace() + this.getTabSpace() + subComponent);
-                i++;
-            }
-            lineBuffer.append(this.getLineSeparator() + this.getTabSpace() + "}" + this.getLineSeparator());
-            lineBuffer.append("})");
-        }
-        decorators.add(lineBuffer.toString());
-        fCgClass.getAnnotationList().addAll(decorators);
-
-        /* Sets componentId, caption, routerPath and routerName. */
-        buildMetaGet("componentId", argClassStructure.getName(), false);
-        buildMetaGet("caption", argClassStructure.getSubject(), false);
-        buildMetaGet("routerPath", argClassStructure.getRouterPath(), true);
-        buildMetaGet("routerName", argClassStructure.getRouterName(), true);
-        buildBooleanGet("expectConsistentAfterTransition", argClassStructure.getExpectConsistentAfterTransition(), false);
-
-        /* Sets the property. */
-        for (int indexField = 0; indexField < argClassStructure.getFieldList()
-                .size(); indexField++) {
-            final BlancoVueComponentFieldStructure fieldStructure = (BlancoVueComponentFieldStructure) argClassStructure
-                    .getFieldList().get(indexField);
-
-            // If a required field is not set, exception processing will be performed.
-            if (fieldStructure.getName() == null) {
-                throw new IllegalArgumentException(fMsg
-                        .getMbvoji03(argClassStructure.getName()));
-            }
-            if (fieldStructure.getType() == null) {
-                throw new IllegalArgumentException(fMsg.getMbvoji04(
-                        argClassStructure.getName(), fieldStructure.getName()));
-            }
-
-            // Generates a field.
-            buildProp(argClassStructure, fieldStructure, false, argQueryProps);
-
-            // Getter/Setter is not generated.
-            // Instead, generates a method that notifies the implementing class of property changes.
-            /*
-             * In mixins, it is more convenient to declare properties in duplicate, so it is deprecated.
-             * 2020/07/01 by tueda
-             */
-//            buildOnChange(argClassStructure, fieldStructure);
-
-        }
-
-        // TODO: Consider how to generate the toString method.
-//        if (argClassStructure.getGenerateToString()) {
-//            // Generates the toString method.
-//            buildMethodToString(argClassStructure);
-//        }
-
-        // TODO: Considers whether to externally flag whether to generate copyTo method.
-//        BlancoBeanUtils.generateCopyToMethod(fCgSourceFile, fCgClass);
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
@@ -423,6 +389,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
         boolean useTemplate = argClassStructure.getUseTemplate();
         boolean useScript = argClassStructure.getUseScript();
         boolean useStyle = argClassStructure.getUseStyle();
+        boolean useSetup = argClassStructure.getUseSetup();
+        boolean useData = argClassStructure.getUseData();
 
         if (useScript != true) {
             System.out.println("### ERROR: Script cannot be ignored.");
@@ -596,374 +564,6 @@ public class BlancoVueComponentXml2TypeScriptClass {
         field.setAccess("public");
         field.setNotnull(true);
         field.setDefault(defaultValue);
-    }
-
-    /**
-     * Auto-generates the interface source code to force the implementation class to implement the property from the given property information.
-     *
-     * @param argClassStructure
-     *            Class information.
-     * @param argDirectoryTarget
-     *            Output directory for TypeScript source code.
-     * @throws IOException
-     *             If an I/O exception occurs.
-     */
-    private void generateInterface(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget,
-            final Map<String, String> argQueryProps) throws IOException {
-        /*
-         * The output directory will be in the format specified by the targetStyle argument of the ant task.
-         * For compatibility, the output directory will be blanco/main if it is not specified.
-         * by tueda, 2019/08/30
-         */
-        String strTarget = argDirectoryTarget
-                .getAbsolutePath(); // advanced
-        if (!this.isTargetStyleAdvanced()) {
-            strTarget += "/main"; // legacy
-        }
-        final File fileBlancoMain = new File(strTarget);
-
-        /* tueda DEBUG */
-        if (this.isVerbose()) {
-            System.out.println("/* tueda */ generateInterface argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
-        }
-
-        // Gets an instance of the BlancoCgObjectFactory class.
-        fCgFactory = BlancoCgObjectFactory.getInstance();
-
-        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
-                .getPackage(), null);
-        fCgSourceFile.setEncoding(fEncoding);
-        fCgSourceFile.setTabs(this.getTabs());
-
-        // Creates an interface.
-        fCgInterface = fCgFactory.createInterface(argClassStructure.getName() + "Interface", "");
-        fCgSourceFile.getInterfaceList().add(fCgInterface);
-
-        // In the case of an interface, ignores the access specification (always public).
-        fCgInterface.setAccess("public");
-
-        // Sets the JavaDoc for the class.
-        fCgInterface.setDescription(argClassStructure.getDescription());
-        for (String line : argClassStructure.getDescriptionList()) {
-            fCgInterface.getLangDoc().getDescriptionList().add(line);
-        }
-
-        /* In TypeScript, sets the header instead of import. */
-        for (int index = 0; index < argClassStructure.getInterfaceHeaderList()
-                .size(); index++) {
-            final String header = (String) argClassStructure.getInterfaceHeaderList()
-                    .get(index);
-            fCgSourceFile.getHeaderList().add(header);
-        }
-
-        for (int indexField = 0; indexField < argClassStructure.getFieldList()
-                .size(); indexField++) {
-            // Processes each field.
-            final BlancoVueComponentFieldStructure fieldStructure = (BlancoVueComponentFieldStructure) argClassStructure
-                    .getFieldList().get(indexField);
-
-            // If a required field is not set, exception processing will be performed.
-            if (fieldStructure.getName() == null) {
-                throw new IllegalArgumentException(fMsg
-                        .getMbvoji03(argClassStructure.getName()));
-            }
-            if (fieldStructure.getType() == null) {
-                throw new IllegalArgumentException(fMsg.getMbvoji04(
-                        argClassStructure.getName(), fieldStructure.getName()));
-            }
-
-            // Generates a field.
-            buildProp(argClassStructure, fieldStructure, true, argQueryProps);
-
-            // The interface does not have a Getter/Setter.
-        }
-
-        // TODO: Does the interface need a toString method?
-//        if (argInterfaceStructure.getGenerateToString()) {
-//            // Generates the toString method.
-//            buildMethodToString(argInterfaceStructure);
-//        }
-
-        // TODO: Considers whether to externally flag whether to generate copyTo method.
-//        BlancoBeanUtils.generateCopyToMethod(fCgSourceFile, fCgClass);
-
-        // Auto-generates the actual source code based on the collected information.
-        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
-                fCgSourceFile, fileBlancoMain);
-    }
-
-    /**
-     * Generates the properties of the component.
-     * @param argClassStructure
-     *            Class information.
-     * @param argFieldStructure
-     * @param isInterface
-     * @param argQueryProps
-     */
-    private void buildProp(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final BlancoVueComponentFieldStructure argFieldStructure,
-            boolean isInterface,
-            final Map<String, String> argQueryProps) {
-
-//        System.out.println("%%% " + argFieldStructure.toString());
-
-        /*
-         * In interface, prefixes the property name with "p".
-         */
-        String fieldName = argFieldStructure.getName();
-        if (isInterface) {
-            fieldName = "p" + this.getFieldNameAdjustered(argClassStructure, argFieldStructure);
-        }
-        final BlancoCgField field = fCgFactory.createField(fieldName,
-                argFieldStructure.getType(), null);
-
-        if (isInterface != true) {
-            fCgClass.getFieldList().add(field);
-        } else {
-            fCgInterface.getFieldList().add(field);
-        }
-
-        /*
-         * Supports Generic. Since blancoCg assumes that <> is attached and trims the package part, it will not be set correctly if it is not set here.
-         */
-        String generic = argFieldStructure.getGeneric();
-        if (generic != null && generic.length() > 0) {
-            field.getType().setGenerics(generic);
-        }
-
-        if (this.isVerbose()) {
-            System.out.println("!!! type = " + argFieldStructure.getType());
-            System.out.println("!!! generic = " + field.getType().getGenerics());
-        }
-
-        /*
-         * Since Getter / Setter is not created, it will make them all public.
-         */
-        field.setAccess("public");
-        /*
-         * For the time being, final will not be supported.
-         */
-        field.setFinal(false);
-
-        /*
-         * Supports const (val in Kotlin).
-         */
-        field.setConst(argFieldStructure.getValue());
-
-        // Supports nullable.
-        if (!argFieldStructure.getNullable()) {
-            field.setNotnull(true);
-        }
-
-        // Stores the query string.
-        String queryParam = argFieldStructure.getQueryParam();
-        if (argQueryProps != null && queryParam != null && queryParam.length() > 0) {
-            argQueryProps.put(fieldName, queryParam);
-        }
-
-        // Sets the JavaDoc for the field.
-        field.setDescription(argFieldStructure.getDescription());
-        for (String line : argFieldStructure.getDescriptionList()) {
-            field.getLangDoc().getDescriptionList().add(line);
-        }
-        field.getLangDoc().getDescriptionList().add(
-                fBundle.getXml2javaclassFieldName(argFieldStructure.getName()));
-
-        /*
-         * In TypeScript, the default value of a property is mandatory in principle.
-         * However, it cannot be set for interface.
-         */
-        if (isInterface != true) {
-            final String type = field.getType().getName();
-            String defaultRawValue = argFieldStructure.getDefault();
-            boolean isNullable = argFieldStructure.getNullable();
-            if (!isNullable && (defaultRawValue == null || defaultRawValue.length() <= 0)) {
-                System.err.println("/* tueda */ The field does not have a default value. If it is not an interface, be sure to set the default value or set it to Nullable.");
-                throw new IllegalArgumentException(fMsg
-                        .getMbvoji08(argClassStructure.getName(), argFieldStructure.getName()));
-            }
-
-            // Sets the default value for the field.
-            field.getLangDoc().getDescriptionList().add(
-                    BlancoCgSourceUtil.escapeStringAsLangDoc(BlancoCgSupportedLang.KOTLIN, fBundle.getXml2javaclassFieldDefault(argFieldStructure
-                            .getDefault())));
-            if (argClassStructure.getAdjustDefaultValue() == false) {
-                // If the variant of the default value is off, the value on the definition sheet is adopted as it is.
-                field.setDefault(argFieldStructure.getDefault());
-            } else {
-
-                if (type.equals("string")) {
-                    // Adds double-quotes.
-                    field.setDefault("\""
-                            + BlancoJavaSourceUtil
-                                    .escapeStringAsJavaSource(argFieldStructure
-                                            .getDefault()) + "\"");
-                } else {
-                    /*
-                     * For other types, for the time being, the given value is written as is.
-                     */
-                    field.setDefault(argFieldStructure.getDefault());
-                }
-            }
-
-            /* Sets the Prop decorator. */
-            boolean required = argFieldStructure.getRequired();
-            List<String> decorators = new ArrayList<>();
-            decorators.add("Prop(" +
-                    (required ? "{ required: true }" : "") +
-                    ")");
-            field.getAnnotationList().addAll(decorators);
-            if (this.isVerbose()) {
-                System.out.println("/* tueda */ method annotation = " + field.getAnnotationList().get(0));
-            }
-        }
-    }
-
-    /**
-     * Generates a method to notify the implementing class of property changes.
-     *
-     * @param argClassStructure
-     * @param argFieldStructure
-     */
-    private void buildOnChange(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final BlancoVueComponentFieldStructure argFieldStructure
-    ) {
-        String methodName = "onChange" + BlancoNameAdjuster.toClassName(argFieldStructure.getName());
-
-        final BlancoCgMethod method = fCgFactory.createMethod(methodName,
-                fBundle.getXml2javaclassGetJavadoc01(argFieldStructure
-                        .getName()));
-        fCgClass.getMethodList().add(method);
-
-        // Supports Notnull.
-        if (!argFieldStructure.getNullable()) {
-            method.setNotnull(true);
-        }
-
-        // Sets the JavaDoc for the method.
-        // TODO: It would better to make it resource bundle and support internationalization.
-        List<String> lines = new ArrayList<>();
-        lines.add("Watch " + argFieldStructure
-                .getName() + " and notify changes to implements.");
-        lines.add("immedeate: act on initialized.");
-        lines.add("deep: follow inside of objects.");
-        method.getLangDoc().getDescriptionList().addAll(lines);
-
-        // Sets the decorations.
-        List<String> decorates = new ArrayList<>();
-        decorates.add("Watch(\"" +
-                argFieldStructure.getName() +
-                "\", {immediate: true, deep: true})"
-                );
-        method.getAnnotationList().addAll(decorates);
-
-        // Implements parameters.
-        method.getParameterList().add(this.createParameter(argClassStructure, argFieldStructure, "new"));
-        method.getParameterList().add(this.createParameter(argClassStructure, argFieldStructure, "old"));
-
-        // Implements methods.
-        method.getLineList().add(
-                "this.p"
-                        + getFieldNameAdjustered(argClassStructure, argFieldStructure)
-                        + " = "
-                        + "new"
-                        + getFieldNameAdjustered(argClassStructure,
-                        argFieldStructure) + ";");
-    }
-
-    /**
-     * Generates parameters.
-     *
-     * @param argClassStructure
-     * @param argFieldStructure
-     * @param prefix
-     * @return
-     */
-    private BlancoCgParameter createParameter(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final BlancoVueComponentFieldStructure argFieldStructure,
-            final String prefix
-    ) {
-        BlancoCgParameter param = fCgFactory.createParameter(prefix
-                        + getFieldNameAdjustered(argClassStructure,
-                argFieldStructure),
-                argFieldStructure.getType(),
-                fBundle.getXml2javaclassSetArgJavadoc(argFieldStructure
-                        .getName()));
-        if (!argFieldStructure.getNullable()) {
-            param.setNotnull(true);
-        }
-        // Supports generic if available.
-        String generic = argFieldStructure.getGeneric();
-        if (generic != null && generic.length() > 0) {
-            param.getType().setGenerics(generic);
-        }
-        return param;
-    }
-
-    private void buildMetaGet(
-            String name,
-            String meta,
-            boolean isStatic) {
-        if (meta == null) {
-            return;
-        }
-
-        final BlancoCgMethod method = fCgFactory.createMethod(name,
-                fBundle.getXml2javaclassGetJavadoc01(name));
-        fCgClass.getMethodList().add(method);
-
-        method.setNotnull(true);
-        method.setAccess("get");
-        method.setStatic(isStatic);
-
-        BlancoCgReturn cgReturn = fCgFactory.createReturn("string",
-                fBundle.getXml2javaclassGetReturnJavadoc(name));
-        method.setReturn(cgReturn);
-
-        // Implements methods.
-        method.getLineList().add("return \"" + meta + "\";");
-    }
-
-    private void buildBooleanGet(
-            String name,
-            boolean meta,
-            boolean isStatic) {
-
-        final BlancoCgMethod method = fCgFactory.createMethod(name,
-                fBundle.getXml2javaclassGetJavadoc01(name));
-        fCgClass.getMethodList().add(method);
-
-        method.setNotnull(true);
-        method.setAccess("get");
-        method.setStatic(isStatic);
-
-        BlancoCgReturn cgReturn = fCgFactory.createReturn("boolean",
-                fBundle.getXml2javaclassGetReturnJavadoc(name));
-        method.setReturn(cgReturn);
-
-        // Implements methods.
-        String strMeta = meta ? "true" : "false";
-        method.getLineList().add("return " + strMeta + ";");
-    }
-
-    /**
-     * Gets the adjusted field name.
-     *
-     * @param argFieldStructure
-     *            Field information.
-     * @return Adjusted field name.
-     */
-    private String getFieldNameAdjustered(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final BlancoVueComponentFieldStructure argFieldStructure) {
-        return (argClassStructure.getAdjustFieldName() == false ? argFieldStructure
-                .getName()
-                : BlancoNameAdjuster.toClassName(argFieldStructure.getName()));
     }
 
     private String getTabSpace() {
