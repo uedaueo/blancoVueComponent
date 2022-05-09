@@ -184,19 +184,19 @@ public class BlancoVueComponentUtil {
     /**
      * Adds to importHeaderList with only checking for duplicates.
      *
-     * @param className
-     * @param importFrom
+     * @param argClassName
+     * @param argImportFrom
      * @param argImportHeaderList
      */
     static public void addImportHeaderList(
             String argClassName,
-            String importFrom,
+            String argImportFrom,
             final Map<String, List<String>> argImportHeaderList
     ) {
-        List<String> importClassList = argImportHeaderList.get(importFrom);
+        List<String> importClassList = argImportHeaderList.get(argImportFrom);
         if (importClassList == null) {
             importClassList = new ArrayList<>();
-            argImportHeaderList.put(importFrom, importClassList);
+            argImportHeaderList.put(argImportFrom, importClassList);
         }
         boolean isMatch = false;
         for (String myClass : importClassList) {
@@ -208,7 +208,7 @@ public class BlancoVueComponentUtil {
         if (!isMatch) {
             importClassList.add(argClassName);
             if (isVerbose) {
-                System.out.println("BlancoVueComponentUtil#addImportHeaderList: new import { " + argClassName + " } from \"" + importFrom + "\"");
+                System.out.println("BlancoVueComponentUtil#addImportHeaderList: new import { " + argClassName + " } from \"" + argImportFrom + "\"");
             }
         }
     }

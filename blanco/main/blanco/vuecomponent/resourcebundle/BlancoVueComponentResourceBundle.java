@@ -114,18 +114,18 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_LIST]
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER_COMPONENTS]
      *
-     * [blancovuecomponent-list] (ja)<br>
+     * [blancovuecomponent-header-components] (ja)<br>
      *
-     * @return key[META2XML.ELEMENT_LIST]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[META2XML.ELEMENT_HEADER_COMPONENTS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getMeta2xmlElementList() {
+    public String getMeta2xmlElementHeaderComponents() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "blancovuecomponent-list";
+        String strFormat = "blancovuecomponent-header-components";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("META2XML.ELEMENT_LIST");
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER_COMPONENTS");
             }
         } catch (MissingResourceException ex) {
         }
@@ -134,18 +134,18 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_EXTENDS]
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_LIST_COMPONENTS]
      *
-     * [blancovuecomponent-extends] (ja)<br>
+     * [blancovuecomponent-list-components] (ja)<br>
      *
-     * @return key[META2XML.ELEMENT_EXTENDS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[META2XML.ELEMENT_LIST_COMPONENTS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getMeta2xmlElementExtends() {
+    public String getMeta2xmlElementListComponents() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "blancovuecomponent-extends";
+        String strFormat = "blancovuecomponent-list-components";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("META2XML.ELEMENT_EXTENDS");
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_LIST_COMPONENTS");
             }
         } catch (MissingResourceException ex) {
         }
@@ -154,18 +154,18 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_IMPLEMENTS]
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER_API]
      *
-     * [blancovuecomponent-implements] (ja)<br>
+     * [blancovuecomponent-header-api] (ja)<br>
      *
-     * @return key[META2XML.ELEMENT_IMPLEMENTS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[META2XML.ELEMENT_HEADER_API]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getMeta2xmlElementImplements() {
+    public String getMeta2xmlElementHeaderApi() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "blancovuecomponent-implements";
+        String strFormat = "blancovuecomponent-header-api";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("META2XML.ELEMENT_IMPLEMENTS");
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER_API");
             }
         } catch (MissingResourceException ex) {
         }
@@ -174,18 +174,18 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_COMPONENTS]
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_LIST_API]
      *
-     * [blancovuecomponent-components] (ja)<br>
+     * [blancovuecomponent-list-api] (ja)<br>
      *
-     * @return key[META2XML.ELEMENT_COMPONENTS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[META2XML.ELEMENT_LIST_API]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getMeta2xmlElementComponents() {
+    public String getMeta2xmlElementListApi() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "blancovuecomponent-components";
+        String strFormat = "blancovuecomponent-list-api";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("META2XML.ELEMENT_COMPONENTS");
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_LIST_API");
             }
         } catch (MissingResourceException ex) {
         }
@@ -194,18 +194,18 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER]
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER_PROPS]
      *
-     * [blancovuecomponent-header] (ja)<br>
+     * [blancovuecomponent-header-props] (ja)<br>
      *
-     * @return key[META2XML.ELEMENT_HEADER]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[META2XML.ELEMENT_HEADER_PROPS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getMeta2xmlElementHeader() {
+    public String getMeta2xmlElementHeaderProps() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "blancovuecomponent-header";
+        String strFormat = "blancovuecomponent-header-props";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER");
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER_PROPS");
             }
         } catch (MissingResourceException ex) {
         }
@@ -214,18 +214,58 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER_INTERFACE]
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_LIST_PROPS]
      *
-     * [blancovuecomponent-header-interface] (ja)<br>
+     * [blancovuecomponent-list-props] (ja)<br>
      *
-     * @return key[META2XML.ELEMENT_HEADER_INTERFACE]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[META2XML.ELEMENT_LIST_PROPS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getMeta2xmlElementHeaderInterface() {
+    public String getMeta2xmlElementListProps() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "blancovuecomponent-header-interface";
+        String strFormat = "blancovuecomponent-list-props";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER_INTERFACE");
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_LIST_PROPS");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_HEADER_EMITS]
+     *
+     * [blancovuecomponent-header-emits] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_HEADER_EMITS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementHeaderEmits() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-header-emits";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_HEADER_EMITS");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_LIST_EMITS]
+     *
+     * [blancovuecomponent-list-emits] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_LIST_EMITS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementListEmits() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-list-emits";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_LIST_EMITS");
             }
         } catch (MissingResourceException ex) {
         }

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * バリューオブジェクトのフィールドをあらわすバリューオブジェクトクラス。このクラスの設定情報をもとにフィールドとセッター・ゲッターが自動生成されます。
  */
-public class BlancoVueComponentFieldStructure {
+public class BlancoVueComponentPropsStructure {
     /**
      * 項目番号。省略可能です。
      *
@@ -616,7 +616,7 @@ public class BlancoVueComponentFieldStructure {
     @Override
     public String toString() {
         final StringBuffer buf = new StringBuffer();
-        buf.append("blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure[");
+        buf.append("blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure[");
         buf.append("no=" + fNo);
         buf.append(",name=" + fName);
         buf.append(",type=" + fType);
@@ -652,9 +652,9 @@ public class BlancoVueComponentFieldStructure {
      *
      * @param target target value object.
      */
-    public void copyTo(final BlancoVueComponentFieldStructure target) {
+    public void copyTo(final BlancoVueComponentPropsStructure target) {
         if (target == null) {
-            throw new IllegalArgumentException("Bug: BlancoVueComponentFieldStructure#copyTo(target): argument 'target' is null");
+            throw new IllegalArgumentException("Bug: BlancoVueComponentPropsStructure#copyTo(target): argument 'target' is null");
         }
 
         // No needs to copy parent class.

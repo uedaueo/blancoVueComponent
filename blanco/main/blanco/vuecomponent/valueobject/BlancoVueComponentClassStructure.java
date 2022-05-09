@@ -73,20 +73,36 @@ public class BlancoVueComponentClassStructure {
     private List<String> fDescriptionList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * Interface source コードの先頭に書かれるコード群です。
-     *
-     * フィールド: [interfaceHeaderList]。
-     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
-     */
-    private List<String> fInterfaceHeaderList = new java.util.ArrayList<java.lang.String>();
-
-    /**
      * component source コードの先頭に書かれるコード群です。
      *
      * フィールド: [componentHeaderList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      */
     private List<String> fComponentHeaderList = new java.util.ArrayList<java.lang.String>();
+
+    /**
+     * api 定義コードの先頭に書かれるコード群です。
+     *
+     * フィールド: [apiHeaderList]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     */
+    private List<String> fApiHeaderList = new java.util.ArrayList<java.lang.String>();
+
+    /**
+     * props 定義コードの先頭に書かれるコード群です。
+     *
+     * フィールド: [propsHeaderList]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     */
+    private List<String> fPropsHeaderList = new java.util.ArrayList<java.lang.String>();
+
+    /**
+     * emits 定義コードの先頭に書かれるコード群です。
+     *
+     * フィールド: [emitsHeaderList]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     */
+    private List<String> fEmitsHeaderList = new java.util.ArrayList<java.lang.String>();
 
     /**
      * コンポーネントの種別。screen or part
@@ -168,7 +184,7 @@ public class BlancoVueComponentClassStructure {
     private String fExtends;
 
     /**
-     * 使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、importHeaderListに明示的に記載する必要があります。
+     * 使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、componentHeaderListに明示的に記載する必要があります。
      *
      * フィールド: [componentList]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
@@ -176,12 +192,28 @@ public class BlancoVueComponentClassStructure {
     private List<String> fComponentList = new java.util.ArrayList<java.lang.String>();
 
     /**
-     * フィールドを記憶するリストを指定します。
+     * propsのリストを記憶します。
      *
-     * フィールド: [fieldList]。
-     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure&gt;()]。
+     * フィールド: [propsList]。
+     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure&gt;()]。
      */
-    private List<BlancoVueComponentFieldStructure> fFieldList = new java.util.ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>();
+    private List<BlancoVueComponentPropsStructure> fPropsList = new java.util.ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure>();
+
+    /**
+     * apiのリストを記憶します。
+     *
+     * フィールド: [apiList]。
+     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure&gt;()]。
+     */
+    private List<BlancoVueComponentApiStructure> fApiList = new java.util.ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure>();
+
+    /**
+     * emitsのリストを記憶します。
+     *
+     * フィールド: [emitsList]。
+     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure&gt;()]。
+     */
+    private List<BlancoVueComponentEmitsStructure> fEmitsList = new java.util.ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure>();
 
     /**
      * ファイル説明
@@ -212,6 +244,29 @@ public class BlancoVueComponentClassStructure {
      * デフォルト: [false]。
      */
     private Boolean fExpectConsistentAfterTransition = false;
+
+    /**
+     * コンポーネントの別名を定義します。
+     *
+     * フィールド: [alias]。
+     */
+    private String fAlias;
+
+    /**
+     * setup関数を実装するかどうか
+     *
+     * フィールド: [useSetup]。
+     * デフォルト: [false]。
+     */
+    private Boolean fUseSetup = false;
+
+    /**
+     * data関数を実装するかどうか
+     *
+     * フィールド: [useData]。
+     * デフォルト: [false]。
+     */
+    private Boolean fUseData = false;
 
     /**
      * フィールド [name] の値を設定します。
@@ -413,29 +468,6 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
-     * フィールド [interfaceHeaderList] の値を設定します。
-     *
-     * フィールドの説明: [Interface source コードの先頭に書かれるコード群です。]。
-     *
-     * @param argInterfaceHeaderList フィールド[interfaceHeaderList]に設定する値。
-     */
-    public void setInterfaceHeaderList(final List<String> argInterfaceHeaderList) {
-        fInterfaceHeaderList = argInterfaceHeaderList;
-    }
-
-    /**
-     * フィールド [interfaceHeaderList] の値を取得します。
-     *
-     * フィールドの説明: [Interface source コードの先頭に書かれるコード群です。]。
-     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
-     *
-     * @return フィールド[interfaceHeaderList]から取得した値。
-     */
-    public List<String> getInterfaceHeaderList() {
-        return fInterfaceHeaderList;
-    }
-
-    /**
      * フィールド [componentHeaderList] の値を設定します。
      *
      * フィールドの説明: [component source コードの先頭に書かれるコード群です。]。
@@ -456,6 +488,75 @@ public class BlancoVueComponentClassStructure {
      */
     public List<String> getComponentHeaderList() {
         return fComponentHeaderList;
+    }
+
+    /**
+     * フィールド [apiHeaderList] の値を設定します。
+     *
+     * フィールドの説明: [api 定義コードの先頭に書かれるコード群です。]。
+     *
+     * @param argApiHeaderList フィールド[apiHeaderList]に設定する値。
+     */
+    public void setApiHeaderList(final List<String> argApiHeaderList) {
+        fApiHeaderList = argApiHeaderList;
+    }
+
+    /**
+     * フィールド [apiHeaderList] の値を取得します。
+     *
+     * フィールドの説明: [api 定義コードの先頭に書かれるコード群です。]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     *
+     * @return フィールド[apiHeaderList]から取得した値。
+     */
+    public List<String> getApiHeaderList() {
+        return fApiHeaderList;
+    }
+
+    /**
+     * フィールド [propsHeaderList] の値を設定します。
+     *
+     * フィールドの説明: [props 定義コードの先頭に書かれるコード群です。]。
+     *
+     * @param argPropsHeaderList フィールド[propsHeaderList]に設定する値。
+     */
+    public void setPropsHeaderList(final List<String> argPropsHeaderList) {
+        fPropsHeaderList = argPropsHeaderList;
+    }
+
+    /**
+     * フィールド [propsHeaderList] の値を取得します。
+     *
+     * フィールドの説明: [props 定義コードの先頭に書かれるコード群です。]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     *
+     * @return フィールド[propsHeaderList]から取得した値。
+     */
+    public List<String> getPropsHeaderList() {
+        return fPropsHeaderList;
+    }
+
+    /**
+     * フィールド [emitsHeaderList] の値を設定します。
+     *
+     * フィールドの説明: [emits 定義コードの先頭に書かれるコード群です。]。
+     *
+     * @param argEmitsHeaderList フィールド[emitsHeaderList]に設定する値。
+     */
+    public void setEmitsHeaderList(final List<String> argEmitsHeaderList) {
+        fEmitsHeaderList = argEmitsHeaderList;
+    }
+
+    /**
+     * フィールド [emitsHeaderList] の値を取得します。
+     *
+     * フィールドの説明: [emits 定義コードの先頭に書かれるコード群です。]。
+     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     *
+     * @return フィールド[emitsHeaderList]から取得した値。
+     */
+    public List<String> getEmitsHeaderList() {
+        return fEmitsHeaderList;
     }
 
     /**
@@ -690,7 +791,7 @@ public class BlancoVueComponentClassStructure {
     /**
      * フィールド [componentList] の値を設定します。
      *
-     * フィールドの説明: [使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、importHeaderListに明示的に記載する必要があります。]。
+     * フィールドの説明: [使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、componentHeaderListに明示的に記載する必要があります。]。
      *
      * @param argComponentList フィールド[componentList]に設定する値。
      */
@@ -701,7 +802,7 @@ public class BlancoVueComponentClassStructure {
     /**
      * フィールド [componentList] の値を取得します。
      *
-     * フィールドの説明: [使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、importHeaderListに明示的に記載する必要があります。]。
+     * フィールドの説明: [使用するコンポーネントの(java.lang.String)の一覧。自動探索はされないので、componentHeaderListに明示的に記載する必要があります。]。
      * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
      *
      * @return フィールド[componentList]から取得した値。
@@ -711,26 +812,72 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
-     * フィールド [fieldList] の値を設定します。
+     * フィールド [propsList] の値を設定します。
      *
-     * フィールドの説明: [フィールドを記憶するリストを指定します。]。
+     * フィールドの説明: [propsのリストを記憶します。]。
      *
-     * @param argFieldList フィールド[fieldList]に設定する値。
+     * @param argPropsList フィールド[propsList]に設定する値。
      */
-    public void setFieldList(final List<BlancoVueComponentFieldStructure> argFieldList) {
-        fFieldList = argFieldList;
+    public void setPropsList(final List<BlancoVueComponentPropsStructure> argPropsList) {
+        fPropsList = argPropsList;
     }
 
     /**
-     * フィールド [fieldList] の値を取得します。
+     * フィールド [propsList] の値を取得します。
      *
-     * フィールドの説明: [フィールドを記憶するリストを指定します。]。
-     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure&gt;()]。
+     * フィールドの説明: [propsのリストを記憶します。]。
+     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure&gt;()]。
      *
-     * @return フィールド[fieldList]から取得した値。
+     * @return フィールド[propsList]から取得した値。
      */
-    public List<BlancoVueComponentFieldStructure> getFieldList() {
-        return fFieldList;
+    public List<BlancoVueComponentPropsStructure> getPropsList() {
+        return fPropsList;
+    }
+
+    /**
+     * フィールド [apiList] の値を設定します。
+     *
+     * フィールドの説明: [apiのリストを記憶します。]。
+     *
+     * @param argApiList フィールド[apiList]に設定する値。
+     */
+    public void setApiList(final List<BlancoVueComponentApiStructure> argApiList) {
+        fApiList = argApiList;
+    }
+
+    /**
+     * フィールド [apiList] の値を取得します。
+     *
+     * フィールドの説明: [apiのリストを記憶します。]。
+     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure&gt;()]。
+     *
+     * @return フィールド[apiList]から取得した値。
+     */
+    public List<BlancoVueComponentApiStructure> getApiList() {
+        return fApiList;
+    }
+
+    /**
+     * フィールド [emitsList] の値を設定します。
+     *
+     * フィールドの説明: [emitsのリストを記憶します。]。
+     *
+     * @param argEmitsList フィールド[emitsList]に設定する値。
+     */
+    public void setEmitsList(final List<BlancoVueComponentEmitsStructure> argEmitsList) {
+        fEmitsList = argEmitsList;
+    }
+
+    /**
+     * フィールド [emitsList] の値を取得します。
+     *
+     * フィールドの説明: [emitsのリストを記憶します。]。
+     * デフォルト: [new java.util.ArrayList&lt;blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure&gt;()]。
+     *
+     * @return フィールド[emitsList]から取得した値。
+     */
+    public List<BlancoVueComponentEmitsStructure> getEmitsList() {
+        return fEmitsList;
     }
 
     /**
@@ -824,6 +971,74 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [alias] の値を設定します。
+     *
+     * フィールドの説明: [コンポーネントの別名を定義します。]。
+     *
+     * @param argAlias フィールド[alias]に設定する値。
+     */
+    public void setAlias(final String argAlias) {
+        fAlias = argAlias;
+    }
+
+    /**
+     * フィールド [alias] の値を取得します。
+     *
+     * フィールドの説明: [コンポーネントの別名を定義します。]。
+     *
+     * @return フィールド[alias]から取得した値。
+     */
+    public String getAlias() {
+        return fAlias;
+    }
+
+    /**
+     * フィールド [useSetup] の値を設定します。
+     *
+     * フィールドの説明: [setup関数を実装するかどうか]。
+     *
+     * @param argUseSetup フィールド[useSetup]に設定する値。
+     */
+    public void setUseSetup(final Boolean argUseSetup) {
+        fUseSetup = argUseSetup;
+    }
+
+    /**
+     * フィールド [useSetup] の値を取得します。
+     *
+     * フィールドの説明: [setup関数を実装するかどうか]。
+     * デフォルト: [false]。
+     *
+     * @return フィールド[useSetup]から取得した値。
+     */
+    public Boolean getUseSetup() {
+        return fUseSetup;
+    }
+
+    /**
+     * フィールド [useData] の値を設定します。
+     *
+     * フィールドの説明: [data関数を実装するかどうか]。
+     *
+     * @param argUseData フィールド[useData]に設定する値。
+     */
+    public void setUseData(final Boolean argUseData) {
+        fUseData = argUseData;
+    }
+
+    /**
+     * フィールド [useData] の値を取得します。
+     *
+     * フィールドの説明: [data関数を実装するかどうか]。
+     * デフォルト: [false]。
+     *
+     * @return フィールド[useData]から取得した値。
+     */
+    public Boolean getUseData() {
+        return fUseData;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -847,8 +1062,10 @@ public class BlancoVueComponentClassStructure {
         buf.append(",impledir=" + fImpledir);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
-        buf.append(",interfaceHeaderList=" + fInterfaceHeaderList);
         buf.append(",componentHeaderList=" + fComponentHeaderList);
+        buf.append(",apiHeaderList=" + fApiHeaderList);
+        buf.append(",propsHeaderList=" + fPropsHeaderList);
+        buf.append(",emitsHeaderList=" + fEmitsHeaderList);
         buf.append(",componentKind=" + fComponentKind);
         buf.append(",authRequired=" + fAuthRequired);
         buf.append(",forceReload=" + fForceReload);
@@ -860,11 +1077,16 @@ public class BlancoVueComponentClassStructure {
         buf.append(",createImportList=" + fCreateImportList);
         buf.append(",extends=" + fExtends);
         buf.append(",componentList=" + fComponentList);
-        buf.append(",fieldList=" + fFieldList);
+        buf.append(",propsList=" + fPropsList);
+        buf.append(",apiList=" + fApiList);
+        buf.append(",emitsList=" + fEmitsList);
         buf.append(",fileDescription=" + fFileDescription);
         buf.append(",constructorArgList=" + fConstructorArgList);
         buf.append(",subject=" + fSubject);
         buf.append(",expectConsistentAfterTransition=" + fExpectConsistentAfterTransition);
+        buf.append(",alias=" + fAlias);
+        buf.append(",useSetup=" + fUseSetup);
+        buf.append(",useData=" + fUseData);
         buf.append("]");
         return buf.toString();
     }
@@ -914,12 +1136,18 @@ public class BlancoVueComponentClassStructure {
         // Name: fDescriptionList
         // Type: java.util.List
         // フィールド[fDescriptionList]はサポート外の型[java.util.Listjava.lang.String]です。
-        // Name: fInterfaceHeaderList
-        // Type: java.util.List
-        // フィールド[fInterfaceHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
         // Name: fComponentHeaderList
         // Type: java.util.List
         // フィールド[fComponentHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Name: fApiHeaderList
+        // Type: java.util.List
+        // フィールド[fApiHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Name: fPropsHeaderList
+        // Type: java.util.List
+        // フィールド[fPropsHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Name: fEmitsHeaderList
+        // Type: java.util.List
+        // フィールド[fEmitsHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
         // Name: fComponentKind
         // Type: java.lang.String
         target.fComponentKind = this.fComponentKind;
@@ -953,9 +1181,15 @@ public class BlancoVueComponentClassStructure {
         // Name: fComponentList
         // Type: java.util.List
         // フィールド[fComponentList]はサポート外の型[java.util.Listjava.lang.String]です。
-        // Name: fFieldList
+        // Name: fPropsList
         // Type: java.util.List
-        // フィールド[fFieldList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure]です。
+        // フィールド[fPropsList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure]です。
+        // Name: fApiList
+        // Type: java.util.List
+        // フィールド[fApiList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentApiStructure]です。
+        // Name: fEmitsList
+        // Type: java.util.List
+        // フィールド[fEmitsList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure]です。
         // Name: fFileDescription
         // Type: java.lang.String
         target.fFileDescription = this.fFileDescription;
@@ -968,5 +1202,14 @@ public class BlancoVueComponentClassStructure {
         // Name: fExpectConsistentAfterTransition
         // Type: java.lang.Boolean
         target.fExpectConsistentAfterTransition = this.fExpectConsistentAfterTransition;
+        // Name: fAlias
+        // Type: java.lang.String
+        target.fAlias = this.fAlias;
+        // Name: fUseSetup
+        // Type: java.lang.Boolean
+        target.fUseSetup = this.fUseSetup;
+        // Name: fUseData
+        // Type: java.lang.Boolean
+        target.fUseData = this.fUseData;
     }
 }

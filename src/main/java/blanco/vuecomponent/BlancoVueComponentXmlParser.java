@@ -10,13 +10,15 @@
 package blanco.vuecomponent;
 
 import blanco.cg.BlancoCgSupportedLang;
+import blanco.commons.util.BlancoNameAdjuster;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
 import blanco.valueobjectts.valueobject.BlancoValueObjectTsClassStructure;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
+import blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
-import blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure;
+import blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure;
 import blanco.xml.bind.BlancoXmlBindingUtil;
 import blanco.xml.bind.BlancoXmlUnmarshaller;
 import blanco.xml.bind.valueobject.BlancoXmlAttribute;
@@ -208,17 +210,9 @@ public class BlancoVueComponentXmlParser {
 
         final BlancoVueComponentClassStructure objClassStructure = new BlancoVueComponentClassStructure();
         /*
-         * Used to generate a component. Stores it  in objClassStructure#headerList.
+         * import named objects into defineComponent file with file names as key.
          */
-        final Map<String, List<String>> componentHeaderList = new HashMap<>();
-        /*
-         * Used to import a component.
-         * Since the component is default exported, it should not be wrapped in "{ }" when import.
-         */
-        final Map<String, List<String>> defaultExportedHeaderList = new HashMap<>();        /*
-         * Used to generate an interface. Stores it in objClassStructure#importList.
-         */
-        final Map<String, List<String>> interfaceHeaderList = new HashMap<>();
+        final Map<String, List<String>> namedExportecHeaderList = new HashMap<>();
 
         // Gets the common information.
         final BlancoXmlElement elementCommon = BlancoXmlBindingUtil
@@ -240,43 +234,100 @@ public class BlancoVueComponentXmlParser {
             System.out.println("BlancoVueComponent#parseElementPhp name = " + name);
         }
 
-        // Vue component definition common.
-        this.parseVueComponentCommon(elementCommon, objClassStructure);
+        /*
+         * Parse defineComponent file informations.
+         */
 
-        // Vue component definition inheritance.
-        this.parseVueComponentExtends(componentHeaderList, defaultExportedHeaderList, objClassStructure);
+        // Vue component definition common.
+        this.parseCommon(elementCommon, objClassStructure);
+
+        // Generate impoorts for Vue component definition.
+        this.generateImports4Component(namedExportecHeaderList, objClassStructure);
+
+        // Get the header information for Vue component definition.
+        List<BlancoXmlElement> componentHeaderElementList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet,
+                        fBundle.getMeta2xmlElementHeaderComponents());
+        List<String> headerList = this.parseHeaderList(componentHeaderElementList, namedExportecHeaderList, null);
+        if (headerList != null && headerList.size() > 0) {
+            objClassStructure.getComponentHeaderList().addAll(headerList);
+        }
 
         // Vue component definition using component.
         final List<BlancoXmlElement> componentList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
-                        fBundle.getMeta2xmlElementComponents());
+                        fBundle.getMeta2xmlElementListComponents());
         if (componentList != null && componentList.size() != 0) {
             final BlancoXmlElement elementComponentRoot = componentList.get(0);
-            this.parseVueComponentComponents(elementComponentRoot, componentHeaderList, objClassStructure);
+            this.parseVueComponentComponents(elementComponentRoot, objClassStructure);
         }
 
-        // Vue component definition property.
-        final List<BlancoXmlElement> listList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementList());
-        if (listList != null && listList.size() != 0) {
-            final BlancoXmlElement elementListRoot = listList.get(0);
-            this.parseVueComponentProperties(elementListRoot, componentHeaderList, interfaceHeaderList, objClassStructure);
+        /*
+         * Parse API list file informations
+         */
+        final List<BlancoXmlElement> apiElementList = BlancoXmlBindingUtil.getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementListApi());
+        if (apiElementList != null && apiElementList.size() != 0) {
+            final BlancoXmlElement elementApiRoot = apiElementList.get(0);
+            this.parseApiList(elementApiRoot, objClassStructure);
         }
 
-        // Gets the header information.
-        List<BlancoXmlElement> headerElementList = BlancoXmlBindingUtil
+        /*
+         * Parse header information for API
+         */
+        List<BlancoXmlElement> apiHeaderElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
-                        fBundle.getMeta2xmlElementHeader());
-        List<String> headerList = this.parseHeaderList(headerElementList, componentHeaderList, defaultExportedHeaderList);
-        if (headerList != null && headerList.size() > 0) {
-            objClassStructure.getComponentHeaderList().addAll(headerList);
+                        fBundle.getMeta2xmlElementHeaderApi());
+        List<String> apiHeaderList = this.parseHeaderList(apiHeaderElementList, null, null);
+        if (apiHeaderList != null && apiHeaderList.size() > 0) {
+            objClassStructure.getApiHeaderList().addAll(apiHeaderList);
         }
-        headerElementList = BlancoXmlBindingUtil
+
+        /*
+         * Parse Props file informations
+         */
+        namedExportecHeaderList.clear();
+        final List<BlancoXmlElement> propsList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementListProps());
+        if (propsList != null && propsList.size() != 0) {
+            final BlancoXmlElement elementListRoot = propsList.get(0);
+            this.parseVueComponentProperties(elementListRoot, namedExportecHeaderList, objClassStructure);
+        }
+        /*
+         * Import LooseRequired and ComponentPropsOptions
+         */
+        BlancoVueComponentUtil.addImportHeaderList("LooseRequired", "@vue/shared", namedExportecHeaderList);
+        BlancoVueComponentUtil.addImportHeaderList("ComponentPropsOptions", "vue", namedExportecHeaderList);
+        // Get headers user defined.
+        List<BlancoXmlElement> propsHeaderElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
-                        fBundle.getMeta2xmlElementHeaderInterface());
-        headerList = this.parseHeaderList(headerElementList, interfaceHeaderList, null);
-        if (headerList != null && headerList.size() > 0) {
-            objClassStructure.getInterfaceHeaderList().addAll(headerList);
+                        fBundle.getMeta2xmlElementHeaderProps());
+        List<String> propsHeaderList = this.parseHeaderList(propsHeaderElementList, namedExportecHeaderList, null);
+        if (propsHeaderList != null && propsHeaderList.size() > 0) {
+            objClassStructure.getPropsHeaderList().addAll(propsHeaderList);
+        }
+
+        /*
+         * Parse Emits file informations
+         */
+        namedExportecHeaderList.clear();
+        final List<BlancoXmlElement> emitsList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementListEmits());
+        if (emitsList != null && emitsList.size() != 0) {
+            namedExportecHeaderList.clear();
+            final BlancoXmlElement elementListRoot = emitsList.get(0);
+            this.parseVueComponentProperties(elementListRoot, namedExportecHeaderList, objClassStructure);
+        }
+        /*
+         * Import ObjectEmitsOptions
+         */
+        BlancoVueComponentUtil.addImportHeaderList("ObjectEmitsOptions", "vue", namedExportecHeaderList);
+        // Get headers user defined.
+        List<BlancoXmlElement> emitsHeaderElementList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet,
+                        fBundle.getMeta2xmlElementHeaderEmits());
+        List<String> emitsHeaderList = this.parseHeaderList(emitsHeaderElementList, namedExportecHeaderList, null);
+        if (emitsHeaderList != null && emitsHeaderList.size() > 0) {
+            objClassStructure.getPropsHeaderList().addAll(emitsHeaderList);
         }
 
         return objClassStructure;
@@ -345,7 +396,7 @@ public class BlancoVueComponentXmlParser {
      * @param argElementCommon
      * @param argObjClassStructure
      */
-    private void parseVueComponentCommon(
+    private void parseCommon(
             final BlancoXmlElement argElementCommon,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
@@ -353,6 +404,8 @@ public class BlancoVueComponentXmlParser {
                 argElementCommon, "subject"));
         argObjClassStructure.setName(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "name"));
+        argObjClassStructure.setAlias(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "alias"));
         argObjClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "package"));
         argObjClassStructure.setClassAlias(BlancoXmlBindingUtil.getTextContent(
@@ -377,7 +430,7 @@ public class BlancoVueComponentXmlParser {
                     argObjClassStructure.setDescription(lines[index]);
                 } else {
                     // For a multi-line description, it will be split and stored.
-                    // From the second line, assumes that character reference encoding has been properly implemented. 
+                    // From the second line, assumes that character reference encoding has been properly implemented.
                     argObjClassStructure.getDescriptionList().add(lines[index]);
                 }
             }
@@ -399,6 +452,10 @@ public class BlancoVueComponentXmlParser {
                 .getTextContent(argElementCommon, "useScript")));
         argObjClassStructure.setUseStyle("true".equals(BlancoXmlBindingUtil
                 .getTextContent(argElementCommon, "useStyle")));
+        argObjClassStructure.setUseSetup("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "useSetup")));
+        argObjClassStructure.setUseData("true".equals(BlancoXmlBindingUtil
+                .getTextContent(argElementCommon, "useData")));
 
         argObjClassStructure.setAdjustFieldName("true".equals(BlancoXmlBindingUtil
                 .getTextContent(argElementCommon, "adjustFieldName")));
@@ -412,44 +469,50 @@ public class BlancoVueComponentXmlParser {
                 .equals(BlancoXmlBindingUtil.getTextContent(argElementCommon,
                         "expectConsistentAfterTransition")));
         argObjClassStructure
-                .setFieldList(new ArrayList<blanco.vuecomponent.valueobject.BlancoVueComponentFieldStructure>());
+                .setComponentList(new ArrayList<>());
+        argObjClassStructure
+                .setPropsList(new ArrayList<>());
+        argObjClassStructure
+                .setApiList(new ArrayList<>());
+        argObjClassStructure
+                .setEmitsList(new ArrayList<>());
     }
 
     /**
-     * In VueComponent, the "Mixins (implementation components)" function is automatically extended.
+     * Parse import headers for Component definition.
      *
-     * @param argImportHeaderList
+     * @param argNamedExportedHeaderList
      * @param argObjClassStructure
      */
-    private void parseVueComponentExtends(
-            final Map<String, List<String>> argImportHeaderList,
-            final Map<String, List<String>> argDefaultExportedHeaderList,
+    private void generateImports4Component(
+            final Map<String, List<String>> argNamedExportedHeaderList,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
+        // make "import info for defineComponent
+        BlancoVueComponentUtil.addImportHeaderList("defineComponent", "vue", argNamedExportedHeaderList);
 
-        final String impleClassName = argObjClassStructure.getName() + BlancoVueComponentConstants.IMPLECLASS_SUFFIX;
-        String mixins = "Mixins(" + impleClassName + ")";
-        argObjClassStructure.setExtends(mixins);
+        String componentSuffix = BlancoNameAdjuster.toParameterName(argObjClassStructure.getName());
 
-        /*
-         * import { Component, Mixins, Prop, Vue, Watch } from "vue-property-decorator";
-         */
-        BlancoVueComponentUtil.addImportHeaderList("Component", "vue-property-decorator", argImportHeaderList);
-        BlancoVueComponentUtil.addImportHeaderList("Mixins", "vue-property-decorator", argImportHeaderList);
-        BlancoVueComponentUtil.addImportHeaderList("Prop", "vue-property-decorator", argImportHeaderList);
-        BlancoVueComponentUtil.addImportHeaderList("Watch", "vue-property-decorator", argImportHeaderList);
+        // make import info for props. props is always required.
+        BlancoVueComponentUtil.addImportHeaderList(argObjClassStructure.getName() + "Props", "./" + argObjClassStructure.getName() + "Props", argNamedExportedHeaderList);
+        BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Props", "./" + argObjClassStructure.getName() + "Props", argNamedExportedHeaderList);
 
-        /*
-         * import HogeImple from "HogeImple";
-         * Component is default exported, so it should not be wrapped in "{ }".
-         */
-        BlancoVueComponentUtil.makeImportHeaderList(
-                argObjClassStructure.getPackage(),
-                impleClassName,
-                argDefaultExportedHeaderList,
-                argObjClassStructure.getImpledir(),
-                ""
-        );
+        // make import info for emits.
+        if (argObjClassStructure.getEmitsList() != null && argObjClassStructure.getEmitsList().size() != 0) {
+            BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Emits", "./" + argObjClassStructure.getName() + "Emits", argNamedExportedHeaderList);
+        }
+
+        String classNameCannon = argObjClassStructure.getPackage().replace('.', '/') + "/" + argObjClassStructure.getName();
+
+        // make import info for setup.
+        if (argObjClassStructure.getUseSetup()) {
+            BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Setup",  classNameCannon + "Setup", argNamedExportedHeaderList);
+        }
+
+        // make import info for data
+        if (argObjClassStructure.getUseData()) {
+            BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Data", classNameCannon + "Data", argNamedExportedHeaderList);
+        }
     }
 
     /**
@@ -457,12 +520,10 @@ public class BlancoVueComponentXmlParser {
      * Since the import statement is not generated, it should be described in the definition document.
      *
      * @param argElementComponent
-     * @param argImportHeaderList
      * @param argObjClassStructure
      */
     private void parseVueComponentComponents(
             final BlancoXmlElement argElementComponent,
-            final Map<String, List<String>> argImportHeaderList,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
         /* A list of components to be used. */
@@ -487,24 +548,87 @@ public class BlancoVueComponentXmlParser {
         }
     }
 
+    /**
+     * Parse API LIST definition.
+     *
+     * @param argElementApi
+     * @param argObjClassStructure
+     */
+    private void parseApiList(
+            final BlancoXmlElement argElementApi,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+        /* A list of API to be used. */
+        final List<BlancoXmlElement> listApiChildNodes = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementApi, "api");
+        for (int index = 0;
+             listApiChildNodes != null &&
+                     index < listApiChildNodes.size();
+             index++) {
+            final BlancoXmlElement elementList = listApiChildNodes
+                    .get(index);
+            final BlancoVueComponentApiStructure apiStructure = new BlancoVueComponentApiStructure();
+
+            final String apiName = BlancoXmlBindingUtil
+                    .getTextContent(elementList, "name");
+            if (apiName == null || apiName.trim().length() == 0) {
+                continue;
+            }
+            apiStructure.setName(apiName);
+
+            final String apiNo = BlancoXmlBindingUtil
+                    .getTextContent(elementList, "no");
+            if (apiNo != null && apiNo.trim().length() != 0) {
+                apiStructure.setNo(apiNo);
+            }
+
+            final String apiClass = BlancoXmlBindingUtil
+                    .getTextContent(elementList, "class");
+            if (apiClass == null || apiClass.trim().length() == 0) {
+                continue;
+            }
+            apiStructure.setClassName(apiClass);
+
+            final String apiDescription = BlancoXmlBindingUtil
+                    .getTextContent(elementList, "description");
+            if (apiDescription == null || apiDescription.trim().length() == 0) {
+                continue;
+            }
+            apiStructure.setDescription(apiDescription);
+            final String[] lines = BlancoNameUtil.splitString(
+                    apiStructure.getDescription(), '\n');
+            for (int indexLine = 0; indexLine < lines.length; indexLine++) {
+                if (indexLine == 0) {
+                    apiStructure.setDescription(lines[indexLine]);
+                } else {
+                    // For a multi-line description, it will be split and stored.
+                    // From the second line, assumes that character reference encoding has been properly implemented.
+                    apiStructure.getDescriptionList().add(
+                            lines[indexLine]);
+                }
+            }
+
+            argObjClassStructure.getApiList().add(apiStructure);
+        }
+    }
+
     private void parseVueComponentProperties(
             final BlancoXmlElement argElementProperties,
-            final Map<String, List<String>> argComponentHeaderList,
-            final Map<String, List<String>> argInterfaceHeaderList,
+            final Map<String, List<String>> argHeaderList,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
         final List<BlancoXmlElement> listChildNodes = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementProperties, "field");
         for (int index = 0; index < listChildNodes.size(); index++) {
             final BlancoXmlElement elementList = listChildNodes.get(index);
-            final BlancoVueComponentFieldStructure fieldStructure = new BlancoVueComponentFieldStructure();
+            final BlancoVueComponentPropsStructure propsStructure = new BlancoVueComponentPropsStructure();
 
-            fieldStructure.setNo(BlancoXmlBindingUtil.getTextContent(
+            propsStructure.setNo(BlancoXmlBindingUtil.getTextContent(
                     elementList, "no"));
-            fieldStructure.setName(BlancoXmlBindingUtil.getTextContent(
+            propsStructure.setName(BlancoXmlBindingUtil.getTextContent(
                     elementList, "name"));
-            if (fieldStructure.getName() == null
-                    || fieldStructure.getName().trim().length() == 0) {
+            if (propsStructure.getName() == null
+                    || propsStructure.getName().trim().length() == 0) {
                 continue;
             }
 
@@ -553,13 +677,12 @@ public class BlancoVueComponentXmlParser {
                      * Note that the package may be the same as the component, but the basedir may be different.
                      */
                     if (argObjClassStructure.getCreateImportList()) {
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argComponentHeaderList, voStructure.getBasedir(), "");
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argInterfaceHeaderList, voStructure.getBasedir(), "");
+                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argHeaderList, voStructure.getBasedir(), "");
                     }
                 }
             }
 
-            fieldStructure.setType(targetType);
+            propsStructure.setType(targetType);
 
             /* Supports Generic. */
             String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
@@ -578,7 +701,7 @@ public class BlancoVueComponentXmlParser {
                 } else if ("array".equalsIgnoreCase(phpGeneric)) {
                     throw new IllegalArgumentException(fMsg.getMbvoji06(
                             argObjClassStructure.getName(),
-                            fieldStructure.getName(),
+                            propsStructure.getName(),
                             phpGeneric,
                             phpGeneric
                     ));
@@ -610,47 +733,46 @@ public class BlancoVueComponentXmlParser {
                          * Note that the package may be the same as the component, but the basedir may be different.
                          */
                         if (argObjClassStructure.getCreateImportList()) {
-                            BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argComponentHeaderList, voStructure.getBasedir(), "");
-                            BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argInterfaceHeaderList, voStructure.getBasedir(), "");
+                            BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argHeaderList, voStructure.getBasedir(), "");
                         }
                     }
                 }
-                fieldStructure.setGeneric(targetGeneric);
+                propsStructure.setGeneric(targetGeneric);
             }
 
             // Supports Nullable.
-            fieldStructure.setNullable("true".equals(BlancoXmlBindingUtil
+            propsStructure.setNullable("true".equals(BlancoXmlBindingUtil
                     .getTextContent(elementList, "nullable")));
 
             // Supports query string.
-            fieldStructure.setQueryParam(BlancoXmlBindingUtil.getTextContent(
+            propsStructure.setQueryParam(BlancoXmlBindingUtil.getTextContent(
                     elementList, "queryParam"));
 
             // Supports description.
-            fieldStructure.setDescription(BlancoXmlBindingUtil
+            propsStructure.setDescription(BlancoXmlBindingUtil
                     .getTextContent(elementList, "description"));
             final String[] lines = BlancoNameUtil.splitString(
-                    fieldStructure.getDescription(), '\n');
+                    propsStructure.getDescription(), '\n');
             for (int indexLine = 0; indexLine < lines.length; indexLine++) {
                 if (indexLine == 0) {
-                    fieldStructure.setDescription(lines[indexLine]);
+                    propsStructure.setDescription(lines[indexLine]);
                 } else {
                     // For a multi-line description, it will be split and stored.
-                    // From the second line, assumes that character reference encoding has been properly implemented. 
-                    fieldStructure.getDescriptionList().add(
+                    // From the second line, assumes that character reference encoding has been properly implemented.
+                    propsStructure.getDescriptionList().add(
                             lines[indexLine]);
                 }
             }
 
-            fieldStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
+            propsStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
                     elementList, "default"));
 
-            argObjClassStructure.getFieldList().add(fieldStructure);
+            argObjClassStructure.getPropsList().add(propsStructure);
         }
     }
 
     /**
-     *
+     * Create headerList with auto-generated imports and user defined imports.
      *
      * @param argHeaderElementList
      * @param argImportHeaderList

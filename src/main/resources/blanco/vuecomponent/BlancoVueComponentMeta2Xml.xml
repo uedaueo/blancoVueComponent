@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- blancoCalcParser define file for blancoValueObject -->
+<!-- blancoCalcParser define file for blancoVueComponent -->
 <blanco version="0.1.0">
   <target name="blancoCalcParser">
     <blancocalcparser name="valueobject">
       <propertyblock name="blancovuecomponent-common" waitY="1">
-        <startstring>Vueコンポーネント定義・共通</startstring>
+        <startstring>Vueコンポーネント定義・共通（Composition API用）</startstring>
+        <propertykey name="name" waitX="2">
+          <value>コンポーネントID</value>
+        </propertykey>
         <propertykey name="subject" waitX="2">
           <value>コンポーネント名</value>
         </propertykey>
-        <propertykey name="name" waitX="2">
-          <value>コンポーネントID</value>
+        <propertykey name="alias" waitX="2">
+          <value>コンポーネント別名</value>
         </propertykey>
         <propertykey name="package" waitX="2">
           <value>パッケージ</value>
@@ -53,6 +56,12 @@
         <propertykey name="useStyle" waitX="2">
           <value>styleを使用</value>
         </propertykey>
+        <propertykey name="useSetup" waitX="2">
+          <value>setup関数を実装する</value>
+        </propertykey>
+        <propertykey name="useData" waitX="2">
+          <value>data関数を実装する</value>
+        </propertykey>
         <propertykey name="adjustFieldName" waitX="2">
           <value>フィールド名の変形</value>
         </propertykey>
@@ -77,8 +86,8 @@
         </valuemapping>
       </propertyblock>
 
-      <tableblock name="blancovuecomponent-header" waitY="2" titleheight="2" rowname="header">
-        <startstring>Vueコンポーネント定義・ヘッダ情報（クラス用）</startstring>
+      <tableblock name="blancovuecomponent-header-components" waitY="2" titleheight="2" rowname="header">
+        <startstring>Vueコンポーネント定義・ヘッダ情報（コンポーネント定義用）</startstring>
         <tablecolumn name="no">
           <value>No.</value>
         </tablecolumn>
@@ -87,17 +96,7 @@
         </tablecolumn>
       </tableblock>
 
-      <tableblock name="blancovuecomponent-header-interface" waitY="2" titleheight="2" rowname="header">
-        <startstring>Vueコンポーネント定義・ヘッダ情報（インタフェイス用）</startstring>
-        <tablecolumn name="no">
-          <value>No.</value>
-        </tablecolumn>
-        <tablecolumn name="name">
-          <value>ヘッダ記述文</value>
-        </tablecolumn>
-      </tableblock>
-
-      <tableblock name="blancovuecomponent-components" waitY="2" titleheight="2" rowname="components">
+      <tableblock name="blancovuecomponent-list-components" waitY="2" titleheight="2" rowname="components">
         <startstring>Vueコンポーネント定義・使用コンポーネント</startstring>
         <tablecolumn name="no">
           <value>No.</value>
@@ -107,8 +106,44 @@
         </tablecolumn>
       </tableblock>
 
-      <tableblock name="blancovuecomponent-list" waitY="2" titleheight="3" rowname="field">
-        <startstring>Vueコンポーネント定義・プロパティ</startstring>
+      <tableblock name="blancovuecomponent-header-api" waitY="2" titleheight="2" rowname="header">
+        <startstring>Vueコンポーネント定義・ヘッダ情報（使用API定義用）</startstring>
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>ヘッダ記述文</value>
+        </tablecolumn>
+      </tableblock>
+
+      <tableblock name="blancovuecomponent-list-api" waitY="2" titleheight="2" rowname="api">
+        <startstring>Vueコンポーネント定義・使用API</startstring>
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>API名</value>
+        </tablecolumn>
+        <tablecolumn name="class">
+          <value>クラス名</value>
+        </tablecolumn>
+        <tablecolumn name="description">
+          <value>説明</value>
+        </tablecolumn>
+      </tableblock>
+
+      <tableblock name="blancovuecomponent-header-props" waitY="2" titleheight="2" rowname="header">
+        <startstring>Vueコンポーネント定義・ヘッダ情報（props定義用）</startstring>
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>ヘッダ記述文</value>
+        </tablecolumn>
+      </tableblock>
+
+      <tableblock name="blancovuecomponent-list-props" waitY="2" titleheight="3" rowname="props">
+        <startstring>Vueコンポーネント定義・props</startstring>
 
         <tablecolumn name="no">
           <value>No.</value>
@@ -142,6 +177,36 @@
           <result>true</result>
           <source>○</source>
         </valuemapping>
+      </tableblock>
+
+      <tableblock name="blancovuecomponent-header-emits" waitY="2" titleheight="2" rowname="header">
+        <startstring>Vueコンポーネント定義・ヘッダ情報（emits定義用）</startstring>
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>ヘッダ記述文</value>
+        </tablecolumn>
+      </tableblock>
+
+      <tableblock name="blancovuecomponent-list-emits" waitY="2" titleheight="3" rowname="emits">
+        <startstring>Vueコンポーネント定義・emits</startstring>
+
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>イベント名</value>
+        </tablecolumn>
+        <tablecolumn name="type">
+          <value>ペイロード・型</value>
+        </tablecolumn>
+        <tablecolumn name="generic">
+          <value>ペイロード・総称型</value>
+        </tablecolumn>
+        <tablecolumn name="description">
+          <value>説明</value>
+        </tablecolumn>
       </tableblock>
 
     </blancocalcparser>
