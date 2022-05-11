@@ -13,11 +13,11 @@ import blanco.cg.BlancoCgSupportedLang;
 import blanco.commons.util.BlancoNameAdjuster;
 import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
-import blanco.valueobjectts.valueobject.BlancoValueObjectTsClassStructure;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
 import blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
+import blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure;
 import blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure;
 import blanco.xml.bind.BlancoXmlBindingUtil;
 import blanco.xml.bind.BlancoXmlUnmarshaller;
@@ -241,18 +241,6 @@ public class BlancoVueComponentXmlParser {
         // Vue component definition common.
         this.parseCommon(elementCommon, objClassStructure);
 
-        // Generate impoorts for Vue component definition.
-        this.generateImports4Component(namedExportecHeaderList, objClassStructure);
-
-        // Get the header information for Vue component definition.
-        List<BlancoXmlElement> componentHeaderElementList = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementSheet,
-                        fBundle.getMeta2xmlElementHeaderComponents());
-        List<String> headerList = this.parseHeaderList(componentHeaderElementList, namedExportecHeaderList, null);
-        if (headerList != null && headerList.size() > 0) {
-            objClassStructure.getComponentHeaderList().addAll(headerList);
-        }
-
         // Vue component definition using component.
         final List<BlancoXmlElement> componentList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
@@ -290,8 +278,27 @@ public class BlancoVueComponentXmlParser {
                 .getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementListProps());
         if (propsList != null && propsList.size() != 0) {
             final BlancoXmlElement elementListRoot = propsList.get(0);
-            this.parseVueComponentProperties(elementListRoot, namedExportecHeaderList, objClassStructure);
+            /* share function with emits */
+            this.parseVueComponentProps(elementListRoot, namedExportecHeaderList, objClassStructure);
         }
+        /*
+         * subject and alias properties are automatically generated.
+         */
+        objClassStructure.getPropsList().add(0, this.generatePropsStructure(
+                "alias",
+                "string",
+                true,
+                "\"" + objClassStructure.getAlias() + "\"",
+                fBundle.getXml2sourceFilePropsAliasDescription()
+        ));
+        objClassStructure.getPropsList().add(0, this.generatePropsStructure(
+                "subject",
+                "string",
+                true,
+                "\"" + objClassStructure.getSubject() + "\"",
+                fBundle.getXml2sourceFilePropsSubjectDescription()
+        ));
+
         /*
          * Import LooseRequired and ComponentPropsOptions
          */
@@ -315,7 +322,7 @@ public class BlancoVueComponentXmlParser {
         if (emitsList != null && emitsList.size() != 0) {
             namedExportecHeaderList.clear();
             final BlancoXmlElement elementListRoot = emitsList.get(0);
-            this.parseVueComponentProperties(elementListRoot, namedExportecHeaderList, objClassStructure);
+            this.parseVueComponentEmits(elementListRoot, namedExportecHeaderList, objClassStructure);
         }
         /*
          * Import ObjectEmitsOptions
@@ -327,7 +334,20 @@ public class BlancoVueComponentXmlParser {
                         fBundle.getMeta2xmlElementHeaderEmits());
         List<String> emitsHeaderList = this.parseHeaderList(emitsHeaderElementList, namedExportecHeaderList, null);
         if (emitsHeaderList != null && emitsHeaderList.size() > 0) {
-            objClassStructure.getPropsHeaderList().addAll(emitsHeaderList);
+            objClassStructure.getEmitsHeaderList().addAll(emitsHeaderList);
+        }
+
+        // At last, generate impoorts for Vue component definition.
+        namedExportecHeaderList.clear();
+        this.generateImports4Component(namedExportecHeaderList, objClassStructure);
+
+        // Get the header information for Vue component definition.
+        List<BlancoXmlElement> componentHeaderElementList = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementSheet,
+                        fBundle.getMeta2xmlElementHeaderComponents());
+        List<String> headerList = this.parseHeaderList(componentHeaderElementList, namedExportecHeaderList, null);
+        if (headerList != null && headerList.size() > 0) {
+            objClassStructure.getComponentHeaderList().addAll(headerList);
         }
 
         return objClassStructure;
@@ -502,7 +522,8 @@ public class BlancoVueComponentXmlParser {
             BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Emits", "./" + argObjClassStructure.getName() + "Emits", argNamedExportedHeaderList);
         }
 
-        String classNameCannon = argObjClassStructure.getPackage().replace('.', '/') + "/" + argObjClassStructure.getName();
+        String impleDir = argObjClassStructure.getImpledir() + "/";
+        String classNameCannon = impleDir + argObjClassStructure.getPackage().replace('.', '/') + "/" + argObjClassStructure.getName();
 
         // make import info for setup.
         if (argObjClassStructure.getUseSetup()) {
@@ -617,13 +638,13 @@ public class BlancoVueComponentXmlParser {
         }
     }
 
-    private void parseVueComponentProperties(
+    private void parseVueComponentProps(
             final BlancoXmlElement argElementProperties,
             final Map<String, List<String>> argHeaderList,
             final BlancoVueComponentClassStructure argObjClassStructure
     ) {
         final List<BlancoXmlElement> listChildNodes = BlancoXmlBindingUtil
-                .getElementsByTagName(argElementProperties, "field");
+                .getElementsByTagName(argElementProperties, "props");
         for (int index = 0; index < listChildNodes.size(); index++) {
             final BlancoXmlElement elementList = listChildNodes.get(index);
             final BlancoVueComponentPropsStructure propsStructure = new BlancoVueComponentPropsStructure();
@@ -641,108 +662,30 @@ public class BlancoVueComponentXmlParser {
              * Gets the type. Changes the type name to TypeScript style.
              */
             String phpType = BlancoXmlBindingUtil.getTextContent(elementList, "type");
-            String targetType = phpType;
-            if ("boolean".equalsIgnoreCase(phpType)) {
-                targetType = "boolean";
-            } else if ("integer".equalsIgnoreCase(phpType)) {
-                targetType = "number";
-            } else if ("double".equalsIgnoreCase(phpType)) {
-                targetType = "number";
-            } else if ("float".equalsIgnoreCase(phpType)) {
-                targetType = "number";
-            } else if ("string".equalsIgnoreCase(phpType)) {
-                targetType = "string";
-            } else if ("array".equalsIgnoreCase(phpType)) {
-                    targetType = "Array";
-            } else if ("object".equalsIgnoreCase(phpType)) {
-                targetType = "any";
-            } else {
-                /* Searches for a package name with this name. */
-                BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(phpType);
-
-                String packageName = null;
-                if (voStructure != null) {
-                    packageName = voStructure.getPackage();
-                    if (packageName == null) {
-                        // Tries to isolate the package name.
-                        String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpType);
-                        if (simpleName != null && !simpleName.equals(phpType)) {
-                            packageName = BlancoVueComponentUtil.getPackageName(phpType);
-                            phpType = simpleName;
-                        }
-                    }
-                    if (packageName != null) {
-                        targetType = packageName + "." + phpType;
-                    }
-
-                    /* Others are written as is. */
-
-                    /*
-                     * Creates import information for TypeScript.
-                     * Note that the package may be the same as the component, but the basedir may be different.
-                     */
-                    if (argObjClassStructure.getCreateImportList()) {
-                        BlancoVueComponentUtil.makeImportHeaderList(packageName, phpType, argHeaderList, voStructure.getBasedir(), "");
-                    }
-                }
-            }
-
+            String targetType = BlancoVueComponentUtil.convertPhpType2Ts(phpType, argObjClassStructure, argHeaderList, false);
             propsStructure.setType(targetType);
 
             /* Supports Generic. */
             String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
             if (BlancoStringUtil.null2Blank(phpGeneric).length() != 0) {
-                String targetGeneric = phpGeneric;
-                if ("boolean".equalsIgnoreCase(phpGeneric)) {
-                    targetGeneric = "boolean";
-                } else if ("integer".equalsIgnoreCase(phpGeneric)) {
-                    targetGeneric = "number";
-                } else if ("double".equalsIgnoreCase(phpGeneric)) {
-                    targetGeneric = "number";
-                } else if ("float".equalsIgnoreCase(phpGeneric)) {
-                    targetGeneric = "number";
-                } else if ("string".equalsIgnoreCase(phpGeneric)) {
-                    targetGeneric = "string";
-                } else if ("array".equalsIgnoreCase(phpGeneric)) {
+                String targetGeneric = "";
+                try {
+                    targetGeneric = BlancoVueComponentUtil.convertPhpType2Ts(phpGeneric, argObjClassStructure, argHeaderList, true);
+                } catch (IllegalArgumentException e) {
                     throw new IllegalArgumentException(fMsg.getMbvoji06(
                             argObjClassStructure.getName(),
                             propsStructure.getName(),
                             phpGeneric,
                             phpGeneric
                     ));
-                } else if ("object".equalsIgnoreCase(phpGeneric)) {
-                    targetGeneric = "any";
-                } else {
-                    /* Searches for a package with this name. */
-                    BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(phpGeneric);
-
-                    String packageName = null;
-                    if (voStructure != null) {
-                        packageName = voStructure.getPackage();
-                        if (packageName == null) {
-                            // Tries to isolate package name.
-                            String simpleName = BlancoVueComponentUtil.getSimpleClassName(phpGeneric);
-                            if (simpleName != null && !simpleName.equals(phpGeneric)) {
-                                packageName = BlancoVueComponentUtil.getPackageName(phpGeneric);
-                                phpGeneric = simpleName;
-                            }
-                        }
-                        if (packageName != null) {
-                            targetGeneric = packageName + "." + phpGeneric;
-                        }
-
-                        /* Others are written as is. */
-
-                        /*
-                         * Creates import information for TypeScript.
-                         * Note that the package may be the same as the component, but the basedir may be different.
-                         */
-                        if (argObjClassStructure.getCreateImportList()) {
-                            BlancoVueComponentUtil.makeImportHeaderList(packageName, phpGeneric, argHeaderList, voStructure.getBasedir(), "");
-                        }
-                    }
                 }
                 propsStructure.setGeneric(targetGeneric);
+            }
+
+            // Supports required.
+            if ("true".equalsIgnoreCase(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "required"))) {
+                propsStructure.setRequired(true);
             }
 
             // Supports Nullable.
@@ -774,6 +717,96 @@ public class BlancoVueComponentXmlParser {
 
             argObjClassStructure.getPropsList().add(propsStructure);
         }
+    }
+
+    private void parseVueComponentEmits(
+            final BlancoXmlElement argElementEmits,
+            final Map<String, List<String>> argHeaderList,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+        final List<BlancoXmlElement> listChildNodes = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementEmits, "emits");
+        for (int index = 0; index < listChildNodes.size(); index++) {
+            final BlancoXmlElement elementList = listChildNodes.get(index);
+            final BlancoVueComponentEmitsStructure emitsStructure = new BlancoVueComponentEmitsStructure();
+
+            emitsStructure.setNo(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "no"));
+            emitsStructure.setName(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "name"));
+            if (emitsStructure.getName() == null
+                    || emitsStructure.getName().trim().length() == 0) {
+                continue;
+            }
+
+            /*
+             * Gets the type. Changes the type name to TypeScript style.
+             */
+            String phpType = BlancoXmlBindingUtil.getTextContent(elementList, "type");
+            String targetType = BlancoVueComponentUtil.convertPhpType2Ts(phpType, argObjClassStructure, argHeaderList, false);
+            emitsStructure.setType(targetType);
+
+            /* Supports Generic. */
+            String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
+            if (BlancoStringUtil.null2Blank(phpGeneric).length() != 0) {
+                String targetGeneric = "";
+                try {
+                    targetGeneric = BlancoVueComponentUtil.convertPhpType2Ts(phpGeneric, argObjClassStructure, argHeaderList, true);
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException(fMsg.getMbvoji06(
+                            argObjClassStructure.getName(),
+                            emitsStructure.getName(),
+                            phpGeneric,
+                            phpGeneric
+                    ));
+                }
+                emitsStructure.setGeneric(targetGeneric);
+            }
+
+            // Supports description.
+            emitsStructure.setDescription(BlancoXmlBindingUtil
+                    .getTextContent(elementList, "description"));
+            final String[] lines = BlancoNameUtil.splitString(
+                    emitsStructure.getDescription(), '\n');
+            for (int indexLine = 0; indexLine < lines.length; indexLine++) {
+                if (indexLine == 0) {
+                    emitsStructure.setDescription(lines[indexLine]);
+                } else {
+                    // For a multi-line description, it will be split and stored.
+                    // From the second line, assumes that character reference encoding has been properly implemented.
+                    emitsStructure.getDescriptionList().add(
+                            lines[indexLine]);
+                }
+            }
+
+            argObjClassStructure.getEmitsList().add(emitsStructure);
+        }
+    }
+
+    /**
+     * to add subject and alias properties
+     *
+     * @param argPropName
+     * @param argType
+     * @param argNullable
+     * @param argDefaultValue
+     * @param argDescription
+     * @return
+     */
+    private BlancoVueComponentPropsStructure generatePropsStructure(
+            String argPropName,
+            String argType,
+            Boolean argNullable,
+            String argDefaultValue,
+            String argDescription) {
+        BlancoVueComponentPropsStructure propsStructure = new BlancoVueComponentPropsStructure();
+        propsStructure.setName(argPropName);
+        propsStructure.setType(argType);
+        propsStructure.setDefault(argDefaultValue);
+        propsStructure.setNullable(argNullable);
+        propsStructure.setDescription(argDescription);
+
+        return propsStructure;
     }
 
     /**

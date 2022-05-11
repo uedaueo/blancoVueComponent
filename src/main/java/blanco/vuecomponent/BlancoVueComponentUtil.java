@@ -3,6 +3,7 @@ package blanco.vuecomponent;
 import blanco.valueobjectts.BlancoValueObjectTsXmlParser;
 import blanco.valueobjectts.valueobject.BlancoValueObjectTsClassStructure;
 import blanco.vuecomponent.task.valueobject.BlancoVueComponentProcessInput;
+import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
 
 import java.io.File;
 import java.io.IOException;
@@ -211,5 +212,57 @@ public class BlancoVueComponentUtil {
                 System.out.println("BlancoVueComponentUtil#addImportHeaderList: new import { " + argClassName + " } from \"" + argImportFrom + "\"");
             }
         }
+    }
+
+    static public String convertPhpType2Ts(String argPhpType, BlancoVueComponentClassStructure argObjClassStructure, Map<String, List<String>> argHeaderList, boolean isGeneric) {
+        String targetType = argPhpType;
+        if ("boolean".equalsIgnoreCase(argPhpType)) {
+            targetType = "boolean";
+        } else if ("integer".equalsIgnoreCase(argPhpType)) {
+            targetType = "number";
+        } else if ("double".equalsIgnoreCase(argPhpType)) {
+            targetType = "number";
+        } else if ("float".equalsIgnoreCase(argPhpType)) {
+            targetType = "number";
+        } else if ("string".equalsIgnoreCase(argPhpType)) {
+            targetType = "string";
+        } else if ("array".equalsIgnoreCase(argPhpType)) {
+            if (isGeneric) {
+                throw new IllegalArgumentException("Generic Type Exception");
+            }
+            targetType = "Array";
+        } else if ("object".equalsIgnoreCase(argPhpType)) {
+            targetType = "any";
+        } else {
+            /* Searches for a package name with this name. */
+            BlancoValueObjectTsClassStructure voStructure = BlancoVueComponentUtil.objects.get(argPhpType);
+
+            String packageName = null;
+            if (voStructure != null) {
+                packageName = voStructure.getPackage();
+                if (packageName == null) {
+                    // Tries to isolate the package name.
+                    String simpleName = BlancoVueComponentUtil.getSimpleClassName(argPhpType);
+                    if (simpleName != null && !simpleName.equals(argPhpType)) {
+                        packageName = BlancoVueComponentUtil.getPackageName(argPhpType);
+                        argPhpType = simpleName;
+                    }
+                }
+                if (packageName != null) {
+                    targetType = packageName + "." + argPhpType;
+                }
+
+                /* Others are written as is. */
+
+                /*
+                 * Creates import information for TypeScript.
+                 * Note that the package may be the same as the component, but the basedir may be different.
+                 */
+                if (argObjClassStructure.getCreateImportList()) {
+                    BlancoVueComponentUtil.makeImportHeaderList(packageName, argPhpType, argHeaderList, voStructure.getBasedir(), "");
+                }
+            }
+        }
+        return targetType;
     }
 }

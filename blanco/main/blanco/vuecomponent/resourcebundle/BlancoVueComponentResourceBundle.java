@@ -1002,14 +1002,14 @@ public class BlancoVueComponentResourceBundle {
     /**
      * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTECONFIG.CLASS]
      *
-     * [RouteConfigを定義します: [{0}]。] (ja)<br>
+     * [RouteRecordを定義します: [{0}]。] (ja)<br>
      *
      * @param arg0 置換文字列{0}を置換する値。java.lang.String型を与えてください。
      * @return key[XML2SOURCE_FILE.ROUTECONFIG.CLASS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
     public String getXml2sourceFileRouteconfigClass(final String arg0) {
         // 初期値として定義書の値を利用します。
-        String strFormat = "RouteConfigを定義します: [{0}]。";
+        String strFormat = "RouteRecordを定義します: [{0}]。";
         try {
             if (fResourceBundle != null) {
                 strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTECONFIG.CLASS");
@@ -1026,14 +1026,14 @@ public class BlancoVueComponentResourceBundle {
     /**
      * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTECONFIG.PARAMETER]
      *
-     * [RouteConfigのパラメータです: [{0}]。] (ja)<br>
+     * [RouteRecordのパラメータです: [{0}]。] (ja)<br>
      *
      * @param arg0 置換文字列{0}を置換する値。java.lang.String型を与えてください。
      * @return key[XML2SOURCE_FILE.ROUTECONFIG.PARAMETER]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
     public String getXml2sourceFileRouteconfigParameter(final String arg0) {
         // 初期値として定義書の値を利用します。
-        String strFormat = "RouteConfigのパラメータです: [{0}]。";
+        String strFormat = "RouteRecordのパラメータです: [{0}]。";
         try {
             if (fResourceBundle != null) {
                 strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTECONFIG.PARAMETER");
@@ -1060,6 +1060,166 @@ public class BlancoVueComponentResourceBundle {
         try {
             if (fResourceBundle != null) {
                 strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTECONFIG.LIST");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_SUBJECT.DESCRIPTION]
+     *
+     * [コンポーネントのsubjectプロパティです] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS_SUBJECT.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsSubjectDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネントのsubjectプロパティです";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS_SUBJECT.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_ALIAS.DESCRIPTION]
+     *
+     * [コンポーネントのaliasプロパティです] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS_ALIAS.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsAliasDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネントのaliasプロパティです";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS_ALIAS.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_INTERFACE.DESCRIPTION]
+     *
+     * [コンポーネントのプロパティを定義するインタフェイスです] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS_INTERFACE.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsInterfaceDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネントのプロパティを定義するインタフェイスです";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS_INTERFACE.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_TYPE.DESCRIPTION]
+     *
+     * [propsの型を定義します] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS_TYPE.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsTypeDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "propsの型を定義します";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS_TYPE.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS.DESCRIPTION]
+     *
+     * [propsの定義です] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "propsの定義です";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.EMITS_TYPE.DESCRIPTION]
+     *
+     * [emitsの型を定義します] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.EMITS_TYPE.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileEmitsTypeDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "emitsの型を定義します";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.EMITS_TYPE.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.EMITS.DESCRIPTION]
+     *
+     * [emitsの定義です] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.EMITS.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileEmitsDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "emitsの定義です";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.EMITS.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTE_SETTINGS_CONST.DESCRIPTION]
+     *
+     * [RouteRecordの配列を返します。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.ROUTE_SETTINGS_CONST.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileRouteSettingsConstDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "RouteRecordの配列を返します。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTE_SETTINGS_CONST.DESCRIPTION");
             }
         } catch (MissingResourceException ex) {
         }

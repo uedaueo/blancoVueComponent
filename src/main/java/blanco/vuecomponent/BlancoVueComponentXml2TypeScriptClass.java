@@ -17,10 +17,13 @@ import blanco.cg.valueobject.BlancoCgField;
 import blanco.cg.valueobject.BlancoCgInterface;
 import blanco.cg.valueobject.BlancoCgSourceFile;
 import blanco.commons.util.BlancoNameAdjuster;
+import blanco.commons.util.BlancoStringUtil;
 import blanco.commons.util.BlancoXmlUtil;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
+import blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure;
+import blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -158,15 +161,31 @@ public class BlancoVueComponentXml2TypeScriptClass {
             /* Generate defineComponent calling. */
             generateDefineComponent(classStructure, argDirectoryTarget);
 
+            /* Generate props options */
+            generatePropsOptioins(classStructure, argDirectoryTarget, queryProps);
+
+            /* Generate emits options */
+            if (classStructure.getEmitsList() != null && classStructure.getEmitsList().size() != 0) {
+                generateEmitsOptioins(classStructure, argDirectoryTarget);
+            }
+
             /* In the case of the screen, creates a RouterConfig. */
             if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
-                generateRouteConfig(classStructure, argDirectoryTarget, queryProps);
+                generateRouteRecord(classStructure, argDirectoryTarget, queryProps);
             }
 
         }
         return structures;
     }
 
+    /**
+     * After all meta files are parsed and generated, generate listClass
+     * for RouteSettings of vue-router.
+     *
+     * @param argClassStructures
+     * @param argDirectoryTarget
+     * @throws IOException
+     */
     public void processListClass(
             final List<BlancoVueComponentClassStructure> argClassStructures,
             final File argDirectoryTarget) throws IOException {
@@ -188,6 +207,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(this.getListClass());
+        String constName = BlancoNameAdjuster.toParameterName(simpleClassName);
         String packageName = BlancoVueComponentUtil.getPackageName(this.getListClass());
 
         // Gets an instance of the BlancoCgObjectFactory class.
@@ -199,25 +219,26 @@ public class BlancoVueComponentXml2TypeScriptClass {
         // Creates a class.
         fCgClass = fCgFactory.createClass(simpleClassName, fBundle.getXml2sourceFileRouteconfigList());
         fCgSourceFile.getClassList().add(fCgClass);
-        fCgClass.setAccess("public");
-        fCgSourceFile.getHeaderList().add("import { RouteConfig } from \"vue-router\"");
+        fCgClass.setAccess("");
+        fCgClass.setNoClassDeclare(true);
 
-        final BlancoCgField field = fCgFactory.createField(BlancoVueComponentConstants.ROUTE_PAGEDEFS,
-                "Array", "The Array of RouteConfig.");
+        final BlancoCgField field = fCgFactory.createField(constName,
+                "dummy", fBundle.getXml2sourceFileRouteSettingsConstDescription());
         fCgClass.getFieldList().add(field);
 
-        field.getType().setGenerics("RouteConfig");
-        field.setStatic(true);
         field.setNotnull(true);
-        field.setAccess("public");
+        field.setAccess("export const");
+        field.setTypeInference(true);
 
         StringBuffer defaultValue = new StringBuffer();
-        defaultValue.append("[" + this.getLineSeparator());
+        defaultValue.append("() => {" + this.getLineSeparator());
+        defaultValue.append(this.getTabSpace() + "return [" + this.getLineSeparator());
 
-        String suffix = "RouteConfig";
+        String suffix = "RouteRecord";
         int i = 0;
         for (BlancoVueComponentClassStructure structure : argClassStructures) {
             String className = structure.getName() + suffix;
+            String classConstName = BlancoNameAdjuster.toParameterName(className);
             String classPackageName = structure.getPackage();
             if (classPackageName == null) {
                 classPackageName = "";
@@ -227,132 +248,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
             }
             i++;
 
-            defaultValue.append(this.getTabSpace() + this.getTabSpace() + "new " + className + "()");
+            defaultValue.append(this.getTabSpace() + this.getTabSpace() + classConstName);
 
             /*
              * Creates an import list.
              * Since duplicates are not allowed, the strategy is rather not to check for duplicates, but rather to generate errors at compiling.
              */
-            String importHeader = "import { " + className + " } from \"" + structure.getBasedir() + "/" + classPackageName.replace(".", "/") + "/" + className + "\"";
+            String importHeader = "import { " + classConstName + " } from \"" + structure.getBasedir() + "/" + classPackageName.replace(".", "/") + "/" + className + "\"";
             fCgSourceFile.getHeaderList().add(importHeader);
         }
         defaultValue.append(this.getLineSeparator() + this.getTabSpace() + "]");
+        defaultValue.append(this.getLineSeparator() + "}");
 
         field.setDefault(defaultValue.toString());
-
-        // Auto-generates the actual source code based on the collected information.
-        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
-                fCgSourceFile, fileBlancoMain);
-    }
-
-    /**
-     * Generate options for defineComponent argument.
-     *
-     * @param argClassStructure
-     *            Class information.
-     * @param argDirectoryTarget
-     *            Output directory for TypeScript source code.
-     * @throws IOException
-     *             If an I/O exception occurs.
-     */
-    public void generateDefineComponent(
-            final BlancoVueComponentClassStructure argClassStructure,
-            final File argDirectoryTarget) throws IOException {
-        /*
-         * The output directory will be in the format specified by the targetStyle argument of
-         the ant task.
-         * For compatibility, the output directory will be blanco/main if it is not specified.
-         * by tueda, 2019/08/30
-         */
-        String strTarget = argDirectoryTarget
-                .getAbsolutePath(); // advanced
-        if (!this.isTargetStyleAdvanced()) {
-            strTarget += "/main"; // legacy
-        }
-        final File fileBlancoMain = new File(strTarget);
-
-        /* tueda DEBUG */
-        if (this.isVerbose()) {
-            System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
-        }
-
-        boolean useTemplate = argClassStructure.getUseTemplate();
-        boolean useSetup = argClassStructure.getUseSetup();
-        boolean useData = argClassStructure.getUseData();
-        boolean existsComponents = argClassStructure.getComponentList().size() != 0;
-        boolean existsEmits = argClassStructure.getEmitsList().size() != 0;
-
-        /*
-         * Props always have subject and alias properties at least.
-         * if useTemplate is false, render function should be implemented.
-         */
-        String propsType = argClassStructure.getName() + "Props";
-        String propsConst = BlancoNameAdjuster.toParameterName(propsType);
-
-        // Gets an instance of the BlancoCgObjectFactory class.
-        fCgFactory = BlancoCgObjectFactory.getInstance();
-
-        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
-                .getPackage(), null);
-        fCgSourceFile.setEncoding(fEncoding);
-        fCgSourceFile.setTabs(this.getTabs());
-
-        // Creates a class.
-        fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
-        fCgSourceFile.getClassList().add(fCgClass);
-        // Do not declare class for defineComponent calling.
-        fCgClass.setNoClassDeclare(true);
-
-        List<String> plainTextList = fCgClass.getPlainTextList();
-        // defineComponent call
-        plainTextList.add("export default defineComponent({");
-        plainTextList.add("name: \"" + argClassStructure.getName() + "\",");
-        plainTextList.add("props: " + propsConst);
-        if (existsComponents) {
-            plainTextList.add(",\ncomponents: {\n");
-            int loop = 0;
-            for (String comp : argClassStructure.getComponentList()) {
-                if (loop > 0) {
-                    plainTextList.add(",\n");
-                }
-                plainTextList.add("\t\t" + comp);
-                loop++;
-            }
-            plainTextList.add("\t}");
-        }
-        if (existsEmits) {
-            plainTextList.add(",\nemits: " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Emits");
-        }
-        if (useSetup) {
-            plainTextList.add(",\nsetup: (props, context) => {\n");
-            plainTextList.add("\t\treturn " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context);");
-            plainTextList.add("\t}");
-        }
-        if (useData) {
-            plainTextList.add(",\ndata: () => {\n");
-            plainTextList.add("\t\treturn " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Data();");
-            plainTextList.add("\t}");
-        }
-        if (!useTemplate) {
-            plainTextList.add(",\nrender: () => {\n");
-            plainTextList.add("\t\treturn " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Render();");
-            plainTextList.add("\t}");
-        }
-        plainTextList.add("});");
-
-        // Sets the JavaDoc for the class.
-        fCgClass.setDescription(argClassStructure.getDescription());
-        for (String line : argClassStructure.getDescriptionList()) {
-            fCgClass.getLangDoc().getDescriptionList().add(line);
-        }
-
-        /* In TypeScript, sets the header instead of import. */
-        for (int index = 0; index < argClassStructure.getComponentHeaderList()
-                .size(); index++) {
-            final String header = (String) argClassStructure.getComponentHeaderList()
-                    .get(index);
-            fCgSourceFile.getHeaderList().add(header);
-        }
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
@@ -389,8 +297,6 @@ public class BlancoVueComponentXml2TypeScriptClass {
         boolean useTemplate = argClassStructure.getUseTemplate();
         boolean useScript = argClassStructure.getUseScript();
         boolean useStyle = argClassStructure.getUseStyle();
-        boolean useSetup = argClassStructure.getUseSetup();
-        boolean useData = argClassStructure.getUseData();
 
         if (useScript != true) {
             System.out.println("### ERROR: Script cannot be ignored.");
@@ -446,12 +352,371 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
+     * Generate options for defineComponent argument.
+     *
+     * @param argClassStructure
+     *            Class information.
+     * @param argDirectoryTarget
+     *            Output directory for TypeScript source code.
+     * @throws IOException
+     *             If an I/O exception occurs.
+     */
+    public void generateDefineComponent(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final File argDirectoryTarget) throws IOException {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of
+         the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateDefineComponent argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        boolean useTemplate = argClassStructure.getUseTemplate();
+        boolean useSetup = argClassStructure.getUseSetup();
+        boolean useData = argClassStructure.getUseData();
+        boolean existsComponents = argClassStructure.getComponentList().size() != 0;
+        boolean existsEmits = argClassStructure.getEmitsList().size() != 0;
+
+        /*
+         * Props always have subject and alias properties at least.
+         * if useTemplate is false, render function should be implemented.
+         */
+        String propsType = argClassStructure.getName() + "Props";
+        String propsConst = BlancoNameAdjuster.toParameterName(propsType);
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+
+        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
+                .getPackage(), null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a class.
+        fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
+        fCgSourceFile.getClassList().add(fCgClass);
+        // Do not declare class for defineComponent calling.
+        fCgClass.setNoClassDeclare(true);
+
+        List<String> plainTextList = fCgClass.getPlainTextList();
+        // defineComponent call
+        plainTextList.add("export default defineComponent({");
+        plainTextList.add("name: \"" + argClassStructure.getName() + "\",");
+        plainTextList.add("props: " + propsConst);
+        if (existsComponents) {
+            addCommaToListString(plainTextList);
+            plainTextList.add("components: {");
+            int loop = 0;
+            for (String comp : argClassStructure.getComponentList()) {
+                if (loop > 0) {
+                    addCommaToListString(plainTextList);
+                }
+                plainTextList.add(this.getTabSpace() + this.getTabSpace() + comp);
+                loop++;
+            }
+            plainTextList.add(this.getTabSpace() + "}");
+        }
+        if (existsEmits) {
+            addCommaToListString(plainTextList);
+            plainTextList.add("emits: " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Emits");
+        }
+        if (useSetup) {
+            addCommaToListString(plainTextList);
+            plainTextList.add("setup: (props, context) => {");
+            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context);");
+            plainTextList.add(this.getTabSpace() + "}");
+        }
+        if (useData) {
+            addCommaToListString(plainTextList);
+            plainTextList.add("data: () => {");
+            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Data();");
+            plainTextList.add(this.getTabSpace() + "}");
+        }
+        if (!useTemplate) {
+            addCommaToListString(plainTextList);
+            plainTextList.add("render: () => {");
+            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Render();");
+            plainTextList.add(this.getTabSpace() + "}");
+        }
+        plainTextList.add("});");
+
+        // Sets the JavaDoc for the class.
+        fCgClass.setDescription(argClassStructure.getDescription());
+        for (String line : argClassStructure.getDescriptionList()) {
+            fCgClass.getLangDoc().getDescriptionList().add(line);
+        }
+
+        /* In TypeScript, sets the header instead of import. */
+        for (int index = 0; index < argClassStructure.getComponentHeaderList()
+                .size(); index++) {
+            final String header = (String) argClassStructure.getComponentHeaderList()
+                    .get(index);
+            fCgSourceFile.getHeaderList().add(header);
+        }
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * Generate props options file.
+     *
+     * @param argClassStructure
+     * @param argDirectoryTarget
+     * @throws IOException
+     */
+    public void generatePropsOptioins(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final File argDirectoryTarget,
+            final Map<String, String> argQueryProps) throws IOException {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of
+         the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generatePropsOptions argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        /*
+         * Props always have subject and alias properties at least.
+         * if useTemplate is false, render function should be implemented.
+         */
+        String propsType = argClassStructure.getName() + "Props";
+        String propsInterface = argClassStructure.getName() + "Interface";
+        String propsConst = BlancoNameAdjuster.toParameterName(propsType);
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+
+        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
+                .getPackage(), null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Create interface first.
+        fCgInterface = fCgFactory.createInterface(propsInterface, fBundle.getXml2sourceFilePropsInterfaceDescription());
+        fCgSourceFile.getInterfaceList().add(fCgInterface);
+        fCgInterface.setAccess("");
+
+        for (BlancoVueComponentPropsStructure propsStructure : argClassStructure.getPropsList()) {
+            BlancoCgField fieldInf = fCgFactory.createField(
+                    propsStructure.getName(),
+                    propsStructure.getType(),
+                    propsStructure.getDescription()
+            );
+            fCgInterface.getFieldList().add(fieldInf);
+
+            for (String line : propsStructure.getDescriptionList()) {
+                fieldInf.getLangDoc().getDescriptionList().add(line);
+            }
+            String generics = propsStructure.getGeneric();
+            if (BlancoStringUtil.null2Blank(generics).length() != 0) {
+                fieldInf.getType().setGenerics(generics);
+            }
+            fieldInf.setNotnull(!propsStructure.getNullable());
+            fieldInf.setAccess("");
+            // Stores the query string.
+            String queryParam = propsStructure.getQueryParam();
+            if (argQueryProps != null && queryParam != null && queryParam.length() > 0) {
+                argQueryProps.put(propsStructure.getName(), queryParam);
+            }
+        }
+
+        // Create non-named class.
+        fCgClass = fCgFactory.createClass(propsType, "");
+        fCgSourceFile.getClassList().add(fCgClass);
+        // Do not declare class for defineComponent calling.
+        fCgClass.setNoClassDeclare(true);
+
+        List<String> plainTextList = fCgClass.getPlainTextList();
+        plainTextList.add("");
+        // declare props type
+        plainTextList.add("/** " + fBundle.getXml2sourceFilePropsTypeDescription() + " */");
+        plainTextList.add("export declare type " + propsType + " = Readonly<LooseRequired<" + propsInterface + ">>;");
+        plainTextList.add("");
+
+        // props definition
+        BlancoCgField propsField = fCgFactory.createField(propsConst, "ComponentPropsOptions", fBundle.getXml2sourceFilePropsDescription());
+        fCgClass.getFieldList().add(propsField);
+        propsField.getType().setGenerics(propsInterface);
+        propsField.setAccess("export const");
+        propsField.setNotnull(true);
+
+        StringBuffer propsBuf = new StringBuffer();
+        int loopCount = 0;
+        boolean written = false;
+        propsBuf.append("{\n");
+        for (BlancoVueComponentPropsStructure propsStructure : argClassStructure.getPropsList()) {
+            boolean isRequired = propsStructure.getRequired();
+            boolean isDefault = BlancoStringUtil.null2Blank(propsStructure.getDefault()).length() != 0;
+            if (isRequired || isDefault) {
+                if (loopCount > 0 && written) {
+                    propsBuf.append("," + this.getLineSeparator());
+                }
+                written = true;
+                propsBuf.append(this.getTabSpace() + propsStructure.getName() + ": {" + this.getLineSeparator());
+                if (isRequired) {
+                    propsBuf.append(this.getTabSpace() + this.getTabSpace() + "required: true");
+                }
+                if (isDefault) {
+                    if (propsStructure.getRequired()) {
+                        propsBuf.append("," + this.getLineSeparator());
+                    }
+                    propsBuf.append(this.getTabSpace() + this.getTabSpace() + "default: ");
+                    propsBuf.append(propsStructure.getDefault());
+                }
+                propsBuf.append(this.getLineSeparator() + this.getTabSpace() + "}");
+            } else {
+                written = false;
+            }
+            loopCount++;
+        }
+        propsBuf.append(this.getLineSeparator() + "}");
+        propsField.setDefault(propsBuf.toString());
+
+        /* In TypeScript, sets the header instead of import. */
+        for (int index = 0; index < argClassStructure.getPropsHeaderList()
+                .size(); index++) {
+            final String header = argClassStructure.getPropsHeaderList()
+                    .get(index);
+            fCgSourceFile.getHeaderList().add(header);
+        }
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * Generate emits options
+     *
+     * @param argClassStructure
+     * @param argDirectoryTarget
+     * @throws IOException
+     */
+    public void generateEmitsOptioins(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final File argDirectoryTarget) throws IOException {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of
+         the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateEmitsOptions argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String emitsType = argClassStructure.getName() + "Emits";
+        String emitsConst = BlancoNameAdjuster.toParameterName(emitsType);
+
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+
+        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
+                .getPackage(), null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Create non-named class.
+        fCgClass = fCgFactory.createClass(emitsType, "");
+        fCgSourceFile.getClassList().add(fCgClass);
+        // Do not declare class for defineComponent calling.
+        fCgClass.setNoClassDeclare(true);
+
+        List<String> plainTextList = fCgClass.getPlainTextList();
+        plainTextList.add("");
+        // declare emits type
+        plainTextList.add("/** " + fBundle.getXml2sourceFileEmitsTypeDescription() + " */");
+        plainTextList.add("export declare type " + emitsType + " = {");
+        int emitsLoopCount = 0;
+        for (BlancoVueComponentEmitsStructure emitsStructure : argClassStructure.getEmitsList()) {
+            if (emitsLoopCount > 0) {
+                this.addCommaToListString(plainTextList);
+            }
+            String type = emitsStructure.getType();
+            if (BlancoStringUtil.null2Blank(emitsStructure.getGeneric()).length() != 0) {
+                String simpleGeneric = BlancoVueComponentUtil.getSimpleClassName(emitsStructure.getGeneric());
+                type = type + "<" + simpleGeneric + ">";
+            }
+            plainTextList.add(this.getTabSpace() + "\"" + emitsStructure.getName() + "\": (value: " + type + ") => boolean");
+            emitsLoopCount++;
+        }
+        plainTextList.add("} | ObjectEmitsOptions;");
+
+        // props definition
+        BlancoCgField emitsField = fCgFactory.createField(emitsConst, emitsType, fBundle.getXml2sourceFileEmitsDescription());
+        fCgClass.getFieldList().add(emitsField);
+        emitsField.setAccess("export const");
+        emitsField.setNotnull(true);
+
+        StringBuffer emitsBuf = new StringBuffer();
+        int loopCount = 0;
+        emitsBuf.append("{" + this.getLineSeparator());
+        for (BlancoVueComponentEmitsStructure emitsStructure : argClassStructure.getEmitsList()) {
+            if (loopCount > 0) {
+                emitsBuf.append("," + this.getLineSeparator());
+            }
+            String type = emitsStructure.getType();
+            if (BlancoStringUtil.null2Blank(emitsStructure.getGeneric()).length() != 0) {
+                String simpleGeneric = BlancoVueComponentUtil.getSimpleClassName(emitsStructure.getGeneric());
+                type = type + "<" + simpleGeneric + ">";
+            }
+            emitsBuf.append(this.getTabSpace() + "\"" + emitsStructure.getName() + "\": (value: " + type + ") => true");
+            loopCount++;
+        }
+        emitsBuf.append(this.getLineSeparator() + "}");
+        emitsField.setDefault(emitsBuf.toString());
+
+        /* In TypeScript, sets the header instead of import. */
+        for (int index = 0; index < argClassStructure.getEmitsHeaderList()
+                .size(); index++) {
+            final String header = (String) argClassStructure.getEmitsHeaderList()
+                    .get(index);
+            fCgSourceFile.getHeaderList().add(header);
+        }
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
      * For the screen component, creates a RouteConfig for vue-router.
      *  @param argClassStructure
      * @param argDirectoryTarget
      * @param argQueryProps
      */
-    private void generateRouteConfig(
+    private void generateRouteRecord(
             final BlancoVueComponentClassStructure argClassStructure,
             final File argDirectoryTarget,
             final Map<String, String> argQueryProps) {
@@ -475,10 +740,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
         /*
          * Prepares the necessary information.
          */
-        String suffix = "RouteConfig";
+        String suffix = "RouteRecord";
         String className = argClassStructure.getName() + suffix;
-        String strImport = "import { RouteConfig } from \"vue-router\"";
-        String strImport2 = "import { RoutePropsFunction } from \"vue-router/types/router\"";
+        String constName = BlancoNameAdjuster.toParameterName(className);
+        String strImport = "import { RouteRecordRaw } from \"vue-router\"";
+//        String strImport2 = "import { RoutePropsFunction } from \"vue-router/types/router\"";
         String strPackage = argClassStructure.getPackage();
 
         String propPathValue = "\"" + argClassStructure.getRouterPath() + "\"";
@@ -520,26 +786,37 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setTabs(this.getTabs());
 
         // Creates a class.
-        fCgClass = fCgFactory.createClass(className, fBundle.getXml2sourceFileRouteconfigClass(argClassStructure.getName()));
+        fCgClass = fCgFactory.createClass(className, "");
         fCgSourceFile.getClassList().add(fCgClass);
-        fCgClass.setAccess("public");
-
-        // Implements the RouteConfig.
-        fCgClass.getImplementInterfaceList().add(
-                fCgFactory.createType(suffix));
+        fCgClass.setAccess("");
+        fCgClass.setNoClassDeclare(true);
 
         // Imports the RouteConfig.
         fCgSourceFile.getHeaderList().add(strImport);
 
+        BlancoCgField cgRouteRecord = fCgFactory.createField(constName, "RouteRecordRaw", fBundle.getXml2sourceFileRouteconfigClass(argClassStructure.getName()));
+        fCgClass.getFieldList().add(cgRouteRecord);
+        cgRouteRecord.setAccess("export const");
+        cgRouteRecord.setNotnull(true);
+        cgRouteRecord.setNotnull(true);
+
+        StringBuffer recordBuf = new StringBuffer();
+        recordBuf.append("{" + this.getLineSeparator());
+
         // Creates the field as public. It doesn't create a Getter/Setter.
-        this.buildRouteConfigField("path", "string", propPathValue);
-        this.buildRouteConfigField("name", "string", propNameValue);
-        this.buildRouteConfigField("component", "object", propComponentValue);
-        this.buildRouteConfigField("meta", "any", propMetaValue);
+        recordBuf.append(this.buildRouteRecordField("path", "string", propPathValue));
+        recordBuf.append("," + this.getLineSeparator());
+        recordBuf.append(this.buildRouteRecordField("name", "string", propNameValue));
+        recordBuf.append("," + this.getLineSeparator());
+        recordBuf.append(this.buildRouteRecordField("component", "object", propComponentValue));
+        recordBuf.append("," + this.getLineSeparator());
+        recordBuf.append(this.buildRouteRecordField("meta", "any", propMetaValue));
         if (propPropsValue != null && propPropsValue.length() > 0) {
-            fCgSourceFile.getHeaderList().add(strImport2);
-            this.buildRouteConfigField("props", "RoutePropsFunction", propPropsValue);
+            recordBuf.append("," + this.getLineSeparator());
+            recordBuf.append(this.buildRouteRecordField("props", "RoutePropsFunction", propPropsValue));
         }
+        recordBuf.append(this.getLineSeparator() + "}");
+        cgRouteRecord.setDefault(recordBuf.toString());
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
@@ -552,18 +829,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
      * @param fieldType
      * @param defaultValue
      */
-    private void buildRouteConfigField(
+    private String buildRouteRecordField(
             String fieldName,
             String fieldType,
             String defaultValue
     ) {
-        final BlancoCgField field = fCgFactory.createField(fieldName,
-                fieldType, fBundle.getXml2sourceFileRouteconfigParameter(fieldName));
-        fCgClass.getFieldList().add(field);
-
-        field.setAccess("public");
-        field.setNotnull(true);
-        field.setDefault(defaultValue);
+        boolean isString = false;
+        if ("string".equalsIgnoreCase(fieldType)) {
+            isString = true;
+        }
+        StringBuffer fieldBuf = new StringBuffer();
+        fieldBuf.append(this.getTabSpace() + fieldName + ": ");
+        fieldBuf.append(defaultValue);
+        return fieldBuf.toString();
     }
 
     private String getTabSpace() {
@@ -576,5 +854,12 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
     private String getLineSeparator() {
         return System.getProperty("line.separator", "\n");
+    }
+
+    private void addCommaToListString(List<String> list) {
+        if (list.size() > 0) {
+            String lastline = list.remove(list.size() - 1);
+            list.add(lastline + ",");
+        }
     }
 }
