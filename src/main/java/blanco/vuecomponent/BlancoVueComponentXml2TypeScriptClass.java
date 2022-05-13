@@ -411,6 +411,13 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         List<String> plainTextList = fCgClass.getPlainTextList();
         // defineComponent call
+        // Sets the JavaDoc for the class.
+        plainTextList.add("/**");
+        plainTextList.add(" * " + argClassStructure.getDescription());
+        for (String line : argClassStructure.getDescriptionList()) {
+            plainTextList.add(" * " + line);
+        }
+        plainTextList.add(" */");
         plainTextList.add("export default defineComponent({");
         plainTextList.add("name: \"" + argClassStructure.getName() + "\",");
         plainTextList.add("props: " + propsConst);
@@ -450,12 +457,6 @@ public class BlancoVueComponentXml2TypeScriptClass {
             plainTextList.add(this.getTabSpace() + "}");
         }
         plainTextList.add("});");
-
-        // Sets the JavaDoc for the class.
-        fCgClass.setDescription(argClassStructure.getDescription());
-        for (String line : argClassStructure.getDescriptionList()) {
-            fCgClass.getLangDoc().getDescriptionList().add(line);
-        }
 
         /* In TypeScript, sets the header instead of import. */
         for (int index = 0; index < argClassStructure.getComponentHeaderList()
@@ -545,7 +546,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         }
 
         // Create non-named class.
-        fCgClass = fCgFactory.createClass(propsType, "");
+        fCgClass = fCgFactory.createClass(propsType, null);
         fCgSourceFile.getClassList().add(fCgClass);
         // Do not declare class for defineComponent calling.
         fCgClass.setNoClassDeclare(true);
@@ -648,7 +649,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setTabs(this.getTabs());
 
         // Create non-named class.
-        fCgClass = fCgFactory.createClass(emitsType, "");
+        fCgClass = fCgFactory.createClass(emitsType, null);
         fCgSourceFile.getClassList().add(fCgClass);
         // Do not declare class for defineComponent calling.
         fCgClass.setNoClassDeclare(true);
@@ -786,7 +787,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setTabs(this.getTabs());
 
         // Creates a class.
-        fCgClass = fCgFactory.createClass(className, "");
+        fCgClass = fCgFactory.createClass(className, null);
         fCgSourceFile.getClassList().add(fCgClass);
         fCgClass.setAccess("");
         fCgClass.setNoClassDeclare(true);

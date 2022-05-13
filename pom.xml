@@ -298,6 +298,8 @@
 						<configuration>
 							<target>
 								<delete dir="tmp" />
+								<delete dir="tmpObjects" />
+								<delete dir="tmpTest" />
 								<delete dir="blanco" />
 								<delete dir="sample" />
 								<delete dir="bin" />
