@@ -1092,12 +1092,12 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
-     * このバリューオブジェクトを指定のターゲットに複写します。
+     * Copies this value object to the specified target.
      *
-     * <P>使用上の注意</P>
+     * <P>Cautions for use</P>
      * <UL>
-     * <LI>オブジェクトのシャロー範囲のみ複写処理対象となります。
-     * <LI>オブジェクトが循環参照している場合には、このメソッドは使わないでください。
+     * <LI>Only the shallow range of the object will be subject to the copying process.
+     * <LI>Do not use this method if the object has a circular reference.
      * </UL>
      *
      * @param target target value object.
@@ -1135,19 +1135,19 @@ public class BlancoVueComponentClassStructure {
         target.fDescription = this.fDescription;
         // Name: fDescriptionList
         // Type: java.util.List
-        // フィールド[fDescriptionList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Field[fDescriptionList] is an unsupported type[java.util.Listjava.lang.String].
         // Name: fComponentHeaderList
         // Type: java.util.List
-        // フィールド[fComponentHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Field[fComponentHeaderList] is an unsupported type[java.util.Listjava.lang.String].
         // Name: fApiHeaderList
         // Type: java.util.List
-        // フィールド[fApiHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Field[fApiHeaderList] is an unsupported type[java.util.Listjava.lang.String].
         // Name: fPropsHeaderList
         // Type: java.util.List
-        // フィールド[fPropsHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Field[fPropsHeaderList] is an unsupported type[java.util.Listjava.lang.String].
         // Name: fEmitsHeaderList
         // Type: java.util.List
-        // フィールド[fEmitsHeaderList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Field[fEmitsHeaderList] is an unsupported type[java.util.Listjava.lang.String].
         // Name: fComponentKind
         // Type: java.lang.String
         target.fComponentKind = this.fComponentKind;
@@ -1180,22 +1180,22 @@ public class BlancoVueComponentClassStructure {
         target.fExtends = this.fExtends;
         // Name: fComponentList
         // Type: java.util.List
-        // フィールド[fComponentList]はサポート外の型[java.util.Listjava.lang.String]です。
+        // Field[fComponentList] is an unsupported type[java.util.Listjava.lang.String].
         // Name: fPropsList
         // Type: java.util.List
-        // フィールド[fPropsList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure]です。
+        // Field[fPropsList] is an unsupported type[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure].
         // Name: fApiList
         // Type: java.util.List
-        // フィールド[fApiList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentApiStructure]です。
+        // Field[fApiList] is an unsupported type[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentApiStructure].
         // Name: fEmitsList
         // Type: java.util.List
-        // フィールド[fEmitsList]はサポート外の型[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure]です。
+        // Field[fEmitsList] is an unsupported type[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure].
         // Name: fFileDescription
         // Type: java.lang.String
         target.fFileDescription = this.fFileDescription;
         // Name: fConstructorArgList
         // Type: java.util.List
-        // フィールド[fConstructorArgList]はサポート外の型[java.util.Listblanco.cg.valueobject.BlancoCgField]です。
+        // Field[fConstructorArgList] is an unsupported type[java.util.Listblanco.cg.valueobject.BlancoCgField].
         // Name: fSubject
         // Type: java.lang.String
         target.fSubject = this.fSubject;

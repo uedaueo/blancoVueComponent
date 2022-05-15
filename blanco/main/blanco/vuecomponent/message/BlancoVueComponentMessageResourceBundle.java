@@ -6,7 +6,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
- * メッセージ定義[BlancoVueComponent]が内部的に利用するリソースバンドルクラス。
+ * A resource bundle class used internally by the message definition [BlancoVueComponent].
  *
  * リソースバンドル定義: [BlancoVueComponentMessage]。<BR>
  * このクラスはリソースバンドル定義書から自動生成されたリソースバンドルクラスです。<BR>
