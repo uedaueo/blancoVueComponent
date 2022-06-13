@@ -519,7 +519,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         // Create interface first.
         fCgInterface = fCgFactory.createInterface(propsInterface, fBundle.getXml2sourceFilePropsInterfaceDescription());
         fCgSourceFile.getInterfaceList().add(fCgInterface);
-        fCgInterface.setAccess("");
+        fCgInterface.setAccess("public");
 
         for (BlancoVueComponentPropsStructure propsStructure : argClassStructure.getPropsList()) {
             BlancoCgField fieldInf = fCgFactory.createField(

@@ -5,7 +5,7 @@
 	<groupId>blanco.vuecomponent</groupId>
 	<artifactId>blanco-vuecomponent</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>blanco-vuecomponent</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 
@@ -231,7 +231,7 @@
 							<target>
 								<taskdef name="blancoresourcebundle" classname="blanco.resourcebundle.task.BlancoResourceBundleTask" classpathref="maven.compile.classpath">
 								</taskdef>
-								<blancoresourcebundle metadir="meta/program" encoding="${project.build.sourceEncoding}" />
+								<blancoresourcebundle metadir="meta/program" encoding="${project.build.sourceEncoding}" commenttimestamp="false" />
 							</target>
 						</configuration>
 						<goals>
