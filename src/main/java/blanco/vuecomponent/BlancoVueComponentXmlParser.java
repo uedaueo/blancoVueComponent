@@ -522,6 +522,12 @@ public class BlancoVueComponentXmlParser {
             BlancoVueComponentUtil.addImportHeaderList(componentSuffix + "Emits", "./" + argObjClassStructure.getName() + "Emits", argNamedExportedHeaderList);
         }
 
+        // make import info for RequestFactory
+        if (argObjClassStructure.getApiList() != null && argObjClassStructure.getApiList().size() > 0) {
+            String requestFactory = argObjClassStructure.getName() + "RequestFactory";
+            BlancoVueComponentUtil.addImportHeaderList(requestFactory, "./" + requestFactory, argNamedExportedHeaderList);
+        }
+
         String impleDir = argObjClassStructure.getImpledir() + "/";
         String classNameCannon = impleDir + argObjClassStructure.getPackage().replace('.', '/') + "/" + argObjClassStructure.getName();
 

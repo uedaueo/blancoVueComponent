@@ -444,7 +444,34 @@ public class BlancoVueComponentXml2TypeScriptClass {
         if (useSetup) {
             addCommaToListString(plainTextList);
             plainTextList.add("setup: (props, context) => {");
-            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context);");
+
+            /* Implement RequestFactory */
+            Boolean isRequestFactory = false;
+            if (argClassStructure.getApiList() != null && argClassStructure.getApiList().size() != 0) {
+                isRequestFactory = true;
+                String factoryClass = argClassStructure.getName() + "RequestFactory";
+                plainTextList.add("const factory: " + factoryClass + " = {");
+                int apiCount = 0;
+                for (BlancoVueComponentApiStructure apiStructure : argClassStructure.getApiList()) {
+                    if (apiCount > 0) {
+                        addCommaToListString(plainTextList);
+                    }
+                    String requestClass = BlancoNameAdjuster.toClassName(apiStructure.getName()) + BlancoNameAdjuster.toClassName(apiStructure.getMethod()) + "Request";
+                    String creator = "create" + requestClass;
+                    plainTextList.add(creator + "(): " + requestClass + " {");
+                    plainTextList.add("return new " + requestClass + "();");
+                    plainTextList.add("}");
+                    apiCount++;
+                }
+                plainTextList.add("}");
+
+                /* Add headers */
+                if (argClassStructure.getApiHeaderList() != null && argClassStructure.getApiHeaderList().size() > 0) {
+                    argClassStructure.getComponentHeaderList().addAll(argClassStructure.getApiHeaderList());
+                }
+            }
+
+            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context" + (isRequestFactory ? ", factory" : "") + ");");
             plainTextList.add(this.getTabSpace() + "}");
         }
         if (useData) {
@@ -751,25 +778,22 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
 
-        // Create class.
-        fCgClass = fCgFactory.createClass(factoryClass, fBundle.getXml2sourceFileRequestFactoryDescription(factoryClass));
-        fCgSourceFile.getClassList().add(fCgClass);
-        fCgClass.setAccess("public");
+        // Create interface.
+        fCgInterface = fCgFactory.createInterface(factoryClass, fBundle.getXml2sourceFileRequestFactoryDescription(factoryClass));
+        fCgSourceFile.getInterfaceList().add(fCgInterface);
+        fCgInterface.setAccess("public");
 
         for (BlancoVueComponentApiStructure apiStructure : argClassStructure.getApiList()) {
             String requestClass = BlancoNameAdjuster.toClassName(apiStructure.getName()) + BlancoNameAdjuster.toClassName(apiStructure.getMethod()) + "Request";
             String creator = "create" + requestClass;
             BlancoCgMethod apiMethod = fCgFactory.createMethod(creator, fBundle.getXml2sourceFileRequestFactoryMethodDescription(requestClass));
-            fCgClass.getMethodList().add(apiMethod);
-            apiMethod.setStatic(true);
+            fCgInterface.getMethodList().add(apiMethod);
             apiMethod.setAccess("public");
             apiMethod.setNotnull(true);
 
-            BlancoCgReturn apiReturn = fCgFactory.createReturn(requestClass, null);
+            BlancoCgReturn apiReturn = fCgFactory.createReturn(requestClass, fBundle.getXml2sourceFileRequestFactoryReturnDescription(requestClass));
             apiReturn.setNullable(false);
             apiMethod.setReturn(apiReturn);
-            List<String> line = apiMethod.getLineList();
-            line.add("return new " + requestClass + "();");
         }
 
         /* In TypeScript, sets the header instead of import. */
