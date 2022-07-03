@@ -21,11 +21,11 @@ public class BlancoVueComponentApiStructure {
     private String fName;
 
     /**
-     * APIの実装クラス名を指定します。必須項目です。
+     * APIのHTTPメソッドを指定します。必須項目です。
      *
-     * フィールド: [className]。
+     * フィールド: [method]。
      */
-    private String fClassName;
+    private String fMethod;
 
     /**
      * フィールドの説明です。
@@ -87,25 +87,25 @@ public class BlancoVueComponentApiStructure {
     }
 
     /**
-     * フィールド [className] の値を設定します。
+     * フィールド [method] の値を設定します。
      *
-     * フィールドの説明: [APIの実装クラス名を指定します。必須項目です。]。
+     * フィールドの説明: [APIのHTTPメソッドを指定します。必須項目です。]。
      *
-     * @param argClassName フィールド[className]に設定する値。
+     * @param argMethod フィールド[method]に設定する値。
      */
-    public void setClassName(final String argClassName) {
-        fClassName = argClassName;
+    public void setMethod(final String argMethod) {
+        fMethod = argMethod;
     }
 
     /**
-     * フィールド [className] の値を取得します。
+     * フィールド [method] の値を取得します。
      *
-     * フィールドの説明: [APIの実装クラス名を指定します。必須項目です。]。
+     * フィールドの説明: [APIのHTTPメソッドを指定します。必須項目です。]。
      *
-     * @return フィールド[className]から取得した値。
+     * @return フィールド[method]から取得した値。
      */
-    public String getClassName() {
-        return fClassName;
+    public String getMethod() {
+        return fMethod;
     }
 
     /**
@@ -170,7 +170,7 @@ public class BlancoVueComponentApiStructure {
         buf.append("blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure[");
         buf.append("no=" + fNo);
         buf.append(",name=" + fName);
-        buf.append(",className=" + fClassName);
+        buf.append(",method=" + fMethod);
         buf.append(",description=" + fDescription);
         buf.append(",descriptionList=" + fDescriptionList);
         buf.append("]");
@@ -201,9 +201,9 @@ public class BlancoVueComponentApiStructure {
         // Name: fName
         // Type: java.lang.String
         target.fName = this.fName;
-        // Name: fClassName
+        // Name: fMethod
         // Type: java.lang.String
-        target.fClassName = this.fClassName;
+        target.fMethod = this.fMethod;
         // Name: fDescription
         // Type: java.lang.String
         target.fDescription = this.fDescription;

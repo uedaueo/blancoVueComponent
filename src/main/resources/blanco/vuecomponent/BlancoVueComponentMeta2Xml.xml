@@ -124,8 +124,8 @@
         <tablecolumn name="name">
           <value>API名</value>
         </tablecolumn>
-        <tablecolumn name="class">
-          <value>クラス名</value>
+        <tablecolumn name="method">
+          <value>メソッド</value>
         </tablecolumn>
         <tablecolumn name="description">
           <value>説明</value>

@@ -608,12 +608,12 @@ public class BlancoVueComponentXmlParser {
                 apiStructure.setNo(apiNo);
             }
 
-            final String apiClass = BlancoXmlBindingUtil
-                    .getTextContent(elementList, "class");
-            if (apiClass == null || apiClass.trim().length() == 0) {
+            final String apiMethod = BlancoXmlBindingUtil
+                    .getTextContent(elementList, "method");
+            if (apiMethod == null || apiMethod.trim().length() == 0) {
                 continue;
             }
-            apiStructure.setClassName(apiClass);
+            apiStructure.setMethod(apiMethod);
 
             final String apiDescription = BlancoXmlBindingUtil
                     .getTextContent(elementList, "description");

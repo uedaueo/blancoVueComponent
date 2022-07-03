@@ -12,15 +12,13 @@ package blanco.vuecomponent;
 import blanco.cg.BlancoCgObjectFactory;
 import blanco.cg.BlancoCgSupportedLang;
 import blanco.cg.transformer.BlancoCgTransformerFactory;
-import blanco.cg.valueobject.BlancoCgClass;
-import blanco.cg.valueobject.BlancoCgField;
-import blanco.cg.valueobject.BlancoCgInterface;
-import blanco.cg.valueobject.BlancoCgSourceFile;
+import blanco.cg.valueobject.*;
 import blanco.commons.util.BlancoNameAdjuster;
 import blanco.commons.util.BlancoStringUtil;
 import blanco.commons.util.BlancoXmlUtil;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
+import blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure;
 import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
 import blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure;
 import blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure;
@@ -167,6 +165,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
             /* Generate emits options */
             if (classStructure.getEmitsList() != null && classStructure.getEmitsList().size() != 0) {
                 generateEmitsOptioins(classStructure, argDirectoryTarget);
+            }
+
+            /* Generate RequestFactory  */
+            if (classStructure.getApiList() != null && classStructure.getApiList().size() != 0) {
+                generateRequestFactory(classStructure, argDirectoryTarget);
             }
 
             /* In the case of the screen, creates a RouterConfig. */
@@ -702,6 +705,77 @@ public class BlancoVueComponentXml2TypeScriptClass {
         for (int index = 0; index < argClassStructure.getEmitsHeaderList()
                 .size(); index++) {
             final String header = (String) argClassStructure.getEmitsHeaderList()
+                    .get(index);
+            fCgSourceFile.getHeaderList().add(header);
+        }
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * Generate RequestFactory class
+     *
+     * @param argClassStructure
+     * @param argDirectoryTarget
+     * @throws IOException
+     */
+    public void generateRequestFactory(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final File argDirectoryTarget) throws IOException {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of
+         the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateRequestFactory argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String factoryClass = argClassStructure.getName() + "RequestFactory";
+
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+
+        fCgSourceFile = fCgFactory.createSourceFile(argClassStructure
+                .getPackage(), null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Create class.
+        fCgClass = fCgFactory.createClass(factoryClass, fBundle.getXml2sourceFileRequestFactoryDescription(factoryClass));
+        fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("public");
+
+        for (BlancoVueComponentApiStructure apiStructure : argClassStructure.getApiList()) {
+            String requestClass = BlancoNameAdjuster.toClassName(apiStructure.getName()) + BlancoNameAdjuster.toClassName(apiStructure.getMethod()) + "Request";
+            String creator = "create" + requestClass;
+            BlancoCgMethod apiMethod = fCgFactory.createMethod(creator, fBundle.getXml2sourceFileRequestFactoryMethodDescription(requestClass));
+            fCgClass.getMethodList().add(apiMethod);
+            apiMethod.setStatic(true);
+            apiMethod.setAccess("public");
+            apiMethod.setNotnull(true);
+
+            BlancoCgReturn apiReturn = fCgFactory.createReturn(requestClass, null);
+            apiReturn.setNullable(false);
+            apiMethod.setReturn(apiReturn);
+            List<String> line = apiMethod.getLineList();
+            line.add("return new " + requestClass + "();");
+        }
+
+        /* In TypeScript, sets the header instead of import. */
+        for (int index = 0; index < argClassStructure.getApiHeaderList()
+                .size(); index++) {
+            final String header = (String) argClassStructure.getApiHeaderList()
                     .get(index);
             fCgSourceFile.getHeaderList().add(header);
         }
