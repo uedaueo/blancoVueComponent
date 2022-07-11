@@ -471,16 +471,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 }
             }
 
-            /* Implement onBeforeRouterLeave */
-            if (BlancoStringUtil.null2Blank(argClassStructure.getBeforeRouterLeave()).length() > 0) {
+            /* Implement onBeforeRouteLeave */
+            if (BlancoStringUtil.null2Blank(argClassStructure.getBeforeRouteLeave()).length() > 0) {
                 plainTextList.add ("onBeforeRouteLeave((to, from, next) => {");
-                plainTextList.add(argClassStructure.getBeforeRouterLeave() + "(useRouter(), to, from, next);");
+                plainTextList.add(argClassStructure.getBeforeRouteLeave() + "(useRouter(), to, from, next);");
                 plainTextList.add("});");
+                /* Add headers */
+                argClassStructure.getComponentHeaderList().add("import { onBeforeRouteLeave, useRouter } from \"vue-router\"");
             }
-
-            /* Add headers */
-            argClassStructure.getComponentHeaderList().add("import { onBeforeRouteLeave, useRouter } from \"vue-router\"");
-            argClassStructure.getComponentHeaderList().add("import { RouterHooks } from \"@/utils/RouterHooks\"");
 
             plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context" + (isRequestFactory ? ", factory" : "") + ");");
             plainTextList.add(this.getTabSpace() + "}");

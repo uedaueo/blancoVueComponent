@@ -477,9 +477,9 @@ public class BlancoVueComponentXmlParser {
         argObjClassStructure.setUseData("true".equals(BlancoXmlBindingUtil
                 .getTextContent(argElementCommon, "useData")));
 
-        String beforeRouterLeave = BlancoXmlBindingUtil.getTextContent(argElementCommon, "beforeRouterLeave");
-        if (BlancoStringUtil.null2Blank(beforeRouterLeave).length() > 0) {
-            argObjClassStructure.setBeforeRouterLeave(beforeRouterLeave);
+        String beforeRouteLeave = BlancoXmlBindingUtil.getTextContent(argElementCommon, "beforeRouteLeave");
+        if (BlancoStringUtil.null2Blank(beforeRouteLeave).length() > 0) {
+            argObjClassStructure.setBeforeRouteLeave(beforeRouteLeave);
         }
 
         argObjClassStructure.setAdjustFieldName("true".equals(BlancoXmlBindingUtil
