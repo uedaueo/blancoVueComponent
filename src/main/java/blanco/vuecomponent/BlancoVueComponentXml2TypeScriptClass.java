@@ -463,13 +463,24 @@ public class BlancoVueComponentXml2TypeScriptClass {
                     plainTextList.add("}");
                     apiCount++;
                 }
-                plainTextList.add("}");
+                plainTextList.add("};");
 
                 /* Add headers */
                 if (argClassStructure.getApiHeaderList() != null && argClassStructure.getApiHeaderList().size() > 0) {
                     argClassStructure.getComponentHeaderList().addAll(argClassStructure.getApiHeaderList());
                 }
             }
+
+            /* Implement onBeforeRouterLeave */
+            if (BlancoStringUtil.null2Blank(argClassStructure.getBeforeRouterLeave()).length() > 0) {
+                plainTextList.add ("onBeforeRouteLeave((to, from, next) => {");
+                plainTextList.add(argClassStructure.getBeforeRouterLeave() + "(useRouter(), to, from, next);");
+                plainTextList.add("});");
+            }
+
+            /* Add headers */
+            argClassStructure.getComponentHeaderList().add("import { onBeforeRouteLeave, useRouter } from \"vue-router\"");
+            argClassStructure.getComponentHeaderList().add("import { RouterHooks } from \"@/utils/RouterHooks\"");
 
             plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context" + (isRequestFactory ? ", factory" : "") + ");");
             plainTextList.add(this.getTabSpace() + "}");

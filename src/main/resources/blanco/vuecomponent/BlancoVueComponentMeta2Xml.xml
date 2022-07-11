@@ -62,6 +62,9 @@
         <propertykey name="useData" waitX="2">
           <value>data関数を実装する</value>
         </propertykey>
+        <propertykey name="beforeRouterLeave" waitX="2">
+          <value>BeforeRouterLeave関数名</value>
+        </propertykey>
         <propertykey name="adjustFieldName" waitX="2">
           <value>フィールド名の変形</value>
         </propertykey>

@@ -269,6 +269,14 @@ public class BlancoVueComponentClassStructure {
     private Boolean fUseData = false;
 
     /**
+     * BeforeRouterLeave関数名を定義します。
+     *
+     * フィールド: [beforeRouterLeave]。
+     * デフォルト: [&quot;&quot;]。
+     */
+    private String fBeforeRouterLeave = "";
+
+    /**
      * フィールド [name] の値を設定します。
      *
      * フィールドの説明: [フィールド名を指定します。必須項目です。]。
@@ -1039,6 +1047,29 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [beforeRouterLeave] の値を設定します。
+     *
+     * フィールドの説明: [BeforeRouterLeave関数名を定義します。]。
+     *
+     * @param argBeforeRouterLeave フィールド[beforeRouterLeave]に設定する値。
+     */
+    public void setBeforeRouterLeave(final String argBeforeRouterLeave) {
+        fBeforeRouterLeave = argBeforeRouterLeave;
+    }
+
+    /**
+     * フィールド [beforeRouterLeave] の値を取得します。
+     *
+     * フィールドの説明: [BeforeRouterLeave関数名を定義します。]。
+     * デフォルト: [&quot;&quot;]。
+     *
+     * @return フィールド[beforeRouterLeave]から取得した値。
+     */
+    public String getBeforeRouterLeave() {
+        return fBeforeRouterLeave;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -1087,6 +1118,7 @@ public class BlancoVueComponentClassStructure {
         buf.append(",alias=" + fAlias);
         buf.append(",useSetup=" + fUseSetup);
         buf.append(",useData=" + fUseData);
+        buf.append(",beforeRouterLeave=" + fBeforeRouterLeave);
         buf.append("]");
         return buf.toString();
     }
@@ -1211,5 +1243,8 @@ public class BlancoVueComponentClassStructure {
         // Name: fUseData
         // Type: java.lang.Boolean
         target.fUseData = this.fUseData;
+        // Name: fBeforeRouterLeave
+        // Type: java.lang.String
+        target.fBeforeRouterLeave = this.fBeforeRouterLeave;
     }
 }
