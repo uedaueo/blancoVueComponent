@@ -473,8 +473,9 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
             /* Implement onBeforeRouteLeave */
             if (BlancoStringUtil.null2Blank(argClassStructure.getBeforeRouteLeave()).length() > 0) {
+                plainTextList.add("const noAuthPath = inject<string>('noAuthPath');");
                 plainTextList.add ("onBeforeRouteLeave((to, from, next) => {");
-                plainTextList.add(argClassStructure.getBeforeRouteLeave() + "(useRouter(), to, from, next);");
+                plainTextList.add(argClassStructure.getBeforeRouteLeave() + "(useRouter(), to, from, next, noAuthPath!);");
                 plainTextList.add("});");
                 /* Add headers */
                 argClassStructure.getComponentHeaderList().add("import { onBeforeRouteLeave, useRouter } from \"vue-router\"");

@@ -515,7 +515,9 @@ public class BlancoVueComponentXmlParser {
     ) {
         // make "import info for defineComponent
         BlancoVueComponentUtil.addImportHeaderList("defineComponent", "vue", argNamedExportedHeaderList);
-
+        if (BlancoStringUtil.null2Blank(argObjClassStructure.getBeforeRouteLeave()).length() > 0) {
+            BlancoVueComponentUtil.addImportHeaderList("inject", "vue", argNamedExportedHeaderList);
+        }
         String componentSuffix = BlancoNameAdjuster.toParameterName(argObjClassStructure.getName());
 
         // make import info for props. props is always required.
