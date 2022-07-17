@@ -445,6 +445,9 @@ public class BlancoVueComponentXml2TypeScriptClass {
             addCommaToListString(plainTextList);
             plainTextList.add("setup: (props, context) => {");
 
+            /* cast props as the ComponentProps type. */
+            plainTextList.add("const myProps = props as " + propsType + ";");
+
             /* Implement RequestFactory */
             Boolean isRequestFactory = false;
             if (argClassStructure.getApiList() != null && argClassStructure.getApiList().size() != 0) {
@@ -472,16 +475,16 @@ public class BlancoVueComponentXml2TypeScriptClass {
             }
 
             /* Implement onBeforeRouteLeave */
-            if (BlancoStringUtil.null2Blank(argClassStructure.getBeforeRouteLeave()).length() > 0) {
+            if (BlancoStringUtil.null2Blank(argClassStructure.getBeforeRouteLeave()).length() > 0 && "screen".equals(argClassStructure.getComponentKind())) {
                 plainTextList.add("const noAuthPath = inject<string>('noAuthPath');");
                 plainTextList.add ("onBeforeRouteLeave((to, from, next) => {");
-                plainTextList.add(argClassStructure.getBeforeRouteLeave() + "(useRouter(), to, from, next, noAuthPath!);");
+                plainTextList.add(argClassStructure.getBeforeRouteLeave() + "(useRouter(), to, from, next, myProps.componentId, noAuthPath!);");
                 plainTextList.add("});");
                 /* Add headers */
                 argClassStructure.getComponentHeaderList().add("import { onBeforeRouteLeave, useRouter } from \"vue-router\"");
             }
 
-            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(props as " + propsType + ", context" + (isRequestFactory ? ", factory" : "") + ");");
+            plainTextList.add(this.getTabSpace() + this.getTabSpace() + "return " + BlancoNameAdjuster.toParameterName(argClassStructure.getName()) + "Setup(myProps, context" + (isRequestFactory ? ", factory" : "") + ");");
             plainTextList.add(this.getTabSpace() + "}");
         }
         if (useData) {
