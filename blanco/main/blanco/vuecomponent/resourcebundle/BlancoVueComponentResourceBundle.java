@@ -1108,6 +1108,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_COMPOENENT_ID.DESCRIPTION]
+     *
+     * [コンポーネントのcomponentIdプロパティです] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS_COMPOENENT_ID.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsCompoenentIdDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネントのcomponentIdプロパティです";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS_COMPOENENT_ID.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_INTERFACE.DESCRIPTION]
      *
      * [コンポーネントのプロパティを定義するインタフェイスです] (ja)<br>

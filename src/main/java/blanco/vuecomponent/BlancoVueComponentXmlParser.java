@@ -282,7 +282,7 @@ public class BlancoVueComponentXmlParser {
             this.parseVueComponentProps(elementListRoot, namedExportecHeaderList, objClassStructure);
         }
         /*
-         * subject and alias properties are automatically generated.
+         * subject ,alias and componentId properties are automatically generated.
          */
         objClassStructure.getPropsList().add(0, this.generatePropsStructure(
                 "alias",
@@ -297,6 +297,13 @@ public class BlancoVueComponentXmlParser {
                 true,
                 "\"" + objClassStructure.getSubject() + "\"",
                 fBundle.getXml2sourceFilePropsSubjectDescription()
+        ));
+        objClassStructure.getPropsList().add(0, this.generatePropsStructure(
+                "componentId",
+                "string",
+                false,
+                "\"" + objClassStructure.getName() + "\"",
+                fBundle.getXml2sourceFilePropsCompoenentIdDescription()
         ));
 
         /*
