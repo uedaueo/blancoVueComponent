@@ -683,7 +683,7 @@ public class BlancoVueComponentXmlParser {
              */
             String phpType = BlancoXmlBindingUtil.getTextContent(elementList, "type");
             String targetType = BlancoVueComponentUtil.convertPhpType2Ts(phpType, argObjClassStructure, argHeaderList, false);
-            propsStructure.setType(targetType);
+            propsStructure.setType(BlancoVueComponentUtil.getSimpleClassName(targetType));
 
             /* Supports Generic. */
             String phpGeneric = BlancoXmlBindingUtil.getTextContent(elementList, "generic");
@@ -699,7 +699,7 @@ public class BlancoVueComponentXmlParser {
                             phpGeneric
                     ));
                 }
-                propsStructure.setGeneric(targetGeneric);
+                propsStructure.setGeneric(BlancoVueComponentUtil.getSimpleClassName(targetGeneric));
             }
 
             // Supports required.
