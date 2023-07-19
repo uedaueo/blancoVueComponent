@@ -735,6 +735,15 @@ public class BlancoVueComponentXmlParser {
             propsStructure.setDefault(BlancoXmlBindingUtil.getTextContent(
                     elementList, "default"));
 
+            /*
+             * if specified queryParam, default value is required.
+             */
+            if (BlancoStringUtil.null2Blank(propsStructure.getQueryParam()).trim().length() > 0) {
+                if (BlancoStringUtil.null2Blank(propsStructure.getDefault()).trim().length() == 0) {
+                    propsStructure.setDefault("\"\"");
+                }
+            }
+
             argObjClassStructure.getPropsList().add(propsStructure);
         }
     }

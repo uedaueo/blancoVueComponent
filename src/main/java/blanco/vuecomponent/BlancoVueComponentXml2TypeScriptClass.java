@@ -632,9 +632,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
                     propsBuf.append(propsStructure.getDefault());
                 }
                 propsBuf.append(this.getLineSeparator() + this.getTabSpace() + "}");
-            } else {
-                written = false;
             }
+//            else {
+//                written = false;
+//            }
             loopCount++;
         }
         propsBuf.append(this.getLineSeparator() + "}");
