@@ -471,6 +471,8 @@ public class BlancoVueComponentXmlParser {
 
         argObjClassStructure.setAuthRequired("true".equals(BlancoXmlBindingUtil
                 .getTextContent(argElementCommon, "authRequired")));
+        argObjClassStructure.setLayoutType(BlancoXmlBindingUtil.getTextContent(
+                argElementCommon, "layoutType"));
         argObjClassStructure.setForceReload("true".equals(BlancoXmlBindingUtil
                 .getTextContent(argElementCommon, "forceReload")));
         argObjClassStructure.setUseTemplate("true".equals(BlancoXmlBindingUtil

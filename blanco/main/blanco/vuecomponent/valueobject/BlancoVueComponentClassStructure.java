@@ -277,6 +277,14 @@ public class BlancoVueComponentClassStructure {
     private String fBeforeRouteLeave = "";
 
     /**
+     * レイアウト識別子。設定した値をそのままRoutePath.meta に設定します。
+     *
+     * フィールド: [layoutType]。
+     * デフォルト: [&quot;&quot;]。
+     */
+    private String fLayoutType = "";
+
+    /**
      * フィールド [name] の値を設定します。
      *
      * フィールドの説明: [フィールド名を指定します。必須項目です。]。
@@ -1070,6 +1078,29 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [layoutType] の値を設定します。
+     *
+     * フィールドの説明: [レイアウト識別子。設定した値をそのままRoutePath.meta に設定します。]。
+     *
+     * @param argLayoutType フィールド[layoutType]に設定する値。
+     */
+    public void setLayoutType(final String argLayoutType) {
+        fLayoutType = argLayoutType;
+    }
+
+    /**
+     * フィールド [layoutType] の値を取得します。
+     *
+     * フィールドの説明: [レイアウト識別子。設定した値をそのままRoutePath.meta に設定します。]。
+     * デフォルト: [&quot;&quot;]。
+     *
+     * @return フィールド[layoutType]から取得した値。
+     */
+    public String getLayoutType() {
+        return fLayoutType;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -1119,6 +1150,7 @@ public class BlancoVueComponentClassStructure {
         buf.append(",useSetup=" + fUseSetup);
         buf.append(",useData=" + fUseData);
         buf.append(",beforeRouteLeave=" + fBeforeRouteLeave);
+        buf.append(",layoutType=" + fLayoutType);
         buf.append("]");
         return buf.toString();
     }
@@ -1246,5 +1278,8 @@ public class BlancoVueComponentClassStructure {
         // Name: fBeforeRouteLeave
         // Type: java.lang.String
         target.fBeforeRouteLeave = this.fBeforeRouteLeave;
+        // Name: fLayoutType
+        // Type: java.lang.String
+        target.fLayoutType = this.fLayoutType;
     }
 }

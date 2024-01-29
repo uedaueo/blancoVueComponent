@@ -44,6 +44,9 @@
         <propertykey name="authRequired" waitX="2">
           <value>認証が必要なコンポーネント</value>
         </propertykey>
+        <propertykey name="layoutType" waitX="2">
+          <value>レイアウト</value>
+        </propertykey>
         <propertykey name="forceReload" waitX="2">
           <value>画面を強制再読込する</value>
         </propertykey>
