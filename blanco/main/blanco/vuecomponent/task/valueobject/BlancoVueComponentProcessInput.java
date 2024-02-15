@@ -75,7 +75,7 @@ public class BlancoVueComponentProcessInput {
     private String fTargetStyle = "blanco";
 
     /**
-     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した画面コンポーネントのRouteRecordクラスの一覧を返す関数を生成します。この関数はvue-routerの初期設定に使用されます。関数名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。
      *
      * フィールド: [listClass]。
      */
@@ -95,6 +95,21 @@ public class BlancoVueComponentProcessInput {
      * フィールド: [searchTmpdir]。
      */
     private String fSearchTmpdir;
+
+    /**
+     * routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。
+     *
+     * フィールド: [routeRecordMapKey]。
+     * デフォルト: [&quot;alias&quot;]。
+     */
+    private String fRouteRecordMapKey = "\"alias\"";
+
+    /**
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。
+     *
+     * フィールド: [routeRecordMap]。
+     */
+    private String fRouteRecordMap;
 
     /**
      * フィールド [verbose] の値を設定します。
@@ -304,7 +319,7 @@ public class BlancoVueComponentProcessInput {
     /**
      * フィールド [listClass] の値を設定します。
      *
-     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。]。
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した画面コンポーネントのRouteRecordクラスの一覧を返す関数を生成します。この関数はvue-routerの初期設定に使用されます。関数名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]。
      *
      * @param argListClass フィールド[listClass]に設定する値。
      */
@@ -315,7 +330,7 @@ public class BlancoVueComponentProcessInput {
     /**
      * フィールド [listClass] の値を取得します。
      *
-     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。]。
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した画面コンポーネントのRouteRecordクラスの一覧を返す関数を生成します。この関数はvue-routerの初期設定に使用されます。関数名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]。
      *
      * @return フィールド[listClass]から取得した値。
      */
@@ -369,6 +384,51 @@ public class BlancoVueComponentProcessInput {
     }
 
     /**
+     * フィールド [routeRecordMapKey] の値を設定します。
+     *
+     * フィールドの説明: [routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]。
+     *
+     * @param argRouteRecordMapKey フィールド[routeRecordMapKey]に設定する値。
+     */
+    public void setRouteRecordMapKey(final String argRouteRecordMapKey) {
+        fRouteRecordMapKey = argRouteRecordMapKey;
+    }
+
+    /**
+     * フィールド [routeRecordMapKey] の値を取得します。
+     *
+     * フィールドの説明: [routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]。
+     * デフォルト: [&quot;alias&quot;]。
+     *
+     * @return フィールド[routeRecordMapKey]から取得した値。
+     */
+    public String getRouteRecordMapKey() {
+        return fRouteRecordMapKey;
+    }
+
+    /**
+     * フィールド [routeRecordMap] の値を設定します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]。
+     *
+     * @param argRouteRecordMap フィールド[routeRecordMap]に設定する値。
+     */
+    public void setRouteRecordMap(final String argRouteRecordMap) {
+        fRouteRecordMap = argRouteRecordMap;
+    }
+
+    /**
+     * フィールド [routeRecordMap] の値を取得します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]。
+     *
+     * @return フィールド[routeRecordMap]から取得した値。
+     */
+    public String getRouteRecordMap() {
+        return fRouteRecordMap;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -395,6 +455,8 @@ public class BlancoVueComponentProcessInput {
         buf.append(",listClass=" + fListClass);
         buf.append(",lineSeparator=" + fLineSeparator);
         buf.append(",searchTmpdir=" + fSearchTmpdir);
+        buf.append(",routeRecordMapKey=" + fRouteRecordMapKey);
+        buf.append(",routeRecordMap=" + fRouteRecordMap);
         buf.append("]");
         return buf.toString();
     }
@@ -453,5 +515,11 @@ public class BlancoVueComponentProcessInput {
         // Name: fSearchTmpdir
         // Type: java.lang.String
         target.fSearchTmpdir = this.fSearchTmpdir;
+        // Name: fRouteRecordMapKey
+        // Type: java.lang.String
+        target.fRouteRecordMapKey = this.fRouteRecordMapKey;
+        // Name: fRouteRecordMap
+        // Type: java.lang.String
+        target.fRouteRecordMap = this.fRouteRecordMap;
     }
 }

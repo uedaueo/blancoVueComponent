@@ -120,6 +120,8 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
          * The reason is that in the PHP-style definitions, the package name is not specified when specifying a class.
          */
             BlancoVueComponentUtil.isVerbose = input.getVerbose();
+            BlancoVueComponentUtil.routeRecordMapKey = input.getRouteRecordMapKey();
+
             BlancoVueComponentUtil.processValueObjects(input);
 
             /*
@@ -130,8 +132,14 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             boolean createClassList = false;
             String listClassName = input.getListClass();
             List<BlancoVueComponentClassStructure> screenComponentStructures = new ArrayList<>();
-            if (listClassName != null && listClassName.length() > 0) {
+            if (listClassName != null && !listClassName.isEmpty()) {
                 createClassList = true;
+            }
+
+            boolean createRouteRecordMap = false;
+            String routeRecordMapName = input.getRouteRecordMap();
+            if (routeRecordMapName != null && !routeRecordMapName.isEmpty()) {
+                createRouteRecordMap = true;
             }
 
             // Next, scans the directory specified as the meta directory.
@@ -167,17 +175,34 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             if (createClassList) {
                 if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
                     System.out.println("[WARN] listClass is specified but no meta file. : " + listClassName);
-                    return BlancoVueComponentBatchProcess.END_SUCCESS;
+                } else {
+                    final BlancoVueComponentXml2TypeScriptClass xml2Class = new BlancoVueComponentXml2TypeScriptClass();
+                    xml2Class.setEncoding(input.getEncoding());
+                    xml2Class.setVerbose(input.getVerbose());
+                    xml2Class.setTargetStyleAdvanced(isTargetStyleAdvanced);
+                    xml2Class.setXmlRootElement(input.getXmlrootelement());
+                    xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
+                    xml2Class.setTabs(input.getTabs());
+                    xml2Class.setListClass(listClassName);
+                    xml2Class.processListClass(screenComponentStructures, new File(strTarget));
                 }
-                final BlancoVueComponentXml2TypeScriptClass xml2Class = new BlancoVueComponentXml2TypeScriptClass();
-                xml2Class.setEncoding(input.getEncoding());
-                xml2Class.setVerbose(input.getVerbose());
-                xml2Class.setTargetStyleAdvanced(isTargetStyleAdvanced);
-                xml2Class.setXmlRootElement(input.getXmlrootelement());
-                xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
-                xml2Class.setTabs(input.getTabs());
-                xml2Class.setListClass(listClassName);
-                xml2Class.processListClass(screenComponentStructures, new File(strTarget));
+            }
+
+            if (createRouteRecordMap) {
+                if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
+                    System.out.println("[WARN] routeRecordMap is specified but no meta file. : " + routeRecordMapName);
+                } else {
+                    final BlancoVueComponentXml2TypeScriptClass xml2Class = new BlancoVueComponentXml2TypeScriptClass();
+                    xml2Class.setEncoding(input.getEncoding());
+                    xml2Class.setVerbose(input.getVerbose());
+                    xml2Class.setTargetStyleAdvanced(isTargetStyleAdvanced);
+                    xml2Class.setXmlRootElement(input.getXmlrootelement());
+                    xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
+                    xml2Class.setTabs(input.getTabs());
+                    xml2Class.setRouteRecordMap(routeRecordMapName);
+                    xml2Class.processRouteRecordMap(screenComponentStructures, new File(strTarget));
+                    xml2Class.processRouteRecordMapInterface(screenComponentStructures, new File(strTarget));
+                }
             }
 
             return BlancoVueComponentBatchProcess.END_SUCCESS;

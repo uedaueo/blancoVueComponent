@@ -27,6 +27,8 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +95,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
     public void setListClass(String listClass) {
         this.fListClass = listClass;
+    }
+
+    private String fRouteRecordMap = "";
+    public String getRouteRecordMap() {
+        return this.fRouteRecordMap;
+    }
+    public void setRouteRecordMap(String routeRecordMap) {
+        this.fRouteRecordMap = routeRecordMap;
     }
 
     /**
@@ -261,6 +271,185 @@ public class BlancoVueComponentXml2TypeScriptClass {
             fCgSourceFile.getHeaderList().add(importHeader);
         }
         defaultValue.append(this.getLineSeparator() + this.getTabSpace() + "]");
+        defaultValue.append(this.getLineSeparator() + "}");
+
+        field.setDefault(defaultValue.toString());
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * create RouteRecordMapInterface.<br>
+     * <br>
+     * import {RouteRecordRaw} from "vue-router";<br>
+     * export interface RouteRecordMapInterface {<br>
+     *   [key: string]: RouteRecordRaw;<br>
+     * }<br>
+     * <br>
+     * @param argClassStructures
+     * @param argDirectoryTarget
+     */
+    public void processRouteRecordMapInterface(
+            final List<BlancoVueComponentClassStructure> argClassStructures,
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String interfaceName = this.getRouteRecordMap() + "Interface";
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(interfaceName);
+        String packageName = BlancoVueComponentUtil.getPackageName(interfaceName);
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a interface.
+        fCgInterface = fCgFactory.createInterface(simpleClassName, fBundle.getXml2sourceFileRouterecordMapInterface());
+        fCgSourceFile.getInterfaceList().add(fCgInterface);
+        fCgInterface.setAccess("public");
+        /*
+         * Creates an import.
+         */
+        String importHeader = "import { RouteRecordRaw } from \"vue-router\"";
+        fCgSourceFile.getHeaderList().add(importHeader);
+
+        List<String> plainTextList = fCgInterface.getPlainTextList();
+        plainTextList.add(this.getTabSpace() + "[key: string]: RouteRecordRaw;");
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * After all meta files are parsed and generated, generate routeRecordMap
+     * mainly using for bread crumbs .
+     *
+     * @param argClassStructures
+     * @param argDirectoryTarget
+     * @throws IOException
+     */
+    public void processRouteRecordMap(
+            final List<BlancoVueComponentClassStructure> argClassStructures,
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(this.getRouteRecordMap());
+        String constName = BlancoNameAdjuster.toParameterName(simpleClassName);
+        String packageName = BlancoVueComponentUtil.getPackageName(this.getRouteRecordMap());
+        String simpleInterfaceName = simpleClassName + "Interface";
+
+        /* At least one structure exists. */
+        BlancoVueComponentClassStructure delegateStructure = argClassStructures.get(0);
+        String baseDir = delegateStructure.getBasedir();
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a class.
+        fCgClass = fCgFactory.createClass(simpleClassName, fBundle.getXml2sourceFileRouteconfigList());
+        fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("");
+        fCgClass.setNoClassDeclare(true);
+
+        final BlancoCgField field = fCgFactory.createField(constName,
+                "dummy", fBundle.getXml2sourceFileRouteSettingsConstDescription());
+        fCgClass.getFieldList().add(field);
+
+        field.setNotnull(true);
+        field.setAccess("export const");
+//        field.setTypeInference(true);
+        BlancoCgType myType = fCgFactory.createType(simpleInterfaceName);
+        field.setType(myType);
+
+        StringBuffer defaultValue = new StringBuffer();
+        defaultValue.append("{" + this.getLineSeparator());
+
+        /* Import interface */
+        String interfaceHeader = "import { " + simpleInterfaceName + " } from \"" + baseDir + "/" + packageName.replace(".", "/") + "/" + simpleInterfaceName + "\"";
+        fCgSourceFile.getHeaderList().add(interfaceHeader);
+
+        /* "alias" is defined as default value. */
+        String keyGetter = "get" + BlancoNameAdjuster.toClassName(BlancoVueComponentUtil.routeRecordMapKey);
+
+        String routeRecordSuffix = "RouteRecord";
+        int i = 0;
+        for (BlancoVueComponentClassStructure structure : argClassStructures) {
+            /* get key value first. */
+            String keyValue = null;
+            Class<? extends BlancoVueComponentClassStructure> clazz = structure.getClass();
+            try {
+                Method getter = clazz.getMethod(keyGetter);
+                keyValue = (String) getter.invoke(structure);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error!!! next structure.");
+            }
+            if (keyValue == null || keyValue.isEmpty()) {
+                System.out.println("No Such Item: " + keyGetter);
+                continue;
+            }
+
+            /* get routeRecord const name. */
+            String className = structure.getName() + routeRecordSuffix;
+            String classConstName = BlancoNameAdjuster.toParameterName(className);
+            String classPackageName = structure.getPackage();
+            if (classPackageName == null) {
+                classPackageName = "";
+            }
+
+            if (i != 0) {
+                defaultValue.append("," + this.getLineSeparator());
+            }
+            i++;
+
+            defaultValue.append(this.getTabSpace() + keyValue + ": " + classConstName);
+
+            /*
+             * Creates an import list.
+             * Since duplicates are not allowed, the strategy is rather not to check for duplicates, but rather to generate errors at compiling.
+             */
+            String importHeader = "import { " + classConstName + " } from \"" + structure.getBasedir() + "/" + classPackageName.replace(".", "/") + "/" + className + "\"";
+            fCgSourceFile.getHeaderList().add(importHeader);
+        }
         defaultValue.append(this.getLineSeparator() + "}");
 
         field.setDefault(defaultValue.toString());

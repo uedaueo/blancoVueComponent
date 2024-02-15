@@ -274,6 +274,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_BREAD_CRUMBS]
+     *
+     * [blancovuecomponent-bread-crumbs] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_BREAD_CRUMBS]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementBreadCrumbs() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-bread-crumbs";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_BREAD_CRUMBS");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2JAVACLASS.FIELD.NAME]
      *
      * [フィールド: [{0}]。] (ja)<br>
@@ -1317,6 +1337,46 @@ public class BlancoVueComponentResourceBundle {
         // 与えられた引数を元に置換文字列を置き換えます。
         messageFormat.format(new Object[] {arg0}, strbuf, null);
         return strbuf.toString();
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTERECORD.MAP.INTERFACE]
+     *
+     * [コンポーネント別名などをキーにRouteRecordを取得するMapのインタフェイスです。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.ROUTERECORD.MAP.INTERFACE]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileRouterecordMapInterface() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネント別名などをキーにRouteRecordを取得するMapのインタフェイスです。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTERECORD.MAP.INTERFACE");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTERECORD.MAP]
+     *
+     * [コンポーネント別名などをキーにRouteRecordを取得するMapです。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.ROUTERECORD.MAP]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileRouterecordMap() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネント別名などをキーにRouteRecordを取得するMapです。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTERECORD.MAP");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
     }
 
     /**

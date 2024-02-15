@@ -18,6 +18,9 @@ public class BlancoVueComponentUtil {
 
     static public boolean isVerbose = false;
 
+    /* for BreadCrumbs */
+    static public String routeRecordMapKey = "alias";
+
     public static HashMap<String, BlancoValueObjectTsClassStructure> objects = new HashMap<>();
 
     static public void processValueObjects(final BlancoVueComponentProcessInput input) throws IOException {

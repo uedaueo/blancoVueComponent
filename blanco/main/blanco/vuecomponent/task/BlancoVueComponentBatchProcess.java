@@ -80,6 +80,10 @@ public class BlancoVueComponentBatchProcess {
                 input.setLineSeparator(arg.substring(15));
             } else if (arg.startsWith("-searchTmpdir=")) {
                 input.setSearchTmpdir(arg.substring(14));
+            } else if (arg.startsWith("-routeRecordMapKey=")) {
+                input.setRouteRecordMapKey(arg.substring(19));
+            } else if (arg.startsWith("-routeRecordMap=")) {
+                input.setRouteRecordMap(arg.substring(16));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -173,7 +177,7 @@ public class BlancoVueComponentBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoVueComponentBatchProcess: Usage:");
-        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12");
+        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -210,7 +214,7 @@ public class BlancoVueComponentBatchProcess {
         System.out.println("      type[string]");
         System.out.println("      default value[blanco]");
         System.out.println("    -listClass");
-        System.out.println("      explanation[未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。]");
+        System.out.println("      explanation[未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した画面コンポーネントのRouteRecordクラスの一覧を返す関数を生成します。この関数はvue-routerの初期設定に使用されます。関数名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]");
         System.out.println("      type[string]");
         System.out.println("    -lineSeparator");
         System.out.println("      explanation[行末記号をしていします。LF=0x0a, CR=0x0d, CFLF=0x0d0x0a とします。LFがデフォルトです。]");
@@ -218,6 +222,13 @@ public class BlancoVueComponentBatchProcess {
         System.out.println("      default value[LF]");
         System.out.println("    -searchTmpdir");
         System.out.println("      explanation[import文作成のために検索するtmpディレクトリをカンマ区切りで指定します。指定ディレクトリ直下のvalueobjectディレクトリの下にxmlを探しにいきます。]");
+        System.out.println("      type[string]");
+        System.out.println("    -routeRecordMapKey");
+        System.out.println("      explanation[routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]");
+        System.out.println("      type[string]");
+        System.out.println("      default value[\"alias\"]");
+        System.out.println("    -routeRecordMap");
+        System.out.println("      explanation[未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]");
         System.out.println("      type[string]");
         System.out.println("    -? , -help");
         System.out.println("      explanation[show the usage.]");

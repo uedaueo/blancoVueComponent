@@ -92,6 +92,16 @@
         </valuemapping>
       </propertyblock>
 
+      <tableblock name="blancovuecomponent-bread-crumbs" waitY="2" titleheight="2" rowname="crumbs">
+        <startstring>Vueコンポーネント定義・パンくずリスト</startstring>
+        <tablecolumn name="no">
+          <value>No.</value>
+        </tablecolumn>
+        <tablecolumn name="name">
+          <value>コンポーネント別名</value>
+        </tablecolumn>
+      </tableblock>
+
       <tableblock name="blancovuecomponent-header-components" waitY="2" titleheight="2" rowname="header">
         <startstring>Vueコンポーネント定義・ヘッダ情報（コンポーネント定義用）</startstring>
         <tablecolumn name="no">

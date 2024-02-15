@@ -84,6 +84,16 @@ public class BlancoVueComponentTask extends Task {
     protected boolean fIsFieldSearchTmpdirProcessed = false;
 
     /**
+     * フィールド [routeRecordMapKey] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldRouteRecordMapKeyProcessed = false;
+
+    /**
+     * フィールド [routeRecordMap] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldRouteRecordMapProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -316,7 +326,7 @@ public class BlancoVueComponentTask extends Task {
      * Antタスクの[listClass]アトリビュートのセッターメソッド。
      *
      * 項目番号: 9<br>
-     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した画面コンポーネントのRouteRecordクラスの一覧を返す関数を生成します。この関数はvue-routerの初期設定に使用されます。関数名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。<br>
      *
      * @param arg セットしたい値
      */
@@ -329,7 +339,7 @@ public class BlancoVueComponentTask extends Task {
      * Antタスクの[listClass]アトリビュートのゲッターメソッド。
      *
      * 項目番号: 9<br>
-     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したクラスの一覧をプロパティにもつValueObjectを生成します。ValueObjectのクラス名を指定します。事前にExcelシートの作成が必要です。<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した画面コンポーネントのRouteRecordクラスの一覧を返す関数を生成します。この関数はvue-routerの初期設定に使用されます。関数名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。<br>
      *
      * @return このフィールドの値
      */
@@ -389,6 +399,57 @@ public class BlancoVueComponentTask extends Task {
     }
 
     /**
+     * Antタスクの[routeRecordMapKey]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 12<br>
+     * routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setRouteRecordMapKey(final String arg) {
+        fInput.setRouteRecordMapKey(arg);
+        fIsFieldRouteRecordMapKeyProcessed = true;
+    }
+
+    /**
+     * Antタスクの[routeRecordMapKey]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 12<br>
+     * routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。<br>
+     * デフォルト値[&quot;alias&quot;]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getRouteRecordMapKey() {
+        return fInput.getRouteRecordMapKey();
+    }
+
+    /**
+     * Antタスクの[routeRecordMap]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 13<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setRouteRecordMap(final String arg) {
+        fInput.setRouteRecordMap(arg);
+        fIsFieldRouteRecordMapProcessed = true;
+    }
+
+    /**
+     * Antタスクの[routeRecordMap]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 13<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getRouteRecordMap() {
+        return fInput.getRouteRecordMap();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -415,6 +476,8 @@ public class BlancoVueComponentTask extends Task {
             System.out.println("- listClass:[" + getListClass() + "]");
             System.out.println("- lineSeparator:[" + getLineSeparator() + "]");
             System.out.println("- searchTmpdir:[" + getSearchTmpdir() + "]");
+            System.out.println("- routeRecordMapKey:[" + getRouteRecordMapKey() + "]");
+            System.out.println("- routeRecordMap:[" + getRouteRecordMap() + "]");
         }
 
         try {

@@ -241,6 +241,13 @@ public class BlancoVueComponentXmlParser {
         // Vue component definition common.
         this.parseCommon(elementCommon, objClassStructure);
 
+        // Vue component definition bread crumbs.
+        final List<BlancoXmlElement> breadCrumbList = BlancoXmlBindingUtil.getElementsByTagName(argElementSheet, fBundle.getMeta2xmlElementBreadCrumbs());
+        if (breadCrumbList != null && !breadCrumbList.isEmpty()) {
+            final BlancoXmlElement elementBreadCrumbsRoot = breadCrumbList.get(0);
+            this.parseBreadCrumbs(elementBreadCrumbsRoot, objClassStructure);
+        }
+
         // Vue component definition using component.
         final List<BlancoXmlElement> componentList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,
@@ -510,6 +517,33 @@ public class BlancoVueComponentXmlParser {
                 .setApiList(new ArrayList<>());
         argObjClassStructure
                 .setEmitsList(new ArrayList<>());
+    }
+
+
+    private void parseBreadCrumbs(
+            final BlancoXmlElement argElementBreadCrumbs,
+            final BlancoVueComponentClassStructure argObjClassStructure
+    ) {
+        /* A list of components to be used. */
+        final List<BlancoXmlElement> listBreadCrumbsChildNodes = BlancoXmlBindingUtil
+                .getElementsByTagName(argElementBreadCrumbs, "crumbs");
+        for (int index = 0;
+             listBreadCrumbsChildNodes != null &&
+                     index < listBreadCrumbsChildNodes.size();
+             index++) {
+            final BlancoXmlElement element = listBreadCrumbsChildNodes
+                    .get(index);
+
+            final String crumbName = BlancoXmlBindingUtil
+                    .getTextContent(element, "name");
+            if (crumbName == null || crumbName.trim().length() == 0) {
+                continue;
+            }
+
+            argObjClassStructure.getBreadCrumbNameList().add(
+                    BlancoXmlBindingUtil
+                            .getTextContent(element, "name"));
+        }
     }
 
     /**
