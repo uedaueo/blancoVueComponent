@@ -19,7 +19,10 @@ public class BlancoVueComponentUtil {
     static public boolean isVerbose = false;
 
     /* for BreadCrumbs */
-    static public String routeRecordMapKey = "alias";
+    static public String routeRecordMapKey = "name";
+    static public boolean createRouteRecordMap = false;
+    static public String routeRecordBreadCrumbName = "alias";
+    static public String breadCrumbInterface = null;
 
     public static HashMap<String, BlancoValueObjectTsClassStructure> objects = new HashMap<>();
 

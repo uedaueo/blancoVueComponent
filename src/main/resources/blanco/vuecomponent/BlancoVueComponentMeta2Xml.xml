@@ -98,8 +98,16 @@
           <value>No.</value>
         </tablecolumn>
         <tablecolumn name="name">
-          <value>コンポーネント別名</value>
+          <value>コンポーネントID</value>
         </tablecolumn>
+        <tablecolumn name="nolink">
+          <value>リンク無し</value>
+        </tablecolumn>
+
+        <valuemapping>
+          <result>true</result>
+          <source>○</source>
+        </valuemapping>
       </tableblock>
 
       <tableblock name="blancovuecomponent-header-components" waitY="2" titleheight="2" rowname="header">

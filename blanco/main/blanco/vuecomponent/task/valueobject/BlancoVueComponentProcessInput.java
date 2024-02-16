@@ -100,9 +100,9 @@ public class BlancoVueComponentProcessInput {
      * routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。
      *
      * フィールド: [routeRecordMapKey]。
-     * デフォルト: [&quot;alias&quot;]。
+     * デフォルト: [&quot;name&quot;]。
      */
-    private String fRouteRecordMapKey = "\"alias\"";
+    private String fRouteRecordMapKey = "\"name\"";
 
     /**
      * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。
@@ -110,6 +110,21 @@ public class BlancoVueComponentProcessInput {
      * フィールド: [routeRecordMap]。
      */
     private String fRouteRecordMap;
+
+    /**
+     * routeRecord#meta の breadCrumb.name に設定する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。
+     *
+     * フィールド: [routeRecordBreadCrumbName]。
+     * デフォルト: [&quot;alias&quot;]。
+     */
+    private String fRouteRecordBreadCrumbName = "\"alias\"";
+
+    /**
+     * 未指定または空文字でなかった場合に、指定された配置場所にパンくずリストデータの為のインタフェイスを生成します。
+     *
+     * フィールド: [breadCrumbInterface]。
+     */
+    private String fBreadCrumbInterface;
 
     /**
      * フィールド [verbose] の値を設定します。
@@ -398,7 +413,7 @@ public class BlancoVueComponentProcessInput {
      * フィールド [routeRecordMapKey] の値を取得します。
      *
      * フィールドの説明: [routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]。
-     * デフォルト: [&quot;alias&quot;]。
+     * デフォルト: [&quot;name&quot;]。
      *
      * @return フィールド[routeRecordMapKey]から取得した値。
      */
@@ -426,6 +441,51 @@ public class BlancoVueComponentProcessInput {
      */
     public String getRouteRecordMap() {
         return fRouteRecordMap;
+    }
+
+    /**
+     * フィールド [routeRecordBreadCrumbName] の値を設定します。
+     *
+     * フィールドの説明: [routeRecord#meta の breadCrumb.name に設定する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]。
+     *
+     * @param argRouteRecordBreadCrumbName フィールド[routeRecordBreadCrumbName]に設定する値。
+     */
+    public void setRouteRecordBreadCrumbName(final String argRouteRecordBreadCrumbName) {
+        fRouteRecordBreadCrumbName = argRouteRecordBreadCrumbName;
+    }
+
+    /**
+     * フィールド [routeRecordBreadCrumbName] の値を取得します。
+     *
+     * フィールドの説明: [routeRecord#meta の breadCrumb.name に設定する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]。
+     * デフォルト: [&quot;alias&quot;]。
+     *
+     * @return フィールド[routeRecordBreadCrumbName]から取得した値。
+     */
+    public String getRouteRecordBreadCrumbName() {
+        return fRouteRecordBreadCrumbName;
+    }
+
+    /**
+     * フィールド [breadCrumbInterface] の値を設定します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、指定された配置場所にパンくずリストデータの為のインタフェイスを生成します。]。
+     *
+     * @param argBreadCrumbInterface フィールド[breadCrumbInterface]に設定する値。
+     */
+    public void setBreadCrumbInterface(final String argBreadCrumbInterface) {
+        fBreadCrumbInterface = argBreadCrumbInterface;
+    }
+
+    /**
+     * フィールド [breadCrumbInterface] の値を取得します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、指定された配置場所にパンくずリストデータの為のインタフェイスを生成します。]。
+     *
+     * @return フィールド[breadCrumbInterface]から取得した値。
+     */
+    public String getBreadCrumbInterface() {
+        return fBreadCrumbInterface;
     }
 
     /**
@@ -457,6 +517,8 @@ public class BlancoVueComponentProcessInput {
         buf.append(",searchTmpdir=" + fSearchTmpdir);
         buf.append(",routeRecordMapKey=" + fRouteRecordMapKey);
         buf.append(",routeRecordMap=" + fRouteRecordMap);
+        buf.append(",routeRecordBreadCrumbName=" + fRouteRecordBreadCrumbName);
+        buf.append(",breadCrumbInterface=" + fBreadCrumbInterface);
         buf.append("]");
         return buf.toString();
     }
@@ -521,5 +583,11 @@ public class BlancoVueComponentProcessInput {
         // Name: fRouteRecordMap
         // Type: java.lang.String
         target.fRouteRecordMap = this.fRouteRecordMap;
+        // Name: fRouteRecordBreadCrumbName
+        // Type: java.lang.String
+        target.fRouteRecordBreadCrumbName = this.fRouteRecordBreadCrumbName;
+        // Name: fBreadCrumbInterface
+        // Type: java.lang.String
+        target.fBreadCrumbInterface = this.fBreadCrumbInterface;
     }
 }

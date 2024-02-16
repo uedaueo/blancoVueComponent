@@ -1148,6 +1148,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_BREAD_CRUMB_LIST.DESCRIPTION]
+     *
+     * [コンポーネントのbreadCrumbListプロパティです] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PROPS_BREAD_CRUMB_LIST.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePropsBreadCrumbListDescription() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "コンポーネントのbreadCrumbListプロパティです";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PROPS_BREAD_CRUMB_LIST.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PROPS_INTERFACE.DESCRIPTION]
      *
      * [コンポーネントのプロパティを定義するインタフェイスです] (ja)<br>
@@ -1360,18 +1380,58 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
-     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.ROUTERECORD.MAP]
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.BREAD.CRUMB.INTERFACE]
      *
-     * [コンポーネント別名などをキーにRouteRecordを取得するMapです。] (ja)<br>
+     * [パンくずリストデータのインタフェイスです。] (ja)<br>
      *
-     * @return key[XML2SOURCE_FILE.ROUTERECORD.MAP]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     * @return key[XML2SOURCE_FILE.BREAD.CRUMB.INTERFACE]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
      */
-    public String getXml2sourceFileRouterecordMap() {
+    public String getXml2sourceFileBreadCrumbInterface() {
         // 初期値として定義書の値を利用します。
-        String strFormat = "コンポーネント別名などをキーにRouteRecordを取得するMapです。";
+        String strFormat = "パンくずリストデータのインタフェイスです。";
         try {
             if (fResourceBundle != null) {
-                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.ROUTERECORD.MAP");
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.BREAD.CRUMB.INTERFACE");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.BREAD.CRUMB.NAME]
+     *
+     * [パンくずリストの表示名です。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.BREAD.CRUMB.NAME]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileBreadCrumbName() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "パンくずリストの表示名です。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.BREAD.CRUMB.NAME");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.BREAD.CRUMB.NOLINK]
+     *
+     * [パンくずリストにリンクが存在しない場合に true を指定します。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.BREAD.CRUMB.NOLINK]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileBreadCrumbNolink() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "パンくずリストにリンクが存在しない場合に true を指定します。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.BREAD.CRUMB.NOLINK");
             }
         } catch (MissingResourceException ex) {
         }

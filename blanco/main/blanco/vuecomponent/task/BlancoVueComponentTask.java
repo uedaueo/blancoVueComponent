@@ -94,6 +94,16 @@ public class BlancoVueComponentTask extends Task {
     protected boolean fIsFieldRouteRecordMapProcessed = false;
 
     /**
+     * フィールド [routeRecordBreadCrumbName] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldRouteRecordBreadCrumbNameProcessed = false;
+
+    /**
+     * フィールド [breadCrumbInterface] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldBreadCrumbInterfaceProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -416,7 +426,7 @@ public class BlancoVueComponentTask extends Task {
      *
      * 項目番号: 12<br>
      * routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。<br>
-     * デフォルト値[&quot;alias&quot;]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     * デフォルト値[&quot;name&quot;]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
      *
      * @return このフィールドの値
      */
@@ -450,6 +460,57 @@ public class BlancoVueComponentTask extends Task {
     }
 
     /**
+     * Antタスクの[routeRecordBreadCrumbName]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 14<br>
+     * routeRecord#meta の breadCrumb.name に設定する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setRouteRecordBreadCrumbName(final String arg) {
+        fInput.setRouteRecordBreadCrumbName(arg);
+        fIsFieldRouteRecordBreadCrumbNameProcessed = true;
+    }
+
+    /**
+     * Antタスクの[routeRecordBreadCrumbName]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 14<br>
+     * routeRecord#meta の breadCrumb.name に設定する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。<br>
+     * デフォルト値[&quot;alias&quot;]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getRouteRecordBreadCrumbName() {
+        return fInput.getRouteRecordBreadCrumbName();
+    }
+
+    /**
+     * Antタスクの[breadCrumbInterface]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 15<br>
+     * 未指定または空文字でなかった場合に、指定された配置場所にパンくずリストデータの為のインタフェイスを生成します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setBreadCrumbInterface(final String arg) {
+        fInput.setBreadCrumbInterface(arg);
+        fIsFieldBreadCrumbInterfaceProcessed = true;
+    }
+
+    /**
+     * Antタスクの[breadCrumbInterface]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 15<br>
+     * 未指定または空文字でなかった場合に、指定された配置場所にパンくずリストデータの為のインタフェイスを生成します。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getBreadCrumbInterface() {
+        return fInput.getBreadCrumbInterface();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -478,6 +539,8 @@ public class BlancoVueComponentTask extends Task {
             System.out.println("- searchTmpdir:[" + getSearchTmpdir() + "]");
             System.out.println("- routeRecordMapKey:[" + getRouteRecordMapKey() + "]");
             System.out.println("- routeRecordMap:[" + getRouteRecordMap() + "]");
+            System.out.println("- routeRecordBreadCrumbName:[" + getRouteRecordBreadCrumbName() + "]");
+            System.out.println("- breadCrumbInterface:[" + getBreadCrumbInterface() + "]");
         }
 
         try {

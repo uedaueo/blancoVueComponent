@@ -84,6 +84,10 @@ public class BlancoVueComponentBatchProcess {
                 input.setRouteRecordMapKey(arg.substring(19));
             } else if (arg.startsWith("-routeRecordMap=")) {
                 input.setRouteRecordMap(arg.substring(16));
+            } else if (arg.startsWith("-routeRecordBreadCrumbName=")) {
+                input.setRouteRecordBreadCrumbName(arg.substring(27));
+            } else if (arg.startsWith("-breadCrumbInterface=")) {
+                input.setBreadCrumbInterface(arg.substring(21));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -177,7 +181,7 @@ public class BlancoVueComponentBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoVueComponentBatchProcess: Usage:");
-        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14");
+        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14 -routeRecordBreadCrumbName=value15 -breadCrumbInterface=value16");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -226,9 +230,16 @@ public class BlancoVueComponentBatchProcess {
         System.out.println("    -routeRecordMapKey");
         System.out.println("      explanation[routeRecordMap のキーとして使用する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]");
         System.out.println("      type[string]");
-        System.out.println("      default value[\"alias\"]");
+        System.out.println("      default value[\"name\"]");
         System.out.println("    -routeRecordMap");
         System.out.println("      explanation[未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成したコンポーネント別名をキーとして、RouteRecord 関数を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。事前にExcelシートの作成が必要です。]");
+        System.out.println("      type[string]");
+        System.out.println("    -routeRecordBreadCrumbName");
+        System.out.println("      explanation[routeRecord#meta の breadCrumb.name に設定する項目を指定します。項目名にはClassStructureで定義しているプロパティ名を使用します。]");
+        System.out.println("      type[string]");
+        System.out.println("      default value[\"alias\"]");
+        System.out.println("    -breadCrumbInterface");
+        System.out.println("      explanation[未指定または空文字でなかった場合に、指定された配置場所にパンくずリストデータの為のインタフェイスを生成します。]");
         System.out.println("      type[string]");
         System.out.println("    -? , -help");
         System.out.println("      explanation[show the usage.]");

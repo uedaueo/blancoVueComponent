@@ -15,10 +15,7 @@ import blanco.commons.util.BlancoNameUtil;
 import blanco.commons.util.BlancoStringUtil;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.resourcebundle.BlancoVueComponentResourceBundle;
-import blanco.vuecomponent.valueobject.BlancoVueComponentApiStructure;
-import blanco.vuecomponent.valueobject.BlancoVueComponentClassStructure;
-import blanco.vuecomponent.valueobject.BlancoVueComponentEmitsStructure;
-import blanco.vuecomponent.valueobject.BlancoVueComponentPropsStructure;
+import blanco.vuecomponent.valueobject.*;
 import blanco.xml.bind.BlancoXmlBindingUtil;
 import blanco.xml.bind.BlancoXmlUnmarshaller;
 import blanco.xml.bind.valueobject.BlancoXmlAttribute;
@@ -53,6 +50,28 @@ public class BlancoVueComponentXmlParser {
      * A resource bundle object for blancoValueObject.
      */
     private final static BlancoVueComponentResourceBundle fBundle = new BlancoVueComponentResourceBundle();
+
+    private BlancoVueComponentXml2TypeScriptClass xml2Class = null;
+    public BlancoVueComponentXml2TypeScriptClass getXml2Class() {
+        return this.xml2Class;
+    }
+    public void setXml2Class(BlancoVueComponentXml2TypeScriptClass xml2Class) {
+        this.xml2Class = xml2Class;
+    }
+    private String getLineSeparator() {
+        String lineSeparator = "\n";
+        if (this.xml2Class != null) {
+            lineSeparator = this.xml2Class.getLineSeparator();
+        }
+        return lineSeparator;
+    }
+    private String getTabSpace() {
+        String tabSpace = "    ";
+        if (this.xml2Class != null) {
+            tabSpace = this.xml2Class.getTabSpace();
+        }
+        return tabSpace;
+    }
 
     public static Map<String, Integer> mapCommons = new HashMap<String, Integer>() {
         {
@@ -99,7 +118,8 @@ public class BlancoVueComponentXmlParser {
      * @return An array of information obtained as a result of parsing.
      */
     public BlancoVueComponentClassStructure[] parse(
-            final File argMetaXmlSourceFile) {
+            final File argMetaXmlSourceFile
+            ) {
         final BlancoXmlDocument documentMeta = new BlancoXmlUnmarshaller()
                 .unmarshal(argMetaXmlSourceFile);
         if (documentMeta == null) {
@@ -287,6 +307,40 @@ public class BlancoVueComponentXmlParser {
             final BlancoXmlElement elementListRoot = propsList.get(0);
             /* share function with emits */
             this.parseVueComponentProps(elementListRoot, namedExportecHeaderList, objClassStructure);
+        }
+        /*
+         * if breadCrumbs are specified, add them to props.
+         */
+        if (!objClassStructure.getBreadCrumbList().isEmpty() && !BlancoStringUtil.null2Blank(BlancoVueComponentUtil.breadCrumbInterface).trim().isEmpty()) {
+            StringBuffer breadCrumbsBuffer = new StringBuffer();
+            breadCrumbsBuffer.append("[" + this.getLineSeparator());
+            int i = 0;
+            for (BlancoVueComponentBreadCrumbStructure breadCrumb : objClassStructure.getBreadCrumbList()) {
+                if (i != 0) {
+                    breadCrumbsBuffer.append("," + this.getLineSeparator());
+                }
+                breadCrumbsBuffer.append(this.getTabSpace() + this.getTabSpace() + this.getTabSpace() + "{ name: \"" + breadCrumb.getName() + "\", nolink: " + breadCrumb.getNolink().toString() + " }");
+                i++;
+            }
+            breadCrumbsBuffer.append(this.getLineSeparator() + this.getTabSpace() + this.getTabSpace() + "]");
+
+            String interfaceName = BlancoVueComponentUtil.getSimpleClassName(BlancoVueComponentUtil.breadCrumbInterface);
+            String interfacePackage = BlancoVueComponentUtil.getPackageName(BlancoVueComponentUtil.breadCrumbInterface);
+            BlancoVueComponentUtil.makeImportHeaderList(
+                    interfacePackage,
+                    interfaceName,
+                    namedExportecHeaderList,
+                    objClassStructure.getBasedir(),
+                    objClassStructure.getPackage()
+            );
+
+            objClassStructure.getPropsList().add(0, generatePropsStructure(
+                    "breadCrumbs",
+                    interfaceName + "[]",
+                    true,
+                    breadCrumbsBuffer.toString(),
+                    fBundle.getXml2sourceFilePropsBreadCrumbListDescription()
+            ));
         }
         /*
          * subject ,alias and componentId properties are automatically generated.
@@ -540,9 +594,12 @@ public class BlancoVueComponentXmlParser {
                 continue;
             }
 
-            argObjClassStructure.getBreadCrumbNameList().add(
-                    BlancoXmlBindingUtil
-                            .getTextContent(element, "name"));
+            BlancoVueComponentBreadCrumbStructure crumbStructure = new BlancoVueComponentBreadCrumbStructure();
+            crumbStructure.setName(crumbName);
+            crumbStructure.setNolink("true".equals(BlancoXmlBindingUtil
+                            .getTextContent(element, "nolink")));
+
+            argObjClassStructure.getBreadCrumbList().add(crumbStructure);
         }
     }
 

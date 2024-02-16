@@ -10,6 +10,7 @@
 package blanco.vuecomponent.task;
 
 import blanco.cg.BlancoCgSupportedLang;
+import blanco.commons.util.BlancoStringUtil;
 import blanco.vuecomponent.*;
 import blanco.vuecomponent.message.BlancoVueComponentMessage;
 import blanco.vuecomponent.task.valueobject.BlancoVueComponentProcessInput;
@@ -121,6 +122,8 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
          */
             BlancoVueComponentUtil.isVerbose = input.getVerbose();
             BlancoVueComponentUtil.routeRecordMapKey = input.getRouteRecordMapKey();
+            BlancoVueComponentUtil.routeRecordBreadCrumbName = input.getRouteRecordBreadCrumbName();
+            BlancoVueComponentUtil.breadCrumbInterface = input.getBreadCrumbInterface();
 
             BlancoVueComponentUtil.processValueObjects(input);
 
@@ -136,10 +139,9 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                 createClassList = true;
             }
 
-            boolean createRouteRecordMap = false;
             String routeRecordMapName = input.getRouteRecordMap();
             if (routeRecordMapName != null && !routeRecordMapName.isEmpty()) {
-                createRouteRecordMap = true;
+                BlancoVueComponentUtil.createRouteRecordMap = true;
             }
 
             // Next, scans the directory specified as the meta directory.
@@ -188,7 +190,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                 }
             }
 
-            if (createRouteRecordMap) {
+            if (BlancoVueComponentUtil.createRouteRecordMap) {
                 if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
                     System.out.println("[WARN] routeRecordMap is specified but no meta file. : " + routeRecordMapName);
                 } else {
@@ -202,6 +204,9 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                     xml2Class.setRouteRecordMap(routeRecordMapName);
                     xml2Class.processRouteRecordMap(screenComponentStructures, new File(strTarget));
                     xml2Class.processRouteRecordMapInterface(screenComponentStructures, new File(strTarget));
+                    if (!BlancoStringUtil.null2Blank(BlancoVueComponentUtil.breadCrumbInterface).trim().isEmpty()) {
+                        xml2Class.processBreadCrumbInterface(screenComponentStructures, new File(strTarget));
+                    }
                 }
             }
 

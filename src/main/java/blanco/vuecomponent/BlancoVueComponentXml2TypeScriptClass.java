@@ -27,7 +27,6 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -156,6 +155,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             final File argDirectoryTarget) throws IOException {
         BlancoVueComponentXmlParser parser = new BlancoVueComponentXmlParser();
         parser.setVerbose(this.isVerbose());
+        parser.setXml2Class(this);
         final BlancoVueComponentClassStructure[] structures = parser.parse(argMetaXmlSourceFile);
 
         for (int index = 0; index < structures.length; index++) {
@@ -274,6 +274,61 @@ public class BlancoVueComponentXml2TypeScriptClass {
         defaultValue.append(this.getLineSeparator() + "}");
 
         field.setDefault(defaultValue.toString());
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    /**
+     * Generate BreadCrumbInterface for bread crumb default value.
+     * @param argClassStructures
+     * @param argDirectoryTarget
+     */
+    public void processBreadCrumbInterface(
+            final List<BlancoVueComponentClassStructure> argClassStructures,
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateClass argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String interfaceName = BlancoVueComponentUtil.breadCrumbInterface;
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(interfaceName);
+        String packageName = BlancoVueComponentUtil.getPackageName(interfaceName);
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a interface.
+        fCgInterface = fCgFactory.createInterface(simpleClassName, fBundle.getXml2sourceFileBreadCrumbInterface());
+        fCgSourceFile.getInterfaceList().add(fCgInterface);
+        fCgInterface.setAccess("public");
+
+        BlancoCgField name = fCgFactory.createField("name", "string", fBundle.getXml2sourceFileBreadCrumbName());
+        BlancoCgField nolink = fCgFactory.createField("nolink", "boolean", fBundle.getXml2sourceFileBreadCrumbNolink());
+        fCgInterface.getFieldList().add(name);
+        fCgInterface.getFieldList().add(nolink);
+        name.setAccess("public");
+        name.setNotnull(true);
+        nolink.setAccess("public");
+        nolink.setNotnull(true);
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
@@ -1051,8 +1106,21 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         String propPathValue = "\"" + argClassStructure.getRouterPath() + "\"";
         String propNameValue = "\"" + argClassStructure.getRouterName() + "\"";
+
+        String metaBreadCrumbName = null;
+        Class<? extends BlancoVueComponentClassStructure> clazz = argClassStructure.getClass();
+        try {
+            String getterKey = "get" + BlancoNameAdjuster.toClassName(BlancoVueComponentUtil.routeRecordBreadCrumbName);
+            Method getter = clazz.getMethod(getterKey);
+            metaBreadCrumbName = (String) getter.invoke(argClassStructure);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error!!! next structure.");
+        }
+
         String propMetaValue = "{" + this.getLineSeparator() +
                 (BlancoStringUtil.null2Blank(argClassStructure.getLayoutType()).trim().length() > 0 ? this.getTabSpace() + this.getTabSpace() + "layoutType: \"" + argClassStructure.getLayoutType() + "\"," + this.getLineSeparator() : "") +
+                (BlancoStringUtil.null2Blank(metaBreadCrumbName).trim().length() > 0 ? this.getTabSpace() + this.getTabSpace() + "breadClumb: \"" + metaBreadCrumbName + "\"," + this.getLineSeparator() : "") +
                 this.getTabSpace() + this.getTabSpace() + "reload: " + (argClassStructure.getForceReload() ? "true" : "false") + "," + this.getLineSeparator() +
                 this.getTabSpace() + this.getTabSpace() + "authRequired: " + (argClassStructure.getAuthRequired() ? "true" : "false") + this.getLineSeparator() +
                 this.getTabSpace() + "}";
@@ -1147,7 +1215,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         return fieldBuf.toString();
     }
 
-    private String getTabSpace() {
+    public String getTabSpace() {
         StringBuffer spc = new StringBuffer();
         for (int i = this.getTabs(); i > 0; i--) {
             spc.append(" ");
@@ -1155,7 +1223,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         return spc.toString();
     }
 
-    private String getLineSeparator() {
+    public String getLineSeparator() {
         return System.getProperty("line.separator", "\n");
     }
 

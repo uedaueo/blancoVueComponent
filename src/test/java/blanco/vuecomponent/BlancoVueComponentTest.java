@@ -60,7 +60,9 @@ public class BlancoVueComponentTest {
         inputComponent.setVerbose(true);
         inputComponent.setListClass("sample.pages.RoutePath");
         inputComponent.setRouteRecordMap("sample.pages.RouteRecordMap");
-        inputComponent.setRouteRecordMapKey("alias");
+        inputComponent.setRouteRecordMapKey("name");
+        inputComponent.setRouteRecordBreadCrumbName("alias");
+        inputComponent.setBreadCrumbInterface("sample.pages.BreadCrumbInterface");
 
         BlancoVueComponentProcessImpl imple2 = new BlancoVueComponentProcessImpl();
         try {

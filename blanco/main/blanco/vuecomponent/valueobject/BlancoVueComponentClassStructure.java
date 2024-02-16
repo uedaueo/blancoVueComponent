@@ -285,12 +285,12 @@ public class BlancoVueComponentClassStructure {
     private String fLayoutType = "";
 
     /**
-     * パンくずリストとして表示する画面名（alias）のリストを保持する。自分自身は含まない。
+     * パンくずリストとして表示する画面名（name, nolink）のリストを保持する。自分自身は含まない。
      *
-     * フィールド: [breadCrumbNameList]。
-     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     * フィールド: [breadCrumbList]。
+     * デフォルト: [new java.util.ArrayList&lt;&gt;()]。
      */
-    private List<String> fBreadCrumbNameList = new java.util.ArrayList<java.lang.String>();
+    private List<BlancoVueComponentBreadCrumbStructure> fBreadCrumbList = new java.util.ArrayList<>();
 
     /**
      * フィールド [name] の値を設定します。
@@ -1109,26 +1109,26 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
-     * フィールド [breadCrumbNameList] の値を設定します。
+     * フィールド [breadCrumbList] の値を設定します。
      *
-     * フィールドの説明: [パンくずリストとして表示する画面名（alias）のリストを保持する。自分自身は含まない。]。
+     * フィールドの説明: [パンくずリストとして表示する画面名（name, nolink）のリストを保持する。自分自身は含まない。]。
      *
-     * @param argBreadCrumbNameList フィールド[breadCrumbNameList]に設定する値。
+     * @param argBreadCrumbList フィールド[breadCrumbList]に設定する値。
      */
-    public void setBreadCrumbNameList(final List<String> argBreadCrumbNameList) {
-        fBreadCrumbNameList = argBreadCrumbNameList;
+    public void setBreadCrumbList(final List<BlancoVueComponentBreadCrumbStructure> argBreadCrumbList) {
+        fBreadCrumbList = argBreadCrumbList;
     }
 
     /**
-     * フィールド [breadCrumbNameList] の値を取得します。
+     * フィールド [breadCrumbList] の値を取得します。
      *
-     * フィールドの説明: [パンくずリストとして表示する画面名（alias）のリストを保持する。自分自身は含まない。]。
-     * デフォルト: [new java.util.ArrayList&lt;java.lang.String&gt;()]。
+     * フィールドの説明: [パンくずリストとして表示する画面名（name, nolink）のリストを保持する。自分自身は含まない。]。
+     * デフォルト: [new java.util.ArrayList&lt;&gt;()]。
      *
-     * @return フィールド[breadCrumbNameList]から取得した値。
+     * @return フィールド[breadCrumbList]から取得した値。
      */
-    public List<String> getBreadCrumbNameList() {
-        return fBreadCrumbNameList;
+    public List<BlancoVueComponentBreadCrumbStructure> getBreadCrumbList() {
+        return fBreadCrumbList;
     }
 
     /**
@@ -1182,7 +1182,7 @@ public class BlancoVueComponentClassStructure {
         buf.append(",useData=" + fUseData);
         buf.append(",beforeRouteLeave=" + fBeforeRouteLeave);
         buf.append(",layoutType=" + fLayoutType);
-        buf.append(",breadCrumbNameList=" + fBreadCrumbNameList);
+        buf.append(",breadCrumbList=" + fBreadCrumbList);
         buf.append("]");
         return buf.toString();
     }
@@ -1313,8 +1313,8 @@ public class BlancoVueComponentClassStructure {
         // Name: fLayoutType
         // Type: java.lang.String
         target.fLayoutType = this.fLayoutType;
-        // Name: fBreadCrumbNameList
+        // Name: fBreadCrumbList
         // Type: java.util.List
-        // Field[fBreadCrumbNameList] is an unsupported type[java.util.Listjava.lang.String].
+        // Field[fBreadCrumbList] is an unsupported type[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentBreadCrumbStructure].
     }
 }
