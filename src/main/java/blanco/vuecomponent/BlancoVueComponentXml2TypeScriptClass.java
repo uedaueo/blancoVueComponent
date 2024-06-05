@@ -1120,7 +1120,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         String propMetaValue = "{" + this.getLineSeparator() +
                 (BlancoStringUtil.null2Blank(argClassStructure.getLayoutType()).trim().length() > 0 ? this.getTabSpace() + this.getTabSpace() + "layoutType: \"" + argClassStructure.getLayoutType() + "\"," + this.getLineSeparator() : "") +
-                (BlancoStringUtil.null2Blank(metaBreadCrumbName).trim().length() > 0 ? this.getTabSpace() + this.getTabSpace() + "breadClumb: \"" + metaBreadCrumbName + "\"," + this.getLineSeparator() : "") +
+                (BlancoStringUtil.null2Blank(metaBreadCrumbName).trim().length() > 0 ? this.getTabSpace() + this.getTabSpace() + "breadCrumb: \"" + metaBreadCrumbName + "\"," + this.getLineSeparator() : "") +
                 this.getTabSpace() + this.getTabSpace() + "reload: " + (argClassStructure.getForceReload() ? "true" : "false") + "," + this.getLineSeparator() +
                 this.getTabSpace() + this.getTabSpace() + "authRequired: " + (argClassStructure.getAuthRequired() ? "true" : "false") + this.getLineSeparator() +
                 this.getTabSpace() + "}";
