@@ -190,6 +190,9 @@
         <tablecolumn name="nullable">
           <value>Nullable</value>
         </tablecolumn>
+        <tablecolumn name="pathParam">
+          <value>パス文字列</value>
+        </tablecolumn>
         <tablecolumn name="queryParam">
           <value>クエリ文字列</value>
         </tablecolumn>

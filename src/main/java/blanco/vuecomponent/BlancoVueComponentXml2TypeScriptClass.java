@@ -165,12 +165,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
             /* Saves a property with a query string */
             Map<String, String> queryProps = new HashMap<>();
+            /* Saves a property with a path string */
+            Map<String, String> pathProps = new HashMap<>();
 
             /* Generate defineComponent calling. */
             generateDefineComponent(classStructure, argDirectoryTarget);
 
             /* Generate props options */
-            generatePropsOptioins(classStructure, argDirectoryTarget, queryProps);
+            generatePropsOptioins(classStructure, argDirectoryTarget, queryProps, pathProps);
 
             /* Generate emits options */
             if (classStructure.getEmitsList() != null && classStructure.getEmitsList().size() != 0) {
@@ -184,7 +186,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
             /* In the case of the screen, creates a RouterConfig. */
             if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
-                generateRouteRecord(classStructure, argDirectoryTarget, queryProps);
+                generateRouteRecord(classStructure, argDirectoryTarget, queryProps, pathProps);
             }
 
         }
@@ -768,7 +770,9 @@ public class BlancoVueComponentXml2TypeScriptClass {
     public void generatePropsOptioins(
             final BlancoVueComponentClassStructure argClassStructure,
             final File argDirectoryTarget,
-            final Map<String, String> argQueryProps) throws IOException {
+            final Map<String, String> argQueryProps,
+            final Map<String, String> argPathProps
+    ) throws IOException {
         /*
          * The output directory will be in the format specified by the targetStyle argument of
          the ant task.
@@ -827,8 +831,13 @@ public class BlancoVueComponentXml2TypeScriptClass {
             fieldInf.setAccess("");
             // Stores the query string.
             String queryParam = propsStructure.getQueryParam();
-            if (argQueryProps != null && queryParam != null && queryParam.length() > 0) {
+            if (argQueryProps != null && queryParam != null && !queryParam.isEmpty()) {
                 argQueryProps.put(propsStructure.getName(), queryParam);
+            }
+            // Store the path string
+            String pathParam = propsStructure.getPathParam();
+            if (argPathProps != null && pathParam != null && !pathParam.isEmpty()) {
+                argPathProps.put(propsStructure.getName(), pathParam);
             }
         }
 
@@ -1072,11 +1081,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
      *  @param argClassStructure
      * @param argDirectoryTarget
      * @param argQueryProps
+     * @param argPathProps
      */
     private void generateRouteRecord(
             final BlancoVueComponentClassStructure argClassStructure,
             final File argDirectoryTarget,
-            final Map<String, String> argQueryProps) {
+            final Map<String, String> argQueryProps,
+            final Map<String, String> argPathProps
+    ) {
         /*
          * The output directory will be in the format specified by the targetStyle argument of the ant task.
          * For compatibility, the output directory will be blanco/main if it is not specified.
@@ -1131,18 +1143,39 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 argClassStructure.getName() + ".vue\")";
 
         String propPropsValue = "";
-        if (argQueryProps != null && argQueryProps.size() > 0) {
-            StringBuffer sb = new StringBuffer();
-            Set<String> keySet = argQueryProps.keySet();
+        boolean pathPropsExist = (argPathProps != null && !argPathProps.isEmpty());
+        boolean queryPropsExist = (argQueryProps != null && !argQueryProps.isEmpty());
+        if (pathPropsExist || queryPropsExist) {
+            assert argPathProps != null;
+            assert argQueryProps != null;
 
+            StringBuffer sb = new StringBuffer();
             sb.append("route => ({" + this.getLineSeparator());
+            List<BlancoVueComponentPropsStructure> propsStructures = argClassStructure.getPropsList();
             int i = 0;
-            for (String key : keySet) {
+            for (BlancoVueComponentPropsStructure propsStructure : propsStructures) {
+                String propName = propsStructure.getName();
+                boolean isPathParam = argPathProps.containsKey(propName);
+                boolean isQueryParam = argQueryProps.containsKey(propName);
+                if (!isPathParam && !isQueryParam) {
+                    continue;
+                }
                 if (i > 0) {
                     sb.append("," + this.getLineSeparator());
                 }
-                sb.append(this.getTabSpace() + this.getTabSpace() + key + ": route.query." + argQueryProps.get(key));
                 i++;
+
+                sb.append(this.getTabSpace() + this.getTabSpace() + propName + ": route.");
+
+                if (isPathParam) {
+                    sb.append("params." + argPathProps.get(propName));
+                    if (isQueryParam) {
+                        sb.append(" || route.");
+                    }
+                }
+                if (isQueryParam) {
+                    sb.append("query." + argQueryProps.get(propName));
+                }
             }
             sb.append(this.getLineSeparator());
             sb.append(this.getTabSpace() + "})");
@@ -1183,7 +1216,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         recordBuf.append(this.buildRouteRecordField("component", "object", propComponentValue));
         recordBuf.append("," + this.getLineSeparator());
         recordBuf.append(this.buildRouteRecordField("meta", "any", propMetaValue));
-        if (propPropsValue != null && propPropsValue.length() > 0) {
+        if (!propPropsValue.isEmpty()) {
             recordBuf.append("," + this.getLineSeparator());
             recordBuf.append(this.buildRouteRecordField("props", "RoutePropsFunction", propPropsValue));
         }

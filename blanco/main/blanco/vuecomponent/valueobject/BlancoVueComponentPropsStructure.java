@@ -147,6 +147,14 @@ public class BlancoVueComponentPropsStructure {
     private Boolean fRequired = false;
 
     /**
+     * 対応するパス文字列パラメータを指定します。
+     *
+     * フィールド: [pathParam]。
+     * デフォルト: [&quot;&quot;]。
+     */
+    private String fPathParam = "";
+
+    /**
      * 対応するクエリ文字列パラメータを指定します。
      *
      * フィールド: [queryParam]。
@@ -580,6 +588,29 @@ public class BlancoVueComponentPropsStructure {
     }
 
     /**
+     * フィールド [pathParam] の値を設定します。
+     *
+     * フィールドの説明: [対応するパス文字列パラメータを指定します。]。
+     *
+     * @param argPathParam フィールド[pathParam]に設定する値。
+     */
+    public void setPathParam(final String argPathParam) {
+        fPathParam = argPathParam;
+    }
+
+    /**
+     * フィールド [pathParam] の値を取得します。
+     *
+     * フィールドの説明: [対応するパス文字列パラメータを指定します。]。
+     * デフォルト: [&quot;&quot;]。
+     *
+     * @return フィールド[pathParam]から取得した値。
+     */
+    public String getPathParam() {
+        return fPathParam;
+    }
+
+    /**
      * フィールド [queryParam] の値を設定します。
      *
      * フィールドの説明: [対応するクエリ文字列パラメータを指定します。]。
@@ -636,6 +667,7 @@ public class BlancoVueComponentPropsStructure {
         buf.append(",minInclusive=" + fMinInclusive);
         buf.append(",maxInclusive=" + fMaxInclusive);
         buf.append(",required=" + fRequired);
+        buf.append(",pathParam=" + fPathParam);
         buf.append(",queryParam=" + fQueryParam);
         buf.append("]");
         return buf.toString();
@@ -716,6 +748,9 @@ public class BlancoVueComponentPropsStructure {
         // Name: fRequired
         // Type: java.lang.Boolean
         target.fRequired = this.fRequired;
+        // Name: fPathParam
+        // Type: java.lang.String
+        target.fPathParam = this.fPathParam;
         // Name: fQueryParam
         // Type: java.lang.String
         target.fQueryParam = this.fQueryParam;

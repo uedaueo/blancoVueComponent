@@ -808,6 +808,9 @@ public class BlancoVueComponentXmlParser {
             // Supports query string.
             propsStructure.setQueryParam(BlancoXmlBindingUtil.getTextContent(
                     elementList, "queryParam"));
+            // Support path string
+            propsStructure.setPathParam(BlancoXmlBindingUtil.getTextContent(
+                    elementList, "pathParam"));
 
             // Supports description.
             propsStructure.setDescription(BlancoXmlBindingUtil
@@ -831,8 +834,8 @@ public class BlancoVueComponentXmlParser {
             /*
              * if specified queryParam, default value is required.
              */
-            if (BlancoStringUtil.null2Blank(propsStructure.getQueryParam()).trim().length() > 0) {
-                if (BlancoStringUtil.null2Blank(propsStructure.getDefault()).trim().length() == 0) {
+            if (!BlancoStringUtil.null2Blank(propsStructure.getQueryParam()).trim().isEmpty() || !BlancoStringUtil.null2Blank(propsStructure.getPathParam()).trim().isEmpty()) {
+                if (BlancoStringUtil.null2Blank(propsStructure.getDefault()).trim().isEmpty()) {
                     propsStructure.setDefault("\"\"");
                 }
             }
