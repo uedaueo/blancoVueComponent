@@ -33,6 +33,7 @@ public class BlancoVueComponentXmlTransformer {
     }
 
     private OutputStream outputStream = null;
+    private String lineSeparator = System.getProperty("line.separator");
 
     public void preapreTransform(
             final File argOutputDirectory,
@@ -100,6 +101,11 @@ public class BlancoVueComponentXmlTransformer {
         }
     }
 
+    public void replaceLineSeparator() {
+        String LS = System.lineSeparator();
+
+    }
+
     public void transform(final Document argDocument) {
 
         if (argDocument == null) {
@@ -118,7 +124,13 @@ public class BlancoVueComponentXmlTransformer {
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             final DOMSource source = new DOMSource(argDocument);
-            transformer.transform(source, new StreamResult(this.outputStream));
+            ByteArrayOutputStream tmpOut = new ByteArrayOutputStream();
+            transformer.transform(source, new StreamResult(tmpOut));
+            // on windows environment, transformer generates CRLF code.
+            String xml = tmpOut.toString("utf-8");
+            xml = xml.replaceAll("\r\n", System.getProperty("line.separator"));
+            this.outputStream.write(xml.getBytes());
+            tmpOut.close();
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
             throw new IllegalArgumentException(
@@ -126,6 +138,10 @@ public class BlancoVueComponentXmlTransformer {
         } catch (TransformerException e) {
             throw new IllegalArgumentException("Unexpected exception: An XML conversion exception occurred."
                     + e.toString());
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException("Unexpected exception: Unsupported Encoding." + e.toString());
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Unexpected exception: Error on file writing." + e);
         }
     }
 

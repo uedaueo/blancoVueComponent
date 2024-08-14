@@ -63,6 +63,7 @@ public class BlancoVueComponentTest {
         inputComponent.setRouteRecordMapKey("name");
         inputComponent.setRouteRecordBreadCrumbName("alias");
         inputComponent.setBreadCrumbInterface("sample.pages.BreadCrumbInterface");
+        inputComponent.setLineSeparator("LF");
 
         BlancoVueComponentProcessImpl imple2 = new BlancoVueComponentProcessImpl();
         try {
