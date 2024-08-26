@@ -1269,15 +1269,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
         BlancoCgField name = fCgFactory.createField("name", "string", fBundle.getXml2sourceFileMenuItemName());
         BlancoCgField label = fCgFactory.createField("label", "string", fBundle.getXml2sourceFileMenuItemLabel());
         BlancoCgField description = fCgFactory.createField("description", "string", fBundle.getXml2sourceFileMenuItemDescriptioin());
+        BlancoCgField children = fCgFactory.createField("children", "Array<" + simpleClassName +  ">", fBundle.getXml2sourceFileMenuItemChildren());
         fCgInterface.getFieldList().add(name);
         fCgInterface.getFieldList().add(label);
         fCgInterface.getFieldList().add(description);
+        fCgInterface.getFieldList().add(children);
         name.setAccess("public");
         name.setNotnull(true);
         label.setAccess("public");
         label.setNotnull(true);
         description.setAccess("public");
         description.setNotnull(false);
+        children.setAccess("public");
+        children.setNotnull(false);
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
