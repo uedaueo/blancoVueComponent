@@ -466,8 +466,10 @@ public class BlancoVueComponentXml2TypeScriptClass {
         defaultValue.append("{" + this.getLineSeparator());
 
         Set<String> permissionKindSet = permissionKindMap.keySet();
-        Set<String> sortedSet = permissionKindSet;
-        if (permissionKindSet.size() > 1) {
+        LinkedHashSet<String> sortedSet = new LinkedHashSet<>();
+        if (permissionKindSet.size() == 1) {
+            sortedSet.addAll(permissionKindSet);
+        } else if (permissionKindSet.size() > 1) {
             sortedSet = permissionKindSet.stream().sorted(
                     new Comparator<String>() {
                         @Override
@@ -475,7 +477,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
                             return o1.compareTo(o2);
                         }
                     }
-            ).collect(Collectors.toSet());
+            ).collect(Collectors.toCollection(LinkedHashSet::new));
         }
         int i = 0;
         for (String permissionKind : sortedSet) {
