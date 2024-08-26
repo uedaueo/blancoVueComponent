@@ -5,7 +5,7 @@
 	<groupId>blanco.vuecomponent</groupId>
 	<artifactId>blanco-vuecomponent</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.12</version>
+	<version>3.0.13</version>
 	<name>blanco-vuecomponent</name>
 	<url>https://igapyon.github.io/blancofw-maven2</url>
 

@@ -1265,15 +1265,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgInterface = fCgFactory.createInterface(simpleClassName, fBundle.getXml2sourceFileMenuItemInterface());
         fCgSourceFile.getInterfaceList().add(fCgInterface);
         fCgInterface.setAccess("public");
+        fCgSourceFile.getHeaderList().add("import { RouteQueryAndHash } from \"vue-router\"");
 
         BlancoCgField name = fCgFactory.createField("name", "string", fBundle.getXml2sourceFileMenuItemName());
         BlancoCgField label = fCgFactory.createField("label", "string", fBundle.getXml2sourceFileMenuItemLabel());
         BlancoCgField description = fCgFactory.createField("description", "string", fBundle.getXml2sourceFileMenuItemDescriptioin());
         BlancoCgField children = fCgFactory.createField("children", "Array<" + simpleClassName +  ">", fBundle.getXml2sourceFileMenuItemChildren());
+        BlancoCgField queryAndHash = fCgFactory.createField("queryAndHash", "RouteQueryAndHash", fBundle.getXml2sourceFileMenuItemQueryAndHash());
+
         fCgInterface.getFieldList().add(name);
         fCgInterface.getFieldList().add(label);
         fCgInterface.getFieldList().add(description);
         fCgInterface.getFieldList().add(children);
+        fCgInterface.getFieldList().add(queryAndHash);
         name.setAccess("public");
         name.setNotnull(true);
         label.setAccess("public");
@@ -1282,6 +1286,8 @@ public class BlancoVueComponentXml2TypeScriptClass {
         description.setNotnull(false);
         children.setAccess("public");
         children.setNotnull(false);
+        queryAndHash.setAccess("public");
+        queryAndHash.setNotnull(false);
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(

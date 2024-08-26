@@ -1560,6 +1560,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.QUERY.AND.HASH]
+     *
+     * [メニューノードから遷移する際に付加するQueryとHash文字列です。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.MENU.ITEM.QUERY.AND.HASH]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileMenuItemQueryAndHash() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "メニューノードから遷移する際に付加するQueryとHash文字列です。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.MENU.ITEM.QUERY.AND.HASH");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.CLASS.DESCRIPTION]
      *
      * [MenuItem を定義します。[ {0} ]] (ja)<br>
