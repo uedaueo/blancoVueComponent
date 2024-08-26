@@ -127,6 +127,13 @@ public class BlancoVueComponentProcessInput {
     private String fBreadCrumbInterface;
 
     /**
+     * 未指定または空文字でなかった場合に、指定されたMenuItem interfaceを使用して。メニュー情報データを各画面コンポーネントの配置場所に作成します。
+     *
+     * フィールド: [menuItemInterface]。
+     */
+    private String fMenuItemInterface;
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [Whether to run in verbose mode.]。
@@ -489,6 +496,28 @@ public class BlancoVueComponentProcessInput {
     }
 
     /**
+     * フィールド [menuItemInterface] の値を設定します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、指定されたMenuItem interfaceを使用して。メニュー情報データを各画面コンポーネントの配置場所に作成します。]。
+     *
+     * @param argMenuItemInterface フィールド[menuItemInterface]に設定する値。
+     */
+    public void setMenuItemInterface(final String argMenuItemInterface) {
+        fMenuItemInterface = argMenuItemInterface;
+    }
+
+    /**
+     * フィールド [menuItemInterface] の値を取得します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、指定されたMenuItem interfaceを使用して。メニュー情報データを各画面コンポーネントの配置場所に作成します。]。
+     *
+     * @return フィールド[menuItemInterface]から取得した値。
+     */
+    public String getMenuItemInterface() {
+        return fMenuItemInterface;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -519,6 +548,7 @@ public class BlancoVueComponentProcessInput {
         buf.append(",routeRecordMap=" + fRouteRecordMap);
         buf.append(",routeRecordBreadCrumbName=" + fRouteRecordBreadCrumbName);
         buf.append(",breadCrumbInterface=" + fBreadCrumbInterface);
+        buf.append(",menuItemInterface=" + fMenuItemInterface);
         buf.append("]");
         return buf.toString();
     }
@@ -589,5 +619,8 @@ public class BlancoVueComponentProcessInput {
         // Name: fBreadCrumbInterface
         // Type: java.lang.String
         target.fBreadCrumbInterface = this.fBreadCrumbInterface;
+        // Name: fMenuItemInterface
+        // Type: java.lang.String
+        target.fMenuItemInterface = this.fMenuItemInterface;
     }
 }

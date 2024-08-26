@@ -28,10 +28,10 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * This is a class to auto-generate TypeScript source code from intermediate XML files for value objects.
@@ -187,8 +187,11 @@ public class BlancoVueComponentXml2TypeScriptClass {
             /* In the case of the screen, creates a RouterConfig. */
             if ("screen".equalsIgnoreCase(classStructure.getComponentKind())) {
                 generateRouteRecord(classStructure, argDirectoryTarget, queryProps, pathProps);
+                if (!BlancoStringUtil.null2Blank(BlancoVueComponentUtil.menuItemInterface).trim().isEmpty() &&
+                        !BlancoStringUtil.null2Blank(classStructure.getMenuLabel()).trim().isEmpty()) {
+                    generateMenuItem(classStructure, argDirectoryTarget);
+                }
             }
-
         }
         return structures;
     }
@@ -284,11 +287,9 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
     /**
      * Generate BreadCrumbInterface for bread crumb default value.
-     * @param argClassStructures
      * @param argDirectoryTarget
      */
     public void processBreadCrumbInterface(
-            final List<BlancoVueComponentClassStructure> argClassStructures,
             final File argDirectoryTarget
     ) {
         /*
@@ -345,11 +346,9 @@ public class BlancoVueComponentXml2TypeScriptClass {
      *   [key: string]: RouteRecordRaw;<br>
      * }<br>
      * <br>
-     * @param argClassStructures
      * @param argDirectoryTarget
      */
     public void processRouteRecordMapInterface(
-            final List<BlancoVueComponentClassStructure> argClassStructures,
             final File argDirectoryTarget
     ) {
         /*
@@ -1209,16 +1208,16 @@ public class BlancoVueComponentXml2TypeScriptClass {
         recordBuf.append("{" + this.getLineSeparator());
 
         // Creates the field as public. It doesn't create a Getter/Setter.
-        recordBuf.append(this.buildRouteRecordField("path", "string", propPathValue));
+        recordBuf.append(this.buildMapField("path", "string", propPathValue));
         recordBuf.append("," + this.getLineSeparator());
-        recordBuf.append(this.buildRouteRecordField("name", "string", propNameValue));
+        recordBuf.append(this.buildMapField("name", "string", propNameValue));
         recordBuf.append("," + this.getLineSeparator());
-        recordBuf.append(this.buildRouteRecordField("component", "object", propComponentValue));
+        recordBuf.append(this.buildMapField("component", "object", propComponentValue));
         recordBuf.append("," + this.getLineSeparator());
-        recordBuf.append(this.buildRouteRecordField("meta", "any", propMetaValue));
+        recordBuf.append(this.buildMapField("meta", "any", propMetaValue));
         if (!propPropsValue.isEmpty()) {
             recordBuf.append("," + this.getLineSeparator());
-            recordBuf.append(this.buildRouteRecordField("props", "RoutePropsFunction", propPropsValue));
+            recordBuf.append(this.buildMapField("props", "RoutePropsFunction", propPropsValue));
         }
         recordBuf.append(this.getLineSeparator() + "}");
         cgRouteRecord.setDefault(recordBuf.toString());
@@ -1229,12 +1228,153 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
 
     /**
+     * Generate MenuInfoInterface
+     * @param argDirectoryTarget
+     */
+    public void processMenuInfoInterface(
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateMenuInfoInterface argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String interfaceName = BlancoVueComponentUtil.menuItemInterface;
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(interfaceName);
+        String packageName = BlancoVueComponentUtil.getPackageName(interfaceName);
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a interface.
+        fCgInterface = fCgFactory.createInterface(simpleClassName, fBundle.getXml2sourceFileMenuItemInterface());
+        fCgSourceFile.getInterfaceList().add(fCgInterface);
+        fCgInterface.setAccess("public");
+
+        BlancoCgField name = fCgFactory.createField("name", "string", fBundle.getXml2sourceFileMenuItemName());
+        BlancoCgField label = fCgFactory.createField("label", "string", fBundle.getXml2sourceFileMenuItemLabel());
+        BlancoCgField description = fCgFactory.createField("description", "string", fBundle.getXml2sourceFileMenuItemDescriptioin());
+        fCgInterface.getFieldList().add(name);
+        fCgInterface.getFieldList().add(label);
+        fCgInterface.getFieldList().add(description);
+        name.setAccess("public");
+        name.setNotnull(true);
+        label.setAccess("public");
+        label.setNotnull(true);
+        description.setAccess("public");
+        description.setNotnull(false);
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    private void generateMenuItem(
+            final BlancoVueComponentClassStructure argClassStructure,
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of
+         the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ generateMenuInfo argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        /*
+         * Prepares the necessary information.
+         */
+        String interfaceName = BlancoVueComponentUtil.menuItemInterface;
+        String simpleInterfaceName = BlancoVueComponentUtil.getSimpleClassName(interfaceName);
+        String interfacePackageName = BlancoVueComponentUtil.getPackageName(interfaceName);
+        final Map<String, List<String>> importHeaderList = new HashMap<>();
+        BlancoVueComponentUtil.makeImportHeaderList(interfacePackageName, simpleInterfaceName, importHeaderList, argClassStructure.getBasedir(), argClassStructure.getPackage());
+        List<String> headerList = new ArrayList<String>();
+        BlancoVueComponentUtil.transformGeneratedHeaderList(headerList, importHeaderList, false);
+
+        String suffix = "MenuItem";
+        String className = argClassStructure.getName() + suffix;
+        String constName = BlancoNameAdjuster.toParameterName(className);
+        String strPackage = argClassStructure.getPackage();
+
+        String propNameValue = "\"" + argClassStructure.getName() + "\"";
+        String propLabelValue = "\"" + argClassStructure.getMenuLabel() + "\"";
+        String propDescriptionValue = "\"" + argClassStructure.getDescription() + "\"";
+
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+
+        fCgSourceFile = fCgFactory.createSourceFile(strPackage, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a class.
+        fCgClass = fCgFactory.createClass(className, null);
+        fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("");
+        fCgClass.setNoClassDeclare(true);
+
+        /* In TypeScript, sets the header instead of import. */
+        fCgSourceFile.getHeaderList().addAll(headerList);
+
+        BlancoCgField cgMenuItem = fCgFactory.createField(constName, simpleInterfaceName, fBundle.getXml2sourceFileMenuItemClassDescription(argClassStructure.getName()));
+        fCgClass.getFieldList().add(cgMenuItem);
+        cgMenuItem.setAccess("export const");
+        cgMenuItem.setNotnull(true);
+        cgMenuItem.setNotnull(true);
+
+        StringBuffer menuItemBuf = new StringBuffer();
+        menuItemBuf.append("{" + this.getLineSeparator());
+
+        // Creates the field as public. It doesn't create a Getter/Setter.
+        menuItemBuf.append(this.buildMapField("name", "string", propNameValue));
+        menuItemBuf.append("," + this.getLineSeparator());
+        menuItemBuf.append(this.buildMapField("label", "string", propLabelValue));
+        menuItemBuf.append("," + this.getLineSeparator());
+        if (!BlancoStringUtil.null2Blank(propDescriptionValue).trim().isEmpty()) {
+            menuItemBuf.append(this.buildMapField("description", "string", propDescriptionValue));
+        }
+
+        menuItemBuf.append(this.getLineSeparator() + "}");
+        cgMenuItem.setDefault(menuItemBuf.toString());
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+
+    }
+
+    /**
      * Generates the field of RouteConfig.
      * @param fieldName
      * @param fieldType
      * @param defaultValue
      */
-    private String buildRouteRecordField(
+    private String buildMapField(
             String fieldName,
             String fieldType,
             String defaultValue

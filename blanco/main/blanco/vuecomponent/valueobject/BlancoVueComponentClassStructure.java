@@ -253,6 +253,13 @@ public class BlancoVueComponentClassStructure {
     private String fAlias;
 
     /**
+     * 画面コンポーネントのメニュー表示用ラベルを定義します。
+     *
+     * フィールド: [menuLabel]。
+     */
+    private String fMenuLabel;
+
+    /**
      * setup関数を実装するかどうか
      *
      * フィールド: [useSetup]。
@@ -1017,6 +1024,28 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [menuLabel] の値を設定します。
+     *
+     * フィールドの説明: [画面コンポーネントのメニュー表示用ラベルを定義します。]。
+     *
+     * @param argMenuLabel フィールド[menuLabel]に設定する値。
+     */
+    public void setMenuLabel(final String argMenuLabel) {
+        fMenuLabel = argMenuLabel;
+    }
+
+    /**
+     * フィールド [menuLabel] の値を取得します。
+     *
+     * フィールドの説明: [画面コンポーネントのメニュー表示用ラベルを定義します。]。
+     *
+     * @return フィールド[menuLabel]から取得した値。
+     */
+    public String getMenuLabel() {
+        return fMenuLabel;
+    }
+
+    /**
      * フィールド [useSetup] の値を設定します。
      *
      * フィールドの説明: [setup関数を実装するかどうか]。
@@ -1178,6 +1207,7 @@ public class BlancoVueComponentClassStructure {
         buf.append(",subject=" + fSubject);
         buf.append(",expectConsistentAfterTransition=" + fExpectConsistentAfterTransition);
         buf.append(",alias=" + fAlias);
+        buf.append(",menuLabel=" + fMenuLabel);
         buf.append(",useSetup=" + fUseSetup);
         buf.append(",useData=" + fUseData);
         buf.append(",beforeRouteLeave=" + fBeforeRouteLeave);
@@ -1301,6 +1331,9 @@ public class BlancoVueComponentClassStructure {
         // Name: fAlias
         // Type: java.lang.String
         target.fAlias = this.fAlias;
+        // Name: fMenuLabel
+        // Type: java.lang.String
+        target.fMenuLabel = this.fMenuLabel;
         // Name: fUseSetup
         // Type: java.lang.Boolean
         target.fUseSetup = this.fUseSetup;

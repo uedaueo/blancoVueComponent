@@ -20,7 +20,9 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess {
 
@@ -124,6 +126,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             BlancoVueComponentUtil.routeRecordMapKey = input.getRouteRecordMapKey();
             BlancoVueComponentUtil.routeRecordBreadCrumbName = input.getRouteRecordBreadCrumbName();
             BlancoVueComponentUtil.breadCrumbInterface = input.getBreadCrumbInterface();
+            BlancoVueComponentUtil.menuItemInterface = input.getMenuItemInterface();
 
             BlancoVueComponentUtil.processValueObjects(input);
 
@@ -135,6 +138,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             boolean createClassList = false;
             String listClassName = input.getListClass();
             List<BlancoVueComponentClassStructure> screenComponentStructures = new ArrayList<>();
+            List<BlancoVueComponentClassStructure> sortedScreenComponents = new ArrayList<>();
             if (listClassName != null && !listClassName.isEmpty()) {
                 createClassList = true;
             }
@@ -168,14 +172,28 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                         screenComponentStructures.add(classStructure);
                     }
                 }
-                // The auto-generation of unit test codes has been removed in 0.9.1 and later.
+                /*
+                 * sort screenComponentStructures
+                 */
+                if (screenComponentStructures.size() == 1) {
+                    sortedScreenComponents.add(screenComponentStructures.get(0));
+                } else if (screenComponentStructures.size() > 1) {
+                    sortedScreenComponents = screenComponentStructures.stream().sorted(
+                            new Comparator<BlancoVueComponentClassStructure>() {
+                                @Override
+                                public int compare(BlancoVueComponentClassStructure o1, BlancoVueComponentClassStructure o2) {
+                                    return o1.getName().compareTo(o2.getName());
+                                }
+                            }
+                    ).collect(Collectors.toList());
+                }
             }
 
             /*
              * If the listClass is specified, it will create a ValueObject that holds the list of auto-generated classes.
              */
             if (createClassList) {
-                if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
+                if (sortedScreenComponents.isEmpty()) {
                     System.out.println("[WARN] listClass is specified but no meta file. : " + listClassName);
                 } else {
                     final BlancoVueComponentXml2TypeScriptClass xml2Class = new BlancoVueComponentXml2TypeScriptClass();
@@ -186,12 +204,12 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                     xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
                     xml2Class.setTabs(input.getTabs());
                     xml2Class.setListClass(listClassName);
-                    xml2Class.processListClass(screenComponentStructures, new File(strTarget));
+                    xml2Class.processListClass(sortedScreenComponents, new File(strTarget));
                 }
             }
 
             if (BlancoVueComponentUtil.createRouteRecordMap) {
-                if (screenComponentStructures == null || screenComponentStructures.size() == 0) {
+                if (sortedScreenComponents.isEmpty()) {
                     System.out.println("[WARN] routeRecordMap is specified but no meta file. : " + routeRecordMapName);
                 } else {
                     final BlancoVueComponentXml2TypeScriptClass xml2Class = new BlancoVueComponentXml2TypeScriptClass();
@@ -202,10 +220,13 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                     xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
                     xml2Class.setTabs(input.getTabs());
                     xml2Class.setRouteRecordMap(routeRecordMapName);
-                    xml2Class.processRouteRecordMap(screenComponentStructures, new File(strTarget));
-                    xml2Class.processRouteRecordMapInterface(screenComponentStructures, new File(strTarget));
+                    xml2Class.processRouteRecordMap(sortedScreenComponents, new File(strTarget));
+                    xml2Class.processRouteRecordMapInterface(new File(strTarget));
                     if (!BlancoStringUtil.null2Blank(BlancoVueComponentUtil.breadCrumbInterface).trim().isEmpty()) {
-                        xml2Class.processBreadCrumbInterface(screenComponentStructures, new File(strTarget));
+                        xml2Class.processBreadCrumbInterface(new File(strTarget));
+                    }
+                    if (!BlancoStringUtil.null2Blank(BlancoVueComponentUtil.menuItemInterface).trim().isEmpty()) {
+                        xml2Class.processMenuInfoInterface(new File(strTarget));
                     }
                 }
             }

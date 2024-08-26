@@ -294,6 +294,26 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[META2XML.ELEMENT_MENU_INFO]
+     *
+     * [blancovuecomponent-menu-info] (ja)<br>
+     *
+     * @return key[META2XML.ELEMENT_MENU_INFO]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getMeta2xmlElementMenuInfo() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "blancovuecomponent-menu-info";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("META2XML.ELEMENT_MENU_INFO");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[XML2JAVACLASS.FIELD.NAME]
      *
      * [フィールド: [{0}]。] (ja)<br>
@@ -1437,6 +1457,110 @@ public class BlancoVueComponentResourceBundle {
         }
         // 置換文字列はひとつもありません。
         return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.INTERFACE]
+     *
+     * [メニュー情報のインタフェイスです。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.MENU.ITEM.INTERFACE]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileMenuItemInterface() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "メニュー情報のインタフェイスです。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.MENU.ITEM.INTERFACE");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.NAME]
+     *
+     * [メニューノードに対応するページのcomponentIdです。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.MENU.ITEM.NAME]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileMenuItemName() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "メニューノードに対応するページのcomponentIdです。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.MENU.ITEM.NAME");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.LABEL]
+     *
+     * [メニューノードに表示する表示名です。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.MENU.ITEM.LABEL]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileMenuItemLabel() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "メニューノードに表示する表示名です。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.MENU.ITEM.LABEL");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.DESCRIPTIOIN]
+     *
+     * [メニューノードの説明です。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.MENU.ITEM.DESCRIPTIOIN]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileMenuItemDescriptioin() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "メニューノードの説明です。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.MENU.ITEM.DESCRIPTIOIN");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.MENU.ITEM.CLASS.DESCRIPTION]
+     *
+     * [MenuItem を定義します。[ {0} ]] (ja)<br>
+     *
+     * @param arg0 置換文字列{0}を置換する値。java.lang.String型を与えてください。
+     * @return key[XML2SOURCE_FILE.MENU.ITEM.CLASS.DESCRIPTION]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFileMenuItemClassDescription(final String arg0) {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "MenuItem を定義します。[ {0} ]";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.MENU.ITEM.CLASS.DESCRIPTION");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        final MessageFormat messageFormat = new MessageFormat(strFormat);
+        final StringBuffer strbuf = new StringBuffer();
+        // 与えられた引数を元に置換文字列を置き換えます。
+        messageFormat.format(new Object[] {arg0}, strbuf, null);
+        return strbuf.toString();
     }
 
     /**

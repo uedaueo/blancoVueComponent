@@ -494,6 +494,7 @@ public class BlancoVueComponentXmlParser {
                 argElementCommon, "name"));
         argObjClassStructure.setAlias(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "alias"));
+        argObjClassStructure.setMenuLabel(BlancoXmlBindingUtil.getTextContent(argElementCommon, "menuLabel"));
         argObjClassStructure.setPackage(BlancoXmlBindingUtil.getTextContent(
                 argElementCommon, "package"));
         argObjClassStructure.setClassAlias(BlancoXmlBindingUtil.getTextContent(
@@ -985,7 +986,7 @@ public class BlancoVueComponentXmlParser {
          *  * Represents directories with Java/Kotlin style package notation in the definition sheet
          * TODO: Should it be possible to define the directory where the files are located on the definition sheet?
          */
-        this.parseGeneratedHeaderList(headerList, argImportHeaderList, false);
+        BlancoVueComponentUtil.transformGeneratedHeaderList(headerList, argImportHeaderList, false);
 
         /*
          * Next, outputs the default exported one.
@@ -995,47 +996,9 @@ public class BlancoVueComponentXmlParser {
          * TODO: Should it be possible to define the directory where the files are located on the definition sheet?
          */
         if (argDefaultExportedHeaderList != null && argDefaultExportedHeaderList.size() > 0) {
-            this.parseGeneratedHeaderList(headerList, argDefaultExportedHeaderList, true);
+            BlancoVueComponentUtil.transformGeneratedHeaderList(headerList, argDefaultExportedHeaderList, true);
         }
 
         return headerList;
-    }
-
-    private void parseGeneratedHeaderList(
-            List<String> argHeaderList,
-            final Map<String, List<String>> argImportHeaderList,
-            boolean isDefaultExported
-    ) {
-        if (argImportHeaderList != null && argImportHeaderList.size() > 0) {
-            Set<String> fromList = argImportHeaderList.keySet();
-            for (String strFrom : fromList) {
-                StringBuffer sb = new StringBuffer();
-                if (isDefaultExported) {
-                    sb.append("import ");
-                } else {
-                    sb.append("import { ");
-                }
-                List<String> classNameList = argImportHeaderList.get(strFrom);
-                int count = 0;
-                for (String className : classNameList) {
-                    if (count > 0) {
-                        sb.append(", ");
-                    }
-                    sb.append(className);
-                    count++;
-                }
-                if (count > 0) {
-                    if (isDefaultExported) {
-                        sb.append(" from \"" + strFrom + "\"");
-                    } else {
-                        sb.append(" } from \"" + strFrom + "\"");
-                    }
-                    if (this.isVerbose()) {
-                        System.out.println("BlancoRestGeneratorTsXmlParser#parseGeneratedHeaderList import = " + sb.toString());
-                    }
-                    argHeaderList.add(sb.toString());
-                }
-            }
-        }
     }
 }

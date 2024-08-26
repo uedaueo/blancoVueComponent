@@ -23,6 +23,7 @@ public class BlancoVueComponentUtil {
     static public boolean createRouteRecordMap = false;
     static public String routeRecordBreadCrumbName = "alias";
     static public String breadCrumbInterface = null;
+    static public String menuItemInterface = null;
 
     public static HashMap<String, BlancoValueObjectTsClassStructure> objects = new HashMap<>();
 
@@ -216,6 +217,51 @@ public class BlancoVueComponentUtil {
             importClassList.add(argClassName);
             if (isVerbose) {
                 System.out.println("BlancoVueComponentUtil#addImportHeaderList: new import { " + argClassName + " } from \"" + argImportFrom + "\"");
+            }
+        }
+    }
+
+    /**
+     * transform makeImportHeaderList to ordinal headerList.
+     *
+     * @param argHeaderList
+     * @param argImportHeaderList
+     * @param isDefaultExported
+     */
+    static public void transformGeneratedHeaderList(
+            List<String> argHeaderList,
+            final Map<String, List<String>> argImportHeaderList,
+            boolean isDefaultExported
+    ) {
+        if (argImportHeaderList != null && argImportHeaderList.size() > 0) {
+            Set<String> fromList = argImportHeaderList.keySet();
+            for (String strFrom : fromList) {
+                StringBuffer sb = new StringBuffer();
+                if (isDefaultExported) {
+                    sb.append("import ");
+                } else {
+                    sb.append("import { ");
+                }
+                List<String> classNameList = argImportHeaderList.get(strFrom);
+                int count = 0;
+                for (String className : classNameList) {
+                    if (count > 0) {
+                        sb.append(", ");
+                    }
+                    sb.append(className);
+                    count++;
+                }
+                if (count > 0) {
+                    if (isDefaultExported) {
+                        sb.append(" from \"" + strFrom + "\"");
+                    } else {
+                        sb.append(" } from \"" + strFrom + "\"");
+                    }
+                    if (isVerbose) {
+                        System.out.println("BlancoVueComponentUtil#transformGeneratedHeaderList import = " + sb.toString());
+                    }
+                    argHeaderList.add(sb.toString());
+                }
             }
         }
     }

@@ -104,6 +104,11 @@ public class BlancoVueComponentTask extends Task {
     protected boolean fIsFieldBreadCrumbInterfaceProcessed = false;
 
     /**
+     * フィールド [menuItemInterface] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldMenuItemInterfaceProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -511,6 +516,31 @@ public class BlancoVueComponentTask extends Task {
     }
 
     /**
+     * Antタスクの[menuItemInterface]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 16<br>
+     * 未指定または空文字でなかった場合に、指定されたMenuItem interfaceを使用して。メニュー情報データを各画面コンポーネントの配置場所に作成します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setMenuItemInterface(final String arg) {
+        fInput.setMenuItemInterface(arg);
+        fIsFieldMenuItemInterfaceProcessed = true;
+    }
+
+    /**
+     * Antタスクの[menuItemInterface]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 16<br>
+     * 未指定または空文字でなかった場合に、指定されたMenuItem interfaceを使用して。メニュー情報データを各画面コンポーネントの配置場所に作成します。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getMenuItemInterface() {
+        return fInput.getMenuItemInterface();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -541,6 +571,7 @@ public class BlancoVueComponentTask extends Task {
             System.out.println("- routeRecordMap:[" + getRouteRecordMap() + "]");
             System.out.println("- routeRecordBreadCrumbName:[" + getRouteRecordBreadCrumbName() + "]");
             System.out.println("- breadCrumbInterface:[" + getBreadCrumbInterface() + "]");
+            System.out.println("- menuItemInterface:[" + getMenuItemInterface() + "]");
         }
 
         try {

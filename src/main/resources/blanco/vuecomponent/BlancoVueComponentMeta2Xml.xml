@@ -14,6 +14,9 @@
         <propertykey name="alias" waitX="2">
           <value>コンポーネント別名</value>
         </propertykey>
+        <propertykey name="menuLabel" waitX="2">
+          <value>メニューラベル</value>
+        </propertykey>
         <propertykey name="package" waitX="2">
           <value>パッケージ</value>
         </propertykey>
