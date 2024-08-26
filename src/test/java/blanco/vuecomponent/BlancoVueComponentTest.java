@@ -65,6 +65,7 @@ public class BlancoVueComponentTest {
         inputComponent.setBreadCrumbInterface("sample.pages.BreadCrumbInterface");
         inputComponent.setMenuItemInterface("sample.pages.MenuItemInterface");
         inputComponent.setMenuItemDescription("subject");
+        inputComponent.setPermissionKindMap("sample.pages.PermissionKindMap");
         inputComponent.setLineSeparator("LF");
 
         BlancoVueComponentProcessImpl imple2 = new BlancoVueComponentProcessImpl();

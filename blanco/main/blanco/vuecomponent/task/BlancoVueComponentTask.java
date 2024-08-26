@@ -114,6 +114,11 @@ public class BlancoVueComponentTask extends Task {
     protected boolean fIsFieldMenuItemDescriptionProcessed = false;
 
     /**
+     * フィールド [permissionKindMap] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldPermissionKindMapProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -572,6 +577,31 @@ public class BlancoVueComponentTask extends Task {
     }
 
     /**
+     * Antタスクの[permissionKindMap]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 18<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した権限種別をキーとして、componentId の配列を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setPermissionKindMap(final String arg) {
+        fInput.setPermissionKindMap(arg);
+        fIsFieldPermissionKindMapProcessed = true;
+    }
+
+    /**
+     * Antタスクの[permissionKindMap]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 18<br>
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した権限種別をキーとして、componentId の配列を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getPermissionKindMap() {
+        return fInput.getPermissionKindMap();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -604,6 +634,7 @@ public class BlancoVueComponentTask extends Task {
             System.out.println("- breadCrumbInterface:[" + getBreadCrumbInterface() + "]");
             System.out.println("- menuItemInterface:[" + getMenuItemInterface() + "]");
             System.out.println("- menuItemDescription:[" + getMenuItemDescription() + "]");
+            System.out.println("- permissionKindMap:[" + getPermissionKindMap() + "]");
         }
 
         try {

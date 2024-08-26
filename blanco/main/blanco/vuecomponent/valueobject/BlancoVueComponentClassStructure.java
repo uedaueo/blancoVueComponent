@@ -300,6 +300,14 @@ public class BlancoVueComponentClassStructure {
     private List<BlancoVueComponentBreadCrumbStructure> fBreadCrumbList = new java.util.ArrayList<>();
 
     /**
+     * 権限種別または権限グループでを表す文字列です。
+     *
+     * フィールド: [permissionKind]。
+     * デフォルト: [&quot;&quot;]。
+     */
+    private String fPermissionKind = "";
+
+    /**
      * フィールド [name] の値を設定します。
      *
      * フィールドの説明: [フィールド名を指定します。必須項目です。]。
@@ -1161,6 +1169,29 @@ public class BlancoVueComponentClassStructure {
     }
 
     /**
+     * フィールド [permissionKind] の値を設定します。
+     *
+     * フィールドの説明: [権限種別または権限グループでを表す文字列です。]。
+     *
+     * @param argPermissionKind フィールド[permissionKind]に設定する値。
+     */
+    public void setPermissionKind(final String argPermissionKind) {
+        fPermissionKind = argPermissionKind;
+    }
+
+    /**
+     * フィールド [permissionKind] の値を取得します。
+     *
+     * フィールドの説明: [権限種別または権限グループでを表す文字列です。]。
+     * デフォルト: [&quot;&quot;]。
+     *
+     * @return フィールド[permissionKind]から取得した値。
+     */
+    public String getPermissionKind() {
+        return fPermissionKind;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -1213,6 +1244,7 @@ public class BlancoVueComponentClassStructure {
         buf.append(",beforeRouteLeave=" + fBeforeRouteLeave);
         buf.append(",layoutType=" + fLayoutType);
         buf.append(",breadCrumbList=" + fBreadCrumbList);
+        buf.append(",permissionKind=" + fPermissionKind);
         buf.append("]");
         return buf.toString();
     }
@@ -1349,5 +1381,8 @@ public class BlancoVueComponentClassStructure {
         // Name: fBreadCrumbList
         // Type: java.util.List
         // Field[fBreadCrumbList] is an unsupported type[java.util.Listblanco.vuecomponent.valueobject.BlancoVueComponentBreadCrumbStructure].
+        // Name: fPermissionKind
+        // Type: java.lang.String
+        target.fPermissionKind = this.fPermissionKind;
     }
 }

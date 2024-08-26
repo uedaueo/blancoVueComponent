@@ -142,6 +142,13 @@ public class BlancoVueComponentProcessInput {
     private String fMenuItemDescription = "\"description\"";
 
     /**
+     * 未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した権限種別をキーとして、componentId の配列を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。
+     *
+     * フィールド: [permissionKindMap]。
+     */
+    private String fPermissionKindMap;
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [Whether to run in verbose mode.]。
@@ -549,6 +556,28 @@ public class BlancoVueComponentProcessInput {
     }
 
     /**
+     * フィールド [permissionKindMap] の値を設定します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した権限種別をキーとして、componentId の配列を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。]。
+     *
+     * @param argPermissionKindMap フィールド[permissionKindMap]に設定する値。
+     */
+    public void setPermissionKindMap(final String argPermissionKindMap) {
+        fPermissionKindMap = argPermissionKindMap;
+    }
+
+    /**
+     * フィールド [permissionKindMap] の値を取得します。
+     *
+     * フィールドの説明: [未指定または空文字でなかった場合に、対象ディレクトリ内の自動生成した権限種別をキーとして、componentId の配列を返す連想配列を生成します。ファイル名は . 区切りの配置場所を含めて指定します。]。
+     *
+     * @return フィールド[permissionKindMap]から取得した値。
+     */
+    public String getPermissionKindMap() {
+        return fPermissionKindMap;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -581,6 +610,7 @@ public class BlancoVueComponentProcessInput {
         buf.append(",breadCrumbInterface=" + fBreadCrumbInterface);
         buf.append(",menuItemInterface=" + fMenuItemInterface);
         buf.append(",menuItemDescription=" + fMenuItemDescription);
+        buf.append(",permissionKindMap=" + fPermissionKindMap);
         buf.append("]");
         return buf.toString();
     }
@@ -657,5 +687,8 @@ public class BlancoVueComponentProcessInput {
         // Name: fMenuItemDescription
         // Type: java.lang.String
         target.fMenuItemDescription = this.fMenuItemDescription;
+        // Name: fPermissionKindMap
+        // Type: java.lang.String
+        target.fPermissionKindMap = this.fPermissionKindMap;
     }
 }

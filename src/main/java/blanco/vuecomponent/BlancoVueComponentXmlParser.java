@@ -564,6 +564,8 @@ public class BlancoVueComponentXmlParser {
         argObjClassStructure.setExpectConsistentAfterTransition("true"
                 .equals(BlancoXmlBindingUtil.getTextContent(argElementCommon,
                         "expectConsistentAfterTransition")));
+        argObjClassStructure.setPermissionKind(BlancoXmlBindingUtil.getTextContent(argElementCommon, "permissionKind"));
+
         argObjClassStructure
                 .setComponentList(new ArrayList<>());
         argObjClassStructure

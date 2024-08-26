@@ -80,6 +80,9 @@
         <propertykey name="expectConsistentAfterTransition" waitX="2">
           <value>遷移後の参照に一貫性を期待</value>
         </propertykey>
+        <propertykey name="permissionKind" waitX="2">
+          <value>権限種別</value>
+        </propertykey>
 
         <valuemapping>
           <result>true</result>

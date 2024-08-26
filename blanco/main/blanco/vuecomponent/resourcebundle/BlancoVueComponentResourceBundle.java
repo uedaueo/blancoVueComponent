@@ -1604,6 +1604,46 @@ public class BlancoVueComponentResourceBundle {
     }
 
     /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PERMISSION.KIND.MAP.INTERFACE]
+     *
+     * [権限種別をキーにcomponentIdの配列を取得するMapのインタフェイスです。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PERMISSION.KIND.MAP.INTERFACE]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePermissionKindMapInterface() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "権限種別をキーにcomponentIdの配列を取得するMapのインタフェイスです。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PERMISSION.KIND.MAP.INTERFACE");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
+     * bundle[BlancoVueComponent], key[XML2SOURCE_FILE.PERMISSION.KIND.MAP]
+     *
+     * [権限種別をキーにcomponentIdの配列を取得するMapです。] (ja)<br>
+     *
+     * @return key[XML2SOURCE_FILE.PERMISSION.KIND.MAP]に対応する値。外部から読み込みができない場合には、定義書の値を戻します。必ずnull以外の値が戻ります。
+     */
+    public String getXml2sourceFilePermissionKindMap() {
+        // 初期値として定義書の値を利用します。
+        String strFormat = "権限種別をキーにcomponentIdの配列を取得するMapです。";
+        try {
+            if (fResourceBundle != null) {
+                strFormat = fResourceBundle.getString("XML2SOURCE_FILE.PERMISSION.KIND.MAP");
+            }
+        } catch (MissingResourceException ex) {
+        }
+        // 置換文字列はひとつもありません。
+        return strFormat;
+    }
+
+    /**
      * bundle[BlancoVueComponent], key[META2XML.ELEMENT_COMMON_CS]
      *
      * [blancovalueobjectcs-common] (ja)<br>

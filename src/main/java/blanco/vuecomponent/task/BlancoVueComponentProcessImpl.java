@@ -149,6 +149,11 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                 BlancoVueComponentUtil.createRouteRecordMap = true;
             }
 
+            String permissionKindMapName = input.getPermissionKindMap();
+            if (permissionKindMapName != null && !permissionKindMapName.isEmpty()) {
+                BlancoVueComponentUtil.createPermissionKindMap = true;
+            }
+
             // Next, scans the directory specified as the meta directory.
             for (int index = 0; index < fileMeta2.length; index++) {
                 if (fileMeta2[index].getName().endsWith(".xml") == false) {
@@ -230,6 +235,19 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
                         xml2Class.processMenuInfoInterface(new File(strTarget));
                     }
                 }
+            }
+
+            if (BlancoVueComponentUtil.createPermissionKindMap) {
+                final BlancoVueComponentXml2TypeScriptClass xml2Class = new BlancoVueComponentXml2TypeScriptClass();
+                xml2Class.setEncoding(input.getEncoding());
+                xml2Class.setVerbose(input.getVerbose());
+                xml2Class.setTargetStyleAdvanced(isTargetStyleAdvanced);
+                xml2Class.setXmlRootElement(input.getXmlrootelement());
+                xml2Class.setSheetLang(new BlancoCgSupportedLang().convertToInt(input.getSheetType()));
+                xml2Class.setTabs(input.getTabs());
+                xml2Class.setPermissionKindMap(permissionKindMapName);
+                xml2Class.processPermissionKindMap(sortedScreenComponents, new File(strTarget));
+                xml2Class.processPermissionKindMapInterface(new File(strTarget));
             }
 
             return BlancoVueComponentBatchProcess.END_SUCCESS;

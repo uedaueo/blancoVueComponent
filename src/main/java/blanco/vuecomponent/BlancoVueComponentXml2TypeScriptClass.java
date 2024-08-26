@@ -28,10 +28,7 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is a class to auto-generate TypeScript source code from intermediate XML files for value objects.
@@ -102,6 +99,14 @@ public class BlancoVueComponentXml2TypeScriptClass {
     }
     public void setRouteRecordMap(String routeRecordMap) {
         this.fRouteRecordMap = routeRecordMap;
+    }
+
+    private String fPermissionKindMap = "";
+    public String getPermissionKindMap() {
+        return this.fPermissionKindMap;
+    }
+    public void setPermissionKindMap(String permissionListMap) {
+        this.fPermissionKindMap = permissionListMap;
     }
 
     /**
@@ -332,6 +337,156 @@ public class BlancoVueComponentXml2TypeScriptClass {
         name.setNotnull(true);
         nolink.setAccess("public");
         nolink.setNotnull(true);
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    public void processPermissionKindMapInterface(
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ processPermissionKindMapInterface argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        String interfaceName = this.getPermissionKindMap() + "Interface";
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(interfaceName);
+        String packageName = BlancoVueComponentUtil.getPackageName(interfaceName);
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a interface.
+        fCgInterface = fCgFactory.createInterface(simpleClassName, fBundle.getXml2sourceFilePermissionKindMapInterface());
+        fCgSourceFile.getInterfaceList().add(fCgInterface);
+        fCgInterface.setAccess("public");
+
+        List<String> plainTextList = fCgInterface.getPlainTextList();
+        plainTextList.add(this.getTabSpace() + "[key: string]: string[];");
+
+        // Auto-generates the actual source code based on the collected information.
+        BlancoCgTransformerFactory.getTsSourceTransformer().transform(
+                fCgSourceFile, fileBlancoMain);
+    }
+
+    public void processPermissionKindMap(
+            final List<BlancoVueComponentClassStructure> argClassStructures,
+            final File argDirectoryTarget
+    ) {
+        /*
+         * The output directory will be in the format specified by the targetStyle argument of the ant task.
+         * For compatibility, the output directory will be blanco/main if it is not specified.
+         * by tueda, 2019/08/30
+         */
+        String strTarget = argDirectoryTarget
+                .getAbsolutePath(); // advanced
+        if (!this.isTargetStyleAdvanced()) {
+            strTarget += "/main"; // legacy
+        }
+        final File fileBlancoMain = new File(strTarget);
+
+        /* tueda DEBUG */
+        if (this.isVerbose()) {
+            System.out.println("/* tueda */ processPermissionKindMap argDirectoryTarget : " + argDirectoryTarget.getAbsolutePath());
+        }
+
+        Map<String, List<String>> permissionKindMap = new HashMap<>();
+        for (BlancoVueComponentClassStructure structure : argClassStructures) {
+            /* get key value first. */
+            String keyValue = structure.getPermissionKind();
+            if (!BlancoStringUtil.null2Blank(keyValue).trim().isEmpty()) {
+                List<String> componentIdList = permissionKindMap.get(keyValue);
+                if (componentIdList == null) {
+                    componentIdList = new ArrayList<>();
+                    permissionKindMap.put(keyValue, componentIdList);
+                }
+                componentIdList.add(structure.getName());
+            }
+        }
+
+        if (permissionKindMap.isEmpty()) {
+            System.out.println("processPermissionKindMap is empty. SKIP!!!");
+            return;
+        }
+
+        String simpleClassName = BlancoVueComponentUtil.getSimpleClassName(this.getPermissionKindMap());
+        String constName = BlancoNameAdjuster.toParameterName(simpleClassName);
+        String packageName = BlancoVueComponentUtil.getPackageName(this.getPermissionKindMap());
+        String simpleInterfaceName = simpleClassName + "Interface";
+
+        /* At least one structure exists. */
+        BlancoVueComponentClassStructure delegateStructure = argClassStructures.get(0);
+        String baseDir = delegateStructure.getBasedir();
+
+        // Gets an instance of the BlancoCgObjectFactory class.
+        fCgFactory = BlancoCgObjectFactory.getInstance();
+        fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
+        fCgSourceFile.setEncoding(fEncoding);
+        fCgSourceFile.setTabs(this.getTabs());
+
+        // Creates a class.
+        fCgClass = fCgFactory.createClass(simpleClassName, fBundle.getXml2sourceFilePermissionKindMap());
+        fCgSourceFile.getClassList().add(fCgClass);
+        fCgClass.setAccess("");
+        fCgClass.setNoClassDeclare(true);
+
+        /* Import interface */
+        String interfaceHeader = "import { " + simpleInterfaceName + " } from \"" + baseDir + "/" + packageName.replace(".", "/") + "/" + simpleInterfaceName + "\"";
+        fCgSourceFile.getHeaderList().add(interfaceHeader);
+
+        final BlancoCgField field = fCgFactory.createField(constName,
+                "dummy", fBundle.getXml2sourceFilePermissionKindMap());
+        fCgClass.getFieldList().add(field);
+
+        field.setNotnull(true);
+        field.setAccess("export const");
+//        field.setTypeInference(true);
+        BlancoCgType myType = fCgFactory.createType(simpleInterfaceName);
+        field.setType(myType);
+
+        StringBuffer defaultValue = new StringBuffer();
+        defaultValue.append("{" + this.getLineSeparator());
+
+        Set<String> permissionKindSet = permissionKindMap.keySet();
+        int i = 0;
+        for (String permissionKind : permissionKindSet) {
+            if (i != 0) {
+                defaultValue.append("," + this.getLineSeparator());
+            }
+            i++;
+            defaultValue.append(this.getTabSpace() + permissionKind + ": [");
+            List<String> componentIdList = permissionKindMap.get(permissionKind);
+            int j = 0;
+            for (String componentId : componentIdList) {
+                if (j != 0) {
+                    defaultValue.append(", ");
+                }
+                j++;
+                defaultValue.append("\"" + componentId + "\"");
+            }
+            defaultValue.append("]");
+        }
+
+        defaultValue.append(this.getLineSeparator() + "}");
+
+        field.setDefault(defaultValue.toString());
 
         // Auto-generates the actual source code based on the collected information.
         BlancoCgTransformerFactory.getTsSourceTransformer().transform(
