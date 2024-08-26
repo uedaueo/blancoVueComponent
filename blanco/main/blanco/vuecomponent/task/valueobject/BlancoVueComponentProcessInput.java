@@ -134,6 +134,14 @@ public class BlancoVueComponentProcessInput {
     private String fMenuItemInterface;
 
     /**
+     * MenuItem の description に割り当てる項目名を指定します。項目名にはClassStructure で定義しているプロパティ名を使用します。
+     *
+     * フィールド: [menuItemDescription]。
+     * デフォルト: [&quot;description&quot;]。
+     */
+    private String fMenuItemDescription = "\"description\"";
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [Whether to run in verbose mode.]。
@@ -518,6 +526,29 @@ public class BlancoVueComponentProcessInput {
     }
 
     /**
+     * フィールド [menuItemDescription] の値を設定します。
+     *
+     * フィールドの説明: [MenuItem の description に割り当てる項目名を指定します。項目名にはClassStructure で定義しているプロパティ名を使用します。]。
+     *
+     * @param argMenuItemDescription フィールド[menuItemDescription]に設定する値。
+     */
+    public void setMenuItemDescription(final String argMenuItemDescription) {
+        fMenuItemDescription = argMenuItemDescription;
+    }
+
+    /**
+     * フィールド [menuItemDescription] の値を取得します。
+     *
+     * フィールドの説明: [MenuItem の description に割り当てる項目名を指定します。項目名にはClassStructure で定義しているプロパティ名を使用します。]。
+     * デフォルト: [&quot;description&quot;]。
+     *
+     * @return フィールド[menuItemDescription]から取得した値。
+     */
+    public String getMenuItemDescription() {
+        return fMenuItemDescription;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -549,6 +580,7 @@ public class BlancoVueComponentProcessInput {
         buf.append(",routeRecordBreadCrumbName=" + fRouteRecordBreadCrumbName);
         buf.append(",breadCrumbInterface=" + fBreadCrumbInterface);
         buf.append(",menuItemInterface=" + fMenuItemInterface);
+        buf.append(",menuItemDescription=" + fMenuItemDescription);
         buf.append("]");
         return buf.toString();
     }
@@ -622,5 +654,8 @@ public class BlancoVueComponentProcessInput {
         // Name: fMenuItemInterface
         // Type: java.lang.String
         target.fMenuItemInterface = this.fMenuItemInterface;
+        // Name: fMenuItemDescription
+        // Type: java.lang.String
+        target.fMenuItemDescription = this.fMenuItemDescription;
     }
 }

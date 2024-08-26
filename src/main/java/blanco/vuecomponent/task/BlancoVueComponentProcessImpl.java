@@ -127,6 +127,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             BlancoVueComponentUtil.routeRecordBreadCrumbName = input.getRouteRecordBreadCrumbName();
             BlancoVueComponentUtil.breadCrumbInterface = input.getBreadCrumbInterface();
             BlancoVueComponentUtil.menuItemInterface = input.getMenuItemInterface();
+            BlancoVueComponentUtil.menuItemDescription = input.getMenuItemDescription();
 
             BlancoVueComponentUtil.processValueObjects(input);
 

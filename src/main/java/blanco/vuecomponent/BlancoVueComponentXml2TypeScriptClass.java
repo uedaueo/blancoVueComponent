@@ -1324,7 +1324,18 @@ public class BlancoVueComponentXml2TypeScriptClass {
 
         String propNameValue = "\"" + argClassStructure.getName() + "\"";
         String propLabelValue = "\"" + argClassStructure.getMenuLabel() + "\"";
-        String propDescriptionValue = "\"" + argClassStructure.getDescription() + "\"";
+        String description = argClassStructure.getDescription();
+
+        Class<? extends BlancoVueComponentClassStructure> clazz = argClassStructure.getClass();
+        try {
+            String getterKey = "get" + BlancoNameAdjuster.toClassName(BlancoVueComponentUtil.menuItemDescription);
+            Method getter = clazz.getMethod(getterKey);
+            description = (String) getter.invoke(argClassStructure);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error!!! next structure.");
+        }
+        String propDescriptionValue = "\"" + description + "\"";
 
         fCgFactory = BlancoCgObjectFactory.getInstance();
 

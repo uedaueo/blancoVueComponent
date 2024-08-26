@@ -24,6 +24,7 @@ public class BlancoVueComponentUtil {
     static public String routeRecordBreadCrumbName = "alias";
     static public String breadCrumbInterface = null;
     static public String menuItemInterface = null;
+    static public String menuItemDescription = "description";
 
     public static HashMap<String, BlancoValueObjectTsClassStructure> objects = new HashMap<>();
 

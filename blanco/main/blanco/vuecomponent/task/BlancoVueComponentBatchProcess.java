@@ -90,6 +90,8 @@ public class BlancoVueComponentBatchProcess {
                 input.setBreadCrumbInterface(arg.substring(21));
             } else if (arg.startsWith("-menuItemInterface=")) {
                 input.setMenuItemInterface(arg.substring(19));
+            } else if (arg.startsWith("-menuItemDescription=")) {
+                input.setMenuItemDescription(arg.substring(21));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -183,7 +185,7 @@ public class BlancoVueComponentBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoVueComponentBatchProcess: Usage:");
-        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14 -routeRecordBreadCrumbName=value15 -breadCrumbInterface=value16 -menuItemInterface=value17");
+        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14 -routeRecordBreadCrumbName=value15 -breadCrumbInterface=value16 -menuItemInterface=value17 -menuItemDescription=value18");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -246,6 +248,10 @@ public class BlancoVueComponentBatchProcess {
         System.out.println("    -menuItemInterface");
         System.out.println("      explanation[未指定または空文字でなかった場合に、指定されたMenuItem interfaceを使用して。メニュー情報データを各画面コンポーネントの配置場所に作成します。]");
         System.out.println("      type[string]");
+        System.out.println("    -menuItemDescription");
+        System.out.println("      explanation[MenuItem の description に割り当てる項目名を指定します。項目名にはClassStructure で定義しているプロパティ名を使用します。]");
+        System.out.println("      type[string]");
+        System.out.println("      default value[\"description\"]");
         System.out.println("    -? , -help");
         System.out.println("      explanation[show the usage.]");
     }
