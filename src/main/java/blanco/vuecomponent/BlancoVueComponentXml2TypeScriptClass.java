@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This is a class to auto-generate TypeScript source code from intermediate XML files for value objects.
@@ -465,8 +466,19 @@ public class BlancoVueComponentXml2TypeScriptClass {
         defaultValue.append("{" + this.getLineSeparator());
 
         Set<String> permissionKindSet = permissionKindMap.keySet();
+        Set<String> sortedSet = permissionKindSet;
+        if (permissionKindSet.size() > 1) {
+            sortedSet = permissionKindSet.stream().sorted(
+                    new Comparator<String>() {
+                        @Override
+                        public int compare(String o1, String o2) {
+                            return o1.compareTo(o2);
+                        }
+                    }
+            ).collect(Collectors.toSet());
+        }
         int i = 0;
-        for (String permissionKind : permissionKindSet) {
+        for (String permissionKind : sortedSet) {
             if (i != 0) {
                 defaultValue.append("," + this.getLineSeparator());
             }
