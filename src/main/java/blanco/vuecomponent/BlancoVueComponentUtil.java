@@ -26,6 +26,7 @@ public class BlancoVueComponentUtil {
     static public String menuItemInterface = null;
     static public String menuItemDescription = "description";
     static public boolean createPermissionKindMap = false;
+    static public boolean isStrictNullable = false;
 
     public static HashMap<String, BlancoValueObjectTsClassStructure> objects = new HashMap<>();
 

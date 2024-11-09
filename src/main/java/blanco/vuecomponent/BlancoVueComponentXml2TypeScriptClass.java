@@ -819,6 +819,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 .getPackage(), null);
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
+        fCgSourceFile.setIsStrictNullable(BlancoVueComponentUtil.isStrictNullable);
 
         // Creates a class.
         fCgClass = fCgFactory.createClass(argClassStructure.getName(), "");
@@ -974,6 +975,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
                 .getPackage(), null);
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
+        fCgSourceFile.setIsStrictNullable(BlancoVueComponentUtil.isStrictNullable);
 
         // Create interface first.
         fCgInterface = fCgFactory.createInterface(propsInterface, fBundle.getXml2sourceFilePropsInterfaceDescription());
@@ -1429,6 +1431,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
         fCgSourceFile = fCgFactory.createSourceFile(packageName, null);
         fCgSourceFile.setEncoding(fEncoding);
         fCgSourceFile.setTabs(this.getTabs());
+        fCgSourceFile.setIsStrictNullable(BlancoVueComponentUtil.isStrictNullable);
 
         // Creates a interface.
         fCgInterface = fCgFactory.createInterface(simpleClassName, fBundle.getXml2sourceFileMenuItemInterface());

@@ -128,6 +128,7 @@ public class BlancoVueComponentProcessImpl implements BlancoVueComponentProcess 
             BlancoVueComponentUtil.breadCrumbInterface = input.getBreadCrumbInterface();
             BlancoVueComponentUtil.menuItemInterface = input.getMenuItemInterface();
             BlancoVueComponentUtil.menuItemDescription = input.getMenuItemDescription();
+            BlancoVueComponentUtil.isStrictNullable = input.getStrictNullable();
 
             BlancoVueComponentUtil.processValueObjects(input);
 

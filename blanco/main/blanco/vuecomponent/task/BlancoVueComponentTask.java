@@ -119,6 +119,11 @@ public class BlancoVueComponentTask extends Task {
     protected boolean fIsFieldPermissionKindMapProcessed = false;
 
     /**
+     * フィールド [strictNullable] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldStrictNullableProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -602,6 +607,32 @@ public class BlancoVueComponentTask extends Task {
     }
 
     /**
+     * Antタスクの[strictNullable]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 19<br>
+     * Nullable な property に対して、? の付与をやめて | undefined | null の定義を行う。false の場合は ? が付与されて | undefined のみ付与される。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setStrictNullable(final boolean arg) {
+        fInput.setStrictNullable(arg);
+        fIsFieldStrictNullableProcessed = true;
+    }
+
+    /**
+     * Antタスクの[strictNullable]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 19<br>
+     * Nullable な property に対して、? の付与をやめて | undefined | null の定義を行う。false の場合は ? が付与されて | undefined のみ付与される。<br>
+     * デフォルト値[false]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public boolean getStrictNullable() {
+        return fInput.getStrictNullable();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -635,6 +666,7 @@ public class BlancoVueComponentTask extends Task {
             System.out.println("- menuItemInterface:[" + getMenuItemInterface() + "]");
             System.out.println("- menuItemDescription:[" + getMenuItemDescription() + "]");
             System.out.println("- permissionKindMap:[" + getPermissionKindMap() + "]");
+            System.out.println("- strictNullable:[" + getStrictNullable() + "]");
         }
 
         try {
