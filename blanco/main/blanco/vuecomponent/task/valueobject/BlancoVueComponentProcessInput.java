@@ -157,6 +157,14 @@ public class BlancoVueComponentProcessInput {
     private boolean fStrictNullable = false;
 
     /**
+     * 対応する vuejs のバージョンを指定します。middle バージョンの違いで動作が変わる場合があるので、文字列として定義します。
+     *
+     * フィールド: [supportedVueVersion]。
+     * デフォルト: [3.4]。
+     */
+    private String fSupportedVueVersion = "3.4";
+
+    /**
      * フィールド [verbose] の値を設定します。
      *
      * フィールドの説明: [Whether to run in verbose mode.]。
@@ -609,6 +617,29 @@ public class BlancoVueComponentProcessInput {
     }
 
     /**
+     * フィールド [supportedVueVersion] の値を設定します。
+     *
+     * フィールドの説明: [対応する vuejs のバージョンを指定します。middle バージョンの違いで動作が変わる場合があるので、文字列として定義します。]。
+     *
+     * @param argSupportedVueVersion フィールド[supportedVueVersion]に設定する値。
+     */
+    public void setSupportedVueVersion(final String argSupportedVueVersion) {
+        fSupportedVueVersion = argSupportedVueVersion;
+    }
+
+    /**
+     * フィールド [supportedVueVersion] の値を取得します。
+     *
+     * フィールドの説明: [対応する vuejs のバージョンを指定します。middle バージョンの違いで動作が変わる場合があるので、文字列として定義します。]。
+     * デフォルト: [3.4]。
+     *
+     * @return フィールド[supportedVueVersion]から取得した値。
+     */
+    public String getSupportedVueVersion() {
+        return fSupportedVueVersion;
+    }
+
+    /**
      * Gets the string representation of this value object.
      *
      * <P>Precautions for use</P>
@@ -643,6 +674,7 @@ public class BlancoVueComponentProcessInput {
         buf.append(",menuItemDescription=" + fMenuItemDescription);
         buf.append(",permissionKindMap=" + fPermissionKindMap);
         buf.append(",strictNullable=" + fStrictNullable);
+        buf.append(",supportedVueVersion=" + fSupportedVueVersion);
         buf.append("]");
         return buf.toString();
     }
@@ -725,5 +757,8 @@ public class BlancoVueComponentProcessInput {
         // Name: fStrictNullable
         // Type: boolean
         target.fStrictNullable = this.fStrictNullable;
+        // Name: fSupportedVueVersion
+        // Type: java.lang.String
+        target.fSupportedVueVersion = this.fSupportedVueVersion;
     }
 }

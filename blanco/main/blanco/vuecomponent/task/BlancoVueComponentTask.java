@@ -124,6 +124,11 @@ public class BlancoVueComponentTask extends Task {
     protected boolean fIsFieldStrictNullableProcessed = false;
 
     /**
+     * フィールド [supportedVueVersion] に値がセットされたかどうか。
+     */
+    protected boolean fIsFieldSupportedVueVersionProcessed = false;
+
+    /**
      * verboseモードで動作させるかどうか。
      *
      * @param arg verboseモードで動作させるかどうか。
@@ -633,6 +638,32 @@ public class BlancoVueComponentTask extends Task {
     }
 
     /**
+     * Antタスクの[supportedVueVersion]アトリビュートのセッターメソッド。
+     *
+     * 項目番号: 20<br>
+     * 対応する vuejs のバージョンを指定します。middle バージョンの違いで動作が変わる場合があるので、文字列として定義します。<br>
+     *
+     * @param arg セットしたい値
+     */
+    public void setSupportedVueVersion(final String arg) {
+        fInput.setSupportedVueVersion(arg);
+        fIsFieldSupportedVueVersionProcessed = true;
+    }
+
+    /**
+     * Antタスクの[supportedVueVersion]アトリビュートのゲッターメソッド。
+     *
+     * 項目番号: 20<br>
+     * 対応する vuejs のバージョンを指定します。middle バージョンの違いで動作が変わる場合があるので、文字列として定義します。<br>
+     * デフォルト値[3.4]が設定されています。Apache Antタスク上でアトリビュートの指定が無い場合には、デフォルト値が設定されます。<br>
+     *
+     * @return このフィールドの値
+     */
+    public String getSupportedVueVersion() {
+        return fInput.getSupportedVueVersion();
+    }
+
+    /**
      * Antタスクのメイン処理。Apache Antから このメソッドが呼び出されます。
      *
      * @throws BuildException タスクとしての例外が発生した場合。
@@ -667,6 +698,7 @@ public class BlancoVueComponentTask extends Task {
             System.out.println("- menuItemDescription:[" + getMenuItemDescription() + "]");
             System.out.println("- permissionKindMap:[" + getPermissionKindMap() + "]");
             System.out.println("- strictNullable:[" + getStrictNullable() + "]");
+            System.out.println("- supportedVueVersion:[" + getSupportedVueVersion() + "]");
         }
 
         try {

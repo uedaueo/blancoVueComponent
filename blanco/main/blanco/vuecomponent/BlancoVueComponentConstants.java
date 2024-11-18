@@ -20,7 +20,7 @@ public class BlancoVueComponentConstants {
      * 項目番号:3<br>
      * バージョン番号。
      */
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "3.0.18";
 
     /**
      * 項目番号:4<br>
@@ -75,4 +75,10 @@ public class BlancoVueComponentConstants {
      * RouteConfig配列を保持する変数名
      */
     public static final String ROUTE_PAGEDEFS = "pagedefs";
+
+    /**
+     * 項目番号:13<br>
+     * vue js 3.5 を表す文字列
+     */
+    public static final String VUE_3_5 = "3.5";
 }

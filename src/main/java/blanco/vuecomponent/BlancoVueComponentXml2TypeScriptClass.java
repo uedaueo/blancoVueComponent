@@ -1021,16 +1021,25 @@ public class BlancoVueComponentXml2TypeScriptClass {
         plainTextList.add("");
         // declare props type
         plainTextList.add("/** " + fBundle.getXml2sourceFilePropsTypeDescription() + " */");
-        plainTextList.add("export declare type " + propsType + " = Readonly<LooseRequired<" + propsInterface + ">>;");
+        if (BlancoVueComponentUtil.compareVersion(BlancoVueComponentUtil.supportedVueVersion, BlancoVueComponentConstants.VUE_3_5) >= 0) {
+            plainTextList.add("export type " + propsType + " = LooseRequired<Readonly<ExtractPropTypes<ComponentObjectPropsOptions<" + propsInterface + ">>> & Readonly<LooseRequired<" + propsInterface + ">> & {}>;");
+        } else {
+            plainTextList.add("export declare type " + propsType + " = Readonly<LooseRequired<" + propsInterface + ">>;");
+        }
         plainTextList.add("");
 
-        // props definition
-        BlancoCgField propsField = fCgFactory.createField(propsConst, "ComponentPropsOptions", fBundle.getXml2sourceFilePropsDescription());
+        BlancoCgField propsField;
+        if (BlancoVueComponentUtil.compareVersion(BlancoVueComponentUtil.supportedVueVersion, BlancoVueComponentConstants.VUE_3_5) >= 0) {
+            propsField = fCgFactory.createField(propsConst, "ComponentObjectPropsOptions", fBundle.getXml2sourceFilePropsDescription());
+        } else {
+            propsField = fCgFactory.createField(propsConst, "ComponentPropsOptions", fBundle.getXml2sourceFilePropsDescription());
+        }
         fCgClass.getFieldList().add(propsField);
         propsField.getType().setGenerics(propsInterface);
         propsField.setAccess("export const");
         propsField.setNotnull(true);
 
+        // props definition
         StringBuffer propsBuf = new StringBuffer();
         int loopCount = 0;
         boolean written = false;
@@ -1062,6 +1071,7 @@ public class BlancoVueComponentXml2TypeScriptClass {
             loopCount++;
         }
         propsBuf.append(this.getLineSeparator() + "}");
+
         propsField.setDefault(propsBuf.toString());
 
         /* In TypeScript, sets the header instead of import. */

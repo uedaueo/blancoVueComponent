@@ -368,10 +368,17 @@ public class BlancoVueComponentXmlParser {
         ));
 
         /*
-         * Import LooseRequired and ComponentPropsOptions
+         * Import LooseRequired and ComponentObjectPropsOptions and ExtractPropTypes
          */
         BlancoVueComponentUtil.addImportHeaderList("LooseRequired", "@vue/shared", namedExportecHeaderList);
-        BlancoVueComponentUtil.addImportHeaderList("ComponentPropsOptions", "vue", namedExportecHeaderList);
+        if (BlancoVueComponentUtil.compareVersion(BlancoVueComponentUtil.supportedVueVersion, BlancoVueComponentConstants.VUE_3_5) >= 0) {
+            BlancoVueComponentUtil.addImportHeaderList("ComponentObjectPropsOptions", "vue", namedExportecHeaderList);
+            BlancoVueComponentUtil.addImportHeaderList("ExtractPropTypes", "vue", namedExportecHeaderList);
+        } else {
+            BlancoVueComponentUtil.addImportHeaderList("ComponentPropsOptions", "vue", namedExportecHeaderList);
+        }
+
+
         // Get headers user defined.
         List<BlancoXmlElement> propsHeaderElementList = BlancoXmlBindingUtil
                 .getElementsByTagName(argElementSheet,

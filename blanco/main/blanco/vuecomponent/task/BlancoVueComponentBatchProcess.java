@@ -96,6 +96,8 @@ public class BlancoVueComponentBatchProcess {
                 input.setPermissionKindMap(arg.substring(19));
             } else if (arg.startsWith("-strictNullable=")) {
                 input.setStrictNullable(Boolean.valueOf(arg.substring(16)).booleanValue());
+            } else if (arg.startsWith("-supportedVueVersion=")) {
+                input.setSupportedVueVersion(arg.substring(21));
             } else if (arg.equals("-?") || arg.equals("-help")) {
                 usage();
                 System.exit(END_SUCCESS);
@@ -189,7 +191,7 @@ public class BlancoVueComponentBatchProcess {
      */
     public static final void usage() {
         System.out.println("BlancoVueComponentBatchProcess: Usage:");
-        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14 -routeRecordBreadCrumbName=value15 -breadCrumbInterface=value16 -menuItemInterface=value17 -menuItemDescription=value18 -permissionKindMap=value19 -strictNullable=value20");
+        System.out.println("  java blanco.vuecomponent.task.BlancoVueComponentBatchProcess -verbose=value1 -metadir=value2 -targetdir=value3 -tmpdir=value4 -encoding=value5 -tabs=value6 -xmlrootelement=value7 -sheetType=value8 -targetStyle=value9 -listClass=value10 -lineSeparator=value11 -searchTmpdir=value12 -routeRecordMapKey=value13 -routeRecordMap=value14 -routeRecordBreadCrumbName=value15 -breadCrumbInterface=value16 -menuItemInterface=value17 -menuItemDescription=value18 -permissionKindMap=value19 -strictNullable=value20 -supportedVueVersion=value21");
         System.out.println("    -verbose");
         System.out.println("      explanation[Whether to run in verbose mode.]");
         System.out.println("      type[boolean]");
@@ -263,6 +265,10 @@ public class BlancoVueComponentBatchProcess {
         System.out.println("      explanation[Nullable な property に対して、? の付与をやめて | undefined | null の定義を行う。false の場合は ? が付与されて | undefined のみ付与される。]");
         System.out.println("      type[boolean]");
         System.out.println("      default value[false]");
+        System.out.println("    -supportedVueVersion");
+        System.out.println("      explanation[対応する vuejs のバージョンを指定します。middle バージョンの違いで動作が変わる場合があるので、文字列として定義します。]");
+        System.out.println("      type[string]");
+        System.out.println("      default value[3.4]");
         System.out.println("    -? , -help");
         System.out.println("      explanation[show the usage.]");
     }

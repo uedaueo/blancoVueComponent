@@ -68,6 +68,7 @@ public class BlancoVueComponentTest {
         inputComponent.setPermissionKindMap("sample.pages.PermissionKindMap");
         inputComponent.setLineSeparator("LF");
         inputComponent.setStrictNullable(true);
+        inputComponent.setSupportedVueVersion("3.5");
 
         BlancoVueComponentProcessImpl imple2 = new BlancoVueComponentProcessImpl();
         try {

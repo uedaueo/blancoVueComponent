@@ -27,6 +27,7 @@ public class BlancoVueComponentUtil {
     static public String menuItemDescription = "description";
     static public boolean createPermissionKindMap = false;
     static public boolean isStrictNullable = false;
+    static public String supportedVueVersion = "3.4";
 
     public static HashMap<String, BlancoValueObjectTsClassStructure> objects = new HashMap<>();
 
@@ -319,5 +320,39 @@ public class BlancoVueComponentUtil {
             }
         }
         return targetType;
+    }
+
+    /**
+     * retrun negative if argVersion1 < argVersion2, 0 on equal, otherwize positive.
+     *
+     * @param argVersion1
+     * @param argVersion2
+     * @return
+     */
+    public static int compareVersion(String argVersion1, String argVersion2) {
+        System.out.println("%%% version1 = " + argVersion1 + "\n%%% version2 = " + argVersion2);
+
+        String[] arrayVersion1s = argVersion1.split("\\.");
+        String[] arrayVersion2s = argVersion2.split("\\.");
+
+        int v1length = arrayVersion1s.length;
+        int v2length = arrayVersion2s.length;
+
+        int i = 0;
+        int cmp = 0;
+        for (; i < v1length && i < v2length; i++) {
+            int v1 = Integer.parseInt(arrayVersion1s[i]);
+            int v2 = Integer.parseInt(arrayVersion2s[i]);
+            cmp = v1 - v2;
+            if (cmp != 0) {
+                break;
+            }
+        }
+        if (cmp == 0 && i < v1length) {
+            cmp = 1;
+        } else if (cmp == 0 && i < v2length) {
+            cmp = -1;
+        }
+        return cmp;
     }
 }
